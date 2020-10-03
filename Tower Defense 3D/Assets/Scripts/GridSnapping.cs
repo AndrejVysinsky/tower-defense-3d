@@ -1,14 +1,31 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 public class GridSnapping : MonoBehaviour, IBuildOptionClicked
 {
     [SerializeField] float cellSize;
     [SerializeField] int maxElevation;
+    [SerializeField] OverlapHandler overlapHandler;
 
     private int _elevation;
 
+    private GameObject _cachedPrefab;
     private GameObject _initializedObject;
     private float _originY;
+
+    private bool _isContinuous;
+
+    private void Awake()
+    {
+        var position = transform.position;
+
+        position.x += transform.localScale.x / 2;
+        position.z += transform.localScale.y / 2;
+
+        transform.position = position;
+
+        overlapHandler = Instantiate(overlapHandler);
+    }
 
     private void OnEnable()
     {
@@ -51,45 +68,79 @@ public class GridSnapping : MonoBehaviour, IBuildOptionClicked
         {
             _elevation++;
         }
-
-        Debug.Log(_elevation);
     }
 
     private void MoveObject()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(ray, out RaycastHit hitInfo))
+        if (RayCastAll(out RaycastHit hitInfo))
         {
-            Vector3 position;
-
-            position = GetNearestPointOnGrid(hitInfo.point);
-
-            position.y = _originY + _elevation;
+            Vector3 position = GetNearestPointOnGrid(hitInfo.point);
 
             _initializedObject.transform.position = position;
+            overlapHandler.SetPosition(position);
+        }
+    }
+
+    private bool RayCastAll(out RaycastHit hitInfo)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        var hitInfos = Physics.RaycastAll(ray).ToList();
+
+        hitInfos.RemoveAll(x => x.transform.gameObject == _initializedObject || x.transform.gameObject == overlapHandler.gameObject);
+
+        hitInfos = hitInfos.OrderBy(x => x.distance).ToList();
+
+        if (hitInfos.Count > 0)
+        {
+            hitInfo = hitInfos[0];
+            return true;
+        }
+        else
+        {
+            hitInfo = new RaycastHit();
+            return false;
         }
     }
 
     private Vector3 GetNearestPointOnGrid(Vector3 point)
     {
-        point -= transform.position;
-
-        int xCount = Mathf.RoundToInt(point.x / cellSize);
-        int yCount = Mathf.RoundToInt(point.y / cellSize);
-        int zCount = Mathf.RoundToInt(point.z / cellSize);
+        int xCount = (int)(point.x / cellSize);
+        int yCount = (int)(point.y / cellSize);
+        int zCount = (int)(point.z / cellSize);
 
         var result = new Vector3(xCount, yCount, zCount);
 
         result *= cellSize;
-        result += transform.position;
+
+        var offsetX = _initializedObject.transform.localScale.x / 2;
+        var offsetZ = _initializedObject.transform.localScale.z / 2;
+
+        result.x += offsetX;
+        result.z += offsetZ;
+
+        result.x = Mathf.Clamp(result.x, 0 + offsetX, transform.localScale.x - offsetX);
+        result.z = Mathf.Clamp(result.z, 0 + offsetZ, transform.localScale.y - offsetZ);
+
+        result.y = _originY + _elevation;
 
         return result;
     }
 
     private void PlaceObject()
     {
-        _initializedObject = null;
+        //only if was clicked on building plane to avoid placing block while clicking on UI
+        if (RayCastAll(out RaycastHit hitInfo))
+        {
+            _initializedObject = null;
+
+            overlapHandler.RemoveOverlappedObjects();
+
+            if (_isContinuous)
+            {
+                InstantiatePrefab();
+            }
+        }
     }
 
     public void OnBuildOptionClicked(GameObject gameObject)
@@ -99,10 +150,28 @@ public class GridSnapping : MonoBehaviour, IBuildOptionClicked
             Destroy(_initializedObject);
         }
 
-        _initializedObject = Instantiate(gameObject);
-        _originY = _initializedObject.transform.position.y;
+        _cachedPrefab = gameObject;
 
+        InstantiatePrefab();
+    }
+
+    private void InstantiatePrefab()
+    {
+        _initializedObject = Instantiate(_cachedPrefab);
+
+        _originY = _initializedObject.transform.position.y;
+        _initializedObject.transform.position = GetNearestPointOnGrid(transform.position);
+
+        overlapHandler.RegisterParent(_initializedObject);
+        overlapHandler.ResizeCollider(_initializedObject.GetComponent<Collider>().bounds.size);
+
+        //random color
         var material = _initializedObject.GetComponent<MeshRenderer>().material;
         material.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+    }
+
+    public void OnBuildingModeChanged(bool continuous)
+    {
+        _isContinuous = continuous;
     }
 }

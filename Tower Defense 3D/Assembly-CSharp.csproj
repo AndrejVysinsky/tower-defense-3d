@@ -55,7 +55,6 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\GridSnappingInEditor.cs" />
     <Compile Include="Assets\Scripts\BuildOption.cs" />
     <Compile Include="Assets\Scripts\Enemies\Waves\EnemyWaveData.cs" />
     <Compile Include="Assets\Scripts\Enemies\EnemyData.cs" />
@@ -67,6 +66,7 @@
     <Compile Include="Assets\Scripts\Event System\IBuildOptionClicked.cs" />
     <Compile Include="Assets\Scripts\Enemies\Waves\EnemySpawner.cs" />
     <Compile Include="Assets\Scripts\Event System\EventManager.cs" />
+    <Compile Include="Assets\Scripts\OverlapHandler.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
