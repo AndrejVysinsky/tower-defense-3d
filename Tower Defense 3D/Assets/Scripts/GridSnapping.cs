@@ -52,6 +52,11 @@ public class GridSnapping : MonoBehaviour, IBuildOptionClicked
             {
                 PlaceObject();
             }
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                DestroyCurrentObject();
+            }
         }
     }
 
@@ -77,7 +82,7 @@ public class GridSnapping : MonoBehaviour, IBuildOptionClicked
             Vector3 position = GetNearestPointOnGrid(hitInfo.point);
 
             _initializedObject.transform.position = position;
-            overlapHandler.SetPosition(position);
+            overlapHandler.SetPosition(_initializedObject.GetComponent<Collider>().bounds.center);
         }
     }
 
@@ -113,8 +118,10 @@ public class GridSnapping : MonoBehaviour, IBuildOptionClicked
 
         result *= cellSize;
 
-        var offsetX = _initializedObject.transform.localScale.x / 2;
-        var offsetZ = _initializedObject.transform.localScale.z / 2;
+        var bounds = _initializedObject.GetComponent<Collider>().bounds;
+
+        var offsetX = bounds.extents.x;
+        var offsetZ = bounds.extents.z;
 
         result.x += offsetX;
         result.z += offsetZ;
@@ -145,14 +152,20 @@ public class GridSnapping : MonoBehaviour, IBuildOptionClicked
 
     public void OnBuildOptionClicked(GameObject gameObject)
     {
-        if (_initializedObject != null)
-        {
-            Destroy(_initializedObject);
-        }
+        DestroyCurrentObject();
 
         _cachedPrefab = gameObject;
 
         InstantiatePrefab();
+    }
+
+    private void DestroyCurrentObject()
+    {
+        if (_initializedObject != null)
+        {
+            Destroy(_initializedObject);
+        }
+        _initializedObject = null;
     }
 
     private void InstantiatePrefab()

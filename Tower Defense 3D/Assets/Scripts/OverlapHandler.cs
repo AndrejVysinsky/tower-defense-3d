@@ -52,11 +52,13 @@ public class OverlapHandler : MonoBehaviour
 
             var point = overlappedObject.GetComponent<Collider>().ClosestPoint(transform.position);
 
-            float minX = transform.position.x - bounds.extents.x;
-            float maxX = transform.position.x + bounds.extents.x;
+            float maxTolerance = 0.05f;
 
-            float minZ = transform.position.z - bounds.extents.z;
-            float maxZ = transform.position.z + bounds.extents.z;
+            float minX = transform.position.x - bounds.extents.x + maxTolerance;
+            float maxX = transform.position.x + bounds.extents.x - maxTolerance;
+
+            float minZ = transform.position.z - bounds.extents.z + maxTolerance;
+            float maxZ = transform.position.z + bounds.extents.z - maxTolerance;
 
             if (point.x > minX && point.x < maxX && point.z > minZ && point.z < maxZ)
             {
