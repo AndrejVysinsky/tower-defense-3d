@@ -45,14 +45,14 @@ public class OverlapHandler : MonoBehaviour
 
             meshRenderer.enabled = true;
 
-            if (IsHigherOrLowerThan(overlappedObject))
+            float maxTolerance = 0.05f;
+
+            if (IsHigherOrLowerThan(overlappedObject, maxTolerance))
             {
                 continue;
             }
 
             var point = overlappedObject.GetComponent<Collider>().ClosestPoint(transform.position);
-
-            float maxTolerance = 0.05f;
 
             float minX = transform.position.x - bounds.extents.x + maxTolerance;
             float maxX = transform.position.x + bounds.extents.x - maxTolerance;
@@ -67,10 +67,12 @@ public class OverlapHandler : MonoBehaviour
         }
     }
 
-    private bool IsHigherOrLowerThan(GameObject gameObject)
+    private bool IsHigherOrLowerThan(GameObject gameObject, float maxTolerance)
     {
-        var upperYOfStaticGameObject = gameObject.transform.position.y + gameObject.GetComponent<Collider>().bounds.extents.y;
-        var lowerYOfStaticGameObject = gameObject.transform.position.y - gameObject.GetComponent<Collider>().bounds.extents.y;
+        var otherBounds = gameObject.GetComponent<Collider>().bounds;
+
+        var upperYOfStaticGameObject = gameObject.transform.position.y + otherBounds.extents.y;
+        var lowerYOfStaticGameObject = gameObject.transform.position.y - otherBounds.extents.y;
 
         var upperYOfMovingGameObject = transform.position.y + _boxCollider.bounds.extents.y;
         var lowerYOfMovingGameObject = transform.position.y - _boxCollider.bounds.extents.y;
@@ -107,5 +109,11 @@ public class OverlapHandler : MonoBehaviour
         }
 
         _objectsInRange.Remove(other.gameObject);
+    }
+
+    public void SetCollisionDetection(bool detectCollision)
+    {
+        _objectsInRange.Clear();
+        _boxCollider.enabled = detectCollision;
     }
 }

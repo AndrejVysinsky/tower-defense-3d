@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using UnityEngine;
 
-public class GridSnapping : MonoBehaviour, IBuildOptionClicked
+public class GridManager : MonoBehaviour, IBuildOptionClicked
 {
     [SerializeField] float cellSize;
     [SerializeField] int maxElevation;
@@ -11,6 +11,7 @@ public class GridSnapping : MonoBehaviour, IBuildOptionClicked
 
     private GameObject _cachedPrefab;
     private GameObject _initializedObject;
+    private Collider _initializedObjectCollider;
     private float _originY;
 
     private bool _isContinuous;
@@ -95,7 +96,7 @@ public class GridSnapping : MonoBehaviour, IBuildOptionClicked
             Vector3 position = _snapToGrid ? GetNearestPointOnGrid(hitInfo.point) : ClampPosition(hitInfo.point);
 
             _initializedObject.transform.position = position;
-            overlapHandler.SetPosition(_initializedObject.GetComponent<Collider>().bounds.center);
+            overlapHandler.SetPosition(position);
         }
     }
 
@@ -137,7 +138,7 @@ public class GridSnapping : MonoBehaviour, IBuildOptionClicked
 
     private Vector3 ClampPosition(Vector3 position)
     {
-        var bounds = _initializedObject.GetComponent<Collider>().bounds;
+        var bounds = _initializedObjectCollider.bounds;
 
         var offsetX = bounds.extents.x;
         var offsetZ = bounds.extents.z;
@@ -190,12 +191,14 @@ public class GridSnapping : MonoBehaviour, IBuildOptionClicked
     private void InstantiatePrefab()
     {
         _initializedObject = Instantiate(_cachedPrefab);
+        _initializedObjectCollider = _initializedObject.GetComponent<Collider>();
 
-        _originY = _initializedObject.transform.position.y;
+        _originY = _initializedObject.transform.position.y + _initializedObjectCollider.bounds.extents.y;
+
         _initializedObject.transform.position = _snapToGrid ? GetNearestPointOnGrid(transform.position) : ClampPosition(transform.position);
 
         overlapHandler.RegisterParent(_initializedObject);
-        overlapHandler.ResizeCollider(_initializedObject.GetComponent<Collider>().bounds.size);
+        overlapHandler.ResizeCollider(_initializedObjectCollider.bounds.size);
 
         //random color
         var material = _initializedObject.GetComponent<MeshRenderer>().material;
@@ -210,5 +213,10 @@ public class GridSnapping : MonoBehaviour, IBuildOptionClicked
     public void OnGridSnappingChanged(bool snapToGrid)
     {
         _snapToGrid = snapToGrid;
+    }
+
+    public void OnCollisionDetectionChanged(bool detectCollision)
+    {
+        overlapHandler.SetCollisionDetection(detectCollision);
     }
 }
