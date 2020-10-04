@@ -94,6 +94,9 @@ public class OverlapHandler : MonoBehaviour
         }
 
         _objectsInRange.Add(other.gameObject);
+
+        //sometimes as soon as object enters range it collides, but CheckOverlap was called too soon (even though LateUpdate should fire after OnTriggerEnter)
+        CheckOverlap();
     }
 
     private void OnTriggerExit(Collider other)

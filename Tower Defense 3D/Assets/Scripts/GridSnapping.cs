@@ -14,6 +14,7 @@ public class GridSnapping : MonoBehaviour, IBuildOptionClicked
     private float _originY;
 
     private bool _isContinuous;
+    private bool _snapToGrid;
 
     private void Awake()
     {
@@ -91,7 +92,7 @@ public class GridSnapping : MonoBehaviour, IBuildOptionClicked
     {
         if (RayCastAll(out RaycastHit hitInfo))
         {
-            Vector3 position = GetNearestPointOnGrid(hitInfo.point);
+            Vector3 position = _snapToGrid ? GetNearestPointOnGrid(hitInfo.point) : ClampPosition(hitInfo.point);
 
             _initializedObject.transform.position = position;
             overlapHandler.SetPosition(_initializedObject.GetComponent<Collider>().bounds.center);
@@ -129,21 +130,27 @@ public class GridSnapping : MonoBehaviour, IBuildOptionClicked
         var result = new Vector3(xCount, yCount, zCount);
 
         result *= cellSize;
+        result = ClampPosition(result);
 
+        return result;
+    }
+
+    private Vector3 ClampPosition(Vector3 position)
+    {
         var bounds = _initializedObject.GetComponent<Collider>().bounds;
 
         var offsetX = bounds.extents.x;
         var offsetZ = bounds.extents.z;
 
-        result.x += offsetX;
-        result.z += offsetZ;
+        position.x += offsetX;
+        position.z += offsetZ;
 
-        result.x = Mathf.Clamp(result.x, 0 + offsetX, transform.localScale.x - offsetX);
-        result.z = Mathf.Clamp(result.z, 0 + offsetZ, transform.localScale.y - offsetZ);
+        position.x = Mathf.Clamp(position.x, 0 + offsetX, transform.localScale.x - offsetX);
+        position.z = Mathf.Clamp(position.z, 0 + offsetZ, transform.localScale.y - offsetZ);
 
-        result.y = _originY + _elevation;
+        position.y = _originY + _elevation;
 
-        return result;
+        return position;
     }
 
     private void PlaceObject()
@@ -185,7 +192,7 @@ public class GridSnapping : MonoBehaviour, IBuildOptionClicked
         _initializedObject = Instantiate(_cachedPrefab);
 
         _originY = _initializedObject.transform.position.y;
-        _initializedObject.transform.position = GetNearestPointOnGrid(transform.position);
+        _initializedObject.transform.position = _snapToGrid ? GetNearestPointOnGrid(transform.position) : ClampPosition(transform.position);
 
         overlapHandler.RegisterParent(_initializedObject);
         overlapHandler.ResizeCollider(_initializedObject.GetComponent<Collider>().bounds.size);
@@ -198,5 +205,10 @@ public class GridSnapping : MonoBehaviour, IBuildOptionClicked
     public void OnBuildingModeChanged(bool continuous)
     {
         _isContinuous = continuous;
+    }
+
+    public void OnGridSnappingChanged(bool snapToGrid)
+    {
+        _snapToGrid = snapToGrid;
     }
 }
