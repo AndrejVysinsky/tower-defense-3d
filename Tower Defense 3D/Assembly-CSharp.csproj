@@ -62,12 +62,12 @@
     <Compile Include="Assets\Scripts\Enemies\HealthScript.cs" />
     <Compile Include="Assets\Scripts\Enemies\Waves\WaveTimer.cs" />
     <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
+    <Compile Include="Assets\Scripts\Building Menu\BuildOptionData.cs" />
     <Compile Include="Assets\Scripts\GridManager.cs" />
     <Compile Include="Assets\Scripts\Event System\IBuildOptionClicked.cs" />
     <Compile Include="Assets\Scripts\Enemies\Waves\EnemySpawner.cs" />
     <Compile Include="Assets\Scripts\OverlapHandler.cs" />
     <Compile Include="Assets\Scripts\Event System\EventManager.cs" />
-    <Compile Include="Assets\Scripts\Building Menu\BuildOptionData.cs" />
     <Compile Include="Assets\Scripts\Building Menu\BuildCategoryData.cs" />
   </ItemGroup>
   <ItemGroup>
