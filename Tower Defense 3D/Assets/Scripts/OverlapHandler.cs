@@ -71,11 +71,11 @@ public class OverlapHandler : MonoBehaviour
     {
         var otherBounds = gameObject.GetComponent<Collider>().bounds;
 
-        var upperYOfStaticGameObject = gameObject.transform.position.y + otherBounds.extents.y;
-        var lowerYOfStaticGameObject = gameObject.transform.position.y - otherBounds.extents.y;
+        var upperYOfStaticGameObject = gameObject.transform.position.y + otherBounds.extents.y - maxTolerance;
+        var lowerYOfStaticGameObject = gameObject.transform.position.y - otherBounds.extents.y + maxTolerance;
 
-        var upperYOfMovingGameObject = transform.position.y + _boxCollider.bounds.extents.y;
-        var lowerYOfMovingGameObject = transform.position.y - _boxCollider.bounds.extents.y;
+        var upperYOfMovingGameObject = transform.position.y + _boxCollider.bounds.extents.y - maxTolerance;
+        var lowerYOfMovingGameObject = transform.position.y - _boxCollider.bounds.extents.y + maxTolerance;
 
         return lowerYOfMovingGameObject >= upperYOfStaticGameObject || upperYOfMovingGameObject <= lowerYOfStaticGameObject;
     }

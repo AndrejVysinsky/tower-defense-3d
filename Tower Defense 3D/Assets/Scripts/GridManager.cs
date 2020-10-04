@@ -21,8 +21,8 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
     {
         var position = transform.position;
 
-        position.x += transform.localScale.x / 2;
-        position.z += transform.localScale.y / 2;
+        position.x = transform.localScale.x / 2;
+        position.z = transform.localScale.y / 2;
 
         transform.position = position;
 
