@@ -39,13 +39,20 @@ public class GridSnapping : MonoBehaviour, IBuildOptionClicked
 
     private void Update()
     {
-        if (Input.GetAxis("Mouse ScrollWheel") != 0)
-        {
-            ChangeElevation();
-        }
-
         if (_initializedObject != null)
         {
+            if (Input.GetAxis("Mouse ScrollWheel") != 0)
+            {
+                if (Input.GetKey(KeyCode.LeftControl))
+                {
+                    ChangeRotation();
+                }
+                else
+                {
+                    ChangeElevation();
+                }
+            }
+
             MoveObject();
 
             if (Input.GetMouseButtonDown(0))
@@ -58,6 +65,11 @@ public class GridSnapping : MonoBehaviour, IBuildOptionClicked
                 DestroyCurrentObject();
             }
         }
+    }
+
+    private void ChangeRotation()
+    {
+        _initializedObject.transform.Rotate(Vector3.up, 90f);
     }
 
     private void ChangeElevation()
