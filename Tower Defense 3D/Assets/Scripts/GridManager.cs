@@ -193,7 +193,7 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
         _initializedObject = Instantiate(_cachedPrefab);
         _initializedObjectCollider = _initializedObject.GetComponent<Collider>();
 
-        _originY = _initializedObject.transform.position.y + _initializedObjectCollider.bounds.extents.y;
+        _originY = _initializedObject.transform.position.y + _initializedObjectCollider.bounds.extents.y - _initializedObjectCollider.bounds.center.y;
 
         _initializedObject.transform.position = _snapToGrid ? GetNearestPointOnGrid(transform.position) : ClampPosition(transform.position);
 
@@ -201,8 +201,8 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
         overlapHandler.ResizeCollider(_initializedObjectCollider.bounds.size);
 
         //random color
-        var material = _initializedObject.GetComponent<MeshRenderer>().material;
-        material.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+        //var material = _initializedObject.GetComponent<MeshRenderer>().material;
+        //material.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
     }
 
     public void OnBuildingModeChanged(bool continuous)
