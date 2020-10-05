@@ -16,6 +16,7 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
 
     private bool _isContinuous;
     private bool _snapToGrid;
+    private bool _autoHeight;
 
     private void Awake()
     {
@@ -76,6 +77,9 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
 
     private void ChangeElevation()
     {
+        if (_autoHeight)
+            return;
+
         float scroll = Input.GetAxis("Mouse ScrollWheel");
 
         if (scroll < 0 && _elevation > 0)
@@ -98,6 +102,11 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
             if (_snapToGrid)
             {
                 position = GetNearestPointOnGrid(hitInfo.point);
+            }
+
+            if (_autoHeight)
+            {
+                _elevation = Mathf.RoundToInt(hitInfo.point.y);
             }
 
             position = ClampPosition(position);
@@ -222,5 +231,10 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
     public void OnCollisionDetectionChanged(bool detectCollision)
     {
         overlapHandler.SetCollisionDetection(detectCollision);
+    }
+
+    public void OnAutoHeightChanged(bool autoHeight)
+    {
+        _autoHeight = autoHeight;
     }
 }
