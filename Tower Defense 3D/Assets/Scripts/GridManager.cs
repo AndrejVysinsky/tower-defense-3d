@@ -6,6 +6,7 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
     [SerializeField] float cellSize;
     [SerializeField] int maxElevation;
     [SerializeField] OverlapHandler overlapHandler;
+    [SerializeField] GameObject mapContainer;
 
     private int _elevation;
 
@@ -14,7 +15,7 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
     private Collider _initializedObjectCollider;
     private float _originY;
 
-    private bool _isContinuous;
+    private bool _continuousBuilding;
     private bool _snapToGrid;
     private bool _autoHeight;
 
@@ -97,23 +98,26 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
     {
         if (RayCastAll(out RaycastHit hitInfo))
         {
-            Vector3 position = hitInfo.point;
-
-            if (_snapToGrid)
-            {
-                position = GetNearestPointOnGrid(hitInfo.point);
-            }
-
-            if (_autoHeight)
-            {
-                _elevation = Mathf.RoundToInt(hitInfo.point.y);
-            }
-
-            position = ClampPosition(position);
-
-            _initializedObject.transform.position = position;
-            overlapHandler.SetPosition(position);
+            SetObjectPosition(hitInfo.point);
         }
+    }
+
+    private void SetObjectPosition(Vector3 position)
+    {
+        if (_autoHeight)
+        {
+            _elevation = Mathf.RoundToInt(position.y);
+        }
+
+        if (_snapToGrid)
+        {
+            position = GetNearestPointOnGrid(position);
+        }
+
+        position = ClampPosition(position);
+
+        _initializedObject.transform.position = position;
+        overlapHandler.SetPosition(position);
     }
 
     private bool RayCastAll(out RaycastHit hitInfo)
@@ -176,7 +180,7 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
 
             overlapHandler.RemoveOverlappedObjects();
 
-            if (_isContinuous)
+            if (_continuousBuilding)
             {
                 InstantiatePrefab();
             }
@@ -196,6 +200,7 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
     {
         if (_initializedObject != null)
         {
+            overlapHandler.ParentDestroyed();
             Destroy(_initializedObject);
         }
         _initializedObject = null;
@@ -203,24 +208,20 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
 
     private void InstantiatePrefab()
     {
-        _initializedObject = Instantiate(_cachedPrefab);
+        _initializedObject = Instantiate(_cachedPrefab, mapContainer.transform);
         _initializedObjectCollider = _initializedObject.GetComponent<Collider>();
 
         _originY = _initializedObject.transform.position.y + _initializedObjectCollider.bounds.extents.y - _initializedObjectCollider.bounds.center.y;
 
-        _initializedObject.transform.position = _snapToGrid ? GetNearestPointOnGrid(transform.position) : ClampPosition(transform.position);
-
         overlapHandler.RegisterParent(_initializedObject);
         overlapHandler.ResizeCollider(_initializedObjectCollider.bounds.size);
 
-        //random color
-        //var material = _initializedObject.GetComponent<MeshRenderer>().material;
-        //material.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+        SetObjectPosition(transform.position);
     }
 
     public void OnBuildingModeChanged(bool continuous)
     {
-        _isContinuous = continuous;
+        _continuousBuilding = continuous;
     }
 
     public void OnGridSnappingChanged(bool snapToGrid)
@@ -228,9 +229,9 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
         _snapToGrid = snapToGrid;
     }
 
-    public void OnCollisionDetectionChanged(bool detectCollision)
+    public void OnHideCollidingObjectsChanged(bool hideCollidingObjects)
     {
-        overlapHandler.SetCollisionDetection(detectCollision);
+        overlapHandler.SetHideCollidingObjects(hideCollidingObjects);
     }
 
     public void OnAutoHeightChanged(bool autoHeight)

@@ -9,6 +9,8 @@ public class OverlapHandler : MonoBehaviour
 
     private List<GameObject> _objectsInRange;
 
+    public bool IsOverlapping { get; private set; }
+
     private void Awake()
     {
         _boxCollider = GetComponent<BoxCollider>();
@@ -32,18 +34,18 @@ public class OverlapHandler : MonoBehaviour
 
         transform.position = position;
 
-        CheckOverlap();
+        IsOverlapping = CheckOverlap();
     }
 
-    private void CheckOverlap()
+    private bool CheckOverlap()
     {
+        var isOverlapping = false;
+
         var bounds = _boxCollider.bounds;
 
         foreach (var overlappedObject in _objectsInRange)
         {
             var meshRenderer = overlappedObject.GetComponent<MeshRenderer>();
-
-            meshRenderer.enabled = true;
 
             float maxTolerance = 0.05f;
 
@@ -54,17 +56,32 @@ public class OverlapHandler : MonoBehaviour
 
             var point = overlappedObject.GetComponent<Collider>().ClosestPoint(transform.position);
 
-            float minX = transform.position.x - bounds.extents.x + maxTolerance;
-            float maxX = transform.position.x + bounds.extents.x - maxTolerance;
-
-            float minZ = transform.position.z - bounds.extents.z + maxTolerance;
-            float maxZ = transform.position.z + bounds.extents.z - maxTolerance;
-
-            if (point.x > minX && point.x < maxX && point.z > minZ && point.z < maxZ)
+            if (IsPointInsideBounds(bounds, point, maxTolerance))
             {
                 meshRenderer.enabled = false;
+                isOverlapping = true;
+            }
+            else
+            {
+                meshRenderer.enabled = true;
             }
         }
+        return isOverlapping;
+    }
+
+    private bool IsPointInsideBounds(Bounds bounds, Vector3 point, float maxTolerance)
+    {
+        float minX = transform.position.x - bounds.extents.x + maxTolerance;
+        float maxX = transform.position.x + bounds.extents.x - maxTolerance;
+
+        float minZ = transform.position.z - bounds.extents.z + maxTolerance;
+        float maxZ = transform.position.z + bounds.extents.z - maxTolerance;
+
+        if (point.x > minX && point.x < maxX && point.z > minZ && point.z < maxZ)
+        {
+            return true;
+        }
+        return false;
     }
 
     private bool IsHigherOrLowerThan(GameObject gameObject, float maxTolerance)
@@ -111,9 +128,15 @@ public class OverlapHandler : MonoBehaviour
         _objectsInRange.Remove(other.gameObject);
     }
 
-    public void SetCollisionDetection(bool detectCollision)
+    public void SetHideCollidingObjects(bool hideCollidingObjects)
     {
         _objectsInRange.Clear();
-        _boxCollider.enabled = detectCollision;
+        _boxCollider.enabled = hideCollidingObjects;
+    }
+
+    public void ParentDestroyed()
+    {
+        _objectsInRange.ForEach(x => x.GetComponent<MeshRenderer>().enabled = true);
+        _objectsInRange.Clear();
     }
 }
