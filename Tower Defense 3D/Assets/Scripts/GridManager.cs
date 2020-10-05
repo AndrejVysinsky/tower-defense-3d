@@ -93,7 +93,14 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
     {
         if (RayCastAll(out RaycastHit hitInfo))
         {
-            Vector3 position = _snapToGrid ? GetNearestPointOnGrid(hitInfo.point) : ClampPosition(hitInfo.point);
+            Vector3 position = hitInfo.point;
+
+            if (_snapToGrid)
+            {
+                position = GetNearestPointOnGrid(hitInfo.point);
+            }
+
+            position = ClampPosition(position);
 
             _initializedObject.transform.position = position;
             overlapHandler.SetPosition(position);
@@ -128,7 +135,7 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
         int yCount = (int)(point.y / cellSize);
         int zCount = (int)(point.z / cellSize);
 
-        var result = new Vector3(xCount, yCount, zCount);
+        var result = new Vector3(xCount + 1, yCount, zCount + 1);
 
         result *= cellSize;
         result = ClampPosition(result);
@@ -142,9 +149,6 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
 
         var offsetX = bounds.extents.x;
         var offsetZ = bounds.extents.z;
-
-        position.x += offsetX;
-        position.z += offsetZ;
 
         position.x = Mathf.Clamp(position.x, 0 + offsetX, transform.localScale.x - offsetX);
         position.z = Mathf.Clamp(position.z, 0 + offsetZ, transform.localScale.y - offsetZ);
