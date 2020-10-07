@@ -46,6 +46,7 @@ public class OverlapHandler : MonoBehaviour
         foreach (var overlappedObject in _objectsInRange)
         {
             var meshRenderer = overlappedObject.GetComponent<MeshRenderer>();
+            meshRenderer.enabled = true;
 
             float maxTolerance = 0.05f;
 
@@ -60,10 +61,6 @@ public class OverlapHandler : MonoBehaviour
             {
                 meshRenderer.enabled = false;
                 isOverlapping = true;
-            }
-            else
-            {
-                meshRenderer.enabled = true;
             }
         }
         return isOverlapping;
