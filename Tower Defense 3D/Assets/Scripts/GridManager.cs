@@ -89,22 +89,23 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
         if (scroll < 0 && _elevation > 0)
         {
             _elevation--;
-            gridDisplay.ChangeGridElevation(_elevation);
-
-            var position = transform.position;
-            position.y = _elevation + _heightOffSet;
-            transform.position = position;
+            OnElevationChanged();
         }
 
         if (scroll > 0 && _elevation < maxElevation)
         {
             _elevation++;
-            gridDisplay.ChangeGridElevation(_elevation);
-
-            var position = transform.position;
-            position.y = _elevation + _heightOffSet;
-            transform.position = position;
+            OnElevationChanged();
         }
+    }
+
+    private void OnElevationChanged()
+    {
+        gridDisplay.ChangeGridElevation(_elevation);
+
+        var position = transform.position;
+        position.y = _elevation + _heightOffSet;
+        transform.position = position;
     }
 
     private void MoveObject()
@@ -254,7 +255,10 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
     {
         _autoHeight = autoHeight;
 
-        //if (_autoHeight)
-        //    _elevation = 0;
+        if (_autoHeight)
+        {
+            _elevation = 0;
+            OnElevationChanged();
+        }
     }
 }
