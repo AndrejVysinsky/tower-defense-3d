@@ -7,8 +7,10 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
     [SerializeField] int maxElevation;
     [SerializeField] OverlapHandler overlapHandler;
     [SerializeField] GameObject mapContainer;
+    [SerializeField] GridDisplay gridDisplay;
 
     private int _elevation;
+    private float _heightOffSet = 0.01f;
 
     private GameObject _cachedPrefab;
     private GameObject _initializedObject;
@@ -29,6 +31,8 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
         transform.position = position;
 
         overlapHandler = Instantiate(overlapHandler);
+
+        gridDisplay.CalculateGrid((int)transform.localScale.x, (int)transform.localScale.y, cellSize, _elevation);
     }
 
     private void OnEnable()
@@ -43,18 +47,16 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
 
     private void Update()
     {
+        if (Input.GetAxis("Mouse ScrollWheel") != 0 && Input.GetKey(KeyCode.LeftControl) == false)
+        {
+            ChangeElevation();
+        }
+
         if (_initializedObject != null)
         {
-            if (Input.GetAxis("Mouse ScrollWheel") != 0)
+            if (Input.GetAxis("Mouse ScrollWheel") != 0 && Input.GetKey(KeyCode.LeftControl))
             {
-                if (Input.GetKey(KeyCode.LeftControl))
-                {
-                    ChangeRotation();
-                }
-                else
-                {
-                    ChangeElevation();
-                }
+                ChangeRotation();
             }
 
             MoveObject();
@@ -86,11 +88,21 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
         if (scroll < 0 && _elevation > 0)
         {
             _elevation--;
+            gridDisplay.ChangeGridElevation(_elevation);
+
+            var position = transform.position;
+            position.y = _elevation + _heightOffSet;
+            transform.position = position;
         }
 
         if (scroll > 0 && _elevation < maxElevation)
         {
             _elevation++;
+            gridDisplay.ChangeGridElevation(_elevation);
+
+            var position = transform.position;
+            position.y = _elevation + _heightOffSet;
+            transform.position = position;
         }
     }
 
@@ -151,9 +163,29 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
         var result = new Vector3(xCount + 1, yCount, zCount + 1);
 
         result *= cellSize;
+
+        result = ShiftPosition(result);
+
         result = ClampPosition(result);
 
         return result;
+    }
+
+    private Vector3 ShiftPosition(Vector3 position)
+    {
+        if ((int)_initializedObjectCollider.bounds.size.x / cellSize % 2 != 0)
+        {
+            position.x -= cellSize / 2;
+            Debug.Log("x shifted");
+        }
+
+        if ((int)_initializedObjectCollider.bounds.size.z / cellSize % 2 != 0)
+        {
+            position.z -= cellSize / 2;
+            Debug.Log("z shifted");
+        }
+
+        return position;
     }
 
     private Vector3 ClampPosition(Vector3 position)
