@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class GridManager : MonoBehaviour, IBuildOptionClicked
 {
@@ -108,7 +109,7 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
 
     private void MoveObject()
     {
-        if (RayCastAll(out RaycastHit hitInfo))
+        if (RayCaster.RayCastNearestGameObject(out RaycastHit hitInfo))
         {
             SetObjectPosition(hitInfo.point);
         }
@@ -205,16 +206,20 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
 
     private void PlaceObject()
     {
-        //only if was clicked on building plane to avoid placing block while clicking on UI
-        if (RayCastAll(out RaycastHit hitInfo))
+        //check if UI was clicked, if not check if building plane was clicked, then place object
+        if (RayCaster.RayCastNearestUIObject(out RaycastResult raycastResult) == false)
         {
-            _initializedObject = null;
-
-            overlapHandler.RemoveOverlappedObjects();
-
-            if (_continuousBuilding)
+            if (RayCaster.RayCastNearestGameObject(out RaycastHit hitInfo))
             {
-                InstantiatePrefab();
+                _initializedObject.layer = (int)LayerEnum.Default;
+                _initializedObject = null;
+
+                overlapHandler.RemoveOverlappedObjects();
+
+                if (_continuousBuilding)
+                {
+                    InstantiatePrefab();
+                }
             }
         }
     }
@@ -242,6 +247,7 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
     {
         _initializedObject = Instantiate(_cachedPrefab, mapContainer.transform);
         _initializedObjectCollider = _initializedObject.GetComponent<Collider>();
+        _initializedObject.layer = (int)LayerEnum.IgnoreRayCast;
 
         _originY = _initializedObject.transform.position.y + _initializedObjectCollider.bounds.extents.y - _initializedObjectCollider.bounds.center.y;
 
@@ -269,5 +275,8 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
     public void OnAutoHeightChanged(bool autoHeight)
     {
         _autoHeight = autoHeight;
+
+        //if (_autoHeight)
+        //    _elevation = 0;
     }
 }

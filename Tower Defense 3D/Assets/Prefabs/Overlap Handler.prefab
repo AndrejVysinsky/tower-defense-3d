@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6209219634770400541}
   - component: {fileID: -8822502717654209392}
   - component: {fileID: 6209219634770400540}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Overlap Handler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
