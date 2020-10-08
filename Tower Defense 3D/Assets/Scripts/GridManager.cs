@@ -133,28 +133,6 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
         overlapHandler.SetPosition(position);
     }
 
-    private bool RayCastAll(out RaycastHit hitInfo)
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        var hitInfos = Physics.RaycastAll(ray).ToList();
-
-        hitInfos.RemoveAll(x => x.transform.gameObject == _initializedObject || x.transform.gameObject == overlapHandler.gameObject);
-
-        hitInfos = hitInfos.OrderBy(x => x.distance).ToList();
-
-        if (hitInfos.Count > 0)
-        {
-            hitInfo = hitInfos[0];
-            return true;
-        }
-        else
-        {
-            hitInfo = new RaycastHit();
-            return false;
-        }
-    }
-
     private Vector3 GetNearestPointOnGrid(Vector3 point)
     {
         int xCount = (int)(point.x / cellSize);
