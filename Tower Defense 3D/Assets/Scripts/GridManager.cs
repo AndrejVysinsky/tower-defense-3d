@@ -4,20 +4,21 @@ using UnityEngine.EventSystems;
 
 public class GridManager : MonoBehaviour, IBuildOptionClicked
 {
+    [SerializeField] int sizeX;
+    [SerializeField] int sizeZ;
     [SerializeField] float cellSize;
-    [SerializeField] int maxElevation;
     [SerializeField] OverlapHandler overlapHandler;
     [SerializeField] GameObject mapContainer;
     [SerializeField] GridDisplay gridDisplay;
 
-    private int _elevation;
-    private float _heightOffSet = 0.01f;
+    private int _objectElevation;
+    private float _objectOriginY;
 
-    private GameObject _cachedPrefab;
-    private GameObject _initializedObject;
-    private Collider _initializedObjectCollider;
-    private float _originY;
-
+    private GameObject _objectToPlacePrefab;
+    private GameObject _objectToPlace;
+    private Collider _objectToPlaceCollider;
+    
+    //settings
     private bool _continuousBuilding;
     private bool _snapToGrid;
     private bool _autoHeight;
@@ -33,7 +34,7 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
 
         overlapHandler = Instantiate(overlapHandler);
 
-        gridDisplay.CalculateGrid((int)transform.localScale.x, (int)transform.localScale.y, cellSize, _elevation);
+        gridDisplay.CalculateGrid(sizeX, sizeZ, cellSize, _objectElevation);
     }
 
     private void OnEnable()
@@ -53,7 +54,7 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
             ChangeElevation();
         }
 
-        if (_initializedObject != null)
+        if (_objectToPlace != null)
         {
             if (Input.GetAxis("Mouse ScrollWheel") != 0 && Input.GetKey(KeyCode.LeftControl))
             {
@@ -76,7 +77,7 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
 
     private void ChangeRotation()
     {
-        _initializedObject.transform.Rotate(Vector3.up, 90f);
+        _objectToPlace.transform.Rotate(Vector3.up, 90f);
     }
 
     private void ChangeElevation()
@@ -86,26 +87,15 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
 
         float scroll = Input.GetAxis("Mouse ScrollWheel");
 
-        if (scroll < 0 && _elevation > 0)
+        if (scroll < 0)
         {
-            _elevation--;
-            OnElevationChanged();
+            gridDisplay.DecreaseElevation();
         }
 
-        if (scroll > 0 && _elevation < maxElevation)
+        if (scroll > 0)
         {
-            _elevation++;
-            OnElevationChanged();
+            gridDisplay.IncreaseElevation();
         }
-    }
-
-    private void OnElevationChanged()
-    {
-        gridDisplay.ChangeGridElevation(_elevation);
-
-        var position = transform.position;
-        position.y = _elevation + _heightOffSet;
-        transform.position = position;
     }
 
     private void MoveObject()
@@ -120,7 +110,11 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
     {
         if (_autoHeight)
         {
-            _elevation = Mathf.RoundToInt(position.y);
+            _objectElevation = Mathf.RoundToInt(position.y);
+        }
+        else
+        {
+            _objectElevation = gridDisplay.GetGridElevation();
         }
 
         if (_snapToGrid)
@@ -130,7 +124,7 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
 
         position = ClampPosition(position);
 
-        _initializedObject.transform.position = position;
+        _objectToPlace.transform.position = position;
         overlapHandler.SetPosition(position);
     }
 
@@ -145,7 +139,6 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
         result *= cellSize;
 
         result = ShiftPosition(result);
-
         result = ClampPosition(result);
 
         return result;
@@ -153,16 +146,14 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
 
     private Vector3 ShiftPosition(Vector3 position)
     {
-        if ((int)_initializedObjectCollider.bounds.size.x / cellSize % 2 != 0)
+        if ((int)_objectToPlaceCollider.bounds.size.x / cellSize % 2 != 0)
         {
             position.x -= cellSize / 2;
-            Debug.Log("x shifted");
         }
 
-        if ((int)_initializedObjectCollider.bounds.size.z / cellSize % 2 != 0)
+        if ((int)_objectToPlaceCollider.bounds.size.z / cellSize % 2 != 0)
         {
             position.z -= cellSize / 2;
-            Debug.Log("z shifted");
         }
 
         return position;
@@ -170,7 +161,7 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
 
     private Vector3 ClampPosition(Vector3 position)
     {
-        var bounds = _initializedObjectCollider.bounds;
+        var bounds = _objectToPlaceCollider.bounds;
 
         var offsetX = bounds.extents.x;
         var offsetZ = bounds.extents.z;
@@ -178,7 +169,7 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
         position.x = Mathf.Clamp(position.x, 0 + offsetX, transform.localScale.x - offsetX);
         position.z = Mathf.Clamp(position.z, 0 + offsetZ, transform.localScale.y - offsetZ);
 
-        position.y = _originY + _elevation;
+        position.y = _objectOriginY + _objectElevation;
 
         return position;
     }
@@ -190,8 +181,8 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
         {
             if (RayCaster.RayCastNearestGameObject(out RaycastHit hitInfo))
             {
-                _initializedObject.layer = (int)LayerEnum.Default;
-                _initializedObject = null;
+                _objectToPlace.layer = (int)LayerEnum.Default;
+                _objectToPlace = null;
 
                 overlapHandler.RemoveOverlappedObjects();
 
@@ -207,31 +198,31 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
     {
         DestroyCurrentObject();
 
-        _cachedPrefab = gameObject;
+        _objectToPlacePrefab = gameObject;
 
         InstantiatePrefab();
     }
 
     private void DestroyCurrentObject()
     {
-        if (_initializedObject != null)
+        if (_objectToPlace != null)
         {
             overlapHandler.ParentDestroyed();
-            Destroy(_initializedObject);
+            Destroy(_objectToPlace);
         }
-        _initializedObject = null;
+        _objectToPlace = null;
     }
 
     private void InstantiatePrefab()
     {
-        _initializedObject = Instantiate(_cachedPrefab, mapContainer.transform);
-        _initializedObjectCollider = _initializedObject.GetComponent<Collider>();
-        _initializedObject.layer = (int)LayerEnum.IgnoreRayCast;
+        _objectToPlace = Instantiate(_objectToPlacePrefab, mapContainer.transform);
+        _objectToPlaceCollider = _objectToPlace.GetComponent<Collider>();
+        _objectToPlace.layer = (int)LayerEnum.IgnoreRayCast;
 
-        _originY = _initializedObject.transform.position.y + _initializedObjectCollider.bounds.extents.y - _initializedObjectCollider.bounds.center.y;
+        _objectOriginY = _objectToPlace.transform.position.y + _objectToPlaceCollider.bounds.extents.y - _objectToPlaceCollider.bounds.center.y;
 
-        overlapHandler.RegisterParent(_initializedObject);
-        overlapHandler.ResizeCollider(_initializedObjectCollider.bounds.size);
+        overlapHandler.RegisterParent(_objectToPlace);
+        overlapHandler.ResizeCollider(_objectToPlaceCollider.bounds.size);
 
         SetObjectPosition(transform.position);
     }
@@ -257,8 +248,7 @@ public class GridManager : MonoBehaviour, IBuildOptionClicked
 
         if (_autoHeight)
         {
-            _elevation = 0;
-            OnElevationChanged();
+            gridDisplay.ResetElevation();
         }
     }
 }

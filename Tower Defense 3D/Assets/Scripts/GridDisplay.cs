@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class GridDisplay : MonoBehaviour
@@ -8,13 +6,16 @@ public class GridDisplay : MonoBehaviour
     [SerializeField] GameObject linePrefab;
     [SerializeField] GameObject lineContainer;
 
+    [SerializeField] GameObject gridBase;
+
+    private readonly float _heightOffSet = 0.01f;
+    private readonly int _maxGridElevation = 3;
+
     private List<LineRenderer> _lines;
     private int _sizeX;
     private int _sizeZ;
+    private int _gridElevation;
     private float _gridCellSize;
-    private int _elevation;
-
-    private readonly float _heightOffSet = 0.01f;
 
     private void Awake()
     {
@@ -28,7 +29,7 @@ public class GridDisplay : MonoBehaviour
         _sizeX = (int)(sizeX * (1.0f / _gridCellSize));
         _sizeZ = (int)(sizeZ * (1.0f / _gridCellSize));
 
-        _elevation = elevation;
+        _gridElevation = elevation;
 
         int requiredNumberOfLines = _sizeX + _sizeZ + 2;
         if (_lines.Count < requiredNumberOfLines)
@@ -45,13 +46,28 @@ public class GridDisplay : MonoBehaviour
             }
         }
 
+        var gridBaseScale = gridBase.transform.localScale;
+        
+        gridBaseScale.x = _sizeX;
+        gridBaseScale.y = _sizeZ;
+
+        gridBase.transform.localScale = gridBaseScale;
+
+        RenderGridBase();
         RenderLines();
     }
-
-    public void ChangeGridElevation(int elevation)
+    
+    private void RenderGridBase()
     {
-        _elevation = elevation;
-        RenderLines();
+        var position = gridBase.transform.position;
+
+        position.x = gridBase.transform.localScale.x / 2;
+        position.z = gridBase.transform.localScale.y / 2;
+
+        position.y = _gridElevation + _heightOffSet;
+        Debug.Log(position.y);
+
+        gridBase.transform.position = position;
     }
 
     private void RenderLines()
@@ -60,15 +76,15 @@ public class GridDisplay : MonoBehaviour
 
         for (int i = 0; i <= _sizeX; i++)
         {
-            _lines[lineIndex].SetPosition(0, new Vector3(0, _heightOffSet + _elevation, i * _gridCellSize));
-            _lines[lineIndex].SetPosition(1, new Vector3(_sizeX * _gridCellSize, _heightOffSet + _elevation, i * _gridCellSize));
+            _lines[lineIndex].SetPosition(0, new Vector3(0, _heightOffSet + _gridElevation, i * _gridCellSize));
+            _lines[lineIndex].SetPosition(1, new Vector3(_sizeX * _gridCellSize, _heightOffSet + _gridElevation, i * _gridCellSize));
             lineIndex++;
         }
 
         for (int i = 0; i <= _sizeZ; i++)
         {
-            _lines[lineIndex].SetPosition(0, new Vector3(i * _gridCellSize, _heightOffSet + _elevation, 0));
-            _lines[lineIndex].SetPosition(1, new Vector3(i * _gridCellSize, _heightOffSet + _elevation, _sizeZ * _gridCellSize));
+            _lines[lineIndex].SetPosition(0, new Vector3(i * _gridCellSize, _heightOffSet + _gridElevation, 0));
+            _lines[lineIndex].SetPosition(1, new Vector3(i * _gridCellSize, _heightOffSet + _gridElevation, _sizeZ * _gridCellSize));
             lineIndex++;
         }
     }
@@ -81,5 +97,40 @@ public class GridDisplay : MonoBehaviour
             
             _lines.Add(line.GetComponent<LineRenderer>());
         }
+    }
+
+    public void IncreaseElevation()
+    {
+        if (_gridElevation < _maxGridElevation)
+        {
+            _gridElevation++;
+            GridElevationChanged();
+        }
+    }
+
+    public void DecreaseElevation()
+    {
+        if (_gridElevation > 0)
+        {
+            _gridElevation--;
+            GridElevationChanged();
+        }
+    }
+
+    public void ResetElevation()
+    {
+        _gridElevation = 0;
+        GridElevationChanged();
+    }
+
+    public int GetGridElevation()
+    {
+        return _gridElevation;
+    }
+
+    public void GridElevationChanged()
+    {
+        RenderGridBase();
+        RenderLines();
     }
 }
