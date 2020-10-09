@@ -3,12 +3,11 @@ using UnityEngine.EventSystems;
 
 public class GridPlacementHandler : MonoBehaviour, IBuildOptionClicked
 {
-    [SerializeField] int sizeX;
-    [SerializeField] int sizeZ;
-    [SerializeField] float cellSize;
-    [SerializeField] OverlapHandler overlapHandler;
-    [SerializeField] GameObject mapContainer;
+    [SerializeField] GridSettings gridSettings;
     [SerializeField] GridDisplay gridDisplay;
+    [SerializeField] OverlapHandler overlapHandler;
+    
+    [SerializeField] GameObject mapContainer;
 
     private int _objectElevation;
     private float _objectOriginY;
@@ -16,11 +15,6 @@ public class GridPlacementHandler : MonoBehaviour, IBuildOptionClicked
     private GameObject _objectToPlacePrefab;
     private GameObject _objectToPlace;
     private Collider _objectToPlaceCollider;
-    
-    //settings
-    private bool _continuousBuilding;
-    private bool _snapToGrid;
-    private bool _autoHeight;
 
     private void Awake()
     {
@@ -33,7 +27,7 @@ public class GridPlacementHandler : MonoBehaviour, IBuildOptionClicked
 
         overlapHandler = Instantiate(overlapHandler);
 
-        gridDisplay.CalculateGrid(sizeX, sizeZ, cellSize);
+        gridDisplay.CalculateGrid(gridSettings.sizeX, gridSettings.sizeZ, gridSettings.cellSize);
     }
 
     private void OnEnable()
@@ -81,7 +75,7 @@ public class GridPlacementHandler : MonoBehaviour, IBuildOptionClicked
 
     private void ChangeElevation()
     {
-        if (_autoHeight)
+        if (gridSettings.autoHeight)
             return;
 
         float scroll = Input.GetAxis("Mouse ScrollWheel");
@@ -107,7 +101,7 @@ public class GridPlacementHandler : MonoBehaviour, IBuildOptionClicked
 
     private void SetObjectPosition(Vector3 position)
     {
-        if (_autoHeight)
+        if (gridSettings.autoHeight)
         {
             _objectElevation = Mathf.RoundToInt(position.y);
         }
@@ -116,7 +110,7 @@ public class GridPlacementHandler : MonoBehaviour, IBuildOptionClicked
             _objectElevation = gridDisplay.GetGridElevation();
         }
 
-        if (_snapToGrid)
+        if (gridSettings.snapToGrid)
         {
             position = GetNearestPointOnGrid(position);
         }
@@ -129,13 +123,13 @@ public class GridPlacementHandler : MonoBehaviour, IBuildOptionClicked
 
     private Vector3 GetNearestPointOnGrid(Vector3 point)
     {
-        int xCount = (int)(point.x / cellSize);
-        int yCount = (int)(point.y / cellSize);
-        int zCount = (int)(point.z / cellSize);
+        int xCount = (int)(point.x / gridSettings.cellSize);
+        int yCount = (int)(point.y / gridSettings.cellSize);
+        int zCount = (int)(point.z / gridSettings.cellSize);
 
         var result = new Vector3(xCount + 1, yCount, zCount + 1);
 
-        result *= cellSize;
+        result *= gridSettings.cellSize;
 
         result = ShiftPosition(result);
         result = ClampPosition(result);
@@ -145,14 +139,14 @@ public class GridPlacementHandler : MonoBehaviour, IBuildOptionClicked
 
     private Vector3 ShiftPosition(Vector3 position)
     {
-        if ((int)_objectToPlaceCollider.bounds.size.x / cellSize % 2 != 0)
+        if ((int)_objectToPlaceCollider.bounds.size.x / gridSettings.cellSize % 2 != 0)
         {
-            position.x -= cellSize / 2;
+            position.x -= gridSettings.cellSize / 2;
         }
 
-        if ((int)_objectToPlaceCollider.bounds.size.z / cellSize % 2 != 0)
+        if ((int)_objectToPlaceCollider.bounds.size.z / gridSettings.cellSize % 2 != 0)
         {
-            position.z -= cellSize / 2;
+            position.z -= gridSettings.cellSize / 2;
         }
 
         return position;
@@ -175,21 +169,25 @@ public class GridPlacementHandler : MonoBehaviour, IBuildOptionClicked
 
     private void PlaceObject()
     {
-        //check if UI was clicked, if not check if building plane was clicked, then place object
-        if (RayCaster.RayCastNearestUIObject(out RaycastResult raycastResult) == false)
+        //if UI was clicked return
+        if (RayCaster.RayCastNearestUIObject(out RaycastResult raycastResult))
+            return;
+
+        //if grid was NOT clicked return
+        if (RayCaster.RayCastNearestGameObject(out RaycastHit hitInfo) == false)
+            return;
+
+        if (overlapHandler.IsOverlapping)
+            return;
+
+        _objectToPlace.layer = (int)LayerEnum.Default;
+        _objectToPlace = null;
+
+        overlapHandler.RemoveOverlappedObjects();
+
+        if (gridSettings.continuousBuilding)
         {
-            if (RayCaster.RayCastNearestGameObject(out RaycastHit hitInfo))
-            {
-                _objectToPlace.layer = (int)LayerEnum.Default;
-                _objectToPlace = null;
-
-                overlapHandler.RemoveOverlappedObjects();
-
-                if (_continuousBuilding)
-                {
-                    InstantiatePrefab();
-                }
-            }
+            InstantiatePrefab();
         }
     }
 
@@ -228,12 +226,12 @@ public class GridPlacementHandler : MonoBehaviour, IBuildOptionClicked
 
     public void OnBuildingModeChanged(bool continuous)
     {
-        _continuousBuilding = continuous;
+        gridSettings.continuousBuilding = continuous;
     }
 
     public void OnGridSnappingChanged(bool snapToGrid)
     {
-        _snapToGrid = snapToGrid;
+        gridSettings.snapToGrid = snapToGrid;
     }
 
     public void OnHideCollidingObjectsChanged(bool hideCollidingObjects)
@@ -243,9 +241,9 @@ public class GridPlacementHandler : MonoBehaviour, IBuildOptionClicked
 
     public void OnAutoHeightChanged(bool autoHeight)
     {
-        _autoHeight = autoHeight;
+        gridSettings.autoHeight = autoHeight;
 
-        if (_autoHeight)
+        if (gridSettings.autoHeight)
         {
             gridDisplay.ResetElevation();
         }
