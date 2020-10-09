@@ -33,7 +33,7 @@ public class GridPlacementHandler : MonoBehaviour, IBuildOptionClicked
 
         overlapHandler = Instantiate(overlapHandler);
 
-        gridDisplay.CalculateGrid(sizeX, sizeZ, cellSize, _objectElevation);
+        gridDisplay.CalculateGrid(sizeX, sizeZ, cellSize);
     }
 
     private void OnEnable()

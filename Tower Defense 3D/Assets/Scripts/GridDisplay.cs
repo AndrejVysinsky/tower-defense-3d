@@ -20,16 +20,16 @@ public class GridDisplay : MonoBehaviour
     private void Awake()
     {
         _lines = new List<LineRenderer>();
+
+        _gridElevation = 0;
     }
 
-    public void CalculateGrid(int sizeX, int sizeZ, float gridCellSize, int elevation)
+    public void CalculateGrid(int sizeX, int sizeZ, float gridCellSize)
     {
         _gridCellSize = gridCellSize;
 
         _sizeX = (int)(sizeX * (1.0f / _gridCellSize));
         _sizeZ = (int)(sizeZ * (1.0f / _gridCellSize));
-
-        _gridElevation = elevation;
 
         int requiredNumberOfLines = _sizeX + _sizeZ + 2;
         if (_lines.Count < requiredNumberOfLines)
@@ -46,13 +46,6 @@ public class GridDisplay : MonoBehaviour
             }
         }
 
-        var gridBaseScale = gridBase.transform.localScale;
-        
-        gridBaseScale.x = _sizeX;
-        gridBaseScale.y = _sizeZ;
-
-        gridBase.transform.localScale = gridBaseScale;
-
         RenderGridBase();
         RenderLines();
     }
@@ -61,11 +54,7 @@ public class GridDisplay : MonoBehaviour
     {
         var position = gridBase.transform.position;
 
-        position.x = gridBase.transform.localScale.x / 2;
-        position.z = gridBase.transform.localScale.y / 2;
-
         position.y = _gridElevation + _heightOffSet;
-        Debug.Log(position.y);
 
         gridBase.transform.position = position;
     }
