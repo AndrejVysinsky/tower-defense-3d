@@ -1,8 +1,7 @@
-﻿using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class GridManager : MonoBehaviour, IBuildOptionClicked
+public class GridPlacementHandler : MonoBehaviour, IBuildOptionClicked
 {
     [SerializeField] int sizeX;
     [SerializeField] int sizeZ;
