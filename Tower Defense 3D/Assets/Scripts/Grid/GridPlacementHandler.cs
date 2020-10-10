@@ -19,13 +19,6 @@ public class GridPlacementHandler : MonoBehaviour, IBuildOptionClicked
 
     private void Awake()
     {
-        var position = transform.position;
-
-        position.x = transform.localScale.x / 2;
-        position.z = transform.localScale.y / 2;
-
-        transform.position = position;
-
         overlapHandler = Instantiate(overlapHandler);
 
         gridDisplay.CalculateGrid(gridSettings.sizeX, gridSettings.sizeZ, gridSettings.cellSize);
@@ -48,6 +41,11 @@ public class GridPlacementHandler : MonoBehaviour, IBuildOptionClicked
             ChangeElevation();
         }
 
+        if (Input.GetMouseButtonDown(1))
+        {
+            DestroyObject();
+        }
+
         if (_objectToPlace != null)
         {
             if (Input.GetAxis("Mouse ScrollWheel") != 0 && Input.GetKey(KeyCode.LeftControl))
@@ -64,7 +62,7 @@ public class GridPlacementHandler : MonoBehaviour, IBuildOptionClicked
 
             if (Input.GetMouseButtonDown(1))
             {
-                DestroyCurrentObject();
+                DestroyObject();
             }
         }
     }
@@ -160,8 +158,8 @@ public class GridPlacementHandler : MonoBehaviour, IBuildOptionClicked
         var offsetX = bounds.extents.x;
         var offsetZ = bounds.extents.z;
 
-        position.x = Mathf.Clamp(position.x, 0 + offsetX, transform.localScale.x - offsetX);
-        position.z = Mathf.Clamp(position.z, 0 + offsetZ, transform.localScale.y - offsetZ);
+        position.x = Mathf.Clamp(position.x, 0 + offsetX, gridSettings.sizeX - offsetX);
+        position.z = Mathf.Clamp(position.z, 0 + offsetZ, gridSettings.sizeZ - offsetZ);
 
         position.y = _objectOriginY + _objectElevation;
 
@@ -201,14 +199,14 @@ public class GridPlacementHandler : MonoBehaviour, IBuildOptionClicked
 
     public void OnBuildOptionClicked(GameObject gameObject)
     {
-        DestroyCurrentObject();
+        DestroyObject();
 
         _objectToPlacePrefab = gameObject;
 
         InstantiatePrefab();
     }
 
-    private void DestroyCurrentObject()
+    private void DestroyObject()
     {
         if (_objectToPlace != null)
         {
@@ -229,7 +227,7 @@ public class GridPlacementHandler : MonoBehaviour, IBuildOptionClicked
         overlapHandler.RegisterParent(_objectToPlace);
         overlapHandler.ResizeCollider(_objectToPlaceCollider.bounds.size);
 
-        SetObjectPosition(transform.position);
+        SetObjectPosition(gridDisplay.GetGridBasePosition());
     }
 
     public void OnBuildingModeChanged(bool continuous)

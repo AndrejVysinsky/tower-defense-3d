@@ -78,6 +78,11 @@ public class GridDisplay : MonoBehaviour
         }
     }
 
+    public Vector3 GetGridBasePosition()
+    {
+        return gridBase.transform.position;
+    }
+
     private void InstantiateRequiredNumberOfLines(int numberOfLinesToInstantiate)
     {
         for (int i = 0; i < numberOfLinesToInstantiate; i++)

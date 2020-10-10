@@ -23,9 +23,9 @@ public class MapSaveManager : MonoBehaviour
             positionY = gameObject.transform.position.y,
             positionZ = gameObject.transform.position.z,
 
-            rotationX = gameObject.transform.rotation.x,
-            rotationY = gameObject.transform.rotation.y,
-            rotationZ = gameObject.transform.rotation.z,
+            rotationX = gameObject.transform.rotation.eulerAngles.x,
+            rotationY = gameObject.transform.rotation.eulerAngles.y,
+            rotationZ = gameObject.transform.rotation.eulerAngles.z,
 
             scaleX = gameObject.transform.localScale.x,
             scaleY = gameObject.transform.localScale.y,
@@ -37,7 +37,7 @@ public class MapSaveManager : MonoBehaviour
 
     public void ObjectRemoved(int gameObjectID)
     {
-        _mapSaveData.saveableObjects.RemoveAll(x => x.id == gameObjectID);
+       _mapSaveData.saveableObjects.RemoveAll(x => x.id == gameObjectID);
     }
 
     public void LoadData()
@@ -82,6 +82,8 @@ public class MapSaveManager : MonoBehaviour
         {
             var gameObject = Instantiate(Resources.Load<GameObject>(obj.resourcePath), transform);
 
+            obj.id = gameObject.GetInstanceID();
+
             var position = gameObject.transform.position;
 
             position.x = obj.positionX;
@@ -90,13 +92,7 @@ public class MapSaveManager : MonoBehaviour
 
             gameObject.transform.position = position;
 
-            var rotation = gameObject.transform.rotation;
-
-            rotation.x = obj.rotationX;
-            rotation.y = obj.rotationY;
-            rotation.z = obj.rotationZ;
-
-            gameObject.transform.rotation = rotation;
+            gameObject.transform.Rotate(new Vector3(obj.rotationX, obj.rotationY, obj.rotationZ));
 
             var scale = gameObject.transform.localScale;
 
