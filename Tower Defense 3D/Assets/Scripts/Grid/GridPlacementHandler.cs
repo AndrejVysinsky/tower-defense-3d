@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class GridPlacementHandler : MonoBehaviour, IBuildOptionClicked
@@ -7,7 +8,7 @@ public class GridPlacementHandler : MonoBehaviour, IBuildOptionClicked
     [SerializeField] GridDisplay gridDisplay;
     [SerializeField] OverlapHandler overlapHandler;
     
-    [SerializeField] GameObject mapContainer;
+    [SerializeField] MapSaveManager map;
 
     private int _objectElevation;
     private float _objectOriginY;
@@ -180,11 +181,17 @@ public class GridPlacementHandler : MonoBehaviour, IBuildOptionClicked
         if (overlapHandler.IsOverlapping && gridSettings.collisionDetection && gridSettings.replaceOnCollision == false)
             return;
 
+        map.ObjectPlaced(_objectToPlace, _objectToPlacePrefab);
         _objectToPlace.layer = (int)LayerEnum.Default;
         _objectToPlace = null;
 
         if (gridSettings.collisionDetection && gridSettings.replaceOnCollision)
-            overlapHandler.RemoveOverlappedObjects();
+        {
+            List<int> removedIds = overlapHandler.RemoveOverlappedObjects();
+
+            removedIds.ForEach(x => map.ObjectRemoved(x));
+        }
+            
 
         if (gridSettings.continuousBuilding)
         {
@@ -213,7 +220,7 @@ public class GridPlacementHandler : MonoBehaviour, IBuildOptionClicked
 
     private void InstantiatePrefab()
     {
-        _objectToPlace = Instantiate(_objectToPlacePrefab, mapContainer.transform);
+        _objectToPlace = Instantiate(_objectToPlacePrefab, map.transform);
         _objectToPlaceCollider = _objectToPlace.GetComponent<Collider>();
         _objectToPlace.layer = (int)LayerEnum.IgnoreRayCast;
 

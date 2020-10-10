@@ -53,6 +53,7 @@ public class OverlapHandler : MonoBehaviour
         var bounds = _boxCollider.bounds;
 
         _overlappedObjects.Clear();
+        _objectsInRange.RemoveAll(x => x == null);
 
         foreach (var overlappedObject in _objectsInRange)
         {
@@ -100,12 +101,17 @@ public class OverlapHandler : MonoBehaviour
         return lowerYOfMovingGameObject >= upperYOfStaticGameObject || upperYOfMovingGameObject <= lowerYOfStaticGameObject;
     }
 
-    public void RemoveOverlappedObjects()
+    public List<int> RemoveOverlappedObjects()
     {
+        List<int> result = new List<int>();
+        result.AddRange(_overlappedObjects.Select(x => x.GetInstanceID()));
+
         _objectsInRange.RemoveAll(x => _overlappedObjects.Contains(x));
 
         _overlappedObjects.ForEach(x => Destroy(x));
         _overlappedObjects.Clear();
+
+        return result;
     }
 
     private void OnTriggerEnter(Collider other)

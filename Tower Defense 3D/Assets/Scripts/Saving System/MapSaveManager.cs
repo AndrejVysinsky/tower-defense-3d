@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using UnityEditor;
 using UnityEngine;
 using static MapSaveData;
 
@@ -14,10 +13,39 @@ public class MapSaveManager : MonoBehaviour
         _mapSaveData = new MapSaveData();
     }
 
+    public void ObjectPlaced(GameObject gameObject, GameObject prefab)
+    {
+        _mapSaveData.saveableObjects.Add(new SaveableObject()
+        {
+            id = gameObject.GetInstanceID(),
+
+            positionX = gameObject.transform.position.x,
+            positionY = gameObject.transform.position.y,
+            positionZ = gameObject.transform.position.z,
+
+            rotationX = gameObject.transform.rotation.x,
+            rotationY = gameObject.transform.rotation.y,
+            rotationZ = gameObject.transform.rotation.z,
+
+            scaleX = gameObject.transform.localScale.x,
+            scaleY = gameObject.transform.localScale.y,
+            scaleZ = gameObject.transform.localScale.z,
+
+            resourcePath = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(prefab).Replace(".prefab", "").Replace("Assets/Resources/", "")
+        });
+    }
+
+    public void ObjectRemoved(int gameObjectID)
+    {
+        _mapSaveData.saveableObjects.RemoveAll(x => x.id == gameObjectID);
+    }
+
     public void LoadData()
     {
         if (File.Exists(Application.persistentDataPath + "/gamesave.save"))
         {
+            ClearScene();
+
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + "/gamesave.save", FileMode.Open);
             _mapSaveData = (MapSaveData)bf.Deserialize(file);
@@ -33,8 +61,6 @@ public class MapSaveManager : MonoBehaviour
 
     public void SaveData()
     {
-        RegisterAllChildren();
-
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/gamesave.save");
         bf.Serialize(file, _mapSaveData);
@@ -47,42 +73,38 @@ public class MapSaveManager : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-        _mapSaveData.terrainObjects.Clear();
+        _mapSaveData.saveableObjects.Clear();
     }
 
     private void CreateObjects()
     {
-        _mapSaveData.terrainObjects.ForEach(x =>
+        _mapSaveData.saveableObjects.ForEach(obj =>
         {
-            var gameObject = new GameObject();
-            
-            gameObject.transform.parent = transform;
-            gameObject.transform.position = x.position;
-            
-            var meshFilter = gameObject.AddComponent<MeshFilter>();
-            meshFilter = x.meshFilter;
+            var gameObject = Instantiate(Resources.Load<GameObject>(obj.resourcePath), transform);
 
-            var meshRenderer = gameObject.AddComponent<MeshRenderer>();
-            meshRenderer = x.meshRenderer;
+            var position = gameObject.transform.position;
 
-            var collider = gameObject.AddComponent<Collider>();
-            collider = x.collider;
+            position.x = obj.positionX;
+            position.y = obj.positionY;
+            position.z = obj.positionZ;
+
+            gameObject.transform.position = position;
+
+            var rotation = gameObject.transform.rotation;
+
+            rotation.x = obj.rotationX;
+            rotation.y = obj.rotationY;
+            rotation.z = obj.rotationZ;
+
+            gameObject.transform.rotation = rotation;
+
+            var scale = gameObject.transform.localScale;
+
+            scale.x = obj.scaleX;
+            scale.y = obj.scaleY;
+            scale.z = obj.scaleZ;
+
+            gameObject.transform.localScale = scale;
         });
-    }
-
-    private void RegisterAllChildren()
-    {
-        _mapSaveData.terrainObjects.Clear();
-
-        foreach (Transform child in transform)
-        {
-            _mapSaveData.terrainObjects.Add(new TerrainObject()
-            {
-                position = child.position,
-                meshFilter = child.gameObject.GetComponent<MeshFilter>(),
-                meshRenderer = child.gameObject.GetComponent<MeshRenderer>(),
-                collider = child.gameObject.GetComponent<Collider>()
-            });
-        }
-    }
+    }   
 }
