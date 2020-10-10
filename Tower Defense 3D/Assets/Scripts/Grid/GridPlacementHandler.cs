@@ -177,13 +177,14 @@ public class GridPlacementHandler : MonoBehaviour, IBuildOptionClicked
         if (RayCaster.RayCastNearestGameObject(out RaycastHit hitInfo) == false)
             return;
 
-        if (overlapHandler.IsOverlapping)
+        if (overlapHandler.IsOverlapping && gridSettings.collisionDetection && gridSettings.replaceOnCollision == false)
             return;
 
         _objectToPlace.layer = (int)LayerEnum.Default;
         _objectToPlace = null;
 
-        overlapHandler.RemoveOverlappedObjects();
+        if (gridSettings.collisionDetection && gridSettings.replaceOnCollision)
+            overlapHandler.RemoveOverlappedObjects();
 
         if (gridSettings.continuousBuilding)
         {
@@ -234,11 +235,6 @@ public class GridPlacementHandler : MonoBehaviour, IBuildOptionClicked
         gridSettings.snapToGrid = snapToGrid;
     }
 
-    public void OnHideCollidingObjectsChanged(bool hideCollidingObjects)
-    {
-        overlapHandler.SetHideCollidingObjects(hideCollidingObjects);
-    }
-
     public void OnAutoHeightChanged(bool autoHeight)
     {
         gridSettings.autoHeight = autoHeight;
@@ -247,5 +243,15 @@ public class GridPlacementHandler : MonoBehaviour, IBuildOptionClicked
         {
             gridDisplay.ResetElevation();
         }
+    }
+
+    public void OnCollisionDetectionChanged(bool collisionDetection)
+    {
+        gridSettings.collisionDetection = collisionDetection;
+    }
+
+    public void OnReplaceOnCollisionChanged(bool replaceOnCollision)
+    {
+        gridSettings.replaceOnCollision = replaceOnCollision;
     }
 }

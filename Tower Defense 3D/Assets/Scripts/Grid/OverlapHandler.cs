@@ -8,13 +8,18 @@ public class OverlapHandler : MonoBehaviour
     private GameObject _parentObject;
 
     private List<GameObject> _objectsInRange;
+    private List<GameObject> _overlappedObjects;
+    
+    private readonly float _maxRangeTollerance = 0.05f;
 
     public bool IsOverlapping { get; private set; }
 
     private void Awake()
     {
         _boxCollider = GetComponent<BoxCollider>();
+
         _objectsInRange = new List<GameObject>();
+        _overlappedObjects = new List<GameObject>();
     }
 
     public void RegisterParent(GameObject parent)
@@ -25,6 +30,10 @@ public class OverlapHandler : MonoBehaviour
     public void ResizeCollider(Vector3 size)
     {
         _boxCollider.size = size;
+
+        //to register OnTriggerEnter
+        _boxCollider.enabled = false;
+        _boxCollider.enabled = true;
     }
 
     public void SetPosition(Vector3 position)
@@ -43,36 +52,33 @@ public class OverlapHandler : MonoBehaviour
 
         var bounds = _boxCollider.bounds;
 
+        _overlappedObjects.Clear();
+
         foreach (var overlappedObject in _objectsInRange)
         {
-            var meshRenderer = overlappedObject.GetComponent<MeshRenderer>();
-            meshRenderer.enabled = true;
-
-            float maxTolerance = 0.05f;
-
-            if (IsHigherOrLowerThan(overlappedObject, maxTolerance))
+            if (IsHigherOrLowerThan(overlappedObject))
             {
                 continue;
             }
 
             var point = overlappedObject.GetComponent<Collider>().ClosestPoint(transform.position);
 
-            if (IsPointInsideBounds(bounds, point, maxTolerance))
-            {
-                meshRenderer.enabled = false;
+            if (IsPointInsideBounds(bounds, point))
+            {                
                 isOverlapping = true;
+                _overlappedObjects.Add(overlappedObject);
             }
         }
         return isOverlapping;
     }
 
-    private bool IsPointInsideBounds(Bounds bounds, Vector3 point, float maxTolerance)
+    private bool IsPointInsideBounds(Bounds bounds, Vector3 point)
     {
-        float minX = transform.position.x - bounds.extents.x + maxTolerance;
-        float maxX = transform.position.x + bounds.extents.x - maxTolerance;
+        float minX = transform.position.x - bounds.extents.x + _maxRangeTollerance;
+        float maxX = transform.position.x + bounds.extents.x - _maxRangeTollerance;
 
-        float minZ = transform.position.z - bounds.extents.z + maxTolerance;
-        float maxZ = transform.position.z + bounds.extents.z - maxTolerance;
+        float minZ = transform.position.z - bounds.extents.z + _maxRangeTollerance;
+        float maxZ = transform.position.z + bounds.extents.z - _maxRangeTollerance;
 
         if (point.x > minX && point.x < maxX && point.z > minZ && point.z < maxZ)
         {
@@ -81,25 +87,25 @@ public class OverlapHandler : MonoBehaviour
         return false;
     }
 
-    private bool IsHigherOrLowerThan(GameObject gameObject, float maxTolerance)
+    private bool IsHigherOrLowerThan(GameObject gameObject)
     {
         var otherBounds = gameObject.GetComponent<Collider>().bounds;
 
-        var upperYOfStaticGameObject = gameObject.transform.position.y + otherBounds.extents.y - maxTolerance;
-        var lowerYOfStaticGameObject = gameObject.transform.position.y - otherBounds.extents.y + maxTolerance;
+        var upperYOfStaticGameObject = gameObject.transform.position.y + otherBounds.extents.y - _maxRangeTollerance;
+        var lowerYOfStaticGameObject = gameObject.transform.position.y - otherBounds.extents.y + _maxRangeTollerance;
 
-        var upperYOfMovingGameObject = transform.position.y + _boxCollider.bounds.extents.y - maxTolerance;
-        var lowerYOfMovingGameObject = transform.position.y - _boxCollider.bounds.extents.y + maxTolerance;
+        var upperYOfMovingGameObject = transform.position.y + _boxCollider.bounds.extents.y - _maxRangeTollerance;
+        var lowerYOfMovingGameObject = transform.position.y - _boxCollider.bounds.extents.y + _maxRangeTollerance;
 
         return lowerYOfMovingGameObject >= upperYOfStaticGameObject || upperYOfMovingGameObject <= lowerYOfStaticGameObject;
     }
 
     public void RemoveOverlappedObjects()
     {
-        var overlapped = _objectsInRange.Where(x => x.GetComponent<MeshRenderer>().enabled == false).ToList();
-        overlapped.ForEach(x => Destroy(x));
+        _objectsInRange.RemoveAll(x => _overlappedObjects.Contains(x));
 
-        _objectsInRange.RemoveAll(x => overlapped.Contains(x));
+        _overlappedObjects.ForEach(x => Destroy(x));
+        _overlappedObjects.Clear();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -111,7 +117,6 @@ public class OverlapHandler : MonoBehaviour
 
         _objectsInRange.Add(other.gameObject);
 
-        //sometimes as soon as object enters range it collides, but CheckOverlap was called too soon (even though LateUpdate should fire after OnTriggerEnter)
         CheckOverlap();
     }
 
@@ -123,12 +128,6 @@ public class OverlapHandler : MonoBehaviour
         }
 
         _objectsInRange.Remove(other.gameObject);
-    }
-
-    public void SetHideCollidingObjects(bool hideCollidingObjects)
-    {
-        _objectsInRange.Clear();
-        _boxCollider.enabled = hideCollidingObjects;
     }
 
     public void ParentDestroyed()

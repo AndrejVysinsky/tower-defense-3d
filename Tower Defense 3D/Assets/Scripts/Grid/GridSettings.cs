@@ -9,6 +9,7 @@ public class GridSettings
 
     public bool continuousBuilding;
     public bool snapToGrid;
-    public bool collisionDetection;
     public bool autoHeight;
+    public bool collisionDetection;
+    public bool replaceOnCollision;
 }
