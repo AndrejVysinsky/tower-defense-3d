@@ -1,8 +1,5 @@
-﻿using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using UnityEditor;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using static MapSaveData;
 
 public class MapSaveManager : MonoBehaviour
 {
@@ -13,58 +10,27 @@ public class MapSaveManager : MonoBehaviour
         _mapSaveData = new MapSaveData();
     }
 
-    public void ObjectPlaced(GameObject gameObject, GameObject prefab)
+    public void LoadMapData()
     {
-        _mapSaveData.saveableObjects.Add(new SaveableObject()
+        ClearScene();
+
+        FileManager.LoadFile(FileManager.MapPath, "gamesave.save", out _mapSaveData);
+
+        List<GameObject> gameObjects = new List<GameObject>();
+
+        _mapSaveData.GetResourcePaths().ForEach(path =>
         {
-            id = gameObject.GetInstanceID(),
+            var gameObject = Instantiate(Resources.Load<GameObject>(path), transform);
 
-            positionX = gameObject.transform.position.x,
-            positionY = gameObject.transform.position.y,
-            positionZ = gameObject.transform.position.z,
-
-            rotationX = gameObject.transform.rotation.eulerAngles.x,
-            rotationY = gameObject.transform.rotation.eulerAngles.y,
-            rotationZ = gameObject.transform.rotation.eulerAngles.z,
-
-            scaleX = gameObject.transform.localScale.x,
-            scaleY = gameObject.transform.localScale.y,
-            scaleZ = gameObject.transform.localScale.z,
-
-            resourcePath = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(prefab).Replace(".prefab", "").Replace("Assets/Resources/", "")
+            gameObjects.Add(gameObject);
         });
+
+        _mapSaveData.InitializeObjects(gameObjects);
     }
 
-    public void ObjectRemoved(int gameObjectID)
+    public void SaveMapData()
     {
-       _mapSaveData.saveableObjects.RemoveAll(x => x.id == gameObjectID);
-    }
-
-    public void LoadData()
-    {
-        if (File.Exists(Application.persistentDataPath + "/gamesave.save"))
-        {
-            ClearScene();
-
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/gamesave.save", FileMode.Open);
-            _mapSaveData = (MapSaveData)bf.Deserialize(file);
-            file.Close();
-
-            CreateObjects();
-        }
-        else
-        {
-            Debug.Log("No saved data available!");
-        }
-    }
-
-    public void SaveData()
-    {
-        BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Create(Application.persistentDataPath + "/gamesave.save");
-        bf.Serialize(file, _mapSaveData);
-        file.Close();
+        FileManager.SaveFile(FileManager.MapPath, "gamesave.save", _mapSaveData);
     }
 
     public void ClearScene()
@@ -73,34 +39,16 @@ public class MapSaveManager : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-        _mapSaveData.saveableObjects.Clear();
+        _mapSaveData.RemoveAllObjects();
     }
 
-    private void CreateObjects()
+    public void ObjectPlaced(GameObject gameObject, GameObject prefab)
     {
-        _mapSaveData.saveableObjects.ForEach(obj =>
-        {
-            var gameObject = Instantiate(Resources.Load<GameObject>(obj.resourcePath), transform);
+        _mapSaveData.ObjectPlaced(gameObject, prefab);
+    }
 
-            obj.id = gameObject.GetInstanceID();
-
-            var position = gameObject.transform.position;
-
-            position.x = obj.positionX;
-            position.y = obj.positionY;
-            position.z = obj.positionZ;
-
-            gameObject.transform.position = position;
-
-            gameObject.transform.Rotate(new Vector3(obj.rotationX, obj.rotationY, obj.rotationZ));
-
-            var scale = gameObject.transform.localScale;
-
-            scale.x = obj.scaleX;
-            scale.y = obj.scaleY;
-            scale.z = obj.scaleZ;
-
-            gameObject.transform.localScale = scale;
-        });
-    }   
+    public void ObjectRemoved(int gameObjectID)
+    {
+        _mapSaveData.ObjectRemoved(gameObjectID);
+    }
 }
