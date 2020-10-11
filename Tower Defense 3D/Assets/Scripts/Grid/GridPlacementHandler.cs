@@ -17,6 +17,8 @@ public class GridPlacementHandler : MonoBehaviour, IBuildOptionClicked
     private GameObject _objectToPlace;
     private Collider _objectToPlaceCollider;
 
+    public GridSettings GridSettings => gridSettings;
+
     private void Awake()
     {
         overlapHandler = Instantiate(overlapHandler);
@@ -92,7 +94,7 @@ public class GridPlacementHandler : MonoBehaviour, IBuildOptionClicked
 
     private void MoveObject()
     {
-        if (RayCaster.RayCastNearestGameObject(out RaycastHit hitInfo))
+        if (RayCaster.RayCastGameObject(out RaycastHit hitInfo))
         {
             SetObjectPosition(hitInfo.point);
         }
@@ -169,11 +171,11 @@ public class GridPlacementHandler : MonoBehaviour, IBuildOptionClicked
     private void PlaceObject()
     {
         //if UI was clicked return
-        if (RayCaster.RayCastNearestUIObject(out RaycastResult raycastResult))
+        if (RayCaster.RayCastUIObject(out RaycastResult raycastResult))
             return;
 
         //if grid was NOT clicked return
-        if (RayCaster.RayCastNearestGameObject(out RaycastHit hitInfo) == false)
+        if (RayCaster.RayCastGameObject(out RaycastHit hitInfo) == false)
             return;
 
         if (overlapHandler.IsOverlapping && gridSettings.collisionDetection && gridSettings.replaceOnCollision == false)
