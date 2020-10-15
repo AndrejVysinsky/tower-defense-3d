@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class MapSaveManager : MonoBehaviour
 {
@@ -8,6 +9,14 @@ public class MapSaveManager : MonoBehaviour
     private void Awake()
     {
         _mapSaveData = new MapSaveData();
+    }
+
+    private void Start()
+    {
+        if (TryGetComponent(out NavMeshSurface navMeshSurface))
+        {
+            navMeshSurface.BuildNavMesh();
+        }
     }
 
     public void LoadMapData()

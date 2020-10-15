@@ -54,4 +54,15 @@ public static class RayCaster
     {
         return Physics.Raycast(camera.transform.position, camera.transform.forward, out hitInfo, 100.0f);
     }
+
+    public static bool RaycastGameObjectWithTagFromCameraCenter(out RaycastHit hitInfo, Camera camera, string tag)
+    {
+        var hitInfos = Physics.RaycastAll(camera.transform.position, camera.transform.forward).ToList();
+
+        hitInfos = hitInfos.OrderBy(x => x.distance).ToList();
+
+        hitInfo = hitInfos.Find(x => x.transform.CompareTag(tag));
+
+        return hitInfo.transform != null;
+    }
 }

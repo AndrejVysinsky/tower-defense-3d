@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Grid
+  - End
+  - Start
+  - Terrain
   layers:
   - Default
   - TransparentFX

@@ -1,21 +1,28 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
     [SerializeField] EnemyData enemyData;
 
-    private Path _path;
-
-    private Vector3 _currentWayPoint;
-    private int _currentWayPointIndex;
+    private NavMeshAgent _agent;
 
     private HealthScript _healthScript;
 
     private float _difficultyModifier;
-    
+
+    private Vector3 _start;
+    private Vector3 _end;
+
+    private void Awake()
+    {
+        _agent = GetComponent<NavMeshAgent>();
+    }
+
     public void Initialize(Path path, Sprite sprite, Color color, float difficultyMultiplier)
     {
-        _path = path;
+        _start = path.GetStartPosition();
+        _end = path.GetEndPosition();
         
         //var spriteRenderer = GetComponent<SpriteRenderer>();
         //spriteRenderer.sprite = sprite;
@@ -32,27 +39,10 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        if (transform.position == _currentWayPoint)
-        {
-            SelectNextWayPoint();
-        }
-        
-        Vector3 movePosition = Vector3.MoveTowards(transform.position, _currentWayPoint, enemyData.Speed * Time.deltaTime);
-        transform.position = movePosition;
-    }
-
-    private void SelectNextWayPoint()
-    {
-        _currentWayPointIndex++;
-
-        if (_currentWayPointIndex >= _path.GetNumberOfWayPoints())
+        if (transform.position.x == _end.x && transform.position.z == _end.z)
         {
             DealDamageToPlayer();
             MoveToStart();
-        }
-        else
-        {
-            _currentWayPoint = _path.GetWayPointAtIndex(_currentWayPointIndex);
         }
     }
 
@@ -65,16 +55,10 @@ public class Enemy : MonoBehaviour
 
     private void MoveToStart()
     {
-        transform.position = _path.GetWayPointAtIndex(0);
+        transform.position = _start;
 
-        _currentWayPointIndex = 1;
-        _currentWayPoint = _path.GetWayPointAtIndex(_currentWayPointIndex);
-    }
-
-    //how far is enemy
-    public int GetPriority()
-    {
-        return _path.GetNumberOfWayPoints() - _currentWayPointIndex;
+        _agent.SetDestination(_end);
+        
     }
 
     public void TakeDamage(float amount)

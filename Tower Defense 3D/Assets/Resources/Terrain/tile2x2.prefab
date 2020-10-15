@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7692451323920950901}
   m_Layer: 0
   m_Name: tile2x2
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

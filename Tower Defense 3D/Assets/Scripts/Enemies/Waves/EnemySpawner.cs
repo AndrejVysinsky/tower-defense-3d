@@ -26,11 +26,21 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
+        if (waveTimer == null)
+        {
+            waveTimer = paths[0].GetTimer();
+        }
+
         StartCoroutine(Spawner());
     }
 
     private void OnEnable()
     {
+        if (waveTimer == null)
+        {
+            waveTimer = paths[0].GetTimer();
+        }
+
         waveTimer.OnTimerSkipped += OnWaveSkipped;
     }
 

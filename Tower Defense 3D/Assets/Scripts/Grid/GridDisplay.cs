@@ -8,6 +8,8 @@ public class GridDisplay : MonoBehaviour
 
     [SerializeField] GameObject gridBase;
 
+    [SerializeField] bool hideGrid;
+
     private readonly float _heightOffSet = 0.01f;
     private readonly int _maxGridElevation = 3;
 
@@ -22,10 +24,18 @@ public class GridDisplay : MonoBehaviour
         _lines = new List<LineRenderer>();
 
         _gridElevation = 0;
+
+        if (hideGrid)
+        {
+            gridBase.SetActive(false);
+        }
     }
 
     public void CalculateGrid(int sizeX, int sizeZ, float gridCellSize)
     {
+        if (hideGrid)
+            return;
+
         _gridCellSize = gridCellSize;
 
         _sizeX = (int)(sizeX * (1.0f / _gridCellSize));
@@ -46,10 +56,18 @@ public class GridDisplay : MonoBehaviour
             }
         }
 
+        GridUpdated();
+    }
+
+    private void GridUpdated()
+    {
+        if (hideGrid)
+            return;
+
         RenderGridBase();
         RenderLines();
     }
-    
+
     private void RenderGridBase()
     {
         var position = gridBase.transform.position;
@@ -98,7 +116,7 @@ public class GridDisplay : MonoBehaviour
         if (_gridElevation < _maxGridElevation)
         {
             _gridElevation++;
-            GridElevationChanged();
+            GridUpdated();
         }
     }
 
@@ -107,24 +125,18 @@ public class GridDisplay : MonoBehaviour
         if (_gridElevation > 0)
         {
             _gridElevation--;
-            GridElevationChanged();
+            GridUpdated();
         }
     }
 
     public void ResetElevation()
     {
         _gridElevation = 0;
-        GridElevationChanged();
+        GridUpdated();
     }
 
     public int GetGridElevation()
     {
         return _gridElevation;
-    }
-
-    public void GridElevationChanged()
-    {
-        RenderGridBase();
-        RenderLines();
     }
 }

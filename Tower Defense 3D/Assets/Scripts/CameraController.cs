@@ -37,7 +37,7 @@ public class CameraController : MonoBehaviour
 
     private float GetCurrentDistanceFromGround()
     {
-        if (RayCaster.RaycastGameObjectFromCameraCenter(out RaycastHit hitInfo, _camera))
+        if (RayCaster.RaycastGameObjectWithTagFromCameraCenter(out RaycastHit hitInfo, _camera, "Terrain"))
         {
            return transform.position.y - hitInfo.point.y;
         }
