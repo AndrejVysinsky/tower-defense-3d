@@ -1,54 +1,39 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Path : MonoBehaviour
 {
-    private List<Vector3> _wayPoints;
+    private PortalStart _portalStart;
+    private PortalEnd _portalEnd;
 
-    private Vector3 _startPosition;
-    private Vector3 _endPosition;
-
-    void Start()
-    {
-        _wayPoints = new List<Vector3>();
-
-        var start = GameObject.FindGameObjectWithTag("Start");
-        var end = GameObject.FindGameObjectWithTag("End");
-
-        _startPosition = start.transform.position;
-        _endPosition = end.transform.position;
-
-        start.GetComponent<StartPortal>().SetTimerActive(true);
-
-        _wayPoints.Add(start.transform.position);
-        _wayPoints.Add(end.transform.position);
+    public PortalStart PortalStart 
+    { 
+        get 
+        {
+            if (_portalStart == null)
+            {
+                _portalStart = GameObject.FindGameObjectWithTag("Start").GetComponent<PortalStart>();
+            }
+            return _portalStart;
+        }
+        set
+        {
+            _portalStart = value;
+        }
     }
 
-    public Vector3 GetWayPointAtIndex(int index)
+    public PortalEnd PortalEnd
     {
-        return _wayPoints[index];
-    }
-
-    public int GetNumberOfWayPoints()
-    {
-        return _wayPoints.Count;
-    }
-
-    public WaveTimer GetTimer()
-    {
-        var start = GameObject.FindGameObjectWithTag("Start");
-
-        return start.GetComponentInChildren<WaveTimer>();
-    }
-
-    public Vector3 GetStartPosition()
-    {
-        return _startPosition;
-    }
-
-    public Vector3 GetEndPosition()
-    {
-        return _endPosition;
+        get
+        {
+            if (_portalEnd == null)
+            {
+                _portalEnd = GameObject.FindGameObjectWithTag("End").GetComponent<PortalEnd>();
+            }
+            return _portalEnd;
+        }
+        set
+        {
+            _portalEnd = value;
+        }
     }
 }

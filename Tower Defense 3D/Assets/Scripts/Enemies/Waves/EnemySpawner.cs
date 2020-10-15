@@ -28,7 +28,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if (waveTimer == null)
         {
-            waveTimer = paths[0].GetTimer();
+            waveTimer = paths[0].PortalStart.GetTimer();
         }
 
         StartCoroutine(Spawner());
@@ -38,7 +38,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if (waveTimer == null)
         {
-            waveTimer = paths[0].GetTimer();
+            waveTimer = paths[0].PortalStart.GetTimer();
         }
 
         waveTimer.OnTimerSkipped += OnWaveSkipped;

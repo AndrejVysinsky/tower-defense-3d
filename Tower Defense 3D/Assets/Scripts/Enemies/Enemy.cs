@@ -11,8 +11,8 @@ public class Enemy : MonoBehaviour
 
     private float _difficultyModifier;
 
-    private Vector3 _start;
-    private Vector3 _end;
+    private PortalStart _portalStart;
+    private PortalEnd _portalEnd;
 
     private void Awake()
     {
@@ -21,8 +21,8 @@ public class Enemy : MonoBehaviour
 
     public void Initialize(Path path, Sprite sprite, Color color, float difficultyMultiplier)
     {
-        _start = path.GetStartPosition();
-        _end = path.GetEndPosition();
+        _portalStart = path.PortalStart;
+        _portalEnd = path.PortalEnd;
         
         //var spriteRenderer = GetComponent<SpriteRenderer>();
         //spriteRenderer.sprite = sprite;
@@ -36,16 +36,6 @@ public class Enemy : MonoBehaviour
         MoveToStart();
     }
 
-
-    private void Update()
-    {
-        if (transform.position.x == _end.x && transform.position.z == _end.z)
-        {
-            DealDamageToPlayer();
-            MoveToStart();
-        }
-    }
-
     private void DealDamageToPlayer()
     {
         var damage = enemyData.DamageToPlayer;
@@ -55,10 +45,15 @@ public class Enemy : MonoBehaviour
 
     private void MoveToStart()
     {
-        transform.position = _start;
+        _agent.Warp(_portalStart.transform.position);
 
-        _agent.SetDestination(_end);
-        
+        _agent.SetDestination(_portalEnd.transform.position);
+    }
+
+    public void OnPortalEndReached()
+    {
+        DealDamageToPlayer();
+        MoveToStart();
     }
 
     public void TakeDamage(float amount)

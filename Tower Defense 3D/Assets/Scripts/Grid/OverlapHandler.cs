@@ -12,7 +12,7 @@ public class OverlapHandler : MonoBehaviour
     
     private readonly float _maxRangeTollerance = 0.05f;
 
-    public bool IsOverlapping { get; private set; }
+    public bool IsOverlapping => _overlappedObjects.Count > 0;
 
     private void Awake()
     {
@@ -43,13 +43,11 @@ public class OverlapHandler : MonoBehaviour
 
         transform.position = position;
 
-        IsOverlapping = CheckOverlap();
+        CheckOverlap();
     }
 
-    private bool CheckOverlap()
+    private void CheckOverlap()
     {
-        var isOverlapping = false;
-
         var bounds = _boxCollider.bounds;
 
         _overlappedObjects.Clear();
@@ -66,11 +64,9 @@ public class OverlapHandler : MonoBehaviour
 
             if (IsPointInsideBounds(bounds, point))
             {                
-                isOverlapping = true;
                 _overlappedObjects.Add(overlappedObject);
             }
         }
-        return isOverlapping;
     }
 
     private bool IsPointInsideBounds(Bounds bounds, Vector3 point)
@@ -121,6 +117,8 @@ public class OverlapHandler : MonoBehaviour
             return;
         }
 
+        Debug.Log("enter");
+
         _objectsInRange.Add(other.gameObject);
 
         CheckOverlap();
@@ -132,6 +130,8 @@ public class OverlapHandler : MonoBehaviour
         {
             return;
         }
+
+        Debug.Log("exit");
 
         _objectsInRange.Remove(other.gameObject);
     }
