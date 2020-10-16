@@ -189,6 +189,9 @@ public class GridPlacementHandler : MonoBehaviour, IBuildOptionClicked
             return;
 
         map.ObjectPlaced(_objectToPlace, _objectToPlacePrefab);
+
+        overlapHandler.DeregisterParent();
+
         _objectToPlace.layer = (int)LayerEnum.Default;
         _objectToPlace = null;
 
@@ -198,7 +201,6 @@ public class GridPlacementHandler : MonoBehaviour, IBuildOptionClicked
 
             removedIds.ForEach(x => map.ObjectRemoved(x));
         }
-            
 
         if (gridSettings.continuousBuilding)
         {

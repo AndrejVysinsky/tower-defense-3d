@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class OverlapHandler : MonoBehaviour
 {
+    [SerializeField] Material validPlacementMaterial;
+    [SerializeField] Material invalidPlacementMaterial;
+
+    private OverlapIndicator _overlapIndicator;
+
     private BoxCollider _boxCollider;
     private GameObject _parentObject;
 
@@ -16,6 +21,8 @@ public class OverlapHandler : MonoBehaviour
 
     private void Awake()
     {
+        _overlapIndicator = new OverlapIndicator(validPlacementMaterial, invalidPlacementMaterial);
+
         _boxCollider = GetComponent<BoxCollider>();
 
         _objectsInRange = new List<GameObject>();
@@ -25,6 +32,16 @@ public class OverlapHandler : MonoBehaviour
     public void RegisterParent(GameObject parent)
     {
         _parentObject = parent;
+        _overlapIndicator.RegisterObjectMaterials(parent);
+    }
+
+    public void DeregisterParent()
+    {
+        if (_parentObject != null)
+        {
+            _parentObject = null;
+            _overlapIndicator.SwitchBackObjectMaterials();
+        }
     }
 
     public void ResizeCollider(Vector3 size)
@@ -44,6 +61,8 @@ public class OverlapHandler : MonoBehaviour
         transform.position = position;
 
         CheckOverlap();
+
+        _overlapIndicator.SetMaterial(!IsOverlapping);
     }
 
     private void CheckOverlap()

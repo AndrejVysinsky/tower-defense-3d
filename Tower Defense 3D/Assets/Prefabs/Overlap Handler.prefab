@@ -74,3 +74,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b874599e10a04144492d80dff4dce4d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  validPlacementMaterial: {fileID: 2100000, guid: b2a38a282f8d4e844881b66daf3aeada,
+    type: 2}
+  invalidPlacementMaterial: {fileID: 2100000, guid: 4fb9c5e7bb992174d89cc7dd560641a0,
+    type: 2}
