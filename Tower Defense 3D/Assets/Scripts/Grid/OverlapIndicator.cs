@@ -34,6 +34,9 @@ public class OverlapIndicator
 
     public void SetMaterial(bool isValidPlacement)
     {
+        if (_objectMeshRenderer == null)
+            return;
+
         if (isValidPlacement)
         {
             SetMaterial(_validPlacementMaterial);

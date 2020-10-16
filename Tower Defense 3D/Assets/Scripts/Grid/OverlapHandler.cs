@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 
 public class OverlapHandler : MonoBehaviour
@@ -137,11 +136,10 @@ public class OverlapHandler : MonoBehaviour
             return;
         }
 
-        Debug.Log("enter");
-
         _objectsInRange.Add(other.gameObject);
 
         CheckOverlap();
+        _overlapIndicator.SetMaterial(!IsOverlapping);
     }
 
     private void OnTriggerExit(Collider other)
@@ -150,8 +148,6 @@ public class OverlapHandler : MonoBehaviour
         {
             return;
         }
-
-        Debug.Log("exit");
 
         _objectsInRange.Remove(other.gameObject);
     }
