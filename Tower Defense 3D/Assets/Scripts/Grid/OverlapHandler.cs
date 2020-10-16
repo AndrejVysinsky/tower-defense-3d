@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 public class OverlapHandler : MonoBehaviour
@@ -131,7 +132,7 @@ public class OverlapHandler : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Grid") || other.gameObject == _parentObject)
+        if (other.gameObject == _parentObject)
         {
             return;
         }
@@ -145,7 +146,7 @@ public class OverlapHandler : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Grid") || other.gameObject == _parentObject)
+        if (other.gameObject == _parentObject)
         {
             return;
         }

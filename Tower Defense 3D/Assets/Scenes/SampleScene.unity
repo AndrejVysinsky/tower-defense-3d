@@ -3283,7 +3283,7 @@ GameObject:
   - component: {fileID: 919535682}
   m_Layer: 0
   m_Name: Grid Placement Handler
-  m_TagString: Grid
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
