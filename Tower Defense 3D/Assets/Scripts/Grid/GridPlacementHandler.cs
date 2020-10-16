@@ -71,7 +71,14 @@ public class GridPlacementHandler : MonoBehaviour, IBuildOptionClicked
 
     private void ChangeRotation()
     {
-        _objectToPlace.transform.Rotate(Vector3.up, 90f);
+        if (Input.GetKey(KeyCode.Space))
+        {
+            _objectToPlace.transform.Rotate(Vector3.forward, 90f);
+        }
+        else
+        {
+            _objectToPlace.transform.Rotate(Vector3.up, 90f);
+        }
     }
 
     private void ChangeElevation()

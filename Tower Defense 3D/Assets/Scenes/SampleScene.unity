@@ -157,6 +157,7 @@ MonoBehaviour:
     type: 3}
   lineContainer: {fileID: 1232527906}
   gridBase: {fileID: 1286217586}
+  hideGrid: 0
 --- !u!4 &25061681
 Transform:
   m_ObjectHideFlags: 0

@@ -77,7 +77,9 @@ public class MapSaveData
 
             gameObjects[index].transform.position = position;
 
-            gameObjects[index].transform.Rotate(new Vector3(obj.rotationX, obj.rotationY, obj.rotationZ));
+            gameObjects[index].transform.rotation = Quaternion.Euler(obj.rotationX, obj.rotationY, obj.rotationZ);
+
+            //gameObjects[index].transform.Rotate(new Vector3(obj.rotationX, obj.rotationY, obj.rotationZ));
 
             var scale = gameObjects[index].transform.localScale;
 
