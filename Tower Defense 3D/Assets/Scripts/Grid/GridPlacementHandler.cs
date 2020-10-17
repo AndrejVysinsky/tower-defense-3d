@@ -185,8 +185,13 @@ public class GridPlacementHandler : MonoBehaviour, IBuildOptionClicked
         if (RayCaster.RayCastGameObject(out RaycastHit hitInfo) == false)
             return;
 
-        if (overlapHandler.IsOverlapping && gridSettings.collisionDetection && gridSettings.replaceOnCollision == false)
-            return;
+        if (gridSettings.collisionDetection && gridSettings.replaceOnCollision == false)
+        {
+            if (overlapHandler.IsOverlapping || overlapHandler.IsOnGround == false)
+            {
+                return;
+            }
+        }
 
         map.ObjectPlaced(_objectToPlace, _objectToPlacePrefab);
 

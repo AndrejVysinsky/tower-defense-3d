@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class UnbuildableTerrainMarker : MonoBehaviour
 {
@@ -21,6 +22,9 @@ public class UnbuildableTerrainMarker : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && _isMarkingActive)
         {
+            if (RayCaster.RayCastUIObject(out _))
+                return;
+
             if (RayCaster.RaycastGameObjectWithTag(out RaycastHit hitInfo, "Terrain"))
             {
                 SwitchLayerAndMaterial(hitInfo.transform.gameObject);
