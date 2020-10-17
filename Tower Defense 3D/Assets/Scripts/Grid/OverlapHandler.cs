@@ -18,6 +18,7 @@ public class OverlapHandler : MonoBehaviour
     private readonly float _maxRangeTollerance = 0.05f;
 
     public bool IsOverlapping => _overlappedObjects.Count > 0;
+    public bool IsOnGround { get; private set; }
 
     private void Awake()
     {
@@ -60,9 +61,14 @@ public class OverlapHandler : MonoBehaviour
 
         transform.position = position;
 
-        CheckOverlap();
+        CheckValidity();
+    }
 
-        _validityIndicator.SetMaterial(!IsOverlapping);
+    private void CheckValidity()
+    {
+        CheckOverlap();
+        IsOnGround = IsWholeObjectOnGround();
+        _validityIndicator.SetMaterial(IsOverlapping == false && IsOnGround);
     }
 
     private void CheckOverlap()
@@ -81,14 +87,85 @@ public class OverlapHandler : MonoBehaviour
 
             var point = overlappedObject.GetComponent<Collider>().ClosestPoint(transform.position);
 
-            if (IsPointInsideBounds(bounds, point))
+            if (IsPointInsideMyBounds(bounds, point))
             {                
                 _overlappedObjects.Add(overlappedObject);
             }
         }
     }
 
-    private bool IsPointInsideBounds(Bounds bounds, Vector3 point)
+    private bool IsWholeObjectOnGround()
+    {
+        if (_objectsInRange.Count == 0)
+            return true;
+        
+        //get lower touching objects
+        List<Collider> colliders = new List<Collider>();
+
+        _objectsInRange.ForEach(x =>
+        {
+            if (x.transform.position.y < transform.position.y)
+            {
+                if (IsHigherOrLowerThan(x))
+                {
+                    colliders.Add(x.GetComponent<Collider>());
+                }
+            }
+        });
+
+        if (colliders.Count == 0)
+            return true;
+
+        //check their range
+        float minX = transform.position.x - _boxCollider.size.x / 2;
+        float maxX = transform.position.x + _boxCollider.size.x / 2;
+
+        float minZ = transform.position.z - _boxCollider.size.z / 2;
+        float maxZ = transform.position.z + _boxCollider.size.z / 2;
+
+        var point = Vector3.zero;
+        point.y = transform.position.y - _boxCollider.size.y / 2;
+
+        for (float i = minX; i <= maxX; i += 0.5f)
+        {
+            for (float j = minZ; j <= maxZ; j += 0.5f)
+            {
+                point.x = i;
+                point.z = j;
+
+                bool isPointOnGround = false;
+
+                foreach (var collider in colliders)
+                {
+                    if (IsPointInsideOtherBounds(collider.bounds, point))
+                    {
+                        isPointOnGround = true;
+                    }
+                }
+
+                if (isPointOnGround == false)
+                    return false;
+            }
+        }
+        return true;
+    }
+
+    private bool IsPointInsideOtherBounds(Bounds bounds, Vector3 point)
+    {
+        float minX = bounds.center.x - bounds.extents.x - _maxRangeTollerance;
+        float maxX = bounds.center.x + bounds.extents.x + _maxRangeTollerance;
+
+        float minZ = bounds.center.z - bounds.extents.z - _maxRangeTollerance;
+        float maxZ = bounds.center.z + bounds.extents.z + _maxRangeTollerance;
+
+        if (point.x >= minX && point.x <= maxX && point.z >= minZ && point.z <= maxZ)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private bool IsPointInsideMyBounds(Bounds bounds, Vector3 point)
     {
         float minX = transform.position.x - bounds.extents.x + _maxRangeTollerance;
         float maxX = transform.position.x + bounds.extents.x - _maxRangeTollerance;
@@ -131,15 +208,14 @@ public class OverlapHandler : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == _parentObject)
+        if (other.gameObject == _parentObject || other.CompareTag("Grid"))
         {
             return;
         }
 
         _objectsInRange.Add(other.gameObject);
 
-        CheckOverlap();
-        _validityIndicator.SetMaterial(!IsOverlapping);
+        CheckValidity();
     }
 
     private void OnTriggerExit(Collider other)
@@ -150,6 +226,8 @@ public class OverlapHandler : MonoBehaviour
         }
 
         _objectsInRange.Remove(other.gameObject);
+
+        CheckValidity();
     }
 
     public void ParentDestroyed()

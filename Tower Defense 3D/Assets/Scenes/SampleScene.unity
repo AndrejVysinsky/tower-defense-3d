@@ -6630,7 +6630,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -6660,9 +6660,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 767853018}
-        m_TargetAssemblyTypeName: MapSaveManager, Assembly-CSharp
-        m_MethodName: LoadMapData
+      - m_Target: {fileID: 2048597134}
+        m_TargetAssemblyTypeName: UnbuildableTerrainMarker, Assembly-CSharp
+        m_MethodName: SwitchMarkingMode
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7011,7 +7011,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildableMaterial: {fileID: 2100000, guid: b2a38a282f8d4e844881b66daf3aeada, type: 2}
   unbuildableMaterial: {fileID: 2100000, guid: 4fb9c5e7bb992174d89cc7dd560641a0, type: 2}
-  mapContainer: {fileID: 767853016}
+  mapSaveManager: {fileID: 767853018}
 --- !u!4 &2048597135
 Transform:
   m_ObjectHideFlags: 0
