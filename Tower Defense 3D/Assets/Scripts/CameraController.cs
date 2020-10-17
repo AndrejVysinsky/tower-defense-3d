@@ -4,7 +4,7 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField] float moveSpeed;
     [SerializeField] float adjustDistanceSpeed;
-    [SerializeField] GridPlacementHandler gridHandler;
+    [SerializeField] GridController gridHandler;
 
     private Camera _camera;
 

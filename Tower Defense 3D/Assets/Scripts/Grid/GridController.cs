@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class GridPlacementHandler : MonoBehaviour, IBuildOptionClicked
+public class GridController : MonoBehaviour, IBuildOptionClicked
 {
     [SerializeField] GridSettings gridSettings;
     [SerializeField] GridDisplay gridDisplay;
