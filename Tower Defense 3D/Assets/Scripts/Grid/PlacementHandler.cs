@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-public class OverlapHandler : MonoBehaviour
+public class PlacementHandler : MonoBehaviour
 {
     [SerializeField] Material validPlacementMaterial;
     [SerializeField] Material invalidPlacementMaterial;

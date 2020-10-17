@@ -6,7 +6,7 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
 {
     [SerializeField] GridSettings gridSettings;
     [SerializeField] GridDisplay gridDisplay;
-    [SerializeField] OverlapHandler overlapHandler;
+    [SerializeField] PlacementHandler overlapHandler;
     
     [SerializeField] MapSaveManager map;
 
