@@ -50,6 +50,19 @@ public static class RayCaster
         //}
     }
 
+    public static bool RaycastGameObjectWithTag(out RaycastHit hitInfo, string tag)
+    {
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        var hitInfos = Physics.RaycastAll(ray).ToList();
+
+        hitInfos = hitInfos.OrderBy(x => x.distance).ToList();
+
+        hitInfo = hitInfos.Find(x => x.transform.CompareTag(tag));
+
+        return hitInfo.transform != null;
+    }
+
     public static bool RaycastGameObjectFromCameraCenter(out RaycastHit hitInfo, Camera camera)
     {
         return Physics.Raycast(camera.transform.position, camera.transform.forward, out hitInfo, 100.0f);

@@ -28,6 +28,9 @@ public class ValidityIndicator
 
     public void SwitchBackObjectMaterials()
     {
+        if (_objectMeshRenderer == null)
+            return;
+
         _objectMeshRenderer.materials = _originalMaterials.ToArray();
     }
 

@@ -56,6 +56,11 @@ public class MapSaveManager : MonoBehaviour
         _mapSaveData.ObjectPlaced(gameObject, prefab);
     }
 
+    public void ObjectLayerUpdated(GameObject gameObject)
+    {
+        _mapSaveData.ObjectLayerUpdated(gameObject);
+    }
+
     public void ObjectRemoved(int gameObjectID)
     {
         _mapSaveData.ObjectRemoved(gameObjectID);

@@ -7,6 +7,7 @@ TagManager:
   - End
   - Start
   - Terrain
+  - Grid
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Unbuildable Terrain
   - 
   - 
   - 

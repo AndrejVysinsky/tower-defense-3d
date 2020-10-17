@@ -11,6 +11,7 @@ public class MapSaveData
     public class SaveableObject
     {
         [SerializeField] public int id;
+        [SerializeField] public int layer;
 
         [SerializeField] public float positionX;
         [SerializeField] public float positionY;
@@ -39,6 +40,7 @@ public class MapSaveData
         saveableObjects.Add(new SaveableObject()
         {
             id = gameObject.GetInstanceID(),
+            layer = gameObject.layer,
 
             positionX = gameObject.transform.position.x,
             positionY = gameObject.transform.position.y,
@@ -56,6 +58,16 @@ public class MapSaveData
         });
     }
 
+    public void ObjectLayerUpdated(GameObject gameObject)
+    {
+        var saveableObject = saveableObjects.Find(x => x.id == gameObject.GetInstanceID());
+
+        if (saveableObject == null)
+            return;
+
+        saveableObject.layer = gameObject.layer;
+    }
+
     public void ObjectRemoved(int gameObjectID)
     {
         saveableObjects.RemoveAll(x => x.id == gameObjectID);
@@ -68,6 +80,8 @@ public class MapSaveData
         saveableObjects.ForEach(obj =>
         {
             obj.id = gameObjects[index].GetInstanceID();
+
+            gameObjects[index].layer = obj.layer;
 
             var position = gameObjects[index].transform.position;
 
