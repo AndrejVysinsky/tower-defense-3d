@@ -185,6 +185,9 @@ public class GridPlacementHandler : MonoBehaviour, IBuildOptionClicked
         if (RayCaster.RayCastGameObject(out RaycastHit hitInfo) == false)
             return;
 
+        if (gridSettings.avoidUnbuildableTerrain)
+            return;
+
         if (gridSettings.collisionDetection && gridSettings.replaceOnCollision == false)
         {
             if (overlapHandler.IsOverlapping || overlapHandler.IsOnGround == false)
@@ -249,6 +252,11 @@ public class GridPlacementHandler : MonoBehaviour, IBuildOptionClicked
     public void OnBuildingModeChanged(bool continuous)
     {
         gridSettings.continuousBuilding = continuous;
+    }
+
+    public void OnAvoidUnbuildableTerrainChanged(bool avoid)
+    {
+        gridSettings.avoidUnbuildableTerrain = avoid;
     }
 
     public void OnGridSnappingChanged(bool snapToGrid)

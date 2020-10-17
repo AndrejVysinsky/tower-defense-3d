@@ -8,6 +8,7 @@ public class GridSettings
     public float cellSize;
 
     public bool continuousBuilding;
+    public bool avoidUnbuildableTerrain;
     public bool snapToGrid;
     public bool autoHeight;
     public bool collisionDetection;
