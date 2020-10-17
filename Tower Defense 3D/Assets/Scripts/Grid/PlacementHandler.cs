@@ -17,6 +17,8 @@ public class PlacementHandler : MonoBehaviour
     
     private readonly float _maxRangeTollerance = 0.05f;
 
+    private bool _avoidUnbuildableTerrain;
+
     public bool IsOverlapping => _overlappedObjects.Count > 0;
     public bool IsOnGround { get; private set; }
 
@@ -137,6 +139,9 @@ public class PlacementHandler : MonoBehaviour
 
                 foreach (var collider in colliders)
                 {
+                    if (_avoidUnbuildableTerrain && collider.gameObject.layer == (int)LayerEnum.UnbuildableTerrain)
+                        continue;
+
                     if (IsPointInsideOtherBounds(collider.bounds, point))
                     {
                         isPointOnGround = true;
@@ -215,7 +220,7 @@ public class PlacementHandler : MonoBehaviour
 
         _objectsInRange.Add(other.gameObject);
 
-        CheckValidity();
+        //CheckValidity();
     }
 
     private void OnTriggerExit(Collider other)
@@ -227,12 +232,17 @@ public class PlacementHandler : MonoBehaviour
 
         _objectsInRange.Remove(other.gameObject);
 
-        CheckValidity();
+        //CheckValidity();
     }
 
     public void ParentDestroyed()
     {
         _objectsInRange.ForEach(x => x.GetComponent<MeshRenderer>().enabled = true);
         _objectsInRange.Clear();
+    }
+
+    public void OnAvoidUnbuildableTerrainChanged(bool avoid)
+    {
+        _avoidUnbuildableTerrain = avoid;
     }
 }

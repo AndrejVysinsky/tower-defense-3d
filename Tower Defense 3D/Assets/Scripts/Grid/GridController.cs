@@ -185,9 +185,6 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
         if (RayCaster.RayCastGameObject(out RaycastHit hitInfo) == false)
             return;
 
-        if (gridSettings.avoidUnbuildableTerrain)
-            return;
-
         if (gridSettings.collisionDetection && gridSettings.replaceOnCollision == false)
         {
             if (placementHandler.IsOverlapping || placementHandler.IsOnGround == false)
@@ -258,6 +255,7 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
     {
         gridSettings.avoidUnbuildableTerrain = avoid;
 
+        placementHandler.OnAvoidUnbuildableTerrainChanged(avoid);
     }
 
     public void OnGridSnappingChanged(bool snapToGrid)

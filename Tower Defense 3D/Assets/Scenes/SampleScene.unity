@@ -3148,8 +3148,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 919535682}
-        m_TargetAssemblyTypeName: GridSnapping, Assembly-CSharp
-        m_MethodName: OnGridSnappingChanged
+        m_TargetAssemblyTypeName: GridController, Assembly-CSharp
+        m_MethodName: OnAvoidUnbuildableTerrainChanged
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3159,7 +3159,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  m_IsOn: 1
+  m_IsOn: 0
 --- !u!1 &908381034
 GameObject:
   m_ObjectHideFlags: 0

@@ -72,10 +72,8 @@ public static class RayCaster
     {
         var hitInfos = Physics.RaycastAll(camera.transform.position, camera.transform.forward).ToList();
 
-        hitInfos = hitInfos.OrderBy(x => x.distance).ToList();
-
-        hitInfo = hitInfos.Find(x => x.transform.CompareTag(tag));
-
+        hitInfo = hitInfos.OrderBy(x => x.distance).FirstOrDefault(x => x.transform.CompareTag(tag));
+        
         return hitInfo.transform != null;
     }
 }
