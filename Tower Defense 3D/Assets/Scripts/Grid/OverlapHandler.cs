@@ -7,7 +7,7 @@ public class OverlapHandler : MonoBehaviour
     [SerializeField] Material validPlacementMaterial;
     [SerializeField] Material invalidPlacementMaterial;
 
-    private OverlapIndicator _overlapIndicator;
+    private ValidityIndicator _validityIndicator;
 
     private BoxCollider _boxCollider;
     private GameObject _parentObject;
@@ -21,7 +21,7 @@ public class OverlapHandler : MonoBehaviour
 
     private void Awake()
     {
-        _overlapIndicator = new OverlapIndicator(validPlacementMaterial, invalidPlacementMaterial);
+        _validityIndicator = new ValidityIndicator(validPlacementMaterial, invalidPlacementMaterial);
 
         _boxCollider = GetComponent<BoxCollider>();
 
@@ -32,7 +32,7 @@ public class OverlapHandler : MonoBehaviour
     public void RegisterParent(GameObject parent)
     {
         _parentObject = parent;
-        _overlapIndicator.RegisterObjectMaterials(parent);
+        _validityIndicator.RegisterObjectMaterials(parent);
     }
 
     public void DeregisterParent()
@@ -40,7 +40,7 @@ public class OverlapHandler : MonoBehaviour
         if (_parentObject != null)
         {
             _parentObject = null;
-            _overlapIndicator.SwitchBackObjectMaterials();
+            _validityIndicator.SwitchBackObjectMaterials();
         }
     }
 
@@ -62,7 +62,7 @@ public class OverlapHandler : MonoBehaviour
 
         CheckOverlap();
 
-        _overlapIndicator.SetMaterial(!IsOverlapping);
+        _validityIndicator.SetMaterial(!IsOverlapping);
     }
 
     private void CheckOverlap()
@@ -139,7 +139,7 @@ public class OverlapHandler : MonoBehaviour
         _objectsInRange.Add(other.gameObject);
 
         CheckOverlap();
-        _overlapIndicator.SetMaterial(!IsOverlapping);
+        _validityIndicator.SetMaterial(!IsOverlapping);
     }
 
     private void OnTriggerExit(Collider other)

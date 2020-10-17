@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
-public class OverlapIndicator
+public class ValidityIndicator
 {
     private readonly Material _validPlacementMaterial;
     private readonly Material _invalidPlacementMaterial;
@@ -11,7 +10,7 @@ public class OverlapIndicator
 
     private MeshRenderer _objectMeshRenderer;
 
-    public OverlapIndicator(Material validPlacementMaterial, Material invalidPlacementMaterial)
+    public ValidityIndicator(Material validPlacementMaterial, Material invalidPlacementMaterial)
     {
         _validPlacementMaterial = validPlacementMaterial;
         _invalidPlacementMaterial = invalidPlacementMaterial;
