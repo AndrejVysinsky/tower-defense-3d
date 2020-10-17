@@ -4,7 +4,7 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField] float moveSpeed;
     [SerializeField] float adjustDistanceSpeed;
-    [SerializeField] GridController gridHandler;
+    [SerializeField] GridController gridController;
 
     private Camera _camera;
 
@@ -79,8 +79,8 @@ public class CameraController : MonoBehaviour
 
         var position = transform.position;
 
-        position.x = Mathf.Clamp(position.x, 0 - outOfMapDistance, gridHandler.GridSettings.sizeX + outOfMapDistance);
-        position.z = Mathf.Clamp(position.z, 0 - shiftZ - outOfMapDistance, gridHandler.GridSettings.sizeZ - shiftZ + outOfMapDistance);
+        position.x = Mathf.Clamp(position.x, 0 - outOfMapDistance, gridController.GridSettings.sizeX + outOfMapDistance);
+        position.z = Mathf.Clamp(position.z, 0 - shiftZ - outOfMapDistance, gridController.GridSettings.sizeZ - shiftZ + outOfMapDistance);
 
         transform.position = position;
     }

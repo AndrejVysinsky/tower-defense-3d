@@ -3305,7 +3305,7 @@ GameObject:
   - component: {fileID: 919535686}
   - component: {fileID: 919535682}
   m_Layer: 0
-  m_Name: Grid Placement Handler
+  m_Name: Grid Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3334,7 +3334,7 @@ MonoBehaviour:
     collisionDetection: 1
     replaceOnCollision: 0
   gridDisplay: {fileID: 25061680}
-  overlapHandler: {fileID: 6209219634770400540, guid: dde82768227e72849b28d62c61880f55,
+  placementHandler: {fileID: 6209219634770400540, guid: dde82768227e72849b28d62c61880f55,
     type: 3}
   map: {fileID: 767853018}
 --- !u!4 &919535686
@@ -3349,6 +3349,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 25061681}
+  - {fileID: 2048597135}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3584,7 +3585,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 10
   adjustDistanceSpeed: 5
-  gridHandler: {fileID: 919535682}
+  gridController: {fileID: 919535682}
 --- !u!1 &977347289
 GameObject:
   m_ObjectHideFlags: 0
@@ -7020,12 +7021,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2048597133}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_Father: {fileID: 919535686}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2048683372
 GameObject:

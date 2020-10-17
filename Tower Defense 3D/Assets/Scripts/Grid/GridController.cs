@@ -6,7 +6,7 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
 {
     [SerializeField] GridSettings gridSettings;
     [SerializeField] GridDisplay gridDisplay;
-    [SerializeField] PlacementHandler overlapHandler;
+    [SerializeField] PlacementHandler placementHandler;
     
     [SerializeField] MapSaveManager map;
 
@@ -21,7 +21,7 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
 
     private void Awake()
     {
-        overlapHandler = Instantiate(overlapHandler);
+        placementHandler = Instantiate(placementHandler);
 
         gridDisplay.CalculateGrid(gridSettings.sizeX, gridSettings.sizeZ, gridSettings.cellSize);
     }
@@ -126,7 +126,7 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
         position = ClampPosition(position);
 
         _objectToPlace.transform.position = position;
-        overlapHandler.SetPosition(position);
+        placementHandler.SetPosition(position);
     }
 
     private Vector3 GetNearestPointOnGrid(Vector3 point)
@@ -190,7 +190,7 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
 
         if (gridSettings.collisionDetection && gridSettings.replaceOnCollision == false)
         {
-            if (overlapHandler.IsOverlapping || overlapHandler.IsOnGround == false)
+            if (placementHandler.IsOverlapping || placementHandler.IsOnGround == false)
             {
                 return;
             }
@@ -198,14 +198,14 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
 
         map.ObjectPlaced(_objectToPlace, _objectToPlacePrefab);
 
-        overlapHandler.DeregisterParent();
+        placementHandler.DeregisterParent();
 
         _objectToPlace.layer = (int)LayerEnum.Default;
         _objectToPlace = null;
 
         if (gridSettings.collisionDetection && gridSettings.replaceOnCollision)
         {
-            List<int> removedIds = overlapHandler.RemoveOverlappedObjects();
+            List<int> removedIds = placementHandler.RemoveOverlappedObjects();
 
             removedIds.ForEach(x => map.ObjectRemoved(x));
         }
@@ -229,7 +229,7 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
     {
         if (_objectToPlace != null)
         {
-            overlapHandler.ParentDestroyed();
+            placementHandler.ParentDestroyed();
             Destroy(_objectToPlace);
         }
         _objectToPlace = null;
@@ -243,8 +243,8 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
 
         _objectOriginY = _objectToPlace.transform.position.y + _objectToPlaceCollider.bounds.extents.y - _objectToPlaceCollider.bounds.center.y;
 
-        overlapHandler.RegisterParent(_objectToPlace);
-        overlapHandler.ResizeCollider(_objectToPlaceCollider.bounds.size);
+        placementHandler.RegisterParent(_objectToPlace);
+        placementHandler.ResizeCollider(_objectToPlaceCollider.bounds.size);
 
         SetObjectPosition(gridDisplay.GetGridBasePosition());
     }
@@ -257,6 +257,7 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
     public void OnAvoidUnbuildableTerrainChanged(bool avoid)
     {
         gridSettings.avoidUnbuildableTerrain = avoid;
+
     }
 
     public void OnGridSnappingChanged(bool snapToGrid)
