@@ -106,12 +106,9 @@ public class PlacementValidator : MonoBehaviour
 
         _objectsInRange.ForEach(x =>
         {
-            if (x.transform.position.y < transform.position.y)
+            if (IsTouchingBottom(x))
             {
-                if (IsHigherOrLowerThan(x))
-                {
-                    colliders.Add(x.GetComponent<Collider>());
-                }
+                colliders.Add(x.GetComponent<Collider>());
             }
         });
 
@@ -153,6 +150,16 @@ public class PlacementValidator : MonoBehaviour
             }
         }
         return true;
+    }
+
+    private bool IsTouchingBottom(GameObject other)
+    {
+        var otherBounds = other.GetComponent<Collider>().bounds;
+
+        float upperYOfStaticGameObject = other.transform.position.y + otherBounds.extents.y;
+        float lowerYOfMovingGameObject = transform.position.y - _boxCollider.bounds.extents.y;
+
+        return Mathf.Abs(upperYOfStaticGameObject - lowerYOfMovingGameObject) <= _maxRangeTollerance;
     }
 
     private bool IsPointInsideOtherBounds(Bounds bounds, Vector3 point)
@@ -220,7 +227,7 @@ public class PlacementValidator : MonoBehaviour
 
         _objectsInRange.Add(other.gameObject);
 
-        //CheckValidity();
+        CheckValidity();
     }
 
     private void OnTriggerExit(Collider other)
@@ -231,8 +238,6 @@ public class PlacementValidator : MonoBehaviour
         }
 
         _objectsInRange.Remove(other.gameObject);
-
-        //CheckValidity();
     }
 
     public void ParentDestroyed()
