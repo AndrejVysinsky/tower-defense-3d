@@ -554,7 +554,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f19a1a1175c5d24f8e12edcec3e738e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildPrefab: {fileID: 1679743713354782928, guid: 5d3767ae809fb0143af7936b94413657,
+  buildPrefab: {fileID: 2169085319361342427, guid: 99cfe215e3df0ee499458c8e366551e8,
     type: 3}
 --- !u!1 &612022850
 GameObject:
@@ -1029,6 +1029,11 @@ PrefabInstance:
       propertyPath: map
       value: 
       objectReference: {fileID: 767853018}
+    - target: {fileID: 8658931559806550153, guid: 0faf02dc6f63cde4a805f913d8a455dc,
+        type: 3}
+      propertyPath: gridSettings.collisionDetection
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8658931559806550154, guid: 0faf02dc6f63cde4a805f913d8a455dc,
         type: 3}
       propertyPath: m_Name

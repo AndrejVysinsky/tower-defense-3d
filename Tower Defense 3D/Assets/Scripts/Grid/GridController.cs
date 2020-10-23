@@ -103,9 +103,19 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
 
     private void MoveObject()
     {
-        if (RayCaster.RayCastGameObject(out RaycastHit hitInfo))
+        if (gridSettings.buildOnlyOnTerrain)
         {
-            SetObjectPosition(hitInfo.point);
+            if (RayCaster.RayCastGameObject(out RaycastHit hitInfo, "Terrain"))
+            {
+                SetObjectPosition(hitInfo.point);
+            }
+        }
+        else
+        {
+            if (RayCaster.RayCastGameObject(out RaycastHit hitInfo))
+            {
+                SetObjectPosition(hitInfo.point);
+            }
         }
     }
 

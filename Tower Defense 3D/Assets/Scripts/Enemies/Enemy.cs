@@ -69,4 +69,9 @@ public class Enemy : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    public int GetPriority()
+    {
+        return (int)_agent.remainingDistance;
+    }
 }

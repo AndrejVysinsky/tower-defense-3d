@@ -9,6 +9,7 @@ public class GridSettings
 
     public bool continuousBuilding;
     public bool avoidUnbuildableTerrain;
+    public bool buildOnlyOnTerrain;
     public bool snapToGrid;
     public bool autoHeight;
     public bool collisionDetection;

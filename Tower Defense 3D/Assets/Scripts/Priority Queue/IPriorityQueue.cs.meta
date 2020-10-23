@@ -1,11 +1,9 @@
 fileFormatVersion: 2
-guid: 0ac47355945073449aa4f906ba673d3e
+guid: 78fc568d42414e2448a69e341b495d43
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - towerSpritePrefab: {fileID: 5268825546238127858, guid: 46ab286139a918641a662bcd1d6b2c27,
-      type: 3}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

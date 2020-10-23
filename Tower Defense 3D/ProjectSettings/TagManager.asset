@@ -8,6 +8,8 @@ TagManager:
   - Start
   - Terrain
   - Grid
+  - TowerMenuOption
+  - Enemy
   layers:
   - Default
   - TransparentFX

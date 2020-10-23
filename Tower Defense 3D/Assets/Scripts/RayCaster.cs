@@ -53,7 +53,7 @@ public static class RayCaster
         //}
     }
 
-    public static bool RaycastGameObjectWithTag(out RaycastHit hitInfo, string tag)
+    public static bool RayCastGameObject(out RaycastHit hitInfo, string tag)
     {
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 

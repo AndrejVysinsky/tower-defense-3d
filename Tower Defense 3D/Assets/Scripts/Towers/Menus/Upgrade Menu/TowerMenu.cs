@@ -29,24 +29,24 @@ public class TowerMenu : MonoBehaviour
 
     private void OnEnable()
     {
-        SelectionManager.Instance.OnGameObjectSelected += GameObjectSelected;
+        //SelectionManager.Instance.OnGameObjectSelected += GameObjectSelected;
     }
 
     private void OnDisable()
     {
-        SelectionManager.Instance.OnGameObjectSelected -= GameObjectSelected;
+        //SelectionManager.Instance.OnGameObjectSelected -= GameObjectSelected;
     }
 
     private void GameObjectSelected(GameObject selectedGameObject)
     {
-        if (InputHandler.ClickedOnObjectInHierarchy(selectedGameObject, gameObject, menuOptionTag))
-        {
-            ShowMenu();
-        }
-        else
-        {
-            HideMenu();
-        }
+        //if (InputHandler.ClickedOnObjectInHierarchy(selectedGameObject, gameObject, menuOptionTag))
+        //{
+        //    ShowMenu();
+        //}
+        //else
+        //{
+        //    HideMenu();
+        //}
     }
 
     private void ShowMenu()

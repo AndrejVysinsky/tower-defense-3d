@@ -41,16 +41,16 @@ public class LaserTower : MonoBehaviour, ITowerType
         towerTargeting.TowerSprite.sprite = towerData.GetLevelData(Level).Sprite;
 
         var price = towerData.GetLevelData(Level).Price;
-        GameController.Instance.ModifyCurrencyBy(-price, transform.position);
+        //GameController.Instance.ModifyCurrencyBy(-price, transform.position);
     }
 
     public void Sell()
     {
-        GridTowerPlacement.Instance.FreeTilePosition(transform.position);
+        //GridTowerPlacement.Instance.FreeTilePosition(transform.position);
 
         var sellValue = (int)(towerData.GetLevelData(Level).Price * towerData.SellFactor);
 
-        GameController.Instance.ModifyCurrencyBy(sellValue, transform.position);
+        //GameController.Instance.ModifyCurrencyBy(sellValue, transform.position);
 
         Destroy(gameObject);
     }

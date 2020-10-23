@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UpgradeOption : MonoBehaviour, ICurrencyChanged
+public class UpgradeOption : MonoBehaviour//, ICurrencyChanged
 {
     [SerializeField] Image upgradeImage;
     [SerializeField] TextMeshProUGUI priceText;
@@ -12,15 +12,15 @@ public class UpgradeOption : MonoBehaviour, ICurrencyChanged
 
     private void OnEnable()
     {
-        EventManager.Instance.AddListener(gameObject);
+        EventManager.AddListener(gameObject);
 
         //hmm... doesnt look right
-        OnCurrencyChanged(GameController.Instance.Currency);
+       // OnCurrencyChanged(GameController.Instance.Currency);
     }
 
     private void OnDisable()
     {
-        EventManager.Instance.RemoveListener(gameObject);
+        EventManager.RemoveListener(gameObject);
     }
 
     public void SetTower(ITowerType tower)

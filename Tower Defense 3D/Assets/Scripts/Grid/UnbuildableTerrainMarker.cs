@@ -25,7 +25,7 @@ public class UnbuildableTerrainMarker : MonoBehaviour
             if (RayCaster.RayCastUIObject(out _))
                 return;
 
-            if (RayCaster.RaycastGameObjectWithTag(out RaycastHit hitInfo, "Terrain"))
+            if (RayCaster.RayCastGameObject(out RaycastHit hitInfo, "Terrain"))
             {
                 SwitchLayerAndMaterial(hitInfo.transform.gameObject);
             }

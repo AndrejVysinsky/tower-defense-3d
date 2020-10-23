@@ -17,7 +17,7 @@ public class TowerTargeting : MonoBehaviour
     private void Awake()
     {
         _targetsInRange = new PriorityQueue<GameObject, int>();
-        RangeRenderer = new RangeRenderer(rangeLineRenderer, GetComponent<CircleCollider2D>().radius);
+        RangeRenderer = new RangeRenderer(rangeLineRenderer, GetComponent<SphereCollider>().radius);
         TowerSprite = moveablePart.GetComponent<SpriteRenderer>();
     }
 
@@ -34,8 +34,8 @@ public class TowerTargeting : MonoBehaviour
         Quaternion rotation = Quaternion.LookRotation(position - moveablePart.transform.position, moveablePart.transform.TransformDirection(Vector3.back));
 
         //rotate only z-axis
-        rotation.x = 0;
-        rotation.y = 0;
+        //rotation.x = 0;
+        //rotation.y = 0;
 
         moveablePart.transform.rotation = rotation;
     }
@@ -50,7 +50,7 @@ public class TowerTargeting : MonoBehaviour
         return firePoint;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
@@ -62,7 +62,7 @@ public class TowerTargeting : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit(Collider collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
