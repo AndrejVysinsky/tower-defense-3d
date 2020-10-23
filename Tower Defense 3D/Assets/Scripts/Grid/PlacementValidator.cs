@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-public class PlacementHandler : MonoBehaviour
+public class PlacementValidator : MonoBehaviour
 {
     [SerializeField] Material validPlacementMaterial;
     [SerializeField] Material invalidPlacementMaterial;

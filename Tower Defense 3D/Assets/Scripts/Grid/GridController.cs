@@ -6,7 +6,7 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
 {
     [SerializeField] GridSettings gridSettings;
     [SerializeField] GridDisplay gridDisplay;
-    [SerializeField] PlacementHandler placementHandler;
+    [SerializeField] PlacementValidator placementHandler;
     
     [SerializeField] MapSaveManager map;
 
