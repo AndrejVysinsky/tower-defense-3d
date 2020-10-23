@@ -24,6 +24,8 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
         placementHandler = Instantiate(placementHandler);
 
         gridDisplay.CalculateGrid(gridSettings.sizeX, gridSettings.sizeZ, gridSettings.cellSize);
+
+        OnAvoidUnbuildableTerrainChanged(gridSettings.avoidUnbuildableTerrain);
     }
 
     private void OnEnable()
@@ -226,7 +228,7 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
     {
         if (_objectToPlace != null)
         {
-            placementHandler.ParentDestroyed();
+            //placementHandler.ParentDestroyed();
             Destroy(_objectToPlace);
         }
         _objectToPlace = null;

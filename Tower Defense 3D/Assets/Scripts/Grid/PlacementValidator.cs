@@ -220,7 +220,7 @@ public class PlacementValidator : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == _parentObject || other.CompareTag("Grid"))
+        if (other.gameObject == _parentObject || _objectsInRange.Contains(other.gameObject))
         {
             return;
         }
