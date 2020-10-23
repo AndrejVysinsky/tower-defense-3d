@@ -4,6 +4,7 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField] float moveSpeed;
     [SerializeField] float adjustDistanceSpeed;
+    [SerializeField] float rotationSpeed;
     [SerializeField] GridController gridController;
 
     private Camera _camera;
@@ -13,7 +14,9 @@ public class CameraController : MonoBehaviour
 
     private void Awake()
     {
-        _camera = GetComponent<Camera>();
+        _camera = GetComponentInChildren<Camera>();
+
+        _camera.transform.LookAt(transform.position);
 
         _targetDistanceFromGround = transform.position.y;
         _currentDistanceFromGround = GetCurrentDistanceFromGround();
@@ -21,6 +24,11 @@ public class CameraController : MonoBehaviour
 
     void LateUpdate()
     {
+        if (Input.GetKey(KeyCode.E) || Input.GetKey(KeyCode.Q))
+        {
+            RotateCamera();
+        }
+
         if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
         {
             MoveCamera();
@@ -33,6 +41,19 @@ public class CameraController : MonoBehaviour
         {
             AdjustHeightToTerrain();
         }
+    }
+
+    private void RotateCamera()
+    {
+        float rotationDirection = 0;
+
+        if (Input.GetKey(KeyCode.E))
+            rotationDirection = 1;
+        
+        if (Input.GetKey(KeyCode.Q))
+            rotationDirection = -1;
+
+        transform.Rotate(Vector3.up, rotationDirection * rotationSpeed * Time.deltaTime);
     }
 
     private float GetCurrentDistanceFromGround()
@@ -52,7 +73,9 @@ public class CameraController : MonoBehaviour
         float xAxisValue = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime;
         float zAxisValue = Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime;
 
-        transform.Translate(new Vector3(xAxisValue, 0.0f, zAxisValue), Space.World);
+        var moveVector = new Vector3(xAxisValue, 0.0f, zAxisValue);
+
+        transform.Translate(Quaternion.AngleAxis(transform.rotation.eulerAngles.y, Vector3.up) * moveVector, Space.World);
     }
 
     private void AdjustHeightToTerrain()
@@ -74,13 +97,12 @@ public class CameraController : MonoBehaviour
 
     private void ClampPosition()
     {
-        var shiftZ = 5;
         var outOfMapDistance = 2;
 
         var position = transform.position;
 
         position.x = Mathf.Clamp(position.x, 0 - outOfMapDistance, gridController.GridSettings.sizeX + outOfMapDistance);
-        position.z = Mathf.Clamp(position.z, 0 - shiftZ - outOfMapDistance, gridController.GridSettings.sizeZ - shiftZ + outOfMapDistance);
+        position.z = Mathf.Clamp(position.z, 0 - outOfMapDistance, gridController.GridSettings.sizeZ + outOfMapDistance);
 
         transform.position = position;
     }
