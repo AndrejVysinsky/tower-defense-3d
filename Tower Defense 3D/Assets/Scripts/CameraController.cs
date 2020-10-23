@@ -43,7 +43,7 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            return _targetDistanceFromGround;
+            return transform.position.y;
         }
     }
 
