@@ -8,8 +8,6 @@ public class PlacementValidator : MonoBehaviour
     [SerializeField] Material invalidPlacementMaterial;
 
     private ValidityIndicator _validityIndicator;
-
-    private BoxCollider _boxCollider;
     private GameObject _parentObject;
 
     private List<GameObject> _objectsInRange;
@@ -17,16 +15,17 @@ public class PlacementValidator : MonoBehaviour
     
     private readonly float _maxRangeTollerance = 0.05f;
 
-    private bool _avoidUnbuildableTerrain;
-
     public bool IsOverlapping => _overlappedObjects.Count > 0;
     public bool IsOnGround { get; private set; }
+    public BoxCollider PlacementCollider { get; private set; }
+
+    public GridSettings GridSettings { get; set; }
 
     private void Awake()
     {
         _validityIndicator = new ValidityIndicator(validPlacementMaterial, invalidPlacementMaterial);
 
-        _boxCollider = GetComponent<BoxCollider>();
+        PlacementCollider = GetComponent<BoxCollider>();
 
         _objectsInRange = new List<GameObject>();
         _overlappedObjects = new List<GameObject>();
@@ -36,6 +35,8 @@ public class PlacementValidator : MonoBehaviour
     {
         _parentObject = parent;
         _validityIndicator.RegisterObjectMaterials(parent);
+
+        ResizeCollider(parent.GetComponent<Collider>().bounds.size);
     }
 
     public void DeregisterParent()
@@ -49,11 +50,26 @@ public class PlacementValidator : MonoBehaviour
 
     public void ResizeCollider(Vector3 size)
     {
-        _boxCollider.size = size;
+        Vector3 newSize = size;
+
+        if (GridSettings.snapToGrid)
+        {
+            newSize.x = GridSettings.cellSize;
+            newSize.z = GridSettings.cellSize;
+            newSize.y = size.y;
+
+            while (newSize.x < size.x && Mathf.Approximately(newSize.x, size.x) == false)
+                newSize.x += GridSettings.cellSize;
+
+            while (newSize.z < size.z && Mathf.Approximately(newSize.z, size.z) == false)
+                newSize.z += GridSettings.cellSize;
+        }
+
+        PlacementCollider.size = newSize;
 
         //to register OnTriggerEnter
-        _boxCollider.enabled = false;
-        _boxCollider.enabled = true;
+        PlacementCollider.enabled = false;
+        PlacementCollider.enabled = true;
     }
 
     public void SetPosition(Vector3 position)
@@ -69,13 +85,16 @@ public class PlacementValidator : MonoBehaviour
     private void CheckValidity()
     {
         CheckOverlap();
+        Debug.Log(_overlappedObjects.Count > 0);
+
         IsOnGround = IsWholeObjectOnGround();
+
         _validityIndicator.SetMaterial(IsOverlapping == false && IsOnGround);
     }
 
     private void CheckOverlap()
     {
-        var bounds = _boxCollider.bounds;
+        var bounds = PlacementCollider.bounds;
 
         _overlappedObjects.Clear();
         _objectsInRange.RemoveAll(x => x == null);
@@ -116,14 +135,14 @@ public class PlacementValidator : MonoBehaviour
             return true;
 
         //check their range
-        float minX = transform.position.x - _boxCollider.size.x / 2;
-        float maxX = transform.position.x + _boxCollider.size.x / 2;
+        float minX = transform.position.x - PlacementCollider.size.x / 2;
+        float maxX = transform.position.x + PlacementCollider.size.x / 2;
 
-        float minZ = transform.position.z - _boxCollider.size.z / 2;
-        float maxZ = transform.position.z + _boxCollider.size.z / 2;
+        float minZ = transform.position.z - PlacementCollider.size.z / 2;
+        float maxZ = transform.position.z + PlacementCollider.size.z / 2;
 
         var point = Vector3.zero;
-        point.y = transform.position.y - _boxCollider.size.y / 2;
+        point.y = transform.position.y - PlacementCollider.size.y / 2;
 
         for (float i = minX; i <= maxX; i += 0.5f)
         {
@@ -136,7 +155,7 @@ public class PlacementValidator : MonoBehaviour
 
                 foreach (var collider in colliders)
                 {
-                    if (_avoidUnbuildableTerrain && collider.gameObject.layer == (int)LayerEnum.UnbuildableTerrain)
+                    if (GridSettings.avoidUnbuildableTerrain && collider.gameObject.layer == (int)LayerEnum.UnbuildableTerrain)
                         continue;
 
                     if (IsPointInsideOtherBounds(collider.bounds, point))
@@ -157,7 +176,7 @@ public class PlacementValidator : MonoBehaviour
         var otherBounds = other.GetComponent<Collider>().bounds;
 
         float upperYOfStaticGameObject = other.transform.position.y + otherBounds.extents.y;
-        float lowerYOfMovingGameObject = transform.position.y - _boxCollider.bounds.extents.y;
+        float lowerYOfMovingGameObject = transform.position.y - PlacementCollider.bounds.extents.y;
 
         return Mathf.Abs(upperYOfStaticGameObject - lowerYOfMovingGameObject) <= _maxRangeTollerance;
     }
@@ -199,8 +218,8 @@ public class PlacementValidator : MonoBehaviour
         var upperYOfStaticGameObject = gameObject.transform.position.y + otherBounds.extents.y - _maxRangeTollerance;
         var lowerYOfStaticGameObject = gameObject.transform.position.y - otherBounds.extents.y + _maxRangeTollerance;
 
-        var upperYOfMovingGameObject = transform.position.y + _boxCollider.bounds.extents.y - _maxRangeTollerance;
-        var lowerYOfMovingGameObject = transform.position.y - _boxCollider.bounds.extents.y + _maxRangeTollerance;
+        var upperYOfMovingGameObject = transform.position.y + PlacementCollider.bounds.extents.y - _maxRangeTollerance;
+        var lowerYOfMovingGameObject = transform.position.y - PlacementCollider.bounds.extents.y + _maxRangeTollerance;
 
         return lowerYOfMovingGameObject >= upperYOfStaticGameObject || upperYOfMovingGameObject <= lowerYOfStaticGameObject;
     }
@@ -238,16 +257,5 @@ public class PlacementValidator : MonoBehaviour
         }
 
         _objectsInRange.Remove(other.gameObject);
-    }
-
-    public void ParentDestroyed()
-    {
-        _objectsInRange.ForEach(x => x.GetComponent<MeshRenderer>().enabled = true);
-        _objectsInRange.Clear();
-    }
-
-    public void OnAvoidUnbuildableTerrainChanged(bool avoid)
-    {
-        _avoidUnbuildableTerrain = avoid;
     }
 }

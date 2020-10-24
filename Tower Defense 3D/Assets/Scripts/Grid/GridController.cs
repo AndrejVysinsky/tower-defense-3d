@@ -6,7 +6,7 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
 {
     [SerializeField] GridSettings gridSettings;
     [SerializeField] GridDisplay gridDisplay;
-    [SerializeField] PlacementValidator placementHandler;
+    [SerializeField] PlacementValidator placementValidator;
     
     [SerializeField] MapSaveManager map;
 
@@ -15,17 +15,15 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
 
     private GameObject _objectToPlacePrefab;
     private GameObject _objectToPlace;
-    private Collider _objectToPlaceCollider;
 
     public GridSettings GridSettings => gridSettings;
 
     private void Awake()
     {
-        placementHandler = Instantiate(placementHandler);
-
+        placementValidator = Instantiate(placementValidator);
+        placementValidator.GridSettings = GridSettings;
+                
         gridDisplay.CalculateGrid(gridSettings.sizeX, gridSettings.sizeZ, gridSettings.cellSize);
-
-        OnAvoidUnbuildableTerrainChanged(gridSettings.avoidUnbuildableTerrain);
     }
 
     private void OnEnable()
@@ -81,6 +79,15 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
         {
             _objectToPlace.transform.Rotate(Vector3.up, 90f);
         }
+        var size = Quaternion.Euler(_objectToPlace.transform.rotation.eulerAngles) * _objectToPlace.GetComponent<Collider>().bounds.size;
+
+        size.x = Mathf.Abs(size.x);
+        size.y = Mathf.Abs(size.y);
+        size.z = Mathf.Abs(size.z);
+
+        _objectOriginY = _objectToPlace.transform.position.y + size.y / 2 - _objectToPlace.GetComponent<Collider>().bounds.center.y; ;
+
+        placementValidator.ResizeCollider(size);
     }
 
     private void ChangeElevation()
@@ -138,7 +145,7 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
         position = ClampPosition(position);
 
         _objectToPlace.transform.position = position;
-        placementHandler.SetPosition(position);
+        placementValidator.SetPosition(position);
     }
 
     private Vector3 GetNearestPointOnGrid(Vector3 point)
@@ -159,12 +166,12 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
 
     private Vector3 ShiftPosition(Vector3 position)
     {
-        if ((int)_objectToPlaceCollider.bounds.size.x / gridSettings.cellSize % 2 != 0)
+        if ((int)placementValidator.PlacementCollider.bounds.size.x / gridSettings.cellSize % 2 != 0)
         {
             position.x -= gridSettings.cellSize / 2;
         }
 
-        if ((int)_objectToPlaceCollider.bounds.size.z / gridSettings.cellSize % 2 != 0)
+        if ((int)placementValidator.PlacementCollider.bounds.size.z / gridSettings.cellSize % 2 != 0)
         {
             position.z -= gridSettings.cellSize / 2;
         }
@@ -174,7 +181,7 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
 
     private Vector3 ClampPosition(Vector3 position)
     {
-        var bounds = _objectToPlaceCollider.bounds;
+        var bounds = placementValidator.PlacementCollider.bounds;
 
         var offsetX = bounds.extents.x;
         var offsetZ = bounds.extents.z;
@@ -199,7 +206,7 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
 
         if (gridSettings.collisionDetection && gridSettings.replaceOnCollision == false)
         {
-            if (placementHandler.IsOverlapping || placementHandler.IsOnGround == false)
+            if (placementValidator.IsOverlapping || placementValidator.IsOnGround == false)
             {
                 return;
             }
@@ -207,14 +214,14 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
 
         map.ObjectPlaced(_objectToPlace, _objectToPlacePrefab);
 
-        placementHandler.DeregisterParent();
+        placementValidator.DeregisterParent();
 
         _objectToPlace.layer = (int)LayerEnum.Default;
         _objectToPlace = null;
 
         if (gridSettings.collisionDetection && gridSettings.replaceOnCollision)
         {
-            List<int> removedIds = placementHandler.RemoveOverlappedObjects();
+            List<int> removedIds = placementValidator.RemoveOverlappedObjects();
 
             removedIds.ForEach(x => map.ObjectRemoved(x));
         }
@@ -238,7 +245,6 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
     {
         if (_objectToPlace != null)
         {
-            //placementHandler.ParentDestroyed();
             Destroy(_objectToPlace);
         }
         _objectToPlace = null;
@@ -247,13 +253,13 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
     private void InstantiatePrefab()
     {
         _objectToPlace = Instantiate(_objectToPlacePrefab, map.transform);
-        _objectToPlaceCollider = _objectToPlace.GetComponent<Collider>();
         _objectToPlace.layer = (int)LayerEnum.IgnoreRayCast;
 
-        _objectOriginY = _objectToPlace.transform.position.y + _objectToPlaceCollider.bounds.extents.y - _objectToPlaceCollider.bounds.center.y;
+        var objectToPlaceBounds = _objectToPlace.GetComponent<Collider>().bounds;
 
-        placementHandler.RegisterParent(_objectToPlace);
-        placementHandler.ResizeCollider(_objectToPlaceCollider.bounds.size);
+        _objectOriginY = _objectToPlace.transform.position.y + objectToPlaceBounds.extents.y - objectToPlaceBounds.center.y;
+
+        placementValidator.RegisterParent(_objectToPlace);
 
         SetObjectPosition(gridDisplay.GetGridBasePosition());
     }
@@ -266,8 +272,6 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
     public void OnAvoidUnbuildableTerrainChanged(bool avoid)
     {
         gridSettings.avoidUnbuildableTerrain = avoid;
-
-        placementHandler.OnAvoidUnbuildableTerrainChanged(avoid);
     }
 
     public void OnGridSnappingChanged(bool snapToGrid)
