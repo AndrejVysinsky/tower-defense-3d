@@ -1032,7 +1032,17 @@ PrefabInstance:
     - target: {fileID: 8658931559806550153, guid: 0faf02dc6f63cde4a805f913d8a455dc,
         type: 3}
       propertyPath: gridSettings.collisionDetection
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8658931559806550153, guid: 0faf02dc6f63cde4a805f913d8a455dc,
+        type: 3}
+      propertyPath: gridSettings.cellSize
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8658931559806550153, guid: 0faf02dc6f63cde4a805f913d8a455dc,
+        type: 3}
+      propertyPath: gridSettings.buildOnlyOnTerrain
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8658931559806550154, guid: 0faf02dc6f63cde4a805f913d8a455dc,
         type: 3}

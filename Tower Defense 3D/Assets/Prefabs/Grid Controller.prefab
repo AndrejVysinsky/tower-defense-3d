@@ -273,11 +273,12 @@ MonoBehaviour:
     cellSize: 1
     continuousBuilding: 1
     avoidUnbuildableTerrain: 0
+    buildOnlyOnTerrain: 0
     snapToGrid: 1
     autoHeight: 0
     collisionDetection: 1
     replaceOnCollision: 0
   gridDisplay: {fileID: 8658931559509862907}
-  placementHandler: {fileID: 6209219634770400540, guid: dde82768227e72849b28d62c61880f55,
+  placementValidator: {fileID: 6209219634770400540, guid: dde82768227e72849b28d62c61880f55,
     type: 3}
   map: {fileID: 0}
