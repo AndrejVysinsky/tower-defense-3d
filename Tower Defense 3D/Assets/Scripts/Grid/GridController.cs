@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -220,6 +221,7 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
         }
 
         _objectToPlace.layer = (int)LayerEnum.Default;
+        _objectToPlace.GetComponentsInChildren<MonoBehaviour>().ToList().ForEach(x => x.enabled = true);
 
         map.ObjectPlaced(_objectToPlace, _objectToPlacePrefab);
 
@@ -273,6 +275,7 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
     private void InstantiatePrefab()
     {
         _objectToPlace = Instantiate(_objectToPlacePrefab, map.transform);
+        _objectToPlace.GetComponentsInChildren<MonoBehaviour>().ToList().ForEach(x => x.enabled = false);
         _objectToPlace.layer = (int)LayerEnum.IgnoreRayCast;
 
         var objectToPlaceBounds = _objectToPlace.GetComponent<Collider>().bounds;

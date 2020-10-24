@@ -239,7 +239,8 @@ public class PlacementValidator : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == _parentObject || _objectsInRange.Contains(other.gameObject) || other.gameObject.layer == (int)LayerEnum.UI)
+        if (other.gameObject == _parentObject || _objectsInRange.Contains(other.gameObject) || other.gameObject.layer == (int)LayerEnum.UI
+            || other.gameObject.layer == (int)LayerEnum.IgnoreRayCast)
         {
             return;
         }
