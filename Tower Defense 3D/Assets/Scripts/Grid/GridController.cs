@@ -45,7 +45,7 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
 
         if (Input.GetMouseButtonDown(1))
         {
-            DestroyObject();
+            DestroyObjectToPlace();
         }
 
         if (_objectToPlace != null)
@@ -64,7 +64,14 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
 
             if (Input.GetMouseButtonDown(1))
             {
-                DestroyObject();
+                DestroyObjectToPlace();
+            }
+        }
+        else
+        {
+            if (Input.GetMouseButtonDown(1) && gridSettings.editorOnlyDestruction)
+            {
+                DestroyClickedObject();
             }
         }
     }
@@ -212,11 +219,12 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
             }
         }
 
+        _objectToPlace.layer = (int)LayerEnum.Default;
+
         map.ObjectPlaced(_objectToPlace, _objectToPlacePrefab);
 
         placementValidator.DeregisterParent();
-
-        _objectToPlace.layer = (int)LayerEnum.Default;
+        
         _objectToPlace = null;
 
         if (gridSettings.collisionDetection && gridSettings.replaceOnCollision)
@@ -234,20 +242,32 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
 
     public void OnBuildOptionClicked(GameObject gameObject)
     {
-        DestroyObject();
+        DestroyObjectToPlace();
 
         _objectToPlacePrefab = gameObject;
 
         InstantiatePrefab();
     }
 
-    private void DestroyObject()
+    private void DestroyObjectToPlace()
     {
         if (_objectToPlace != null)
         {
             Destroy(_objectToPlace);
         }
         _objectToPlace = null;
+    }
+
+    private void DestroyClickedObject()
+    {
+        if (RayCaster.RayCastGameObject(out RaycastHit hitInfo))
+        {
+            if (hitInfo.transform.IsChildOf(map.transform))
+            {
+                map.ObjectRemoved(hitInfo.transform.gameObject.GetInstanceID());
+                Destroy(hitInfo.transform.gameObject);
+            }
+        }
     }
 
     private void InstantiatePrefab()

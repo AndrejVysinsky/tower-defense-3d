@@ -7112,6 +7112,16 @@ PrefabInstance:
       propertyPath: map
       value: 
       objectReference: {fileID: 767853018}
+    - target: {fileID: 8658931559806550153, guid: 0faf02dc6f63cde4a805f913d8a455dc,
+        type: 3}
+      propertyPath: gridSettings.continuousBuilding
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8658931559806550153, guid: 0faf02dc6f63cde4a805f913d8a455dc,
+        type: 3}
+      propertyPath: gridSettings.editorOnlyDestruction
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8658931559806550154, guid: 0faf02dc6f63cde4a805f913d8a455dc,
         type: 3}
       propertyPath: m_Name

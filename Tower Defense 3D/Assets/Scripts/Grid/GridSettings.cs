@@ -14,4 +14,5 @@ public class GridSettings
     public bool autoHeight;
     public bool collisionDetection;
     public bool replaceOnCollision;
+    public bool editorOnlyDestruction;
 }
