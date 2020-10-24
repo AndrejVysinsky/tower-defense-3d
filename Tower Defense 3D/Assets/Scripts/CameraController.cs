@@ -6,6 +6,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] float adjustDistanceSpeed;
     [SerializeField] float rotationSpeed;
     [SerializeField] GridController gridController;
+    [SerializeField] float maxDistanceFromGround;
 
     private Camera _camera;
 
@@ -17,6 +18,10 @@ public class CameraController : MonoBehaviour
         _camera = GetComponentInChildren<Camera>();
 
         _camera.transform.LookAt(transform.position);
+        
+        var position = _camera.transform.position;
+        position.y = maxDistanceFromGround;
+        _camera.transform.position = position;
 
         _targetDistanceFromGround = transform.position.y;
         _currentDistanceFromGround = GetCurrentDistanceFromGround();
@@ -82,13 +87,13 @@ public class CameraController : MonoBehaviour
     {
         var position = transform.position;
 
-        var diff = _targetDistanceFromGround - _currentDistanceFromGround;
-
-        if (Mathf.Abs(diff) < 0.01f)
+        if (Mathf.Approximately(_targetDistanceFromGround, _currentDistanceFromGround))
         {
             _currentDistanceFromGround = _targetDistanceFromGround;
             return;
         }
+
+        var diff = _targetDistanceFromGround - _currentDistanceFromGround;
 
         position.y += diff * Time.deltaTime * adjustDistanceSpeed;
 

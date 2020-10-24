@@ -404,6 +404,11 @@ PrefabInstance:
       propertyPath: gridController
       value: 
       objectReference: {fileID: 210626102}
+    - target: {fileID: 8683805164760568836, guid: 71cb8956f96906248bb3bdd29d7599ba,
+        type: 3}
+      propertyPath: maxDistanceFromGround
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 8683805164760568837, guid: 71cb8956f96906248bb3bdd29d7599ba,
         type: 3}
       propertyPath: m_LocalPosition.x

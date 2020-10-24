@@ -85,7 +85,6 @@ public class PlacementValidator : MonoBehaviour
     private void CheckValidity()
     {
         CheckOverlap();
-        Debug.Log(_overlappedObjects.Count > 0);
 
         IsOnGround = IsWholeObjectOnGround();
 
