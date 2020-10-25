@@ -4,10 +4,9 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] EnemyData enemyData;
+    [SerializeField] HealthScript healthScript;
 
     private NavMeshAgent _agent;
-
-    private HealthScript _healthScript;
 
     private float _difficultyModifier;
 
@@ -29,7 +28,7 @@ public class Enemy : MonoBehaviour
         //spriteRenderer.color = color;
 
         //_healthScript = GetComponent<HealthScript>();
-        //_healthScript.Initialize(enemyData.Health * (1 + difficultyMultiplier));
+        healthScript.Initialize(enemyData.Health * (1 + difficultyMultiplier));
 
         _difficultyModifier = difficultyMultiplier;
 
@@ -58,9 +57,9 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
-        _healthScript.SubtractHealth(amount);
+        healthScript.SubtractHealth(amount);
 
-        if (_healthScript.Health == 0)
+        if (healthScript.Health == 0)
         {
             var reward = enemyData.RewardToPlayer * (1 + _difficultyModifier);
 

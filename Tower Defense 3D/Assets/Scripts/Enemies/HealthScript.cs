@@ -1,6 +1,4 @@
-﻿
-using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class HealthScript : MonoBehaviour
@@ -15,6 +13,8 @@ public class HealthScript : MonoBehaviour
     private float _maxHealth;
     private float _currentHealth;
 
+    private Camera _mainCamera;
+
     public float Health => _currentHealth;
 
     private void Awake()
@@ -27,6 +27,13 @@ public class HealthScript : MonoBehaviour
                 new GradientColorKey(fullHealthColor, 1f)
             }
         };
+
+        _mainCamera = Camera.main;
+    }
+
+    private void LateUpdate()
+    {
+        transform.LookAt(transform.position + _mainCamera.transform.rotation * Vector3.forward, _mainCamera.transform.rotation * Vector3.up);
     }
 
     public void Initialize(float health)

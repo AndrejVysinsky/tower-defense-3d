@@ -9,6 +9,6 @@ public class PortalStart : MonoBehaviour
         if (timer.activeSelf == false)
             timer.SetActive(true);
 
-        return GetComponentInChildren<WaveTimer>();
+        return timer.GetComponent<WaveTimer>();
     }
 }

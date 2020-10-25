@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class TowerTargeting : MonoBehaviour
 {
@@ -23,6 +21,12 @@ public class TowerTargeting : MonoBehaviour
 
     private void Update()
     {
+        //when target dies get another one
+        if (Target == null)
+        {
+            Target = GetTarget();
+        }
+
         if (Target != null)
         {
             LookAt(Target.transform.position);
@@ -42,7 +46,7 @@ public class TowerTargeting : MonoBehaviour
 
     public void SetEnemyTargeting(bool value)
     {
-        GetComponent<Collider2D>().enabled = value;
+        GetComponent<Collider>().enabled = value;
     }
 
     public GameObject GetFirePoint()
@@ -50,23 +54,23 @@ public class TowerTargeting : MonoBehaviour
         return firePoint;
     }
 
-    private void OnTriggerEnter(Collider collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Enemy"))
         {
-            var newEnemy = collision.gameObject.GetComponent<Enemy>();
+            var newEnemy = other.gameObject.GetComponent<Enemy>();
 
-            _targetsInRange.Insert(collision.gameObject, newEnemy.GetPriority());
+            _targetsInRange.Insert(other.gameObject, newEnemy.GetPriority());
 
             Target = GetTarget();
         }
     }
 
-    private void OnTriggerExit(Collider collision)
+    private void OnTriggerExit(Collider other)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Enemy"))
         {
-            _targetsInRange.Remove(collision.gameObject);
+            _targetsInRange.Remove(other.gameObject);
 
             Target = GetTarget();
         }

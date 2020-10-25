@@ -5398,7 +5398,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f19a1a1175c5d24f8e12edcec3e738e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildPrefab: {fileID: 2621891757950903335, guid: ee95ce3e84b86f84fb71b7e84462d8c1,
+  buildPrefab: {fileID: 7039038065909460467, guid: fe7bec2e365cc4e40a7bc0a49fb275c4,
     type: 3}
 --- !u!114 &1611284546
 MonoBehaviour:
@@ -7196,6 +7196,11 @@ PrefabInstance:
       propertyPath: gridController
       value: 
       objectReference: {fileID: 919535682}
+    - target: {fileID: 8683805164760568836, guid: 71cb8956f96906248bb3bdd29d7599ba,
+        type: 3}
+      propertyPath: maxDistanceFromGround
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 8683805164760568837, guid: 71cb8956f96906248bb3bdd29d7599ba,
         type: 3}
       propertyPath: m_LocalPosition.x
