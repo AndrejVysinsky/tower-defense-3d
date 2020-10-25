@@ -105,6 +105,7 @@ GameObject:
   - component: {fileID: 2024329973817410617}
   - component: {fileID: 4330049152232915985}
   - component: {fileID: 2663825934812099868}
+  - component: {fileID: 757528599959891481}
   m_Layer: 0
   m_Name: Canon Tower
   m_TagString: Untagged
@@ -205,6 +206,25 @@ MonoBehaviour:
   projectilePrefab: {fileID: 714181449567907701, guid: 0135b9e50aa251445aa7692d8c8d4782,
     type: 3}
   towerTargeting: {fileID: 1069530625128871706}
+--- !u!114 &757528599959891481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2169085319361342427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c45e504de9d76754f882891608fcddd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactions:
+  - interactionSprite: {fileID: 21300000, guid: e08eeea2b43ffac45b39ac26ed9c6bf0,
+      type: 3}
+    interactionName: Upgrade
+  - interactionSprite: {fileID: 21300000, guid: 63ba981fe23cd6b40b8159d4810fe4a4,
+      type: 3}
+    interactionName: Sell
 --- !u!1 &4724925258096942215
 GameObject:
   m_ObjectHideFlags: 0
