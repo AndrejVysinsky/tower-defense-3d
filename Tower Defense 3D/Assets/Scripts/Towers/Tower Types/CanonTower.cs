@@ -44,21 +44,19 @@ public class CanonTower : MonoBehaviour, ITowerType
 
     public void Upgrade()
     {
-        if (Level == towerData.MaxLevel)
-        {
-            //MethodBase.GetCurrentMethod().Name dava blbosti
-            var interactionMenu = GetComponent<InteractionList>();
-
-            EventManager.ExecuteEvent<IInteractionChanged>((x, y) => x.OnInteractionRemoved("Upgrade", new UnityAction(Upgrade)));
-            return;
-        }
-
         Level++;
-        //towerTargeting.TowerSprite.sprite = towerData.GetLevelData(Level).Sprite;
+        GetComponent<MeshRenderer>().material = towerData.GetLevelData(Level).Material;
 
         var price = towerData.GetLevelData(Level).Price;
 
         //GameController.Instance.ModifyCurrencyBy(-price, transform.position);
+
+        if (Level == towerData.MaxLevel)
+        {
+            var interactionMenu = GetComponent<InteractionList>();
+
+            EventManager.ExecuteEvent<IInteractionChanged>((x, y) => x.OnInteractionRemoved("Upgrade", new UnityAction(Upgrade)));
+        }
     }
 
     public void Sell()

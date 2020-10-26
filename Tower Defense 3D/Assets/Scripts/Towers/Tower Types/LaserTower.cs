@@ -1,17 +1,21 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 public class LaserTower : MonoBehaviour, ITowerType
 {
     [SerializeField] TowerData towerData;
     [SerializeField] LineRenderer laser;
     [SerializeField] TowerTargeting towerTargeting;
-    
-    public int Level { get; private set; }
+
+    public int Level { get; private set; } = 1;
     public TowerData TowerData => towerData;
 
-    private void Start()
+    private void Awake()
     {
-        Upgrade();
+        var interactions = GetComponent<InteractionList>().Interactions;
+
+        interactions.Find(x => x.InteractionName == "Upgrade").InteractionActions.Add(new UnityAction(Upgrade));
+        interactions.Find(x => x.InteractionName == "Sell").InteractionActions.Add(new UnityAction(Sell));
     }
 
     private void Update()
@@ -38,10 +42,18 @@ public class LaserTower : MonoBehaviour, ITowerType
     public void Upgrade()
     {
         Level++;
-        towerTargeting.TowerSprite.sprite = towerData.GetLevelData(Level).Sprite;
+        GetComponent<MeshRenderer>().material = towerData.GetLevelData(Level).Material;
 
         var price = towerData.GetLevelData(Level).Price;
+
         //GameController.Instance.ModifyCurrencyBy(-price, transform.position);
+
+        if (Level == towerData.MaxLevel)
+        {
+            var interactionMenu = GetComponent<InteractionList>();
+
+            EventManager.ExecuteEvent<IInteractionChanged>((x, y) => x.OnInteractionRemoved("Upgrade", new UnityAction(Upgrade)));
+        }
     }
 
     public void Sell()

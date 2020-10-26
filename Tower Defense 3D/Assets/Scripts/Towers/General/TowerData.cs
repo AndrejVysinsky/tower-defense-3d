@@ -24,12 +24,12 @@ public class TowerData : ScriptableObject
         [SerializeField] float damage;
         [SerializeField] float attackDelay;
         [SerializeField] float radius;
-        [SerializeField] Sprite sprite;
+        [SerializeField] Material material;
 
         public int Price => price;
         public float Damage => damage;
         public float AttackDelay => attackDelay;
         public float Radius => radius;
-        public Sprite Sprite => sprite;
+        public Material Material => material;
     }
 }
