@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 public class TowerTargeting : MonoBehaviour
 {
@@ -6,17 +8,15 @@ public class TowerTargeting : MonoBehaviour
     [SerializeField] GameObject moveablePart;
     [SerializeField] GameObject firePoint;
     
-    private PriorityQueue<GameObject, int> _targetsInRange;
+    private List<Enemy> _enemiesInRange;
     
     public RangeRenderer RangeRenderer { get; private set; }
     public GameObject Target { get; private set; }
-    public SpriteRenderer TowerSprite { get; private set; }
 
     private void Awake()
     {
-        _targetsInRange = new PriorityQueue<GameObject, int>();
+        _enemiesInRange = new List<Enemy>();
         RangeRenderer = new RangeRenderer(rangeLineRenderer, GetComponent<SphereCollider>().radius);
-        TowerSprite = moveablePart.GetComponent<SpriteRenderer>();
     }
 
     private void Update()
@@ -44,25 +44,11 @@ public class TowerTargeting : MonoBehaviour
         moveablePart.transform.rotation = rotation;
     }
 
-    public void SetEnemyTargeting(bool value)
-    {
-        GetComponent<Collider>().enabled = value;
-    }
-
-    public GameObject GetFirePoint()
-    {
-        return firePoint;
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            var newEnemy = other.gameObject.GetComponent<Enemy>();
-
-            _targetsInRange.Insert(other.gameObject, newEnemy.GetPriority());
-
-            Target = GetTarget();
+            _enemiesInRange.Add(other.gameObject.GetComponent<Enemy>());
         }
     }
 
@@ -70,8 +56,7 @@ public class TowerTargeting : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            _targetsInRange.Remove(other.gameObject);
-
+            _enemiesInRange.Remove(other.gameObject.GetComponent<Enemy>());
             Target = GetTarget();
         }
     }
@@ -79,12 +64,18 @@ public class TowerTargeting : MonoBehaviour
     private GameObject GetTarget()
     {
         //sometimes target on top of queue is null
+        _enemiesInRange.RemoveAll(enemy => enemy == null);
 
-        while (_targetsInRange.Count() > 0 &&  _targetsInRange.Peek() == null)
-        {
-            _targetsInRange.Pop();
-        }
+        if (_enemiesInRange.Count == 0)
+            return null;
 
-        return _targetsInRange.Count() > 0 ? _targetsInRange.Peek() : null;
+        float remainingDistance = _enemiesInRange.Min(enemy => enemy.GetRemainingDistance());
+
+        return _enemiesInRange.Where(enemy => enemy.GetRemainingDistance() == remainingDistance).FirstOrDefault().gameObject;
+    }
+
+    public GameObject GetFirePoint()
+    {
+        return firePoint;
     }
 }

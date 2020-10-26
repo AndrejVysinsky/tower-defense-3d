@@ -69,8 +69,8 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public int GetPriority()
+    public float GetRemainingDistance()
     {
-        return (int)_agent.remainingDistance;
+        return Vector3.Distance(transform.position, _portalEnd.transform.position);
     }
 }
