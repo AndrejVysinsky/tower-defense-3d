@@ -19,6 +19,8 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
 
     public GridSettings GridSettings => gridSettings;
 
+    public static bool IsBuildingModeActive { get; private set; } = false;
+
     private void Awake()
     {
         placementValidator = Instantiate(placementValidator);
@@ -247,6 +249,7 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
         DestroyObjectToPlace();
 
         _objectToPlacePrefab = gameObject;
+        IsBuildingModeActive = true;
 
         InstantiatePrefab();
     }
@@ -258,6 +261,7 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
             Destroy(_objectToPlace);
         }
         _objectToPlace = null;
+        IsBuildingModeActive = false;
     }
 
     private void DestroyClickedObject()

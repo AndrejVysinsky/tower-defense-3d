@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Reflection;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -28,6 +27,9 @@ public class InteractionController : MonoBehaviour, IInteractionChanged
         if (Input.GetMouseButtonDown(0))
         {
             if (RayCaster.RayCastUIObject(out RaycastResult raycastResult))
+                return;
+
+            if (GridController.IsBuildingModeActive)
                 return;
 
             HideInteractionMenu();
