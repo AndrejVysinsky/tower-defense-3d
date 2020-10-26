@@ -677,7 +677,7 @@ GameObject:
   - component: {fileID: 459278286}
   - component: {fileID: 459278285}
   m_Layer: 5
-  m_Name: Canon Tower (1)
+  m_Name: Canon Tower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -767,7 +767,7 @@ GameObject:
   - component: {fileID: 605938252}
   - component: {fileID: 605938254}
   m_Layer: 5
-  m_Name: Canon Tower
+  m_Name: Laser Tower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -842,7 +842,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f19a1a1175c5d24f8e12edcec3e738e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildPrefab: {fileID: 2169085319361342427, guid: 99cfe215e3df0ee499458c8e366551e8,
+  buildPrefab: {fileID: 4093102055030679959, guid: b15a241b5114f6e46a8494e9d11e1917,
     type: 3}
 --- !u!1 &612022850
 GameObject:
