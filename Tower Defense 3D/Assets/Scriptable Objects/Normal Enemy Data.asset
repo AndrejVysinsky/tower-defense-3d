@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Normal Enemy Data
   m_EditorClassIdentifier: 
   speed: 5
-  health: 1000
+  health: 100
   damageToPlayer: 1
   rewardToPlayer: 5

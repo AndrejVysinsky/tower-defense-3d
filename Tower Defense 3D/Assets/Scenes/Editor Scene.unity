@@ -4962,7 +4962,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f19a1a1175c5d24f8e12edcec3e738e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildPrefab: {fileID: 171754904314338618, guid: 1d4ec6fd05bfd03489eb7877b656460e,
+  buildPrefab: {fileID: 919132149155446097, guid: 5e8dff40488ed7e4ab6f0c75a56c5dd8,
     type: 3}
 --- !u!114 &1468805886
 MonoBehaviour:
@@ -4984,7 +4984,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ee0b82b9d71bb224cb908f75ade3260e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: de2196d4d4765ec439e34eec404f1780, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

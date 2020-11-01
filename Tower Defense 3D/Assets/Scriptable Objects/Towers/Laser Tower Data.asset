@@ -18,49 +18,49 @@ MonoBehaviour:
     damage: 50
     attackDelay: 0
     radius: 1.8
-    sprite: {fileID: 21300000, guid: 070e5061127ea1540af4794338b4780a, type: 3}
+    material: {fileID: 2100000, guid: 8e996807ad0effb47a54b11232e2a358, type: 2}
   - price: 100
     damage: 70
     attackDelay: 0
     radius: 1.8
-    sprite: {fileID: 21300000, guid: 4e08a4df176db6647a1ce8a1e8e0eb3a, type: 3}
+    material: {fileID: 2100000, guid: 8e3c8b7560a95c84787e8a33ecce1aed, type: 2}
   - price: 200
     damage: 100
     attackDelay: 0
     radius: 1.9
-    sprite: {fileID: 21300000, guid: 5eab6d0e8f9aab442a5cdbacaa5c4ea8, type: 3}
+    material: {fileID: 2100000, guid: 3a56629c1970b4540942c5565d2e2663, type: 2}
   - price: 350
     damage: 200
     attackDelay: 0
     radius: 2
-    sprite: {fileID: 21300000, guid: 64869e00e6ce19c40badd4dd4536c3b3, type: 3}
+    material: {fileID: 0}
   - price: 700
     damage: 400
     attackDelay: 0
     radius: 2
-    sprite: {fileID: 21300000, guid: cb946255adae38b488d43942a8ca5e99, type: 3}
+    material: {fileID: 0}
   - price: 4000
     damage: 3000
     attackDelay: 0
     radius: 2.2
-    sprite: {fileID: 21300000, guid: cd6fc8645b5b9d44ead54967f142776f, type: 3}
+    material: {fileID: 0}
   - price: 12000
     damage: 7000
     attackDelay: 0
     radius: 2.2
-    sprite: {fileID: 21300000, guid: 749e49f930ccb484d98bd33b840635ba, type: 3}
+    material: {fileID: 0}
   - price: 40000
     damage: 25000
     attackDelay: 0
     radius: 2.2
-    sprite: {fileID: 21300000, guid: 057cd4ac70fb81e4dbe02ec84dc84b62, type: 3}
+    material: {fileID: 0}
   - price: 120000
     damage: 75000
     attackDelay: 0
     radius: 2.2
-    sprite: {fileID: 21300000, guid: 10abc7d33e186bd47be9dc23ea1fc99a, type: 3}
+    material: {fileID: 0}
   - price: 0
     damage: 200000
     attackDelay: 0
     radius: 2.5
-    sprite: {fileID: 21300000, guid: 5be65808b210cfd409131e7bb030b404, type: 3}
+    material: {fileID: 0}

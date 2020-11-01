@@ -33,7 +33,8 @@ public class HealthScript : MonoBehaviour
 
     private void LateUpdate()
     {
-        transform.LookAt(transform.position + _mainCamera.transform.rotation * Vector3.forward, _mainCamera.transform.rotation * Vector3.up);
+        transform.LookAt(_mainCamera.transform.forward + transform.position);
+        //transform.LookAt(transform.position + _mainCamera.transform.rotation * Vector3.forward, _mainCamera.transform.rotation * Vector3.up);
     }
 
     public void Initialize(float health)
