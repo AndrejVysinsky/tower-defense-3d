@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3914069837572780679}
   - component: {fileID: 1276038831590098509}
   - component: {fileID: 3065372026208832314}
+  - component: {fileID: 2043489671562712055}
   m_Layer: 0
   m_Name: Big Tree
   m_TagString: Untagged
@@ -96,3 +97,16 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3, y: 6, z: 3}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2043489671562712055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771693328120407960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 158cfb9d210db184c968a2a4d4895737, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  path: Trees

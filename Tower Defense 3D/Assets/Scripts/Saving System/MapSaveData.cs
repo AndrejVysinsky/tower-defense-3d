@@ -37,6 +37,11 @@ public class MapSaveData
 
     public void ObjectPlaced(GameObject gameObject, GameObject prefab)
     {
+        if (prefab.TryGetComponent(out ResourcePath path) == false)
+        {
+            return;
+        }
+
         saveableObjects.Add(new SaveableObject()
         {
             id = gameObject.GetInstanceID(),
@@ -54,7 +59,7 @@ public class MapSaveData
             scaleY = gameObject.transform.localScale.y,
             scaleZ = gameObject.transform.localScale.z,
 
-            resourcePath = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(prefab).Replace("Assets/Resources/", "").Replace(".prefab", "")
+            resourcePath = path + "/" + prefab.name
         });
     }
 

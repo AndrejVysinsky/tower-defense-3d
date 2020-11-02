@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 2881078601860262461}
   - component: {fileID: 8816917771771639}
   - component: {fileID: 1673076137334947462}
+  - component: {fileID: 5464956751356299188}
   m_Layer: 0
-  m_Name: half block
+  m_Name: Half Block
   m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95,3 +96,16 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2, y: 1, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5464956751356299188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1954472630587457314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 158cfb9d210db184c968a2a4d4895737, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  path: Terrain

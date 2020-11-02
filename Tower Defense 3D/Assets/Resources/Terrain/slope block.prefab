@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 4187493832321288041}
   - component: {fileID: 2159476286214812579}
   - component: {fileID: 4704894681835607859}
+  - component: {fileID: -4462360615488799928}
   m_Layer: 0
-  m_Name: slope block
+  m_Name: Slope Block
   m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96,3 +97,16 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -5495902117074765545, guid: 7e0e8975f44855547a465069c5b1268b, type: 3}
+--- !u!114 &-4462360615488799928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502428768679826038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 158cfb9d210db184c968a2a4d4895737, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  path: Terrain

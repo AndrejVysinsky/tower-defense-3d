@@ -21,8 +21,6 @@ public class GridDisplay : MonoBehaviour
 
     private void Awake()
     {
-        _lines = new List<LineRenderer>();
-
         _gridElevation = 0;
 
         if (hideGrid)
@@ -35,6 +33,9 @@ public class GridDisplay : MonoBehaviour
     {
         if (hideGrid)
             return;
+
+        if (_lines == null)
+            _lines = new List<LineRenderer>();
 
         _gridCellSize = gridCellSize;
 

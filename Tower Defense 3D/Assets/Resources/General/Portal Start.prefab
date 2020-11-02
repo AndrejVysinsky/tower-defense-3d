@@ -71,6 +71,7 @@ GameObject:
   - component: {fileID: 8712151409065734355}
   - component: {fileID: 6846369484502516761}
   - component: {fileID: 5094425749095268911}
+  - component: {fileID: 4730544751120962741}
   m_Layer: 8
   m_Name: Portal Start
   m_TagString: Terrain
@@ -155,6 +156,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2, y: 1.9999998, z: 1.9999998}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4730544751120962741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4900985901338289612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 158cfb9d210db184c968a2a4d4895737, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  path: General
 --- !u!1001 &4755447764943194244
 PrefabInstance:
   m_ObjectHideFlags: 0
