@@ -35,9 +35,14 @@ public class MapSaveData
         return saveableObjects.Select(x => x.resourcePath).ToList();
     }
 
+    public void RemoveObjectAt(int index)
+    {
+        saveableObjects.RemoveAt(index);
+    }
+
     public void ObjectPlaced(GameObject gameObject, GameObject prefab)
     {
-        if (prefab.TryGetComponent(out ResourcePath path) == false)
+        if (prefab.TryGetComponent(out ResourcePath resourcePath) == false)
         {
             return;
         }
@@ -59,7 +64,7 @@ public class MapSaveData
             scaleY = gameObject.transform.localScale.y,
             scaleZ = gameObject.transform.localScale.z,
 
-            resourcePath = path + "/" + prefab.name
+            resourcePath = resourcePath.Path + "/" + prefab.name
         });
     }
 

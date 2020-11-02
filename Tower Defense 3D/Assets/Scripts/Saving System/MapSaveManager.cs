@@ -27,12 +27,29 @@ public class MapSaveManager : MonoBehaviour
 
         List<GameObject> gameObjects = new List<GameObject>();
 
-        _mapSaveData.GetResourcePaths().ForEach(path =>
+        List<int> objectsToRemove = new List<int>();
+
+        int index = 0;
+        foreach (var path in _mapSaveData.GetResourcePaths())
         {
-            var gameObject = Instantiate(Resources.Load<GameObject>(path), transform);
+            var resource = Resources.Load<GameObject>(path);
+
+            if (resource == null)
+            {
+                Debug.Log($"Resource \"{resource}\" in path \"{path}\" not found");
+                objectsToRemove.Add(index);
+                continue;
+            }
+
+            var gameObject = Instantiate(resource, transform);
 
             gameObjects.Add(gameObject);
-        });
+
+            index++;
+        }
+
+        for (int i = objectsToRemove.Count - 1; i >= 0; i--)
+            _mapSaveData.RemoveObjectAt(objectsToRemove[i]);
 
         _mapSaveData.InitializeObjects(gameObjects);
     }
