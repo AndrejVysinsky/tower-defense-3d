@@ -70,8 +70,8 @@ GameObject:
   - component: {fileID: 6846369484502516761}
   - component: {fileID: 5094425749095268911}
   m_Layer: 8
-  m_Name: My End
-  m_TagString: Untagged
+  m_Name: Portal End
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

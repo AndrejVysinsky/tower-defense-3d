@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4761732551222061483}
   - component: {fileID: 2484938080397739128}
   m_Layer: 0
-  m_Name: Square Block
+  m_Name: Square Block Path
   m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -60,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5594ea16935b4d84c9f5d5c71a075b4c, type: 2}
+  - {fileID: 2100000, guid: 9422982a5176d5745a265b6c59990559, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

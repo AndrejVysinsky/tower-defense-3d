@@ -46,11 +46,6 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
             ChangeElevation();
         }
 
-        if (Input.GetMouseButtonDown(1))
-        {
-            DestroyObjectToPlace();
-        }
-
         if (_objectToPlace != null)
         {
             if (Input.GetAxis("Mouse ScrollWheel") != 0 && Input.GetKey(KeyCode.LeftControl))
