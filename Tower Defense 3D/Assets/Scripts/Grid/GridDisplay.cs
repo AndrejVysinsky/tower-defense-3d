@@ -11,7 +11,7 @@ public class GridDisplay : MonoBehaviour
     [SerializeField] bool hideGrid;
 
     private readonly float _heightOffSet = 0.01f;
-    private readonly int _maxGridElevation = 3;
+    private readonly int _maxGridElevation = 10;
 
     private List<LineRenderer> _lines;
     private int _sizeX;
