@@ -2086,7 +2086,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameInfoDisplay: {fileID: 493604236}
-  startingCurrency: 10
+  startingCurrency: 200
   startingLives: 10
 --- !u!4 &1461662756
 Transform:

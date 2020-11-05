@@ -1,35 +1,22 @@
 ﻿using UnityEngine;
-using UnityEngine.Events;
 
-public class LaserTower : MonoBehaviour, ITowerType
+public class LaserTower : TowerBase
 {
-    [SerializeField] TowerData towerData;
     [SerializeField] LineRenderer laser;
     [SerializeField] TowerTargeting towerTargeting;
 
-    public int Level { get; private set; } = 1;
-    public TowerData TowerData => towerData;
-
-    private void Awake()
+    protected override void Awake()
     {
-        var interactions = GetComponent<InteractionList>().Interactions;
+        base.Awake();
 
-        interactions.Find(x => x.InteractionName == "Upgrade").InteractionActions.Add(new UnityAction(Upgrade));
-        interactions.Find(x => x.InteractionName == "Sell").InteractionActions.Add(new UnityAction(Sell));
-    }
-
-    private void OnEnable()
-    {
-        EventManager.AddListener(gameObject);
-    }
-
-    private void OnDisable()
-    {
-        EventManager.RemoveListener(gameObject);
+        towerTargeting.enabled = false;
     }
 
     private void Update()
     {
+        if (IsUnderConstruction || Level == 0)
+            return;
+
         if (towerTargeting.Target != null)
         {
             laser.enabled = true;
@@ -46,34 +33,37 @@ public class LaserTower : MonoBehaviour, ITowerType
         laser.SetPosition(0, towerTargeting.GetFirePoint().transform.position);
         laser.SetPosition(1, target.transform.position);
 
-        target.GetComponent<Enemy>().TakeDamage(towerData.GetLevelData(Level).Damage * Time.deltaTime);
+        target.GetComponent<Enemy>().TakeDamage(TowerData.GetLevelData(Level).Damage * Time.deltaTime);
     }
 
-    public void Upgrade()
+    public override void Upgrade()
     {
-        Level++;
-        GetComponent<MeshRenderer>().material = towerData.GetLevelData(Level).Material;
-
-        var price = towerData.GetLevelData(Level).Price;
-
-        GameController.Instance.ModifyCurrencyBy(-price, transform.position);
-
-        if (Level == towerData.MaxLevel)
-        {
-            var interactionMenu = GetComponent<InteractionList>();
-
-            EventManager.ExecuteEvent<IInteractionChanged>((x, y) => x.OnInteractionRemoved("Upgrade", new UnityAction(Upgrade)));
-        }
+        base.Upgrade();
     }
 
-    public void Sell()
+    public override void Sell()
     {
-        EventManager.ExecuteEvent<IInteractionChanged>((x, y) => x.OnInteractionHidden());
+        base.Sell();
+    }
 
-        var sellValue = (int)(towerData.GetLevelData(Level).Price * towerData.SellFactor);
+    public override void OnConstructionStarted()
+    {
+        towerTargeting.enabled = false;
 
-        GameController.Instance.ModifyCurrencyBy(sellValue, transform.position);
+        base.OnConstructionStarted();
+    }
 
-        Destroy(gameObject);
+    public override void OnConstructionFinished()
+    {
+        towerTargeting.enabled = true;
+
+        base.OnConstructionFinished();
+    }
+
+    public override void OnConstructionCanceled()
+    {
+        towerTargeting.enabled = true;
+
+        base.OnConstructionCanceled();
     }
 }

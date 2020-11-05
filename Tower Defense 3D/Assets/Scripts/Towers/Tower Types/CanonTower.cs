@@ -1,28 +1,17 @@
 ﻿using UnityEngine;
-using UnityEngine.Events;
 
-public class CanonTower : MonoBehaviour, ITowerType, IConstruction
+public class CanonTower : TowerBase
 {
-    [SerializeField] TowerData towerData;
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] TowerTargeting towerTargeting;
 
     private float _timer;
 
-    public int Level { get; private set; } = 0;
-    public TowerData TowerData => towerData;
-
-    public bool IsUnderConstruction { get; private set; }
-    public bool IsAbleToStartConstruction => GameController.Instance.Currency >= towerData.GetLevelData(Level + 1).Price; 
-
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         towerTargeting.enabled = false;
-
-        var interactions = GetComponent<InteractionList>().Interactions;
-
-        interactions.Find(x => x.InteractionName == "Upgrade").InteractionActions.Add(new UnityAction(Upgrade));
-        interactions.Find(x => x.InteractionName == "Sell").InteractionActions.Add(new UnityAction(Sell));
     }
 
     private void Update()
@@ -32,7 +21,7 @@ public class CanonTower : MonoBehaviour, ITowerType, IConstruction
 
         _timer += Time.deltaTime;
 
-        if (towerTargeting.Target != null && _timer >= towerData.GetLevelData(Level).AttackDelay)
+        if (towerTargeting.Target != null && _timer >= TowerData.GetLevelData(Level).AttackDelay)
         {
             _timer = 0;
             Shoot(towerTargeting.Target);
@@ -43,57 +32,37 @@ public class CanonTower : MonoBehaviour, ITowerType, IConstruction
     {
         var projectile = Instantiate(projectilePrefab, towerTargeting.GetFirePoint().transform.position, transform.rotation);
 
-        projectile.GetComponent<CanonProjectile>().Initialize(target.transform.position, towerData.GetLevelData(Level).Damage);        
+        projectile.GetComponent<CanonProjectile>().Initialize(target.transform.position, TowerData.GetLevelData(Level).Damage);        
     }
 
-    public void Upgrade()
+    public override void Upgrade()
     {
-        Level++;
-        GetComponent<MeshRenderer>().material = towerData.GetLevelData(Level).Material;
-
-        var price = towerData.GetLevelData(Level).Price;
-
-        GameController.Instance.ModifyCurrencyBy(-price, transform.position);
-
-        if (Level == towerData.MaxLevel)
-        {
-            var interactionMenu = GetComponent<InteractionList>();
-
-            EventManager.ExecuteEvent<IInteractionChanged>((x, y) => x.OnInteractionRemoved("Upgrade", new UnityAction(Upgrade)));
-        }
+        base.Upgrade();
     }
 
-    public void Sell()
+    public override void Sell()
     {
-        EventManager.ExecuteEvent<IInteractionChanged>((x, y) => x.OnInteractionHidden());
-
-        var sellValue = (int)(towerData.GetLevelData(Level).Price * towerData.SellFactor);
-
-        GameController.Instance.ModifyCurrencyBy(sellValue, transform.position);
-
-        Destroy(gameObject);
+        base.Sell();
     }
 
-    public void OnConstructionStarted()
+    public override void OnConstructionStarted()
     {
         towerTargeting.enabled = false;
-        IsUnderConstruction = true;
 
-        //simulate construction time
-
-        //after finished
-        OnConstructionFinished();
+        base.OnConstructionStarted();
     }
 
-    public void OnConstructionFinished()
+    public override void OnConstructionFinished()
     {
         towerTargeting.enabled = true;
-        IsUnderConstruction = false;
-        Upgrade();
+
+        base.OnConstructionFinished();
     }
 
-    public void OnConstructionCanceled()
+    public override void OnConstructionCanceled()
     {
-        IsUnderConstruction = false;
+        towerTargeting.enabled = true;
+
+        base.OnConstructionCanceled();
     }
 }
