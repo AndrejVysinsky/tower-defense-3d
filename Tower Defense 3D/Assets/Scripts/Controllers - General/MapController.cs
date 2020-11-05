@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class GameController : MonoBehaviour
+public class MapController : MonoBehaviour
 {
     [SerializeField] MapSaveManager saveManager;
 
