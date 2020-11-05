@@ -1469,7 +1469,7 @@ PrefabInstance:
     - target: {fileID: 8974992648617935877, guid: 044e422ab95adb8488de58f5e2d0dd2a,
         type: 3}
       propertyPath: m_Name
-      value: Map
+      value: Game Map
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 044e422ab95adb8488de58f5e2d0dd2a, type: 3}
