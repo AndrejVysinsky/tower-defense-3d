@@ -1,11 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Reflection;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
 
-public class CanonTower : MonoBehaviour, ITowerType
+public class CanonTower : MonoBehaviour, ITowerType, IConstruction
 {
     [SerializeField] TowerData towerData;
     [SerializeField] GameObject projectilePrefab;
@@ -13,11 +9,16 @@ public class CanonTower : MonoBehaviour, ITowerType
 
     private float _timer;
 
-    public int Level { get; private set; } = 1;
+    public int Level { get; private set; } = 0;
     public TowerData TowerData => towerData;
+
+    public bool IsUnderConstruction { get; private set; }
+    public bool IsAbleToStartConstruction => GameController.Instance.Currency >= towerData.GetLevelData(Level + 1).Price; 
 
     private void Awake()
     {
+        towerTargeting.enabled = false;
+
         var interactions = GetComponent<InteractionList>().Interactions;
 
         interactions.Find(x => x.InteractionName == "Upgrade").InteractionActions.Add(new UnityAction(Upgrade));
@@ -26,6 +27,9 @@ public class CanonTower : MonoBehaviour, ITowerType
 
     private void Update()
     {
+        if (IsUnderConstruction || Level == 0)
+            return;
+
         _timer += Time.deltaTime;
 
         if (towerTargeting.Target != null && _timer >= towerData.GetLevelData(Level).AttackDelay)
@@ -49,7 +53,7 @@ public class CanonTower : MonoBehaviour, ITowerType
 
         var price = towerData.GetLevelData(Level).Price;
 
-        //GameController.Instance.ModifyCurrencyBy(-price, transform.position);
+        GameController.Instance.ModifyCurrencyBy(-price, transform.position);
 
         if (Level == towerData.MaxLevel)
         {
@@ -63,12 +67,33 @@ public class CanonTower : MonoBehaviour, ITowerType
     {
         EventManager.ExecuteEvent<IInteractionChanged>((x, y) => x.OnInteractionHidden());
 
-        //GridTowerPlacement.Instance.FreeTilePosition(transform.position);
-
         var sellValue = (int)(towerData.GetLevelData(Level).Price * towerData.SellFactor);
 
-        //GameController.Instance.ModifyCurrencyBy(sellValue, transform.position);
+        GameController.Instance.ModifyCurrencyBy(sellValue, transform.position);
 
         Destroy(gameObject);
+    }
+
+    public void OnConstructionStarted()
+    {
+        towerTargeting.enabled = false;
+        IsUnderConstruction = true;
+
+        //simulate construction time
+
+        //after finished
+        OnConstructionFinished();
+    }
+
+    public void OnConstructionFinished()
+    {
+        towerTargeting.enabled = true;
+        IsUnderConstruction = false;
+        Upgrade();
+    }
+
+    public void OnConstructionCanceled()
+    {
+        IsUnderConstruction = false;
     }
 }

@@ -39,7 +39,7 @@ public class Enemy : MonoBehaviour
     {
         var damage = enemyData.DamageToPlayer;
 
-        //GameController.Instance.ModifyLivesBy(-damage, transform.position);
+        GameController.Instance.ModifyLivesBy(-damage, transform.position);
     }
 
     private void MoveToStart()
@@ -63,7 +63,7 @@ public class Enemy : MonoBehaviour
         {
             var reward = enemyData.RewardToPlayer * (1 + _difficultyModifier);
 
-            //GameController.Instance.ModifyCurrencyBy((int)reward, transform.position);
+            GameController.Instance.ModifyCurrencyBy((int)reward, transform.position);
 
             Destroy(gameObject);
         }

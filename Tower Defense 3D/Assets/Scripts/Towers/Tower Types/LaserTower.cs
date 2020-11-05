@@ -18,6 +18,16 @@ public class LaserTower : MonoBehaviour, ITowerType
         interactions.Find(x => x.InteractionName == "Sell").InteractionActions.Add(new UnityAction(Sell));
     }
 
+    private void OnEnable()
+    {
+        EventManager.AddListener(gameObject);
+    }
+
+    private void OnDisable()
+    {
+        EventManager.RemoveListener(gameObject);
+    }
+
     private void Update()
     {
         if (towerTargeting.Target != null)
@@ -46,7 +56,7 @@ public class LaserTower : MonoBehaviour, ITowerType
 
         var price = towerData.GetLevelData(Level).Price;
 
-        //GameController.Instance.ModifyCurrencyBy(-price, transform.position);
+        GameController.Instance.ModifyCurrencyBy(-price, transform.position);
 
         if (Level == towerData.MaxLevel)
         {
@@ -58,11 +68,11 @@ public class LaserTower : MonoBehaviour, ITowerType
 
     public void Sell()
     {
-        //GridTowerPlacement.Instance.FreeTilePosition(transform.position);
+        EventManager.ExecuteEvent<IInteractionChanged>((x, y) => x.OnInteractionHidden());
 
         var sellValue = (int)(towerData.GetLevelData(Level).Price * towerData.SellFactor);
 
-        //GameController.Instance.ModifyCurrencyBy(sellValue, transform.position);
+        GameController.Instance.ModifyCurrencyBy(sellValue, transform.position);
 
         Destroy(gameObject);
     }

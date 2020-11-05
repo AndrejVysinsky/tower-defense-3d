@@ -16,6 +16,7 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
 
     private GameObject _objectToPlacePrefab;
     private GameObject _objectToPlace;
+    private IConstruction _objectToPlaceConstruction;
 
     public GridSettings GridSettings => gridSettings;
 
@@ -217,8 +218,20 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
             }
         }
 
+        //if object implements IConstruction interface check if is able to construct and call construction start
+        if (_objectToPlaceConstruction != null)
+        {
+            if (_objectToPlaceConstruction.IsAbleToStartConstruction == false)
+            {
+                Debug.Log("Not enough gold!");
+                return;
+            }
+
+            _objectToPlaceConstruction.OnConstructionStarted();
+        }
+
         _objectToPlace.layer = (int)LayerEnum.Default;
-        _objectToPlace.GetComponentsInChildren<MonoBehaviour>().ToList().ForEach(x => x.enabled = true);
+        //_objectToPlace.GetComponentsInChildren<MonoBehaviour>().ToList().ForEach(x => x.enabled = true);
 
         map.ObjectPlaced(_objectToPlace, _objectToPlacePrefab);
 
@@ -274,14 +287,17 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
     private void InstantiatePrefab()
     {
         _objectToPlace = Instantiate(_objectToPlacePrefab, map.transform);
-        _objectToPlace.GetComponentsInChildren<MonoBehaviour>().ToList().ForEach(x => x.enabled = false);
+        //_objectToPlace.GetComponentsInChildren<MonoBehaviour>().ToList().ForEach(x => x.enabled = false);
+
         _objectToPlace.layer = (int)LayerEnum.IgnoreRayCast;
+        
+        _objectToPlaceConstruction = _objectToPlace.GetComponent<IConstruction>();
 
         var objectToPlaceBounds = _objectToPlace.GetComponent<Collider>().bounds;
 
         _objectOriginY = _objectToPlace.transform.position.y + objectToPlaceBounds.extents.y - objectToPlaceBounds.center.y;
 
-        placementValidator.RegisterParent(_objectToPlace);
+        placementValidator.RegisterParent(_objectToPlace, _objectToPlaceConstruction);
 
         SetObjectPosition(gridDisplay.GetGridBasePosition());
     }
