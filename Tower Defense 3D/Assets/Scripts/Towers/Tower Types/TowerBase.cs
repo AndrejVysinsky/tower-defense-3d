@@ -18,10 +18,10 @@ public class TowerBase : MonoBehaviour, IConstruction
 
     protected virtual void Start()
     {
-        var interactions = GetComponent<InteractionList>().Interactions;
+        //var interactions = GetComponent<InteractionList>().Interactions;
 
-        interactions.Find(x => x.InteractionName == "Upgrade").InteractionActions.Add(new UnityAction(Upgrade));
-        interactions.Find(x => x.InteractionName == "Sell").InteractionActions.Add(new UnityAction(Sell));
+        //interactions.Find(x => x.InteractionName == "Upgrade").InteractionActions.Add(new UnityAction(Upgrade));
+        //interactions.Find(x => x.InteractionName == "Sell").InteractionActions.Add(new UnityAction(Sell));
     }
 
     public virtual void Upgrade()
@@ -35,15 +35,22 @@ public class TowerBase : MonoBehaviour, IConstruction
 
         if (Level == TowerData.MaxLevel)
         {
-            var interactionMenu = GetComponent<InteractionList>();
-
-            EventManager.ExecuteEvent<IInteractionChanged>((x, y) => x.OnInteractionRemoved("Upgrade", new UnityAction(Upgrade)));
+            GetComponent<ObjectInteractions>().Remove("Upgrade", new UnityAction(Upgrade));
         }
+
+        //if (Level == TowerData.MaxLevel)
+        //{
+        //    var interactionMenu = GetComponent<InteractionList>();
+
+        //    EventManager.ExecuteEvent<IInteractionChanged>((x, y) => x.OnInteractionRemoved("Upgrade", new UnityAction(Upgrade)));
+        //}
     }
 
     public virtual void Sell()
     {
-        EventManager.ExecuteEvent<IInteractionChanged>((x, y) => x.OnInteractionHidden());
+        GetComponent<ObjectInteractions>().Remove("Sell", new UnityAction(Sell));
+
+        //EventManager.ExecuteEvent<IInteractionChanged>((x, y) => x.OnInteractionHidden());
 
         var sellValue = TowerData.GetSellValue(Level);
 
