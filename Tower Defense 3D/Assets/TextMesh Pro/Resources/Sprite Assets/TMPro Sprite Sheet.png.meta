@@ -1,0 +1,2842 @@
+fileFormatVersion: 2
+guid: f67da7de95233ab4cac3d6ef59eb1f77
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 9042503784206273587
+    second: TMPro Sprite Sheet_0
+  - first:
+      213: 2973519478971900606
+    second: TMPro Sprite Sheet_1
+  - first:
+      213: -2543360342454924955
+    second: TMPro Sprite Sheet_2
+  - first:
+      213: 1104702983043596364
+    second: TMPro Sprite Sheet_3
+  - first:
+      213: -3264341569039913964
+    second: TMPro Sprite Sheet_4
+  - first:
+      213: -6261622790733940859
+    second: TMPro Sprite Sheet_5
+  - first:
+      213: -2406255776093403513
+    second: TMPro Sprite Sheet_6
+  - first:
+      213: 6698985470876327880
+    second: TMPro Sprite Sheet_7
+  - first:
+      213: -4626800653707189357
+    second: TMPro Sprite Sheet_8
+  - first:
+      213: -2802346952722216437
+    second: TMPro Sprite Sheet_9
+  - first:
+      213: 4165725782977334458
+    second: TMPro Sprite Sheet_10
+  - first:
+      213: 4227535159306102047
+    second: TMPro Sprite Sheet_11
+  - first:
+      213: -1013450904449496031
+    second: TMPro Sprite Sheet_12
+  - first:
+      213: 4268001099433204598
+    second: TMPro Sprite Sheet_13
+  - first:
+      213: 7816477526109333326
+    second: TMPro Sprite Sheet_14
+  - first:
+      213: -7533683863903486812
+    second: TMPro Sprite Sheet_15
+  - first:
+      213: -7154519736020838183
+    second: TMPro Sprite Sheet_16
+  - first:
+      213: -5588847110506937384
+    second: TMPro Sprite Sheet_17
+  - first:
+      213: -1548836548733083337
+    second: TMPro Sprite Sheet_18
+  - first:
+      213: -5160756930973967027
+    second: TMPro Sprite Sheet_19
+  - first:
+      213: 2730537758295717096
+    second: TMPro Sprite Sheet_20
+  - first:
+      213: -3293460615705178965
+    second: TMPro Sprite Sheet_21
+  - first:
+      213: -6664435325946285082
+    second: TMPro Sprite Sheet_22
+  - first:
+      213: -5426674203934385750
+    second: TMPro Sprite Sheet_23
+  - first:
+      213: -8971256104367239515
+    second: TMPro Sprite Sheet_24
+  - first:
+      213: -3267163042137439151
+    second: TMPro Sprite Sheet_25
+  - first:
+      213: -8608393774230649418
+    second: TMPro Sprite Sheet_26
+  - first:
+      213: 5573738654690543187
+    second: TMPro Sprite Sheet_27
+  - first:
+      213: 3031596016397485924
+    second: TMPro Sprite Sheet_28
+  - first:
+      213: 414568724049661361
+    second: TMPro Sprite Sheet_29
+  - first:
+      213: -4254559672048140779
+    second: TMPro Sprite Sheet_30
+  - first:
+      213: -8821419318761283610
+    second: TMPro Sprite Sheet_31
+  - first:
+      213: 6344703805162587125
+    second: TMPro Sprite Sheet_32
+  - first:
+      213: 4112169701483291762
+    second: TMPro Sprite Sheet_33
+  - first:
+      213: 2218135156404839227
+    second: TMPro Sprite Sheet_34
+  - first:
+      213: -932007682465195730
+    second: TMPro Sprite Sheet_35
+  - first:
+      213: 5192804114260099843
+    second: TMPro Sprite Sheet_36
+  - first:
+      213: 2441272597939143827
+    second: TMPro Sprite Sheet_37
+  - first:
+      213: 3698901513054973001
+    second: TMPro Sprite Sheet_38
+  - first:
+      213: 2443940387722907657
+    second: TMPro Sprite Sheet_39
+  - first:
+      213: -2193271972295928418
+    second: TMPro Sprite Sheet_40
+  - first:
+      213: -3649445621294097755
+    second: TMPro Sprite Sheet_41
+  - first:
+      213: 6406350639820046871
+    second: TMPro Sprite Sheet_42
+  - first:
+      213: -2709492840170910737
+    second: TMPro Sprite Sheet_43
+  - first:
+      213: 4373523871034376153
+    second: TMPro Sprite Sheet_44
+  - first:
+      213: -3635311408284350449
+    second: TMPro Sprite Sheet_45
+  - first:
+      213: -7587874483987283218
+    second: TMPro Sprite Sheet_46
+  - first:
+      213: -8509432763818001578
+    second: TMPro Sprite Sheet_47
+  - first:
+      213: 98327009952987029
+    second: TMPro Sprite Sheet_48
+  - first:
+      213: -4991711944862971630
+    second: TMPro Sprite Sheet_49
+  - first:
+      213: 8206753885352370491
+    second: TMPro Sprite Sheet_50
+  - first:
+      213: -4687978361391498700
+    second: TMPro Sprite Sheet_51
+  - first:
+      213: 6924131480276844566
+    second: TMPro Sprite Sheet_52
+  - first:
+      213: 5435996229169746748
+    second: TMPro Sprite Sheet_53
+  - first:
+      213: -3393429418609495334
+    second: TMPro Sprite Sheet_54
+  - first:
+      213: -600245891523295669
+    second: TMPro Sprite Sheet_55
+  - first:
+      213: 170971538905507234
+    second: TMPro Sprite Sheet_56
+  - first:
+      213: -7944194727371053550
+    second: TMPro Sprite Sheet_57
+  - first:
+      213: 2617347536688452423
+    second: TMPro Sprite Sheet_58
+  - first:
+      213: 1687148115112947042
+    second: TMPro Sprite Sheet_59
+  - first:
+      213: 1766771417083083281
+    second: TMPro Sprite Sheet_60
+  - first:
+      213: 3316606930909679688
+    second: TMPro Sprite Sheet_61
+  - first:
+      213: -5947186905588628177
+    second: TMPro Sprite Sheet_62
+  - first:
+      213: 4126043269735235368
+    second: TMPro Sprite Sheet_63
+  - first:
+      213: -7754153653173759934
+    second: TMPro Sprite Sheet_64
+  - first:
+      213: -3105366240571619942
+    second: TMPro Sprite Sheet_65
+  - first:
+      213: -8785741595286946324
+    second: TMPro Sprite Sheet_66
+  - first:
+      213: 261535484759373848
+    second: TMPro Sprite Sheet_67
+  - first:
+      213: 3102668658244951823
+    second: TMPro Sprite Sheet_68
+  - first:
+      213: -8641914348496836260
+    second: TMPro Sprite Sheet_69
+  - first:
+      213: 3750561827715239691
+    second: TMPro Sprite Sheet_70
+  - first:
+      213: -7122662451414854852
+    second: TMPro Sprite Sheet_71
+  - first:
+      213: -5647247451446607168
+    second: TMPro Sprite Sheet_72
+  - first:
+      213: 7541145487504930496
+    second: TMPro Sprite Sheet_73
+  - first:
+      213: -4104348919770078590
+    second: TMPro Sprite Sheet_74
+  - first:
+      213: -4593448490981126051
+    second: TMPro Sprite Sheet_75
+  - first:
+      213: -1408375716260224264
+    second: TMPro Sprite Sheet_76
+  - first:
+      213: -547882719554703204
+    second: TMPro Sprite Sheet_77
+  - first:
+      213: -1660226348199550219
+    second: TMPro Sprite Sheet_78
+  - first:
+      213: 2374429943414451747
+    second: TMPro Sprite Sheet_79
+  - first:
+      213: -3867319917925170509
+    second: TMPro Sprite Sheet_80
+  - first:
+      213: 5219454550029081435
+    second: TMPro Sprite Sheet_81
+  - first:
+      213: -5387470745688052166
+    second: TMPro Sprite Sheet_82
+  - first:
+      213: -3193396442116189949
+    second: TMPro Sprite Sheet_83
+  - first:
+      213: -5769405980650356113
+    second: TMPro Sprite Sheet_84
+  - first:
+      213: 714056681692793753
+    second: TMPro Sprite Sheet_85
+  - first:
+      213: 4367836064273989020
+    second: TMPro Sprite Sheet_86
+  - first:
+      213: -934211622442823057
+    second: TMPro Sprite Sheet_87
+  - first:
+      213: -2218423993804101182
+    second: TMPro Sprite Sheet_88
+  - first:
+      213: 63169017931939825
+    second: TMPro Sprite Sheet_89
+  - first:
+      213: 1663126922688416309
+    second: TMPro Sprite Sheet_90
+  - first:
+      213: -4964999684161528200
+    second: TMPro Sprite Sheet_91
+  - first:
+      213: -5201644664590749323
+    second: TMPro Sprite Sheet_92
+  - first:
+      213: -7382201475539516052
+    second: TMPro Sprite Sheet_93
+  - first:
+      213: 1897621425323865058
+    second: TMPro Sprite Sheet_94
+  - first:
+      213: -8609209896636634844
+    second: TMPro Sprite Sheet_95
+  - first:
+      213: -7372735370918965609
+    second: TMPro Sprite Sheet_96
+  - first:
+      213: -5929506012254416638
+    second: TMPro Sprite Sheet_97
+  - first:
+      213: -1865383282205780341
+    second: TMPro Sprite Sheet_98
+  - first:
+      213: -986221488741202173
+    second: TMPro Sprite Sheet_99
+  - first:
+      213: 5324631173691578937
+    second: TMPro Sprite Sheet_0
+  - first:
+      213: -4253109750271129587
+    second: TMPro Sprite Sheet_1
+  - first:
+      213: -7131841844116450795
+    second: TMPro Sprite Sheet_2
+  - first:
+      213: -5232389969652179106
+    second: TMPro Sprite Sheet_3
+  - first:
+      213: -4842431874008404800
+    second: TMPro Sprite Sheet_4
+  - first:
+      213: 3830007083518939785
+    second: TMPro Sprite Sheet_5
+  - first:
+      213: 6149661074998772122
+    second: TMPro Sprite Sheet_6
+  - first:
+      213: 2160980625821221660
+    second: TMPro Sprite Sheet_7
+  - first:
+      213: -2746151416805904488
+    second: TMPro Sprite Sheet_8
+  - first:
+      213: 2492168598053594872
+    second: TMPro Sprite Sheet_9
+  - first:
+      213: 3768018512127238641
+    second: TMPro Sprite Sheet_10
+  - first:
+      213: -7772548364609063708
+    second: TMPro Sprite Sheet_11
+  - first:
+      213: -6376080476539970479
+    second: TMPro Sprite Sheet_12
+  - first:
+      213: 7038674187300969394
+    second: TMPro Sprite Sheet_13
+  - first:
+      213: 4218221941631403679
+    second: TMPro Sprite Sheet_14
+  - first:
+      213: -8284627348579938342
+    second: TMPro Sprite Sheet_15
+  - first:
+      213: -2092713184289887420
+    second: TMPro Sprite Sheet_16
+  - first:
+      213: 9078903808728012800
+    second: TMPro Sprite Sheet_17
+  - first:
+      213: 1261297932994465712
+    second: TMPro Sprite Sheet_18
+  - first:
+      213: -7815162037634659056
+    second: TMPro Sprite Sheet_19
+  - first:
+      213: 391270079868757476
+    second: TMPro Sprite Sheet_20
+  - first:
+      213: 3233602703804679819
+    second: TMPro Sprite Sheet_21
+  - first:
+      213: 2291936973922299015
+    second: TMPro Sprite Sheet_22
+  - first:
+      213: 2476862483029508148
+    second: TMPro Sprite Sheet_23
+  - first:
+      213: 40856518026027172
+    second: TMPro Sprite Sheet_24
+  - first:
+      213: 1886047332402919400
+    second: TMPro Sprite Sheet_25
+  - first:
+      213: -5413971700400453782
+    second: TMPro Sprite Sheet_26
+  - first:
+      213: -8945938288404416501
+    second: TMPro Sprite Sheet_27
+  - first:
+      213: 2502415878379396019
+    second: TMPro Sprite Sheet_28
+  - first:
+      213: -687853484237310546
+    second: TMPro Sprite Sheet_29
+  - first:
+      213: -9119318228063604405
+    second: TMPro Sprite Sheet_30
+  - first:
+      213: 8947744836617476337
+    second: TMPro Sprite Sheet_31
+  - first:
+      213: -6917058393439692384
+    second: TMPro Sprite Sheet_32
+  - first:
+      213: -7621856702567641846
+    second: TMPro Sprite Sheet_33
+  - first:
+      213: -7941133297358406188
+    second: TMPro Sprite Sheet_34
+  - first:
+      213: 6659940658989410083
+    second: TMPro Sprite Sheet_35
+  - first:
+      213: 5071180435418231470
+    second: TMPro Sprite Sheet_36
+  - first:
+      213: 157230888152287871
+    second: TMPro Sprite Sheet_37
+  - first:
+      213: -7991872464399408345
+    second: TMPro Sprite Sheet_38
+  - first:
+      213: 5073516767624278998
+    second: TMPro Sprite Sheet_39
+  - first:
+      213: -4923593253376627944
+    second: TMPro Sprite Sheet_40
+  - first:
+      213: -6262903627767347009
+    second: TMPro Sprite Sheet_41
+  - first:
+      213: 8842693886139387424
+    second: TMPro Sprite Sheet_42
+  - first:
+      213: 637544654453094956
+    second: TMPro Sprite Sheet_43
+  - first:
+      213: -6941422516467945465
+    second: TMPro Sprite Sheet_44
+  - first:
+      213: -2109583064734295402
+    second: TMPro Sprite Sheet_45
+  - first:
+      213: 6298805769713126139
+    second: TMPro Sprite Sheet_46
+  - first:
+      213: 1722020806947461203
+    second: TMPro Sprite Sheet_47
+  - first:
+      213: 1639121339138675463
+    second: TMPro Sprite Sheet_48
+  - first:
+      213: 1095350578436010463
+    second: TMPro Sprite Sheet_49
+  - first:
+      213: 5648479181262212169
+    second: TMPro Sprite Sheet_50
+  - first:
+      213: 6914188901118986586
+    second: TMPro Sprite Sheet_51
+  - first:
+      213: 6084616310451758566
+    second: TMPro Sprite Sheet_52
+  - first:
+      213: -5818957495926288329
+    second: TMPro Sprite Sheet_53
+  - first:
+      213: 1157622406889110315
+    second: TMPro Sprite Sheet_54
+  - first:
+      213: -994480322311078357
+    second: TMPro Sprite Sheet_55
+  - first:
+      213: -3774863036677181476
+    second: TMPro Sprite Sheet_56
+  - first:
+      213: 1528925965482310257
+    second: TMPro Sprite Sheet_57
+  - first:
+      213: 712053186187617313
+    second: TMPro Sprite Sheet_58
+  - first:
+      213: -2028877472030062164
+    second: TMPro Sprite Sheet_59
+  - first:
+      213: 5742031273955984096
+    second: TMPro Sprite Sheet_60
+  - first:
+      213: -2850271035145715552
+    second: TMPro Sprite Sheet_61
+  - first:
+      213: 3125139677891591813
+    second: TMPro Sprite Sheet_62
+  - first:
+      213: -2950518060489779361
+    second: TMPro Sprite Sheet_63
+  - first:
+      213: 3494383145104816507
+    second: TMPro Sprite Sheet_64
+  - first:
+      213: 5456635627457306004
+    second: TMPro Sprite Sheet_65
+  - first:
+      213: -434690965460654054
+    second: TMPro Sprite Sheet_66
+  - first:
+      213: -6651076544268099288
+    second: TMPro Sprite Sheet_67
+  - first:
+      213: -8347571387900321374
+    second: TMPro Sprite Sheet_68
+  - first:
+      213: -3932026005993331932
+    second: TMPro Sprite Sheet_69
+  - first:
+      213: -1329019969798153227
+    second: TMPro Sprite Sheet_70
+  - first:
+      213: 911932672084941619
+    second: TMPro Sprite Sheet_71
+  - first:
+      213: 6995404068922382561
+    second: TMPro Sprite Sheet_72
+  - first:
+      213: 531123943166802767
+    second: TMPro Sprite Sheet_73
+  - first:
+      213: -2290945351406189569
+    second: TMPro Sprite Sheet_74
+  - first:
+      213: 6323870586479565610
+    second: TMPro Sprite Sheet_75
+  - first:
+      213: -1246704384082203397
+    second: TMPro Sprite Sheet_76
+  - first:
+      213: 6065877990127136017
+    second: TMPro Sprite Sheet_77
+  - first:
+      213: -8890167151264877834
+    second: TMPro Sprite Sheet_78
+  - first:
+      213: -1451143641360339148
+    second: TMPro Sprite Sheet_79
+  - first:
+      213: -1118209563782813560
+    second: TMPro Sprite Sheet_80
+  - first:
+      213: 782973773585613326
+    second: TMPro Sprite Sheet_81
+  - first:
+      213: 1869211297534728884
+    second: TMPro Sprite Sheet_82
+  - first:
+      213: 8570127905803213515
+    second: TMPro Sprite Sheet_83
+  - first:
+      213: 5464248863687930168
+    second: TMPro Sprite Sheet_84
+  - first:
+      213: 2600816366558351305
+    second: TMPro Sprite Sheet_85
+  - first:
+      213: 4953510183940031955
+    second: TMPro Sprite Sheet_86
+  - first:
+      213: -4774846554064563589
+    second: TMPro Sprite Sheet_87
+  - first:
+      213: 4415992296094400847
+    second: TMPro Sprite Sheet_88
+  - first:
+      213: 8898021471037781234
+    second: TMPro Sprite Sheet_89
+  - first:
+      213: -2984887694219474312
+    second: TMPro Sprite Sheet_90
+  - first:
+      213: -4281360742353346706
+    second: TMPro Sprite Sheet_91
+  - first:
+      213: 5907163883621425034
+    second: TMPro Sprite Sheet_92
+  - first:
+      213: 5628675785528827488
+    second: TMPro Sprite Sheet_93
+  - first:
+      213: -3331800357538027132
+    second: TMPro Sprite Sheet_94
+  - first:
+      213: -3852364088952126275
+    second: TMPro Sprite Sheet_95
+  - first:
+      213: 5846341297987417992
+    second: TMPro Sprite Sheet_96
+  - first:
+      213: -6089263772009991213
+    second: TMPro Sprite Sheet_97
+  - first:
+      213: -3421429721385447146
+    second: TMPro Sprite Sheet_98
+  - first:
+      213: -2752554869225009441
+    second: TMPro Sprite Sheet_99
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 128
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1152
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93a9bd367d3e4e940800000000000000
+      internalID: 5324631173691578937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 1152
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d08c650573be9f4c0800000000000000
+      internalID: -4253109750271129587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 1152
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5121c2ff0ab960d90800000000000000
+      internalID: -7131841844116450795
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 1152
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5f90948b01d267b0800000000000000
+      internalID: -5232389969652179106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 1152
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0cc23bcedd93cccb0800000000000000
+      internalID: -4842431874008404800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 1152
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9825064762be62530800000000000000
+      internalID: 3830007083518939785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 1152
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9149585a2cf75550800000000000000
+      internalID: 6149661074998772122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 1152
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1343980e685dfd10800000000000000
+      internalID: 2160980625821221660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 1152
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89f29dd06d5b3e9d0800000000000000
+      internalID: -2746151416805904488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 1152
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f62e57c226f59220800000000000000
+      internalID: 2492168598053594872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1024
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f1a07a7fd0ba4430800000000000000
+      internalID: 3768018512127238641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 1024
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e4feef617c522490800000000000000
+      internalID: -7772548364609063708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_12
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 1024
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15c1888a69c9387a0800000000000000
+      internalID: -6376080476539970479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_13
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 1024
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2bb19cf71e46ea160800000000000000
+      internalID: 7038674187300969394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_14
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 1024
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f96c2beb1822a8a30800000000000000
+      internalID: 4218221941631403679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_15
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 1024
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: adf086ff157170d80800000000000000
+      internalID: -8284627348579938342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_16
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 1024
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44bef91527035f2e0800000000000000
+      internalID: -2092713184289887420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_17
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 1024
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0089c2579eebefd70800000000000000
+      internalID: 9078903808728012800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_18
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 1024
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0bfc11499c7018110800000000000000
+      internalID: 1261297932994465712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_19
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 1024
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01d0ba48887fa8390800000000000000
+      internalID: -7815162037634659056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 896
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e5e0d980121e6500800000000000000
+      internalID: 391270079868757476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_21
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 896
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b864509d68010ec20800000000000000
+      internalID: 3233602703804679819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_22
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 896
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78ce83ad8889ecf10800000000000000
+      internalID: 2291936973922299015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_23
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 896
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 430477a2e459f5220800000000000000
+      internalID: 2476862483029508148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_24
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 896
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a063b369c6219000800000000000000
+      internalID: 40856518026027172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_25
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 896
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e7f27d5e069c2a10800000000000000
+      internalID: 1886047332402919400
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_26
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 896
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a670d954c65bdd4b0800000000000000
+      internalID: -5413971700400453782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_27
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 896
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b08b6193684a9d380800000000000000
+      internalID: -8945938288404416501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_28
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 896
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bbd917abfd5ab220800000000000000
+      internalID: 2502415878379396019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_29
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 896
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea5358686e04476f0800000000000000
+      internalID: -687853484237310546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 768
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b413686436ca17180800000000000000
+      internalID: -9119318228063604405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_31
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 768
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f89b6f8586cc2c70800000000000000
+      internalID: 8947744836617476337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_32
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 768
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a994601a0ca100a0800000000000000
+      internalID: -6917058393439692384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_33
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 768
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0d868a16b9b93690800000000000000
+      internalID: -7621856702567641846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_34
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 768
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ddfce8075d6bc190800000000000000
+      internalID: -7941133297358406188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_35
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 768
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 327ae345ebcdc6c50800000000000000
+      internalID: 6659940658989410083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_36
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 768
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea2b30ddcb3706640800000000000000
+      internalID: 5071180435418231470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_37
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 768
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7a4904e8a89e2200800000000000000
+      internalID: 157230888152287871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_38
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 768
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7236f3d165a271190800000000000000
+      internalID: -7991872464399408345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_39
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 768
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d3bb389e90c86640800000000000000
+      internalID: 5073516767624278998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_40
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 640
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81be9f9b502ebabb0800000000000000
+      internalID: -4923593253376627944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_41
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 640
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb80c643552b519a0800000000000000
+      internalID: -6262903627767347009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_42
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 640
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02e4bd42d3f87ba70800000000000000
+      internalID: 8842693886139387424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_43
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 640
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2a30214c7309d800800000000000000
+      internalID: 637544654453094956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_44
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 640
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 700b70e9ffc1baf90800000000000000
+      internalID: -6941422516467945465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_45
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 640
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69a1552316149b2e0800000000000000
+      internalID: -2109583064734295402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_46
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 640
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bfa8eec997ad96750800000000000000
+      internalID: 6298805769713126139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_47
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 640
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3585feddcc8d5e710800000000000000
+      internalID: 1722020806947461203
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_48
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 640
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7039f1b6c245fb610800000000000000
+      internalID: 1639121339138675463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_49
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 640
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd172343c87733f00800000000000000
+      internalID: 1095350578436010463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_50
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 512
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94cc25073ed636e40800000000000000
+      internalID: 5648479181262212169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_51
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 512
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5945213c2224ff50800000000000000
+      internalID: 6914188901118986586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_52
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 512
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e56603fb46e07450800000000000000
+      internalID: 6084616310451758566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_53
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 512
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7309734dcf8ee3fa0800000000000000
+      internalID: -5818957495926288329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_54
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 512
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2b78aa1273b01010800000000000000
+      internalID: 1157622406889110315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_55
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 512
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2e38847a65e232f0800000000000000
+      internalID: -994480322311078357
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_56
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 512
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cdfaa17711efc9bc0800000000000000
+      internalID: -3774863036677181476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_57
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 512
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17ab174a016d73510800000000000000
+      internalID: 1528925965482310257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_58
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 512
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 124e5e7a998b1e900800000000000000
+      internalID: 712053186187617313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_59
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 512
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca90bda40baf7d3e0800000000000000
+      internalID: -2028877472030062164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_60
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 384
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e28455650bcfaf40800000000000000
+      internalID: 5742031273955984096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_61
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 384
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a00e8c489dc178d0800000000000000
+      internalID: -2850271035145715552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_62
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 384
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58ef436baf9be5b20800000000000000
+      internalID: 3125139677891591813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_63
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 384
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f57d12dd477ad07d0800000000000000
+      internalID: -2950518060489779361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_64
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 384
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b79b519d4fa8e7030800000000000000
+      internalID: 3494383145104816507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_65
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 384
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49d5553513dd9bb40800000000000000
+      internalID: 5456635627457306004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_66
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 384
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1865a8bedaa7f9f0800000000000000
+      internalID: -434690965460654054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_67
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 384
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 821a7f43f11a2b3a0800000000000000
+      internalID: -6651076544268099288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_68
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 384
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a1acfecc08772c80800000000000000
+      internalID: -8347571387900321374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_69
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 384
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4236b292e23ae69c0800000000000000
+      internalID: -3932026005993331932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_70
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5fbd7c0016f5e8de0800000000000000
+      internalID: -1329019969798153227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_71
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 256
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33b12b20fe5d7ac00800000000000000
+      internalID: 911932672084941619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_72
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 256
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e8d07cffeaa41160800000000000000
+      internalID: 6995404068922382561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_73
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 256
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4b792c896eee5700800000000000000
+      internalID: 531123943166802767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_74
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 256
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff30a91475de430e0800000000000000
+      internalID: -2290945351406189569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_75
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 256
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2bd7a80bc6e2c750800000000000000
+      internalID: 6323870586479565610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_76
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 256
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bfcabdec7f0d2bee0800000000000000
+      internalID: -1246704384082203397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_77
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 256
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11d6364c4e35e2450800000000000000
+      internalID: 6065877990127136017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_78
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 256
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f2b20bf318cf9480800000000000000
+      internalID: -8890167151264877834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_79
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 256
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43f66a2fb808cdbe0800000000000000
+      internalID: -1451143641360339148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_80
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 888e74683525b70f0800000000000000
+      internalID: -1118209563782813560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_81
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e02840baf7eadda00800000000000000
+      internalID: 782973773585613326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_82
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ba54b785c5c0f910800000000000000
+      internalID: 1869211297534728884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_83
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bca10118ce53fe670800000000000000
+      internalID: 8570127905803213515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_84
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83173740469e4db40800000000000000
+      internalID: 5464248863687930168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_85
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9cf8bb6a4b4f71420800000000000000
+      internalID: 2600816366558351305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_86
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d5860974476eb440800000000000000
+      internalID: 4953510183940031955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_87
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b72dbf77b565cbdb0800000000000000
+      internalID: -4774846554064563589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_88
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f41819ba891c84d30800000000000000
+      internalID: 4415992296094400847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_89
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f47109526f1c7b70800000000000000
+      internalID: 8898021471037781234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_90
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87a0d9be47c8396d0800000000000000
+      internalID: -2984887694219474312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_91
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6fd9b4a61d8594c0800000000000000
+      internalID: -4281360742353346706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_92
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8f954131467af150800000000000000
+      internalID: 5907163883621425034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_93
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06ed9401ec21d1e40800000000000000
+      internalID: 5628675785528827488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_94
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4892d6a3a3113c1d0800000000000000
+      internalID: -3331800357538027132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_95
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db489849547a98ac0800000000000000
+      internalID: -3852364088952126275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_96
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8877c3e6f60622150800000000000000
+      internalID: 5846341297987417992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_97
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d370b59cd69e7ba0800000000000000
+      internalID: -6089263772009991213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_98
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6115bd0cbc3a480d0800000000000000
+      internalID: -3421429721385447146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TMPro Sprite Sheet_99
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fde421b1ee5fcc9d0800000000000000
+      internalID: -2752554869225009441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 2cd2fa124867b1a448481d9db5039dfb
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
