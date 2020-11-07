@@ -12,6 +12,8 @@ public class InteractionSystem : MonoBehaviour
     [SerializeField] GameObject interactionContainer;
     [SerializeField] GameObject buyContainer;
 
+    private GameObject _interactingGameObject;
+
     private void Awake()
     {
         if (Instance == null)
@@ -40,6 +42,8 @@ public class InteractionSystem : MonoBehaviour
             {
                 if (hitInfo.transform.gameObject.TryGetComponent(out ObjectInteractions interactions))
                 {
+                    _interactingGameObject = hitInfo.transform.gameObject;
+
                     ShowInteractions(interactions.Interactions);
                 }
             }
@@ -56,12 +60,19 @@ public class InteractionSystem : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        myInteractions.ForEach(x =>
+        myInteractions.ForEach(interaction =>
         {
             var action = Instantiate(interactionPrefab, interactionContainer.transform);
 
-            action.GetComponent<InteractionTrigger>().SetAction(x.UnityAction);
-            action.GetComponent<Image>().sprite = x.InteractionSprite;
+            action.GetComponent<InteractionTrigger>().SetAction(interaction.UnityAction);
+
+            if (interaction.TooltipEnabled)
+            {
+                interaction.Tooltip.ObjectData = _interactingGameObject;
+                action.GetComponent<TooltipTrigger>().SetTooltip(interaction.Tooltip);
+            }
+            
+            action.GetComponent<Image>().sprite = interaction.InteractionSprite;
         });
     }
 

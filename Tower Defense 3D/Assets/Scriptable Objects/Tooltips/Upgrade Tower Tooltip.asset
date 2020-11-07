@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8521495b19171dc4c9f8513fae7732f3, type: 3}
-  m_Name: Canon Tower Tooltip
+  m_Script: {fileID: 11500000, guid: fde98c4700eb40f4faadb0bc9e326b3d, type: 3}
+  m_Name: Upgrade Tower Tooltip
   m_EditorClassIdentifier: 
   description: 
   header: 

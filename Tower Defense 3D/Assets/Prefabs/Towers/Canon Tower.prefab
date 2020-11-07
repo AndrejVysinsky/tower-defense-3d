@@ -235,6 +235,8 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+    tooltip: {fileID: 11400000, guid: 1659bc60d1c800f42ab7e691317abe1b, type: 2}
+    tooltipEnabled: 1
   - sprite: {fileID: 21300000, guid: b61eb139025d0054a8bd447d06bbcec0, type: 3}
     unityAction:
       m_PersistentCalls:
@@ -251,6 +253,8 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+    tooltip: {fileID: 11400000, guid: 4d441daee19c6a34f8dde6774ba749ed, type: 2}
+    tooltipEnabled: 1
 --- !u!1 &4724925258096942215
 GameObject:
   m_ObjectHideFlags: 0
