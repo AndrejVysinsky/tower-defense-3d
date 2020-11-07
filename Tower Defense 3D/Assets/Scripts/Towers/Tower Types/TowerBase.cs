@@ -45,7 +45,7 @@ public class TowerBase : MonoBehaviour, IConstruction
     {
         EventManager.ExecuteEvent<IInteractionChanged>((x, y) => x.OnInteractionHidden());
 
-        var sellValue = (int)(TowerData.GetLevelData(Level).Price * TowerData.SellFactor);
+        var sellValue = TowerData.GetSellValue(Level);
 
         GameController.Instance.ModifyCurrencyBy(sellValue, transform.position);
 
