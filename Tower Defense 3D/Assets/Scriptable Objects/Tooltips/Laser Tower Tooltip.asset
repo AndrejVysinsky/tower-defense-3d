@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8521495b19171dc4c9f8513fae7732f3, type: 3}
   m_Name: Laser Tower Tooltip
   m_EditorClassIdentifier: 
-  description: 
-  header: 
+  description: Beams target for constant damage rate
+  header: Laser Tower

@@ -8,6 +8,8 @@ public class ObjectInteractions : MonoBehaviour
 
     public List<Interaction> Interactions => interactions;
 
+    private bool _isQuitting = false;
+
     public void Remove(string name, UnityAction action)
     {
         int before = interactions.Count;
@@ -34,8 +36,16 @@ public class ObjectInteractions : MonoBehaviour
         }
     }
 
+    private void OnApplicationQuit()
+    {
+        _isQuitting = true;
+    }
+
     private void OnDestroy()
     {
+        if (_isQuitting)
+            return;
+
         InteractionSystem.Instance.HideInteractions();
     }
 }

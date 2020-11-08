@@ -45,7 +45,7 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         if (tooltipBase == null)
             return;
 
-        TooltipSystem.Instance.Show(tooltipBase.GetTooltipText());
+        TooltipSystem.Instance.Show(tooltipBase);
     }
 
     private void HideTooltip()

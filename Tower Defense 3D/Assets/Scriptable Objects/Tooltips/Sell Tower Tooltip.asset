@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dde9a08c8b4f4e47afc969d33442f32, type: 3}
   m_Name: Sell Tower Tooltip
   m_EditorClassIdentifier: 
-  description: 
-  header: 
+  description: Sell tower for fraction of price while reclaiming its space
+  header: Sell
