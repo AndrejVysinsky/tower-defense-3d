@@ -726,7 +726,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 500, y: 40}
+  m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &408677745
 MonoBehaviour:
@@ -1728,8 +1728,10 @@ MonoBehaviour:
   tooltip: {fileID: 408677743}
   tooltipText: {fileID: 1512326675}
   tooltipLayoutElement: {fileID: 408677749}
-  offset: {x: 10, y: 5, z: 0}
-  padding: 20
+  offsetYUnder: -10
+  offsetYAbove: 0
+  offsetXLeft: -5
+  offsetXRight: 15
 --- !u!1 &1318572232
 GameObject:
   m_ObjectHideFlags: 0
