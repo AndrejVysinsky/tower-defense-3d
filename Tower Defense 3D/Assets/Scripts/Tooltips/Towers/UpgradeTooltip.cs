@@ -12,8 +12,8 @@ public class UpgradeTooltip : DynamicTooltip, ITooltipHeader
     {
         StringBuilder builder = new StringBuilder();
 
-        builder.Append(Header).AppendLine();
-        builder.Append(Description).AppendLine();
+        builder.Append(TooltipFont.GetFormattedHeader(Header)).AppendLine();
+        builder.Append(TooltipFont.GetFormattedDescription(Description)).AppendLine();
 
         if (ObjectData.TryGetComponent(out TowerBase towerBase))
         {

@@ -9,8 +9,11 @@ public class TooltipSystem : MonoBehaviour
     [SerializeField] Canvas tooltipCanvas;
     [SerializeField] GameObject tooltip;
     [SerializeField] TextMeshProUGUI tooltipText;
-    [SerializeField] Vector3 offset;
-    [SerializeField] float padding;
+    [SerializeField] LayoutElement tooltipLayoutElement;
+    [SerializeField] float offsetYUnder;
+    [SerializeField] float offsetYAbove;
+    [SerializeField] float offsetXLeft;
+    [SerializeField] float offsetXRight;
 
     private RectTransform _tooltipRect;
 
@@ -41,30 +44,52 @@ public class TooltipSystem : MonoBehaviour
         if (tooltip.activeSelf == false)
             return;
 
-        Vector3 newPos = Input.mousePosition + offset;
-        newPos.z = 0f;
-        float rightEdgeToScreenEdgeDistance = Screen.width - (newPos.x + _tooltipRect.rect.width * 2 * tooltipCanvas.scaleFactor / 2) - padding;
-        if (rightEdgeToScreenEdgeDistance < 0)
+        float pivotX = 0;
+        float pivotY = 1;
+
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = 0f;
+
+        float tooltipWidth = _tooltipRect.rect.width * tooltipCanvas.scaleFactor;
+        float tooltipHeight = _tooltipRect.rect.height * tooltipCanvas.scaleFactor;
+
+        bool isOutOfLeftEdge = mousePos.x - Mathf.Abs(offsetXLeft) - _tooltipRect.rect.width < 0;
+        if (isOutOfLeftEdge)
+            pivotX = 0;
+
+        bool isOutOfRightEdge = mousePos.x + offsetXRight + tooltipWidth > Screen.width;
+        if (isOutOfRightEdge)
+            pivotX = 1;
+
+        bool isOutOfTopEdge = mousePos.y + offsetYAbove + tooltipHeight > Screen.height;
+        if (isOutOfTopEdge)
+            pivotY = 1;
+
+        bool isOutOfBottomEdge = mousePos.y - Mathf.Abs(offsetYUnder) - tooltipHeight < 0;
+        if (isOutOfBottomEdge)
+            pivotY = 0;
+
+
+        _tooltipRect.pivot = new Vector2(pivotX, pivotY);
+
+        var offset = new Vector3
         {
-            newPos.x += rightEdgeToScreenEdgeDistance;
-        }
-        float leftEdgeToScreenEdgeDistance = 0 - (newPos.x - _tooltipRect.rect.width * tooltipCanvas.scaleFactor / 2) + padding;
-        if (leftEdgeToScreenEdgeDistance > 0)
-        {
-            newPos.x += leftEdgeToScreenEdgeDistance;
-        }
-        float topEdgeToScreenEdgeDistance = Screen.height - (newPos.y + _tooltipRect.rect.height * tooltipCanvas.scaleFactor) - padding;
-        if (topEdgeToScreenEdgeDistance < 0)
-        {
-            newPos.y += topEdgeToScreenEdgeDistance;
-        }
-        _tooltipRect.transform.position = newPos;
+            x = pivotX == 0 ? offsetXRight : offsetXLeft,
+            y = pivotY == 0 ? offsetYAbove : offsetYUnder,
+            z = 0
+        };
+
+        _tooltipRect.transform.position = mousePos + offset;
     }
 
     public void Show(TooltipBase tooltipItem)
     {
         tooltip.SetActive(true);
         tooltipText.text = tooltipItem.GetTooltipText();
+
+        var textSize = tooltipText.GetPreferredValues(tooltipText.text);
+
+        tooltipLayoutElement.enabled = textSize.x > tooltipLayoutElement.preferredWidth;
 
         LayoutRebuilder.ForceRebuildLayoutImmediate(tooltip.GetComponent<RectTransform>());
     }
