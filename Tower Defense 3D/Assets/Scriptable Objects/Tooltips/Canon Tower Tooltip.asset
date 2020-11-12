@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: Canon Tower Tooltip
   m_EditorClassIdentifier: 
   description: Shoot single target projectiles
+  objectData: {fileID: 2169085319361342427, guid: 99cfe215e3df0ee499458c8e366551e8,
+    type: 3}
   header: Canon Tower

@@ -1552,7 +1552,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c9c081ba76778a4da27599615665b19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltipBase: {fileID: 0}
+  tooltipBase: {fileID: 11400000, guid: 72d05b068d775614581f5093de8f9f2f, type: 2}
 --- !u!114 &914283016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2212,7 +2212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c9c081ba76778a4da27599615665b19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltipBase: {fileID: 0}
+  tooltipBase: {fileID: 11400000, guid: 3e873251b54e0db4ea3393fac9216abe, type: 2}
 --- !u!114 &1491491727
 MonoBehaviour:
   m_ObjectHideFlags: 0
