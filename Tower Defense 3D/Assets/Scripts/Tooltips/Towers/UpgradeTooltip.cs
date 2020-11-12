@@ -23,9 +23,9 @@ public class UpgradeTooltip : DynamicTooltip, ITooltipHeader
             }
             else
             {
-                builder.Append(towerBase.TowerData.GetLevelData(towerBase.Level).Damage).Append(" => ")
-                        .Append(towerBase.TowerData.GetLevelData(towerBase.Level + 1).Damage).AppendLine();
-                builder.Append(towerBase.TowerData.GetLevelData(towerBase.Level + 1).Price).AppendLine();
+                builder.Append(towerBase.TowerData.GetLevelData(towerBase.Level).Damage).Append(" --> ")
+                        .Append(towerBase.TowerData.GetLevelData(towerBase.Level + 1).Damage).Append(TooltipIcons.GetFormattedIconText(TooltipIcons.SwordIcon)).AppendLine();
+                builder.Append(towerBase.TowerData.GetLevelData(towerBase.Level + 1).Price).Append(TooltipIcons.GetFormattedIconText(TooltipIcons.GoldIcon)).AppendLine();
             }
         }
         else

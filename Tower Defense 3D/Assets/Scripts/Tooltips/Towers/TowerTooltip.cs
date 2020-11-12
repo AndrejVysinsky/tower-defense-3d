@@ -17,8 +17,7 @@ public class TowerTooltip : DynamicTooltip, ITooltipHeader
 
         if (ObjectData.TryGetComponent(out TowerBase towerBase))
         {
-            builder.Append(towerBase.TowerData.GetLevelData(1).Damage).AppendLine();
-            builder.Append(towerBase.TowerData.GetLevelData(1).Price).AppendLine();
+            builder.Append(towerBase.TowerData.GetLevelData(1).Price).Append(TooltipIcons.GetFormattedIconText(TooltipIcons.GoldIcon)).AppendLine();
         }
         else
         {

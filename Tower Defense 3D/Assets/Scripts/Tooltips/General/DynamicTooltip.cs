@@ -2,5 +2,17 @@
 
 public abstract class DynamicTooltip : TooltipBase
 {
-    public GameObject ObjectData { get; set; }
+    [SerializeField] GameObject objectData;
+
+    public GameObject ObjectData
+    {
+        get
+        {
+            return objectData;
+        }
+        set
+        {
+            objectData = value;
+        }
+    }
 }
