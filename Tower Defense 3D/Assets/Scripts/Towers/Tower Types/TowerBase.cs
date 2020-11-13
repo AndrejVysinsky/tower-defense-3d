@@ -1,15 +1,47 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Events;
 
-public class TowerBase : MonoBehaviour, IConstruction
+public class TowerBase : MonoBehaviour, IConstruction, IUpgradable, IInteractable, IEntity, IEntityDamage
 {
     [SerializeField] TowerData towerData;
 
-    public int Level { get; private set; }
-    public TowerData TowerData => towerData;
+    public TowerData TowerData
+    {
+        get
+        {
+            return towerData;
+        }
+        private set
+        {
+            towerData = value;
+        }
+    }
 
+    //============================================
+    // IConstruction
+    //============================================
     public bool IsUnderConstruction { get; private set; }
-    public bool IsAbleToStartConstruction => GameController.Instance.Currency >= TowerData.GetLevelData(Level + 1).Price;
+    public bool IsAbleToStartConstruction => GameController.Instance.Currency >= TowerData.Price;
+
+    //============================================
+    // IUpgradeable
+    //============================================
+    public List<IUpgradeOption> UpgradeOptions => new List<IUpgradeOption>() { TowerData };
+    public bool ProgressUpgradeTree => throw new System.NotImplementedException();
+
+    //============================================
+    // IEntity
+    //============================================
+    public string Name => TowerData.Name;
+    public Sprite Sprite => TowerData.Sprite;
+    public int CurrentHitPoints => TowerData.HitPoints;
+    public int TotalHitPoints => TowerData.HitPoints;
+
+    //============================================
+    // IEntityDamage
+    //============================================
+    public int DamageValue => (int)TowerData.Damage;
 
     protected virtual void Awake()
     {
@@ -18,47 +50,32 @@ public class TowerBase : MonoBehaviour, IConstruction
 
     protected virtual void Start()
     {
-        //var interactions = GetComponent<InteractionList>().Interactions;
 
-        //interactions.Find(x => x.InteractionName == "Upgrade").InteractionActions.Add(new UnityAction(Upgrade));
-        //interactions.Find(x => x.InteractionName == "Sell").InteractionActions.Add(new UnityAction(Sell));
     }
 
     public virtual void Upgrade()
     {
-        Level++;
-        GetComponent<MeshRenderer>().material = TowerData.GetLevelData(Level).Material;
+        TowerData = TowerData.NextUpgrades[0];
 
-        var price = TowerData.GetLevelData(Level).Price;
+        GetComponent<MeshRenderer>().material = TowerData.Material;
+
+        var price = TowerData.Price;
 
         GameController.Instance.ModifyCurrencyBy(-price, transform.position);
-
-        if (Level == TowerData.MaxLevel)
-        {
-            GetComponent<ObjectInteractions>().Remove("Upgrade", new UnityAction(Upgrade));
-        }
-
-        //if (Level == TowerData.MaxLevel)
-        //{
-        //    var interactionMenu = GetComponent<InteractionList>();
-
-        //    EventManager.ExecuteEvent<IInteractionChanged>((x, y) => x.OnInteractionRemoved("Upgrade", new UnityAction(Upgrade)));
-        //}
     }
 
     public virtual void Sell()
     {
-        GetComponent<ObjectInteractions>().Remove("Sell", new UnityAction(Sell));
-
-        //EventManager.ExecuteEvent<IInteractionChanged>((x, y) => x.OnInteractionHidden());
-
-        var sellValue = TowerData.GetSellValue(Level);
+        var sellValue = TowerData.GetSellValue();
 
         GameController.Instance.ModifyCurrencyBy(sellValue, transform.position);
 
         Destroy(gameObject);
     }
 
+    //============================================
+    // IConstruction
+    //============================================
     public virtual void OnConstructionStarted()
     {
         IsUnderConstruction = true;
@@ -71,11 +88,25 @@ public class TowerBase : MonoBehaviour, IConstruction
     public virtual void OnConstructionFinished()
     {
         IsUnderConstruction = false;
-        Upgrade();
+        //Upgrade();
     }
 
     public virtual void OnConstructionCanceled()
     {
         IsUnderConstruction = false;
+    }
+
+    //============================================
+    // IUpgradeable
+    //============================================
+    public void Upgrade(IUpgradeOption upgradeOption)
+    {
+        TowerData = TowerData.NextUpgrades[0];
+
+        GetComponent<MeshRenderer>().material = TowerData.Material;
+
+        var price = TowerData.Price;
+
+        GameController.Instance.ModifyCurrencyBy(-price, transform.position);
     }
 }

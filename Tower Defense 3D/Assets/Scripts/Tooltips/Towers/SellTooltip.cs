@@ -17,7 +17,7 @@ public class SellTooltip : DynamicTooltip, ITooltipHeader
 
         if (ObjectData.TryGetComponent(out TowerBase towerBase))
         {
-            builder.Append(towerBase.TowerData.GetSellValue(towerBase.Level)).Append(TooltipIcons.GetFormattedIconText(TooltipIcons.GoldIcon)).AppendLine();
+            builder.Append(towerBase.TowerData.GetSellValue()).Append(TooltipIcons.GetFormattedIconText(TooltipIcons.GoldIcon)).AppendLine();
         }
         else
         {

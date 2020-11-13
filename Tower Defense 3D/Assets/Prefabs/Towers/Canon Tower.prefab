@@ -105,7 +105,6 @@ GameObject:
   - component: {fileID: 2024329973817410617}
   - component: {fileID: 4330049152232915985}
   - component: {fileID: 2663825934812099868}
-  - component: {fileID: -8884408094449436541}
   m_Layer: 0
   m_Name: Canon Tower
   m_TagString: Untagged
@@ -202,65 +201,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a34a79eb041d9b49b8774ffda5c1389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerData: {fileID: 11400000, guid: 49f95cd19a1a23949a2292a93e5af539, type: 2}
+  towerData: {fileID: 11400000, guid: 2656704ebcb0bb145809992a2023b8de, type: 2}
   projectilePrefab: {fileID: 714181449567907701, guid: 0135b9e50aa251445aa7692d8c8d4782,
     type: 3}
   towerTargeting: {fileID: 1069530625128871706}
---- !u!114 &-8884408094449436541
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2169085319361342427}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d3aecbf4e729a54cb9fa9fe809f7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactions:
-  - sprite: {fileID: 21300000, guid: 276cd7188a6d1a549b399899ed276242, type: 3}
-    unityAction:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 2663825934812099868}
-          m_TargetAssemblyTypeName: CanonTower, Assembly-CSharp
-          m_MethodName: Upgrade
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    interactionEnabled:
-      m_PersistentCalls:
-        m_Calls: []
-    tooltip: {fileID: 11400000, guid: 1659bc60d1c800f42ab7e691317abe1b, type: 2}
-    tooltipEnabled: 1
-  - sprite: {fileID: 21300000, guid: b61eb139025d0054a8bd447d06bbcec0, type: 3}
-    unityAction:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 2663825934812099868}
-          m_TargetAssemblyTypeName: CanonTower, Assembly-CSharp
-          m_MethodName: Sell
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    interactionEnabled:
-      m_PersistentCalls:
-        m_Calls: []
-    tooltip: {fileID: 11400000, guid: 4d441daee19c6a34f8dde6774ba749ed, type: 2}
-    tooltipEnabled: 1
 --- !u!1 &4724925258096942215
 GameObject:
   m_ObjectHideFlags: 0

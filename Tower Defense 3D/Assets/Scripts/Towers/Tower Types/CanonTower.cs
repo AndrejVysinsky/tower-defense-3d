@@ -16,12 +16,12 @@ public class CanonTower : TowerBase
 
     private void Update()
     {
-        if (IsUnderConstruction || Level == 0)
+        if (IsUnderConstruction)
             return;
 
         _timer += Time.deltaTime;
 
-        if (towerTargeting.Target != null && _timer >= TowerData.GetLevelData(Level).AttackDelay)
+        if (towerTargeting.Target != null && _timer >= TowerData.AttackDelay)
         {
             _timer = 0;
             Shoot(towerTargeting.Target);
@@ -32,7 +32,7 @@ public class CanonTower : TowerBase
     {
         var projectile = Instantiate(projectilePrefab, towerTargeting.GetFirePoint().transform.position, transform.rotation);
 
-        projectile.GetComponent<CanonProjectile>().Initialize(target.transform.position, TowerData.GetLevelData(Level).Damage);        
+        projectile.GetComponent<CanonProjectile>().Initialize(target.transform.position, TowerData.Damage);        
     }
 
     public override void Upgrade()

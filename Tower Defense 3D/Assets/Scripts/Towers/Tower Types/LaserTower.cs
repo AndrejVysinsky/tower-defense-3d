@@ -14,7 +14,7 @@ public class LaserTower : TowerBase
 
     private void Update()
     {
-        if (IsUnderConstruction || Level == 0)
+        if (IsUnderConstruction)
             return;
 
         if (towerTargeting.Target != null)
@@ -33,7 +33,7 @@ public class LaserTower : TowerBase
         laser.SetPosition(0, towerTargeting.GetFirePoint().transform.position);
         laser.SetPosition(1, target.transform.position);
 
-        target.GetComponent<Enemy>().TakeDamage(TowerData.GetLevelData(Level).Damage * Time.deltaTime);
+        target.GetComponent<Enemy>().TakeDamage(TowerData.Damage * Time.deltaTime);
     }
 
     public override void Upgrade()

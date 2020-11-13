@@ -204,7 +204,6 @@ GameObject:
   - component: {fileID: 4233489597077276277}
   - component: {fileID: 1927771512813209181}
   - component: {fileID: -5169408426047425054}
-  - component: {fileID: 1662321635891694977}
   m_Layer: 0
   m_Name: Laser Tower
   m_TagString: Untagged
@@ -302,58 +301,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f23bff1842b03f74b81eddd927bbb26e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerData: {fileID: 11400000, guid: 7919df719f4bd4d49b378db8a5dc8ef9, type: 2}
+  towerData: {fileID: 11400000, guid: 4b9a912874548f74bbd05b30f4cf4285, type: 2}
   laser: {fileID: 8619833718616983908}
   towerTargeting: {fileID: 2882305233965249878}
---- !u!114 &1662321635891694977
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4093102055030679959}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d3aecbf4e729a54cb9fa9fe809f7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactions:
-  - sprite: {fileID: 21300000, guid: 276cd7188a6d1a549b399899ed276242, type: 3}
-    unityAction:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: -5169408426047425054}
-          m_TargetAssemblyTypeName: LaserTower, Assembly-CSharp
-          m_MethodName: Upgrade
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    tooltip: {fileID: 11400000, guid: 1659bc60d1c800f42ab7e691317abe1b, type: 2}
-    tooltipEnabled: 1
-  - sprite: {fileID: 21300000, guid: b61eb139025d0054a8bd447d06bbcec0, type: 3}
-    unityAction:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: -5169408426047425054}
-          m_TargetAssemblyTypeName: LaserTower, Assembly-CSharp
-          m_MethodName: Sell
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    tooltip: {fileID: 11400000, guid: 4d441daee19c6a34f8dde6774ba749ed, type: 2}
-    tooltipEnabled: 1
 --- !u!1 &4499819305644172628
 GameObject:
   m_ObjectHideFlags: 0

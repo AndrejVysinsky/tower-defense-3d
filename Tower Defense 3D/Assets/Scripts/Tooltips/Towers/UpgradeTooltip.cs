@@ -17,15 +17,15 @@ public class UpgradeTooltip : DynamicTooltip, ITooltipHeader
 
         if (ObjectData.TryGetComponent(out TowerBase towerBase))
         {
-            if (towerBase.TowerData.MaxLevel == towerBase.Level)
+            if (towerBase.TowerData.NextUpgrades.Count == 0)
             {
                 builder.Append("Tower has reached max level!");
             }
             else
             {
-                builder.Append(towerBase.TowerData.GetLevelData(towerBase.Level).Damage).Append(" --> ")
-                        .Append(towerBase.TowerData.GetLevelData(towerBase.Level + 1).Damage).Append(TooltipIcons.GetFormattedIconText(TooltipIcons.SwordIcon)).AppendLine();
-                builder.Append(towerBase.TowerData.GetLevelData(towerBase.Level + 1).Price).Append(TooltipIcons.GetFormattedIconText(TooltipIcons.GoldIcon)).AppendLine();
+                builder.Append(towerBase.TowerData.Damage).Append(" --> ")
+                        .Append(towerBase.TowerData.NextUpgrades[0].Damage).Append(TooltipIcons.GetFormattedIconText(TooltipIcons.SwordIcon)).AppendLine();
+                builder.Append(towerBase.TowerData.NextUpgrades[0].Price).Append(TooltipIcons.GetFormattedIconText(TooltipIcons.GoldIcon)).AppendLine();
             }
         }
         else
