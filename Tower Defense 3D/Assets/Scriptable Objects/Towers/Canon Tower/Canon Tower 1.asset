@@ -12,3 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e811fbc105d5e0408c32c09ec45435a, type: 3}
   m_Name: Canon Tower 1
   m_EditorClassIdentifier: 
+  name: Canon Tower 1
+  sprite: {fileID: -2543360342454924955, guid: f67da7de95233ab4cac3d6ef59eb1f77, type: 3}
+  hitPoints: 50
+  price: 50
+  sellFactor: 50
+  damage: 50
+  attackDelay: 2
+  radius: 50
+  material: {fileID: 2100000, guid: 8e996807ad0effb47a54b11232e2a358, type: 2}
+  nextUpgrades:
+  - {fileID: 11400000, guid: 2526b3d11b28a49408c055120f5354b3, type: 2}
+  - {fileID: 11400000, guid: 42f277d369fc04f4285b76f4b871b564, type: 2}

@@ -15,14 +15,15 @@ public class InteractionPanel : MonoBehaviour
         {
             _upgradePanels.ForEach(upgrade => Destroy(upgrade));
 
-            upgradable.UpgradeOptions.ForEach(upgradeOption =>
+            for (int i = 0; i < upgradable.UpgradeOptions.Count; i++)
             {
+                var upgradeOption = upgradable.UpgradeOptions[i];
+
                 var upgradePanel = Instantiate(upgradePrefab, transform);
-
-                upgradePanel.GetComponent<UpgradePanel>().SetUpgrade(upgradable, upgradeOption);
-
                 _upgradePanels.Add(upgradePanel);
-            });
+
+                upgradePanel.GetComponent<UpgradePanel>().SetUpgrade(upgradable, upgradeOption, i);
+            }
         }
     }
 }

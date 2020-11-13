@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e811fbc105d5e0408c32c09ec45435a, type: 3}
   m_Name: Laser Tower 2
   m_EditorClassIdentifier: 
-  name: 
-  sprite: {fileID: 0}
-  hitPoints: 0
-  price: 0
-  sellFactor: 0
-  damage: 0
+  name: Laser Tower 2 Go Bzzz
+  sprite: {fileID: 1104702983043596364, guid: f67da7de95233ab4cac3d6ef59eb1f77, type: 3}
+  hitPoints: 100
+  price: 200
+  sellFactor: 0.6
+  damage: 80
   attackDelay: 0
-  radius: 0
-  material: {fileID: 0}
+  radius: 20
+  material: {fileID: 2100000, guid: 8e3c8b7560a95c84787e8a33ecce1aed, type: 2}
   nextUpgrades: []

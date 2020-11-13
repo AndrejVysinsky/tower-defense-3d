@@ -27,7 +27,7 @@ public class TowerBase : MonoBehaviour, IConstruction, IUpgradable, IInteractabl
     //============================================
     // IUpgradeable
     //============================================
-    public List<IUpgradeOption> UpgradeOptions => new List<IUpgradeOption>() { TowerData };
+    public List<IUpgradeOption> UpgradeOptions => new List<IUpgradeOption>(TowerData.NextUpgrades);
     public bool ProgressUpgradeTree => throw new System.NotImplementedException();
 
     //============================================
@@ -99,9 +99,9 @@ public class TowerBase : MonoBehaviour, IConstruction, IUpgradable, IInteractabl
     //============================================
     // IUpgradeable
     //============================================
-    public void Upgrade(IUpgradeOption upgradeOption)
+    public void Upgrade(IUpgradeOption upgradeOption, int upgradeIndex)
     {
-        TowerData = TowerData.NextUpgrades[0];
+        TowerData = TowerData.NextUpgrades[upgradeIndex];
 
         GetComponent<MeshRenderer>().material = TowerData.Material;
 

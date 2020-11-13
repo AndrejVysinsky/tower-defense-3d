@@ -12,3 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e811fbc105d5e0408c32c09ec45435a, type: 3}
   m_Name: Canon Tower 2a
   m_EditorClassIdentifier: 
+  name: Canon Tower 2a
+  sprite: {fileID: 1104702983043596364, guid: f67da7de95233ab4cac3d6ef59eb1f77, type: 3}
+  hitPoints: 50
+  price: 50
+  sellFactor: 50
+  damage: 50
+  attackDelay: 50
+  radius: 50
+  material: {fileID: 2100000, guid: 8e3c8b7560a95c84787e8a33ecce1aed, type: 2}
+  nextUpgrades: []
