@@ -3414,6 +3414,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upgradePrefab: {fileID: 7259961369979664899, guid: 3ac53288a7bb098448bf2f6abb2f792d,
     type: 3}
+  sellPrefab: {fileID: 7259961369979664899, guid: 4f317ddce658e354e8a0072f24c6b43a,
+    type: 3}
 --- !u!114 &1875687445
 MonoBehaviour:
   m_ObjectHideFlags: 0

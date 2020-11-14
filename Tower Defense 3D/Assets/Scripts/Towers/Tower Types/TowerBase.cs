@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
-public class TowerBase : MonoBehaviour, IConstruction, IUpgradable, IInteractable, IEntity, IEntityDamage
+public class TowerBase : MonoBehaviour, IConstruction, IUpgradable, ISellable, IInteractable, IEntity, IEntityDamage
 {
     [SerializeField] TowerData towerData;
+    [SerializeField] SellableTooltip sellableTooltip;
 
     public TowerData TowerData
     {
@@ -43,6 +43,18 @@ public class TowerBase : MonoBehaviour, IConstruction, IUpgradable, IInteractabl
     //============================================
     public int DamageValue => (int)TowerData.Damage;
 
+    //============================================
+    // ISellable
+    //============================================
+    public SellableTooltip Tooltip
+    {
+        get
+        {
+            sellableTooltip.Price = towerData.GetSellValue();
+            return sellableTooltip;
+        }
+    }
+
     protected virtual void Awake()
     {
 
@@ -64,6 +76,9 @@ public class TowerBase : MonoBehaviour, IConstruction, IUpgradable, IInteractabl
         GameController.Instance.ModifyCurrencyBy(-price, transform.position);
     }
 
+    //============================================
+    // ISellable
+    //============================================
     public virtual void Sell()
     {
         var sellValue = TowerData.GetSellValue();
@@ -99,7 +114,7 @@ public class TowerBase : MonoBehaviour, IConstruction, IUpgradable, IInteractabl
     //============================================
     // IUpgradeable
     //============================================
-    public void Upgrade(IUpgradeOption upgradeOption, int upgradeIndex)
+    public void Upgrade(int upgradeIndex)
     {
         TowerData = TowerData.NextUpgrades[upgradeIndex];
 

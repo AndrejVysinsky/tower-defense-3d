@@ -25,6 +25,11 @@ public class InteractionSystem : MonoBehaviour
 
     private void Update()
     {
+        if (InteractingGameObject == null)
+        {
+            HideInteractions();
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             if (RayCaster.RayCastUIObject(out _))
@@ -47,7 +52,7 @@ public class InteractionSystem : MonoBehaviour
         }
     }
 
-    public void ShowInteractions()
+    private void ShowInteractions()
     {
         entityPanel.SetActive(true);
         interactionPanel.SetActive(true);
@@ -55,11 +60,17 @@ public class InteractionSystem : MonoBehaviour
         buyContainer.SetActive(false);
     }
 
-    public void HideInteractions()
+    private void HideInteractions()
     {
         entityPanel.SetActive(false);
         interactionPanel.SetActive(false);
 
         buyContainer.SetActive(true);
+    }
+
+    public void RefreshInteractions()
+    {
+        HideInteractions();
+        ShowInteractions();
     }
 }

@@ -2,7 +2,7 @@
 
 public interface ISellable
 {
-    int Price { get; }
-
     void Sell();
+
+    SellableTooltip Tooltip { get; }
 }
