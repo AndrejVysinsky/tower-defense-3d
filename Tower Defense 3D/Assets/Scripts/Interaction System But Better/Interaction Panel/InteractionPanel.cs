@@ -23,6 +23,7 @@ public class InteractionPanel : MonoBehaviour
                 _upgradePanels.Add(upgradePanel);
 
                 upgradePanel.GetComponent<UpgradePanel>().SetUpgrade(upgradable, upgradeOption, i);
+                upgradePanel.GetComponent<TooltipTrigger>().SetTooltip(upgradeOption.Tooltip);
             }
         }
     }

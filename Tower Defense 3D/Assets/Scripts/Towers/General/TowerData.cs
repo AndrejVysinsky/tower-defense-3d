@@ -4,7 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Tower Data", menuName = "Data/Tower Data")]
 public class TowerData : ScriptableObject, IUpgradeOption
 {
-    [SerializeField] new string name;
+    [SerializeField] BuyableTooltip tooltip; 
     [SerializeField] Sprite sprite;
     [SerializeField] int hitPoints;
 
@@ -19,7 +19,7 @@ public class TowerData : ScriptableObject, IUpgradeOption
 
     [SerializeField] List<TowerData> nextUpgrades;
 
-    public string Name => name;
+    public string Name => tooltip.Header;
     public Sprite Sprite => sprite;
     public int HitPoints => hitPoints;
 
@@ -33,7 +33,14 @@ public class TowerData : ScriptableObject, IUpgradeOption
 
     public List<TowerData> NextUpgrades => nextUpgrades;
 
-    public DynamicTooltip DynamicTooltip => throw new System.NotImplementedException();
+    public BuyableTooltip Tooltip
+    {
+        get
+        {
+            tooltip.Price = Price;
+            return tooltip;
+        }
+    }
 
     public int GetSellValue()
     {
