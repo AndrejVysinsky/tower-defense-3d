@@ -13,7 +13,7 @@ public class EntityPanel : MonoBehaviour
 
     private void OnEnable()
     {
-        var interactingObject = InteractionSystemButBetter.Instance.InteractingGameObject;
+        var interactingObject = InteractionSystem.Instance.InteractingGameObject;
 
         if (interactingObject.TryGetComponent(out IEntity entity))
         {

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e811fbc105d5e0408c32c09ec45435a, type: 3}
   m_Name: Laser Tower 2
   m_EditorClassIdentifier: 
-  name: Laser Tower 2 Go Bzzz
+  tooltip: {fileID: 11400000, guid: bf4c48e940791be45bd50acf796c78f6, type: 2}
   sprite: {fileID: 1104702983043596364, guid: f67da7de95233ab4cac3d6ef59eb1f77, type: 3}
   hitPoints: 100
   price: 200

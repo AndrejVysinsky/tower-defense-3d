@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-public class InteractionSystemButBetter : MonoBehaviour
+public class InteractionSystem : MonoBehaviour
 {
-    public static InteractionSystemButBetter Instance { get; private set; }
+    public static InteractionSystem Instance { get; private set; }
 
     [SerializeField] GameObject buyContainer;
 
