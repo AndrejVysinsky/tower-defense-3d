@@ -4,8 +4,25 @@ using UnityEngine.EventSystems;
 public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     [SerializeField] TooltipBase tooltipBase;
+    [SerializeField] bool isBuildOption;
 
     private bool _isQuitting = false;
+
+    void OnEnable()
+    {
+        if (isBuildOption && tooltipBase != null)
+        {
+            var buildPrefab = GetComponent<BuildOption>().BuildPrefab;
+
+            if (buildPrefab.TryGetComponent(out IUpgradable upgradable))
+            {
+                if (tooltipBase is BuyableTooltip buyableTooltip)
+                {
+                    buyableTooltip.Price = upgradable.CurrentUpgrade.Price;
+                }
+            }
+        }
+    }
 
     public void SetTooltip(TooltipBase tooltip)
     {

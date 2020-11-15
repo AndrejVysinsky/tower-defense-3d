@@ -5,12 +5,22 @@ public class BuildOption : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] GameObject buildPrefab;
 
-    private GameObject _buildPrefab;
+    public GameObject BuildPrefab
+    {
+        get
+        {
+            return buildPrefab;
+        }
+        private set
+        {
+            buildPrefab = value;
+        }
+    }
 
     public void Initialize(BuildOptionData buildOptionData)
     {
         GetComponent<SpriteRenderer>().sprite = buildOptionData.BuildIcon;
-        _buildPrefab = buildOptionData.BuildPrefab;
+        BuildPrefab = buildOptionData.BuildPrefab;
     }
 
     public void OnPointerClick(PointerEventData eventData)

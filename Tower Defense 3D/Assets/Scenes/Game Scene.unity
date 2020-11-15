@@ -376,6 +376,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tooltipBase: {fileID: 11400000, guid: 2b3f3ea7a6f991f408684533e2bacfb9, type: 2}
+  isBuildOption: 1
 --- !u!114 &177582223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -970,6 +971,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tooltipBase: {fileID: 11400000, guid: 2b3e5245bd7f11e4aa22899537d3735a, type: 2}
+  isBuildOption: 0
 --- !u!114 &414309822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1061,6 +1063,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tooltipBase: {fileID: 11400000, guid: 0c2d9419bbeffc640970569691812d78, type: 2}
+  isBuildOption: 0
 --- !u!114 &452946248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1714,6 +1717,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tooltipBase: {fileID: 11400000, guid: 808b0029c97f4a14a927da24e2682597, type: 2}
+  isBuildOption: 1
 --- !u!114 &834375903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3941,6 +3945,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tooltipBase: {fileID: 11400000, guid: faa5e2643ae90c248b7ba58cfc5b064d, type: 2}
+  isBuildOption: 0
 --- !u!114 &2140865010
 MonoBehaviour:
   m_ObjectHideFlags: 0

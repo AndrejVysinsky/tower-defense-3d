@@ -28,6 +28,7 @@ public class TowerBase : MonoBehaviour, IConstruction, IUpgradable, ISellable, I
     // IUpgradeable
     //============================================
     public List<IUpgradeOption> UpgradeOptions => new List<IUpgradeOption>(TowerData.NextUpgrades);
+    public IUpgradeOption CurrentUpgrade => towerData;
     public bool ProgressUpgradeTree => throw new System.NotImplementedException();
 
     //============================================
