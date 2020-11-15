@@ -397,8 +397,9 @@ GameObject:
   - component: {fileID: 5536151638407006709}
   - component: {fileID: 2486349961000596068}
   - component: {fileID: 3627655282241091049}
+  - component: {fileID: 2707629295188644192}
   m_Layer: 5
-  m_Name: Wave Timer 2
+  m_Name: Wave Timer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -447,6 +448,20 @@ MonoBehaviour:
   timerContainer: {fileID: 803508796170780375}
   timeText: {fileID: 5656435337178746063}
   timeImage: {fileID: 1815971384298763425}
+--- !u!114 &2707629295188644192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5536151638407006708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c9c081ba76778a4da27599615665b19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltipBase: {fileID: 11400000, guid: b2ec888b8e3f82f49baa6457cb57d0c7, type: 2}
+  isBuildOption: 0
 --- !u!1 &8239480750346198031
 GameObject:
   m_ObjectHideFlags: 0

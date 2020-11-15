@@ -44,6 +44,21 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         HideTooltip();
     }
 
+    private void OnMouseEnter()
+    {
+        ShowTooltip();
+    }
+
+    private void OnMouseDown()
+    {
+        ShowTooltip();
+    }
+
+    private void OnMouseExit()
+    {
+        HideTooltip();
+    }
+
     private void OnDisable()
     {
         if (_isQuitting)

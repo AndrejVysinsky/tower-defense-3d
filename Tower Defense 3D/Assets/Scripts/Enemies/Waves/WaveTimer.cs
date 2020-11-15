@@ -25,7 +25,10 @@ public class WaveTimer : MonoBehaviour
         UpdateTime(_remainingTime);
 
         if (_remainingTime <= 0)
+        {
             timerContainer.SetActive(false);
+            GetComponent<Collider>().enabled = false;
+        }
     }
 
     private void UpdateTime(float remainingTime)
@@ -38,6 +41,7 @@ public class WaveTimer : MonoBehaviour
     public void RefreshTimer(float time)
     {
         timerContainer.SetActive(true);
+        GetComponent<Collider>().enabled = true;
 
         _time = time;
         _remainingTime = time;
@@ -49,5 +53,6 @@ public class WaveTimer : MonoBehaviour
         OnTimerSkipped?.Invoke();
 
         timerContainer.SetActive(false);
+        GetComponent<Collider>().enabled = false;
     } 
 }
