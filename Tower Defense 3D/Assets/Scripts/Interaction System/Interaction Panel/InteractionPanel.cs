@@ -22,6 +22,12 @@ public class InteractionPanel : MonoBehaviour
 
         _interactions.ForEach(interaction => Destroy(interaction));
 
+        if (interactingObject.TryGetComponent(out IUpgradeable upgradable))
+        {
+            if (upgradable.IsUnderUpgrade)
+                return;
+        }
+
         ShowUpgradeOptions(interactingObject);
         ShowSellOption(interactingObject);
     }
@@ -53,10 +59,5 @@ public class InteractionPanel : MonoBehaviour
             sellPanel.GetComponent<SellPanel>().SetSell(sellable);
             sellPanel.GetComponent<TooltipTrigger>().SetTooltip(sellable.Tooltip);
         }
-    }
-
-    public void OnPanelClicked()
-    {
-        ShowInteractions();
     }
 }

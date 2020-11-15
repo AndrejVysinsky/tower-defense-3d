@@ -73,6 +73,9 @@ public class InteractionSystem : MonoBehaviour
 
     public void RefreshInteractions()
     {
+        if (InteractingGameObject == null)
+            return;
+
         HideInteractions();
         ShowInteractions();
     }

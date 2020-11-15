@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 
 public class InteractionIndicator : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class InteractionIndicator : MonoBehaviour
     private float _heighOffset;
 
     private readonly float _distanceAboveGround = 0.1f;
+    private readonly float _agentExtraRadius = 0.15f;
 
     private void OnEnable()
     {
@@ -39,6 +41,11 @@ public class InteractionIndicator : MonoBehaviour
 
             _radius = sizeX / 2;
             _heighOffset = sizeY / 2;
+            
+            if (_interactingObject.gameObject.TryGetComponent(out NavMeshAgent _))
+            {
+                _radius += _agentExtraRadius;
+            }
 
             lineRenderer.gameObject.SetActive(true);
             lineRenderer.widthMultiplier = lineWidth;

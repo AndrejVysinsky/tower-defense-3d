@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IInteractable
 {
     [SerializeField] EnemyData enemyData;
     [SerializeField] HealthScript healthScript;
