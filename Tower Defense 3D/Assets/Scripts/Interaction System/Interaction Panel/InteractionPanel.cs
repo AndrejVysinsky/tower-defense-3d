@@ -28,7 +28,7 @@ public class InteractionPanel : MonoBehaviour
 
     private void ShowUpgradeOptions(GameObject interactingObject)
     {
-        if (interactingObject.TryGetComponent(out IUpgradable upgradable))
+        if (interactingObject.TryGetComponent(out IUpgradeable upgradable))
         {
             for (int i = 0; i < upgradable.UpgradeOptions.Count; i++)
             {
@@ -37,7 +37,7 @@ public class InteractionPanel : MonoBehaviour
                 var upgradePanel = Instantiate(upgradePrefab, transform);
                 _interactions.Add(upgradePanel);
 
-                upgradePanel.GetComponent<UpgradePanel>().SetUpgrade(upgradable, upgradeOption, i);
+                upgradePanel.GetComponent<UpgradePanel>().SetUpgrade(upgradable, upgradeOption);
                 upgradePanel.GetComponent<TooltipTrigger>().SetTooltip(upgradeOption.Tooltip);
             }
         }

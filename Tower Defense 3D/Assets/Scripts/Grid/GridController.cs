@@ -16,7 +16,7 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
 
     private GameObject _objectToPlacePrefab;
     private GameObject _objectToPlace;
-    private IConstruction _objectToPlaceConstruction;
+    private IUpgradeable _objectToPlaceBuild;
 
     public GridSettings GridSettings => gridSettings;
 
@@ -219,15 +219,12 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
         }
 
         //if object implements IConstruction interface check if is able to construct and call construction start
-        if (_objectToPlaceConstruction != null)
+        if (_objectToPlaceBuild != null)
         {
-            if (_objectToPlaceConstruction.IsAbleToStartConstruction == false)
-            {
-                Debug.Log("Not enough gold!");
-                return;
-            }
+            _objectToPlaceBuild.OnUpgradeStarted(_objectToPlaceBuild.CurrentUpgrade, out bool upgradeStarted);
 
-            _objectToPlaceConstruction.OnConstructionStarted();
+            if (upgradeStarted == false)
+                return;
         }
 
         _objectToPlace.layer = (int)LayerEnum.Default;
@@ -287,17 +284,14 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
     private void InstantiatePrefab()
     {
         _objectToPlace = Instantiate(_objectToPlacePrefab, map.transform);
-        //_objectToPlace.GetComponentsInChildren<MonoBehaviour>().ToList().ForEach(x => x.enabled = false);
-
         _objectToPlace.layer = (int)LayerEnum.IgnoreRayCast;
         
-        _objectToPlaceConstruction = _objectToPlace.GetComponent<IConstruction>();
-
+        _objectToPlaceBuild = _objectToPlace.GetComponent<IUpgradeable>();
         var objectToPlaceBounds = _objectToPlace.GetComponent<Collider>().bounds;
 
         _objectOriginY = _objectToPlace.transform.position.y + objectToPlaceBounds.extents.y - objectToPlaceBounds.center.y;
 
-        placementValidator.RegisterParent(_objectToPlace, _objectToPlaceConstruction);
+        placementValidator.RegisterParent(_objectToPlace);
 
         SetObjectPosition(gridDisplay.GetGridBasePosition());
     }

@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class TowerBase : MonoBehaviour, IConstruction, IUpgradable, ISellable, IInteractable, IEntity, IEntityDamage
+public class TowerBase : MonoBehaviour, IUpgradeable, ISellable, IInteractable, IEntity, IEntityDamage
 {
     [SerializeField] TowerData towerData;
     [SerializeField] SellableTooltip sellableTooltip;
@@ -17,19 +18,26 @@ public class TowerBase : MonoBehaviour, IConstruction, IUpgradable, ISellable, I
             towerData = value;
         }
     }
-
-    //============================================
-    // IConstruction
-    //============================================
-    public bool IsUnderConstruction { get; private set; }
-    public bool IsAbleToStartConstruction => GameController.Instance.Currency >= TowerData.Price;
-
+        
     //============================================
     // IUpgradeable
     //============================================
     public List<IUpgradeOption> UpgradeOptions => new List<IUpgradeOption>(TowerData.NextUpgrades);
     public IUpgradeOption CurrentUpgrade => towerData;
     public bool ProgressUpgradeTree => throw new System.NotImplementedException();
+    public bool IsUnderUpgrade { get; private set; }
+
+    //============================================
+    // ISellable
+    //============================================
+    public SellableTooltip Tooltip
+    {
+        get
+        {
+            sellableTooltip.Price = towerData.GetSellValue();
+            return sellableTooltip;
+        }
+    }
 
     //============================================
     // IEntity
@@ -44,18 +52,6 @@ public class TowerBase : MonoBehaviour, IConstruction, IUpgradable, ISellable, I
     //============================================
     public int DamageValue => (int)TowerData.Damage;
 
-    //============================================
-    // ISellable
-    //============================================
-    public SellableTooltip Tooltip
-    {
-        get
-        {
-            sellableTooltip.Price = towerData.GetSellValue();
-            return sellableTooltip;
-        }
-    }
-
     protected virtual void Awake()
     {
 
@@ -64,17 +60,56 @@ public class TowerBase : MonoBehaviour, IConstruction, IUpgradable, ISellable, I
     protected virtual void Start()
     {
 
+    }    
+
+    //============================================
+    // IUpgradeable
+    //============================================
+    public virtual void OnUpgradeStarted(IUpgradeOption upgradeOption, out bool upgradeStarted)
+    {
+        if (GameController.Instance.Currency < upgradeOption.Price)
+        {
+            Debug.Log("Not enough gold!");
+            upgradeStarted = false;
+            return;
+        }
+
+        upgradeStarted = true;
+        IsUnderUpgrade = true;
+
+        //simulate construction time
+        //after finished
+        StartCoroutine(OnUpgradeRunning(upgradeOption));
     }
 
-    public virtual void Upgrade()
+    public IEnumerator OnUpgradeRunning(IUpgradeOption upgradeOption)
     {
-        TowerData = TowerData.NextUpgrades[0];
+        yield return new WaitForEndOfFrame();
 
-        GetComponent<MeshRenderer>().material = TowerData.Material;
+        OnUpgradeFinished(upgradeOption);
+    }
+
+    public virtual void OnUpgradeFinished(IUpgradeOption upgradeOption)
+    {
+        IsUnderUpgrade = false;
+
+        if (upgradeOption != CurrentUpgrade)
+        {
+            var nextTowerData = TowerData.NextUpgrades.Find(x => x == upgradeOption);
+
+            TowerData = nextTowerData;
+
+            GetComponent<MeshRenderer>().material = TowerData.Material;
+        }
 
         var price = TowerData.Price;
 
         GameController.Instance.ModifyCurrencyBy(-price, transform.position);
+    }
+
+    public virtual void OnUpgradeCanceled()
+    {
+        IsUnderUpgrade = false;
     }
 
     //============================================
@@ -88,41 +123,5 @@ public class TowerBase : MonoBehaviour, IConstruction, IUpgradable, ISellable, I
 
         Destroy(gameObject);
     }
-
-    //============================================
-    // IConstruction
-    //============================================
-    public virtual void OnConstructionStarted()
-    {
-        IsUnderConstruction = true;
-
-        //simulate construction time
-        //after finished
-        OnConstructionFinished();
-    }
-
-    public virtual void OnConstructionFinished()
-    {
-        IsUnderConstruction = false;
-        //Upgrade();
-    }
-
-    public virtual void OnConstructionCanceled()
-    {
-        IsUnderConstruction = false;
-    }
-
-    //============================================
-    // IUpgradeable
-    //============================================
-    public void Upgrade(int upgradeIndex)
-    {
-        TowerData = TowerData.NextUpgrades[upgradeIndex];
-
-        GetComponent<MeshRenderer>().material = TowerData.Material;
-
-        var price = TowerData.Price;
-
-        GameController.Instance.ModifyCurrencyBy(-price, transform.position);
-    }
+    
 }

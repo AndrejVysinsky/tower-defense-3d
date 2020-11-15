@@ -14,7 +14,7 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         {
             var buildPrefab = GetComponent<BuildOption>().BuildPrefab;
 
-            if (buildPrefab.TryGetComponent(out IUpgradable upgradable))
+            if (buildPrefab.TryGetComponent(out IUpgradeable upgradable))
             {
                 if (tooltipBase is BuyableTooltip buyableTooltip)
                 {

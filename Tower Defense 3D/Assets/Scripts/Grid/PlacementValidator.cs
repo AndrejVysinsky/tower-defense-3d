@@ -15,8 +15,6 @@ public class PlacementValidator : MonoBehaviour
     
     private readonly float _maxRangeTollerance = 0.05f;
 
-    private IConstruction _construction;
-
     public bool IsOverlapping => _overlappedObjects.Count > 0;
     public bool IsOnGround { get; private set; }
     public BoxCollider PlacementCollider { get; private set; }
@@ -33,12 +31,10 @@ public class PlacementValidator : MonoBehaviour
         _overlappedObjects = new List<GameObject>();
     }
 
-    public void RegisterParent(GameObject parent, IConstruction construction)
+    public void RegisterParent(GameObject parent)
     {
         _parentObject = parent;
         _validityIndicator.RegisterObjectMaterials(parent);
-        
-        _construction = construction;
 
         ResizeCollider(parent.GetComponent<Collider>().bounds.size);
     }
@@ -93,11 +89,6 @@ public class PlacementValidator : MonoBehaviour
         IsOnGround = IsWholeObjectOnGround();
 
         bool isValidPlacement = IsOverlapping == false && IsOnGround;
-
-        if (_construction != null)
-        {
-            isValidPlacement &= _construction.IsAbleToStartConstruction;
-        }
 
         _validityIndicator.SetMaterial(isValidPlacement);
     }

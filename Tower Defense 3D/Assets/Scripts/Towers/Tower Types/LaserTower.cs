@@ -14,7 +14,7 @@ public class LaserTower : TowerBase
 
     private void Update()
     {
-        if (IsUnderConstruction)
+        if (IsUnderUpgrade)
             return;
 
         if (towerTargeting.Target != null)
@@ -36,34 +36,32 @@ public class LaserTower : TowerBase
         target.GetComponent<Enemy>().TakeDamage(TowerData.Damage * Time.deltaTime);
     }
 
-    public override void Upgrade()
+    public override void OnUpgradeStarted(IUpgradeOption upgradeOption, out bool upgradeStarted)
     {
-        base.Upgrade();
+        base.OnUpgradeStarted(upgradeOption, out upgradeStarted);
+
+        if (upgradeStarted)
+        {
+            towerTargeting.enabled = false;
+        }
+    }
+
+    public override void OnUpgradeFinished(IUpgradeOption upgradeOption)
+    {
+        base.OnUpgradeFinished(upgradeOption);
+
+        towerTargeting.enabled = true;
+    }
+
+    public override void OnUpgradeCanceled()
+    {
+        base.OnUpgradeCanceled();
+
+        towerTargeting.enabled = true;
     }
 
     public override void Sell()
     {
         base.Sell();
-    }
-
-    public override void OnConstructionStarted()
-    {
-        towerTargeting.enabled = false;
-
-        base.OnConstructionStarted();
-    }
-
-    public override void OnConstructionFinished()
-    {
-        towerTargeting.enabled = true;
-
-        base.OnConstructionFinished();
-    }
-
-    public override void OnConstructionCanceled()
-    {
-        towerTargeting.enabled = true;
-
-        base.OnConstructionCanceled();
     }
 }
