@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ead8effb9667e0142b5a73f28f8f4a93, type: 3}
   m_Name: Wave Timer Tooltip
   m_EditorClassIdentifier: 
-  description: 
+  description: Click to skip timer

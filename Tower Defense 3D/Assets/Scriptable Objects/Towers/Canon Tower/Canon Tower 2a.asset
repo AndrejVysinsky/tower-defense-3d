@@ -16,7 +16,7 @@ MonoBehaviour:
   sprite: {fileID: 1104702983043596364, guid: f67da7de95233ab4cac3d6ef59eb1f77, type: 3}
   hitPoints: 50
   price: 50
-  sellFactor: 50
+  sellFactor: 2
   damage: 50
   attackDelay: 2
   radius: 50

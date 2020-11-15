@@ -8,6 +8,7 @@ public class InteractionSystem : MonoBehaviour
 
     [SerializeField] GameObject entityPanel;
     [SerializeField] GameObject interactionPanel;
+    [SerializeField] GameObject interactionIndicator;
 
     public GameObject InteractingGameObject { get; private set; }
 
@@ -56,6 +57,7 @@ public class InteractionSystem : MonoBehaviour
     {
         entityPanel.SetActive(true);
         interactionPanel.SetActive(true);
+        interactionIndicator.SetActive(true);
 
         buyContainer.SetActive(false);
     }
@@ -64,6 +66,7 @@ public class InteractionSystem : MonoBehaviour
     {
         entityPanel.SetActive(false);
         interactionPanel.SetActive(false);
+        interactionIndicator.SetActive(false);
 
         buyContainer.SetActive(true);
     }
