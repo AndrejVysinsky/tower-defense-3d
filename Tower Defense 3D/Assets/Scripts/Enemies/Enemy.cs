@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour, IInteractable
     private void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
+        _agent.speed = enemyData.Speed;
     }
 
     public void Initialize(Path path, Sprite sprite, Color color, float difficultyMultiplier)

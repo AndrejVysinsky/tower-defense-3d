@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class CanonTower : TowerBase
+public class ProjectileTower : TowerBase
 {
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] TowerTargeting towerTargeting;
@@ -32,7 +32,7 @@ public class CanonTower : TowerBase
     {
         var projectile = Instantiate(projectilePrefab, towerTargeting.GetFirePoint().transform.position, transform.rotation);
 
-        projectile.GetComponent<CanonProjectile>().Initialize(target.transform.position, TowerData.Damage);        
+        projectile.GetComponent<IProjectileMovement>().Initialize(target.transform.position, TowerData.Damage);        
     }
 
     public override void OnUpgradeStarted(IUpgradeOption upgradeOption, out bool upgradeStarted)
