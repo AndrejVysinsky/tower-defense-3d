@@ -71,6 +71,6 @@ public class Enemy : MonoBehaviour, IInteractable
 
     public float GetRemainingDistance()
     {
-        return Vector3.Distance(transform.position, _portalEnd.transform.position);
+        return _agent.remainingDistance;
     }
 }
