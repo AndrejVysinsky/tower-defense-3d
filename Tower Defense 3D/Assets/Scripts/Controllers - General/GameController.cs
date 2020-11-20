@@ -5,7 +5,7 @@ public class GameController : MonoBehaviour
     public static GameController Instance { get; private set; }
 
     [SerializeField] GameInfoDisplay gameInfoDisplay;
-    //[SerializeField] GameOver gameOver;
+    [SerializeField] GameOver gameOver;
     [SerializeField] int startingCurrency;
     [SerializeField] int startingLives;
 
@@ -13,6 +13,7 @@ public class GameController : MonoBehaviour
     public int Lives { get; private set; }
 
     private int _wave;
+    private int _score;
 
     private void Awake()
     {
@@ -52,6 +53,9 @@ public class GameController : MonoBehaviour
         Currency += value;
         gameInfoDisplay.UpdateCurrencyText(Currency);
 
+        if (value > 0)
+            _score += value;
+
         //EventManager.Instance.ExecuteEvent<ICurrencyChanged>((x, y) => x.OnCurrencyChanged(Currency));
     }
 
@@ -71,18 +75,14 @@ public class GameController : MonoBehaviour
         Lives += value;
         gameInfoDisplay.UpdateLivesText(Lives);
 
-        //if (Lives <= 0)
-        //{
-        //    if (gameOver.gameObject.activeSelf)
-        //        return;
+        if (Lives <= 0)
+        {
+            gameOver.gameObject.SetActive(true);
 
-        //    Time.timeScale = 0f;
+            gameOver.Initialize(_score);
 
-        //    gameOver.gameObject.SetActive(true);
-
-        //    gameOver.InitializeScore(_wave, 100, false);
-        //    // gameOver.InitializeScore(250, 3000, true);
-        //}
+            Time.timeScale = 0f;
+        }
     }
 
     public void WaveSpawned(int waveNumber)
