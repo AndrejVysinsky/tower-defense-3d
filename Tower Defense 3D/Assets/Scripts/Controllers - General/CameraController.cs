@@ -58,7 +58,7 @@ public class CameraController : MonoBehaviour
         if (Input.GetKey(KeyCode.Q))
             rotationDirection = -1;
 
-        transform.Rotate(Vector3.up, rotationDirection * rotationSpeed * Time.deltaTime);
+        transform.Rotate(Vector3.up, rotationDirection * rotationSpeed * Time.deltaTime / Time.timeScale);
     }
 
     private float GetCurrentDistanceFromGround()
@@ -75,8 +75,8 @@ public class CameraController : MonoBehaviour
 
     private void MoveCamera()
     {
-        float xAxisValue = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime;
-        float zAxisValue = Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime;
+        float xAxisValue = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime / Time.timeScale;
+        float zAxisValue = Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime / Time.timeScale;
 
         var moveVector = new Vector3(xAxisValue, 0.0f, zAxisValue);
 
