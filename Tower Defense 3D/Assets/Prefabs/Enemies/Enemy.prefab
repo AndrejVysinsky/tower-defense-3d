@@ -260,6 +260,7 @@ GameObject:
   m_Component:
   - component: {fileID: 547499007045533745}
   - component: {fileID: 8106718598506013729}
+  - component: {fileID: 2604838655650329597}
   m_Layer: 0
   m_Name: Health
   m_TagString: Untagged
@@ -302,6 +303,18 @@ MonoBehaviour:
   lowHealthColor:
     serializedVersion: 2
     rgba: 4278190335
+--- !u!114 &2604838655650329597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5574801736514169576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81e03fbd9364bfb45867372e3801a867, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6070229069521592940
 GameObject:
   m_ObjectHideFlags: 0

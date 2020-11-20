@@ -11,11 +11,8 @@ public class HealthScript : MonoBehaviour
 
     private Gradient _gradient;
     private float _maxHealth;
-    private float _currentHealth;
 
-    private Camera _mainCamera;
-
-    public float Health => _currentHealth;
+    public float Health { get; private set; }
 
     private void Awake()
     {
@@ -27,35 +24,27 @@ public class HealthScript : MonoBehaviour
                 new GradientColorKey(fullHealthColor, 1f)
             }
         };
-
-        _mainCamera = Camera.main;
-    }
-
-    private void LateUpdate()
-    {
-        transform.LookAt(_mainCamera.transform.forward + transform.position);
-        //transform.LookAt(transform.position + _mainCamera.transform.rotation * Vector3.forward, _mainCamera.transform.rotation * Vector3.up);
     }
 
     public void Initialize(float health)
     {
-        _currentHealth = health;
+        Health = health;
         _maxHealth = health;
     }
 
     public void SubtractHealth(float amount)
     {
-        _currentHealth -= amount;
+        Health -= amount;
 
-        if (_currentHealth < 0)
-            _currentHealth = 0;
+        if (Health < 0)
+            Health = 0;
         
         VisualiseDamage();
     }
 
     private void VisualiseDamage()
     {
-        float value = (float)_currentHealth / _maxHealth;
+        float value = Health / _maxHealth;
 
         slider.value = value;
         healthIndicator.color = _gradient.Evaluate(value);
