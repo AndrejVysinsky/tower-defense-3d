@@ -96,6 +96,9 @@ public class TooltipSystem : MonoBehaviour
 
     public void Hide()
     {
+        if (tooltip == null)
+            return;
+
         tooltip.SetActive(false);
     }
 }

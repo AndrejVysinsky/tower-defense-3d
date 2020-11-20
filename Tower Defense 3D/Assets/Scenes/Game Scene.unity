@@ -1635,6 +1635,8 @@ MonoBehaviour:
   currencyText: {fileID: 1364016673}
   waveText: {fileID: 521340428}
   livesText: {fileID: 1890043960}
+  floatingTextPrefab: {fileID: 2338364755488590485, guid: 4261015514249ab4c8e41c1a3a3d3ae4,
+    type: 3}
 --- !u!114 &493604237
 MonoBehaviour:
   m_ObjectHideFlags: 0

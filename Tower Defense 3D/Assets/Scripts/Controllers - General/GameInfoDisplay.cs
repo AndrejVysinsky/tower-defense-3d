@@ -7,6 +7,8 @@ public class GameInfoDisplay : MonoBehaviour
     [SerializeField] TextMeshProUGUI waveText;
     [SerializeField] TextMeshProUGUI livesText;
 
+    [SerializeField] GameObject floatingTextPrefab;
+
     public void UpdateCurrencyText(int total)
     {
         currencyText.text = GetParsedCurrency(total);
@@ -33,6 +35,8 @@ public class GameInfoDisplay : MonoBehaviour
     public void DisplayCurrencyChangeText(int change, Vector3 position)
     {
         //TODO: spawn text at position
+        var floatingText = Instantiate(floatingTextPrefab);
+        floatingText.GetComponent<FloatingTextScript>().Initialize(change.ToString(), position);
     }
 
     public void UpdateLivesText(int total)
@@ -44,6 +48,8 @@ public class GameInfoDisplay : MonoBehaviour
     public void DisplayLivesChangeText(int change, Vector3 position)
     {
         //TODO: spawn text at position
+        var floatingText = Instantiate(floatingTextPrefab);
+        floatingText.GetComponent<FloatingTextScript>().Initialize(change.ToString(), position);
     }
 
     public void UpdateWaveText(int waveNumber)
