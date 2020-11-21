@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -26,9 +27,16 @@ public class PlacementRuleHandler : MonoBehaviour
         _colliderSize = GetComponent<Collider>().bounds.size.x;
         _overlapSphereRadius = 0.1f;
 
+        StartCoroutine(CheckNeighbours());
+    }
+
+    IEnumerator CheckNeighbours()
+    {
+        yield return new WaitForFixedUpdate();
+
         var northSouthOffset = new Vector3(0, 0, _colliderSize);
         var eastWestOffset = new Vector3(_colliderSize, 0, 0);
-        
+
         CheckDirection(DirectionEnum.NORTH, DirectionEnum.SOUTH, northSouthOffset);
         CheckDirection(DirectionEnum.SOUTH, DirectionEnum.NORTH, -northSouthOffset);
 

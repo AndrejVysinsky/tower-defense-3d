@@ -43,6 +43,11 @@ public class MapSaveManager : MonoBehaviour
 
             var gameObject = Instantiate(resource, transform);
 
+            //if (gameObject.TryGetComponent(out PlacementRuleHandler placementRuleHandler))
+            //{
+            //    placementRuleHandler.OnObjectPlaced();
+            //}
+
             gameObjects.Add(gameObject);
 
             index++;
