@@ -17,7 +17,7 @@ MonoBehaviour:
   hitPoints: 50
   price: 50
   sellFactor: 2
-  damage: 50
+  damage: 120
   attackDelay: 2
   radius: 50
   material: {fileID: 2100000, guid: 8e3c8b7560a95c84787e8a33ecce1aed, type: 2}

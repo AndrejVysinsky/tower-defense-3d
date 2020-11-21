@@ -7294,6 +7294,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 117965991039282214, guid: ed98d64e224f89c44bd1289d0b0a116c,
+        type: 3}
+      propertyPath: gridSettings.cellSize
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 117965991558858037, guid: ed98d64e224f89c44bd1289d0b0a116c,
         type: 3}
       propertyPath: m_LocalPosition.x

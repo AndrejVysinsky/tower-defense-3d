@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4761732551222061483}
   - component: {fileID: 2484938080397739128}
   - component: {fileID: -2275716636036314022}
+  - component: {fileID: -2450254903410633123}
   m_Layer: 0
   m_Name: Square Block
   m_TagString: Terrain
@@ -109,3 +110,245 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   path: Terrain
+--- !u!114 &-2450254903410633123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6419299588404856958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a6a55c38ab77064daf146a0548b2ff2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultObject: {fileID: 919132149155446097, guid: b4b8bff251bbdec44892322fac4b5d52,
+    type: 3}
+  objectRules:
+  - ruleObject: {fileID: 919132149155446097, guid: 539a378fff7993d4b8c87938ee4d7e8d,
+      type: 3}
+    placementRules:
+    - rotation: 0
+      rules:
+      - direction: 0
+        isConnected: 1
+      - direction: 2
+        isConnected: 1
+      - direction: 6
+        isConnected: 1
+      - direction: 4
+        isConnected: 0
+    - rotation: 270
+      rules:
+      - direction: 0
+        isConnected: 1
+      - direction: 4
+        isConnected: 1
+      - direction: 6
+        isConnected: 1
+      - direction: 2
+        isConnected: 0
+    - rotation: 180
+      rules:
+      - direction: 2
+        isConnected: 1
+      - direction: 6
+        isConnected: 1
+      - direction: 4
+        isConnected: 1
+      - direction: 0
+        isConnected: 0
+    - rotation: 90
+      rules:
+      - direction: 0
+        isConnected: 1
+      - direction: 4
+        isConnected: 1
+      - direction: 2
+        isConnected: 1
+      - direction: 6
+        isConnected: 0
+  - ruleObject: {fileID: 919132149155446097, guid: 94594770d5d868b42af2a9086f46d590,
+      type: 3}
+    placementRules:
+    - rotation: 90
+      rules:
+      - direction: 0
+        isConnected: 1
+      - direction: 4
+        isConnected: 1
+      - direction: 6
+        isConnected: 0
+      - direction: 2
+        isConnected: 0
+    - rotation: 0
+      rules:
+      - direction: 6
+        isConnected: 1
+      - direction: 2
+        isConnected: 1
+      - direction: 0
+        isConnected: 0
+      - direction: 4
+        isConnected: 0
+  - ruleObject: {fileID: 919132149155446097, guid: 5bc6f23f7d1c03a4ba9537753fe52c23,
+      type: 3}
+    placementRules:
+    - rotation: 90
+      rules:
+      - direction: 0
+        isConnected: 1
+      - direction: 2
+        isConnected: 1
+      - direction: 4
+        isConnected: 0
+      - direction: 6
+        isConnected: 0
+    - rotation: 180
+      rules:
+      - direction: 2
+        isConnected: 1
+      - direction: 4
+        isConnected: 1
+      - direction: 6
+        isConnected: 0
+      - direction: 0
+        isConnected: 0
+    - rotation: -90
+      rules:
+      - direction: 4
+        isConnected: 1
+      - direction: 6
+        isConnected: 1
+      - direction: 0
+        isConnected: 0
+      - direction: 2
+        isConnected: 0
+    - rotation: 0
+      rules:
+      - direction: 6
+        isConnected: 1
+      - direction: 0
+        isConnected: 1
+      - direction: 2
+        isConnected: 0
+      - direction: 4
+        isConnected: 0
+  - ruleObject: {fileID: 919132149155446097, guid: 814c00873c2acf248a52c95426b8227f,
+      type: 3}
+    placementRules:
+    - rotation: -90
+      rules:
+      - direction: 0
+        isConnected: 1
+      - direction: 1
+        isConnected: 0
+      - direction: 2
+        isConnected: 1
+      - direction: 3
+        isConnected: 1
+      - direction: 4
+        isConnected: 1
+      - direction: 5
+        isConnected: 1
+      - direction: 6
+        isConnected: 1
+      - direction: 7
+        isConnected: 1
+    - rotation: 0
+      rules:
+      - direction: 0
+        isConnected: 1
+      - direction: 1
+        isConnected: 1
+      - direction: 2
+        isConnected: 1
+      - direction: 3
+        isConnected: 0
+      - direction: 4
+        isConnected: 1
+      - direction: 5
+        isConnected: 1
+      - direction: 6
+        isConnected: 1
+      - direction: 7
+        isConnected: 1
+    - rotation: 90
+      rules:
+      - direction: 0
+        isConnected: 1
+      - direction: 1
+        isConnected: 1
+      - direction: 2
+        isConnected: 1
+      - direction: 3
+        isConnected: 1
+      - direction: 4
+        isConnected: 1
+      - direction: 5
+        isConnected: 0
+      - direction: 6
+        isConnected: 1
+      - direction: 7
+        isConnected: 1
+    - rotation: 180
+      rules:
+      - direction: 0
+        isConnected: 1
+      - direction: 1
+        isConnected: 1
+      - direction: 2
+        isConnected: 1
+      - direction: 3
+        isConnected: 1
+      - direction: 4
+        isConnected: 1
+      - direction: 5
+        isConnected: 1
+      - direction: 6
+        isConnected: 1
+      - direction: 7
+        isConnected: 0
+  - ruleObject: {fileID: 919132149155446097, guid: 5366719c78686e3419c164b45f5b10ad,
+      type: 3}
+    placementRules:
+    - rotation: -90
+      rules:
+      - direction: 0
+        isConnected: 1
+      - direction: 2
+        isConnected: 0
+      - direction: 4
+        isConnected: 0
+      - direction: 6
+        isConnected: 0
+    - rotation: 0
+      rules:
+      - direction: 0
+        isConnected: 0
+      - direction: 2
+        isConnected: 1
+      - direction: 4
+        isConnected: 0
+      - direction: 6
+        isConnected: 0
+    - rotation: 90
+      rules:
+      - direction: 0
+        isConnected: 0
+      - direction: 2
+        isConnected: 0
+      - direction: 4
+        isConnected: 1
+      - direction: 6
+        isConnected: 0
+    - rotation: 180
+      rules:
+      - direction: 0
+        isConnected: 0
+      - direction: 2
+        isConnected: 0
+      - direction: 4
+        isConnected: 0
+      - direction: 6
+        isConnected: 1

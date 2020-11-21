@@ -227,6 +227,11 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
                 return;
         }
 
+        if (_objectToPlace.TryGetComponent(out PlacementRuleHandler placementRuleHandler))
+        {
+            placementRuleHandler.OnObjectPlaced();
+        }
+
         _objectToPlace.layer = (int)LayerEnum.Default;
         //_objectToPlace.GetComponentsInChildren<MonoBehaviour>().ToList().ForEach(x => x.enabled = true);
 
