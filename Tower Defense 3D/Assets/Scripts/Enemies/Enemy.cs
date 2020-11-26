@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy : MonoBehaviour, IInteractable
+public class Enemy : MonoBehaviour, IInteractable, IEntity
 {
     [SerializeField] EnemyData enemyData;
     [SerializeField] HealthScript healthScript;
@@ -12,6 +12,14 @@ public class Enemy : MonoBehaviour, IInteractable
 
     private PortalStart _portalStart;
     private PortalEnd _portalEnd;
+
+    //============================================
+    // IEntity
+    //============================================
+    public string Name => enemyData.Name;
+    public Sprite Sprite => enemyData.Sprite;
+    public int CurrentHitPoints => (int)healthScript.Health;
+    public int TotalHitPoints => (int)healthScript.MaxHealth;
 
     private void Awake()
     {

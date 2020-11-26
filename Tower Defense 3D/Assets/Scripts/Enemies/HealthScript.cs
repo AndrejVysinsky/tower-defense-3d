@@ -10,9 +10,9 @@ public class HealthScript : MonoBehaviour
     [SerializeField] Color32 lowHealthColor;
 
     private Gradient _gradient;
-    private float _maxHealth;
 
     public float Health { get; private set; }
+    public float MaxHealth { get; private set; }
 
     private void Awake()
     {
@@ -29,7 +29,7 @@ public class HealthScript : MonoBehaviour
     public void Initialize(float health)
     {
         Health = health;
-        _maxHealth = health;
+        MaxHealth = health;
     }
 
     public void SubtractHealth(float amount)
@@ -44,7 +44,7 @@ public class HealthScript : MonoBehaviour
 
     private void VisualiseDamage()
     {
-        float value = Health / _maxHealth;
+        float value = Health / MaxHealth;
 
         slider.value = value;
         healthIndicator.color = _gradient.Evaluate(value);
