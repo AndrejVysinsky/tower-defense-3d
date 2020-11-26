@@ -8,7 +8,7 @@ public class PlacementRuleHandler : MonoBehaviour
     [SerializeField] GameObject defaultObject;
     [SerializeField] List<ObjectPlacementRules> objectRules;
 
-    private GameObject[] _neighbours = new GameObject[8];
+    private GameObject[] _neighbours = new GameObject[10];
     private Collider[] _colliderBuffer = new Collider[3];
 
     private float _colliderSize;
@@ -36,6 +36,7 @@ public class PlacementRuleHandler : MonoBehaviour
 
         var northSouthOffset = new Vector3(0, 0, _colliderSize);
         var eastWestOffset = new Vector3(_colliderSize, 0, 0);
+        var aboveUnderOffset = new Vector3(0, _colliderSize, 0);
 
         CheckDirection(DirectionEnum.NORTH, DirectionEnum.SOUTH, northSouthOffset);
         CheckDirection(DirectionEnum.SOUTH, DirectionEnum.NORTH, -northSouthOffset);
@@ -48,6 +49,8 @@ public class PlacementRuleHandler : MonoBehaviour
 
         CheckDirection(DirectionEnum.SOUTH_EAST, DirectionEnum.NORTH_WEST, -northSouthOffset + eastWestOffset);
         CheckDirection(DirectionEnum.NORTH_WEST, DirectionEnum.SOUTH_EAST, northSouthOffset - eastWestOffset);
+
+        CheckDirection(DirectionEnum.UNDER, DirectionEnum.ABOVE, -aboveUnderOffset);
     }
 
     private void CheckDirection(DirectionEnum checkingDirection, DirectionEnum oppositeDirection, Vector3 offset)
@@ -111,7 +114,10 @@ public class PlacementRuleHandler : MonoBehaviour
 
     private void OnNeighbourChanged()
     {
-        bool ruleFound = false;
+        ChangeObjectTo(defaultObject);
+
+        if (_neighbours[(int)DirectionEnum.ABOVE] != null)
+            return;
 
         for (int i = 0; i < objectRules.Count; i++)
         {
@@ -153,19 +159,10 @@ public class PlacementRuleHandler : MonoBehaviour
                 if (ruleValid)
                 {
                     ChangeObjectTo(objectRules[i].RuleObject, objectRules[i].PlacementRules[j].Rotation);
-                    ruleFound = true;
                     break;
                 }
             }
-
-            if (ruleFound)
-                break;
-        }
-
-        if (ruleFound == false)
-        {
-            ChangeObjectTo(defaultObject);
-        }
+        }        
     }
 
     private void ChangeObjectTo(GameObject newGameObject, float rotation = 0)

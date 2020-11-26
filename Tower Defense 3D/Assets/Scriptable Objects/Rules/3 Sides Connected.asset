@@ -10,8 +10,49 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 891844b463b37d74ba9d95443bfe29ee, type: 3}
-  m_Name: New Object Placement Rules
+  m_Name: 3 Sides Connected
   m_EditorClassIdentifier: 
   objectRules:
-    ruleObject: {fileID: 0}
-    placementRules: []
+    ruleObject: {fileID: 919132149155446097, guid: 539a378fff7993d4b8c87938ee4d7e8d,
+      type: 3}
+    placementRules:
+    - rotation: 0
+      rules:
+      - direction: 0
+        isConnected: 0
+      - direction: 0
+        isConnected: 0
+      - direction: 0
+        isConnected: 0
+      - direction: 0
+        isConnected: 0
+    - rotation: 0
+      rules:
+      - direction: 0
+        isConnected: 0
+      - direction: 0
+        isConnected: 0
+      - direction: 0
+        isConnected: 0
+      - direction: 0
+        isConnected: 0
+    - rotation: 0
+      rules:
+      - direction: 0
+        isConnected: 0
+      - direction: 0
+        isConnected: 0
+      - direction: 0
+        isConnected: 0
+      - direction: 0
+        isConnected: 0
+    - rotation: 0
+      rules:
+      - direction: 0
+        isConnected: 0
+      - direction: 0
+        isConnected: 0
+      - direction: 0
+        isConnected: 0
+      - direction: 0
+        isConnected: 0
