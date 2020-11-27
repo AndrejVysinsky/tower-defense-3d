@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6155039145555639961}
   - component: {fileID: 6669107001253107992}
   - component: {fileID: -3153121997887243712}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Bombard Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,5 +125,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81dccf21022bae3419c352e05a0220fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 2
   damageRange: 8
+  arcHeight: 1

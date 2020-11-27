@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class BombardProjectile : MonoBehaviour, IProjectileWithAreaEffect
@@ -10,6 +6,7 @@ public class BombardProjectile : MonoBehaviour, IProjectileWithAreaEffect
     [SerializeField] float speed;
     [Tooltip("Sets sphere collider radius")]
     [SerializeField] float damageRange;
+    [SerializeField] float arcHeight;
 
     private float _targetDistance;
     private float _damage;
@@ -45,7 +42,7 @@ public class BombardProjectile : MonoBehaviour, IProjectileWithAreaEffect
     {
         _currentPosition = Vector3.MoveTowards(_currentPosition, _targetPosition, Time.deltaTime * _targetDistance * speed);
 
-        float arc = MathfArc.GetArcHeightAtPosition(_startingPosition, _currentPosition, _targetPosition, 2);
+        float arc = MathfArc.GetArcHeightAtPosition(_startingPosition, _currentPosition, _targetPosition, arcHeight);
 
         transform.position = new Vector3(_currentPosition.x, _currentPosition.y + arc, _currentPosition.z);
 
