@@ -270,7 +270,7 @@ MonoBehaviour:
   gridSettings:
     sizeX: 20
     sizeZ: 20
-    cellSize: 1
+    cellSize: 2
     continuousBuilding: 1
     avoidUnbuildableTerrain: 0
     buildOnlyOnTerrain: 0
@@ -278,6 +278,7 @@ MonoBehaviour:
     autoHeight: 0
     collisionDetection: 1
     replaceOnCollision: 0
+    editorOnlyDestruction: 0
   gridDisplay: {fileID: 8658931559509862907}
   placementValidator: {fileID: 6209219634770400540, guid: dde82768227e72849b28d62c61880f55,
     type: 3}

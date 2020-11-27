@@ -42,17 +42,17 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
 
     private void Update()
     {
-        if (Input.GetAxis("Mouse ScrollWheel") != 0 && Input.GetKey(KeyCode.LeftControl) == false)
+        if (Input.GetAxis("Mouse ScrollWheel") != 0 && Input.GetKey(KeyCode.LeftControl))
         {
             ChangeElevation();
         }
 
         if (_objectToPlace != null)
         {
-            if (Input.GetAxis("Mouse ScrollWheel") != 0 && Input.GetKey(KeyCode.LeftControl))
-            {
-                ChangeRotation();
-            }
+            //if (Input.GetAxis("Mouse ScrollWheel") != 0 && Input.GetKey(KeyCode.LeftControl))
+            //{
+            //    ChangeRotation();
+            //}
 
             MoveObject();
 

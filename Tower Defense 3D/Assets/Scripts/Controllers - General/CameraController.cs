@@ -6,7 +6,12 @@ public class CameraController : MonoBehaviour
     [SerializeField] float adjustDistanceSpeed;
     [SerializeField] float rotationSpeed;
     [SerializeField] GridController gridController;
+
+    [Header("Camera Zoom")]
+    [SerializeField] float zoomSensitivity;
+    [SerializeField] float defaultDistanceFromGround;
     [SerializeField] float maxDistanceFromGround;
+    [SerializeField] float minDistanceFromGround;
 
     private Camera _camera;
 
@@ -17,13 +22,13 @@ public class CameraController : MonoBehaviour
     {
         _camera = GetComponentInChildren<Camera>();
 
-        _camera.transform.LookAt(transform.position);
+        //_camera.transform.LookAt(transform.position);
         
         var position = _camera.transform.position;
         position.y = maxDistanceFromGround;
         _camera.transform.position = position;
 
-        _targetDistanceFromGround = transform.position.y;
+        _targetDistanceFromGround = defaultDistanceFromGround;
         _currentDistanceFromGround = GetCurrentDistanceFromGround();
     }
 
@@ -32,6 +37,11 @@ public class CameraController : MonoBehaviour
         if (Input.GetKey(KeyCode.E) || Input.GetKey(KeyCode.Q))
         {
             RotateCamera();
+        }
+
+        if (Input.GetAxis("Mouse ScrollWheel") != 0 && Input.GetKey(KeyCode.LeftControl) == false)
+        {
+            ZoomCamera();
         }
 
         if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
@@ -65,11 +75,11 @@ public class CameraController : MonoBehaviour
     {
         if (RayCaster.RaycastGameObjectWithTagFromCameraCenter(out RaycastHit hitInfo, _camera, "Terrain"))
         {
-           return transform.position.y - hitInfo.point.y;
+           return _camera.transform.position.y - hitInfo.point.y;
         }
         else
         {
-            return transform.position.y;
+            return _camera.transform.position.y;
         }
     }
 
@@ -85,7 +95,7 @@ public class CameraController : MonoBehaviour
 
     private void AdjustHeightToTerrain()
     {
-        var position = transform.position;
+        var position = _camera.transform.position;
 
         if (Mathf.Approximately(_targetDistanceFromGround, _currentDistanceFromGround))
         {
@@ -97,7 +107,7 @@ public class CameraController : MonoBehaviour
 
         position.y += diff * Time.deltaTime * adjustDistanceSpeed;
 
-        transform.position = position;
+        _camera.transform.position = position;
     }
 
     private void ClampPosition()
@@ -110,5 +120,14 @@ public class CameraController : MonoBehaviour
         position.z = Mathf.Clamp(position.z, 0 - outOfMapDistance, gridController.GridSettings.sizeZ + outOfMapDistance);
 
         transform.position = position;
+    }
+
+    private void ZoomCamera()
+    {
+        float zoomValue = Input.GetAxis("Mouse ScrollWheel") * -1000;
+
+        _targetDistanceFromGround += zoomSensitivity * zoomValue * Time.deltaTime;
+
+        _targetDistanceFromGround = Mathf.Clamp(_targetDistanceFromGround, minDistanceFromGround, maxDistanceFromGround);
     }
 }

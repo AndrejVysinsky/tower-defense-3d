@@ -5921,6 +5921,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 164555589337994571, guid: 044e422ab95adb8488de58f5e2d0dd2a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 164555589851386223, guid: 044e422ab95adb8488de58f5e2d0dd2a,
+        type: 3}
+      propertyPath: zoomSensitivity
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 792030019040658628, guid: 044e422ab95adb8488de58f5e2d0dd2a,
         type: 3}
       propertyPath: m_LocalPosition.x

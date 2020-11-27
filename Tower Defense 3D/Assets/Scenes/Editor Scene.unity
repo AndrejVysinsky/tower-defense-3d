@@ -7279,6 +7279,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 117965990794297616, guid: ed98d64e224f89c44bd1289d0b0a116c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 117965991039282210, guid: ed98d64e224f89c44bd1289d0b0a116c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7294,10 +7299,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 117965991039282214, guid: ed98d64e224f89c44bd1289d0b0a116c,
+    - target: {fileID: 117965991558858036, guid: ed98d64e224f89c44bd1289d0b0a116c,
         type: 3}
-      propertyPath: gridSettings.cellSize
-      value: 2
+      propertyPath: zoomSensitivity
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 117965991558858037, guid: ed98d64e224f89c44bd1289d0b0a116c,
         type: 3}

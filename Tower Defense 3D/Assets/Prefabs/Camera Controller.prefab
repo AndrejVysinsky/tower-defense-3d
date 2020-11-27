@@ -131,3 +131,6 @@ MonoBehaviour:
   adjustDistanceSpeed: 5
   rotationSpeed: 50
   gridController: {fileID: 0}
+  defaultDistanceFromGround: 12
+  maxDistanceFromGround: 20
+  minDistanceFromGround: 8
