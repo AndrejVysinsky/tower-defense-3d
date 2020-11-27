@@ -7,6 +7,7 @@ public class PlacementRuleHandler : MonoBehaviour
 {
     [SerializeField] GameObject defaultObject;
     [SerializeField] List<ObjectPlacementRules> objectRules;
+    [SerializeField] List<ObjectPlacementRulesData> objectRulesData;
 
     private GameObject[] _neighbours = new GameObject[10];
     private Collider[] _colliderBuffer = new Collider[3];
@@ -119,11 +120,60 @@ public class PlacementRuleHandler : MonoBehaviour
         if (_neighbours[(int)DirectionEnum.ABOVE] != null)
             return;
 
-        for (int i = 0; i < objectRules.Count; i++)
+        //for (int i = 0; i < objectRules.Count; i++)
+        //{
+        //    for (int j = 0; j < objectRules[i].PlacementRules.Count; j++)
+        //    {
+        //        var rules = objectRules[i].PlacementRules[j].Rules;
+
+        //        if (rules.Count(x => x.IsConnected) > GetNeighbourCount())
+        //        {
+        //            continue;
+        //        }
+
+        //        bool ruleValid = true;
+
+        //        for (int k = 0; k < rules.Count; k++)
+        //        {
+        //            var rule = rules[k];
+
+        //            if (rule.IsConnected)
+        //            {
+        //                //rule is connected, so its expecting neighbour in said direction
+        //                if (_neighbours[(int)rule.Direction] == null)
+        //                {
+        //                    ruleValid = false;
+        //                    break;
+        //                }
+        //            }
+        //            else
+        //            {
+        //                //rule is NOT connected, so direction should be empty (without neighbour)
+        //                if (_neighbours[(int)rule.Direction] != null)
+        //                {
+        //                    ruleValid = false;
+        //                    break;
+        //                }
+        //            }
+        //        }
+
+        //        if (ruleValid)
+        //        {
+        //            ChangeObjectTo(objectRules[i].RuleObject, objectRules[i].PlacementRules[j].Rotation);
+        //            break;
+        //        }
+        //    }
+        //}   
+        blabla();
+    }
+
+    private void blabla()
+    {
+        for (int i = 0; i < objectRulesData.Count; i++)
         {
-            for (int j = 0; j < objectRules[i].PlacementRules.Count; j++)
+            for (int j = 0; j < objectRulesData[i].ObjectRules.PlacementRules.Count; j++)
             {
-                var rules = objectRules[i].PlacementRules[j].Rules;
+                var rules = objectRulesData[i].ObjectRules.PlacementRules[j].Rules;
 
                 if (rules.Count(x => x.IsConnected) > GetNeighbourCount())
                 {
@@ -158,11 +208,11 @@ public class PlacementRuleHandler : MonoBehaviour
 
                 if (ruleValid)
                 {
-                    ChangeObjectTo(objectRules[i].RuleObject, objectRules[i].PlacementRules[j].Rotation);
-                    break;
+                    ChangeObjectTo(objectRulesData[i].ObjectRules.RuleObject, objectRulesData[i].ObjectRules.PlacementRules[j].Rotation);
+                    return;
                 }
             }
-        }        
+        }
     }
 
     private void ChangeObjectTo(GameObject newGameObject, float rotation = 0)

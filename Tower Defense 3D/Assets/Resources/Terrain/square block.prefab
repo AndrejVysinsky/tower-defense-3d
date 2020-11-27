@@ -352,3 +352,17 @@ MonoBehaviour:
         isConnected: 0
       - direction: 6
         isConnected: 1
+  objectRulesData:
+  - {fileID: 11400000, guid: 1001c0747c783aa49ac67202e809eaf9, type: 2}
+  - {fileID: 11400000, guid: 7493136fdab6c01419850ba63dd5c79d, type: 2}
+  - {fileID: 11400000, guid: b01b909911e06c64ca74147a37c45f4d, type: 2}
+  - {fileID: 11400000, guid: 7479645675481f940921e035491ba8bc, type: 2}
+  - {fileID: 11400000, guid: d8dd5eb250584374192bd662d788b6fb, type: 2}
+  - {fileID: 11400000, guid: 5b044c8b59356564eb3efa12bf5425c9, type: 2}
+  - {fileID: 11400000, guid: f79b6a1164778d449838ea63c98b34da, type: 2}
+  - {fileID: 11400000, guid: bcaa3f3ae7b205144abac2198fbd2d7b, type: 2}
+  - {fileID: 11400000, guid: 954a2f51c9284324d949f42f7d849136, type: 2}
+  - {fileID: 11400000, guid: 9bf039465bcf20a45a9082590f2cdd82, type: 2}
+  - {fileID: 11400000, guid: 03cac06c04482544f8f9711d8de83b2c, type: 2}
+  - {fileID: 11400000, guid: 50c5a3d0323404f499c2b6b61a606d2c, type: 2}
+  - {fileID: 11400000, guid: 273a2bb0f667798499d2adf91387ffbd, type: 2}
