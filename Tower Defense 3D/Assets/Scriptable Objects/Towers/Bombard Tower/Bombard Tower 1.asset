@@ -18,7 +18,7 @@ MonoBehaviour:
   price: 200
   sellFactor: 0.4
   damage: 70
-  attackDelay: 3
+  attackDelay: 0.5
   radius: 6
   material: {fileID: 2100000, guid: 1ecc99cf4b014c44eaf1e14361ee049d, type: 2}
   nextUpgrades: []
