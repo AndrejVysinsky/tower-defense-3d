@@ -17,7 +17,7 @@ MonoBehaviour:
     ruleObject: {fileID: 919132149155446097, guid: 7f634d11f88a61b449c616413bc2c911,
       type: 3}
     placementRules:
-    - rotation: -90
+    - rotation: 90
       rules:
       - direction: 0
         isConnected: 1
@@ -29,7 +29,7 @@ MonoBehaviour:
         isConnected: 0
       - direction: 1
         isConnected: 0
-    - rotation: 0
+    - rotation: 180
       rules:
       - direction: 0
         isConnected: 0
@@ -41,7 +41,7 @@ MonoBehaviour:
         isConnected: 0
       - direction: 3
         isConnected: 0
-    - rotation: 90
+    - rotation: -90
       rules:
       - direction: 0
         isConnected: 0
@@ -53,7 +53,7 @@ MonoBehaviour:
         isConnected: 1
       - direction: 5
         isConnected: 0
-    - rotation: 180
+    - rotation: 0
       rules:
       - direction: 0
         isConnected: 1
