@@ -17,7 +17,6 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
 
     private GameObject _objectToPlacePrefab;
     private GameObject _objectToPlace;
-    private Bounds _objectToPlaceColliderBounds;
     private IUpgradeable _objectToPlaceBuild;
 
     public GridSettings GridSettings => gridSettings;
@@ -95,7 +94,7 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
     {
         _objectToPlace.transform.Rotate(Vector3.up, 90f);
 
-        var size = Quaternion.Euler(_objectToPlace.transform.rotation.eulerAngles) * _objectToPlaceColliderBounds.size;
+        var size = Quaternion.Euler(new Vector3(0, 90f, 0)) * _objectToPlace.GetComponent<Collider>().bounds.size;
 
         size.x = Mathf.Abs(size.x);
         size.y = Mathf.Abs(size.y);
@@ -303,9 +302,10 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
         _objectToPlace.layer = (int)LayerEnum.IgnoreRayCast;
         
         _objectToPlaceBuild = _objectToPlace.GetComponent<IUpgradeable>();
-        _objectToPlaceColliderBounds = _objectToPlace.GetComponent<Collider>().bounds;
 
-        _objectOriginY = _objectToPlace.transform.position.y + _objectToPlaceColliderBounds.extents.y - _objectToPlaceColliderBounds.center.y;
+        var objectBounds = _objectToPlace.GetComponent<Collider>().bounds;
+
+        _objectOriginY = _objectToPlace.transform.position.y + objectBounds.extents.y - objectBounds.center.y;
 
         placementValidator.RegisterParent(_objectToPlace);
 
