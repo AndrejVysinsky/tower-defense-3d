@@ -34,7 +34,7 @@ public class GridDimensionsInput : MonoBehaviour
 
         if (isInputValid)
         {
-            gridController.SetGridDimensions(sizeX, sizeZ);
+            gridController.SetGridDimensions(sizeX, sizeZ, true);
         }
     }
 }

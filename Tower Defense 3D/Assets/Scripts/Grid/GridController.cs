@@ -41,10 +41,16 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
         EventManager.RemoveListener(gameObject);
     }
 
-    public void SetGridDimensions(int sizeX, int sizeZ)
+    public void SetGridDimensions(int sizeX, int sizeZ, bool multiplyByCellSize)
     {
-        gridSettings.sizeX = sizeX * (int)gridSettings.cellSize;
-        gridSettings.sizeZ = sizeZ * (int)gridSettings.cellSize;
+        gridSettings.sizeX = sizeX;
+        gridSettings.sizeZ = sizeZ;
+
+        if (multiplyByCellSize)
+        {
+            gridSettings.sizeX *= (int)gridSettings.cellSize;
+            gridSettings.sizeZ *= (int)gridSettings.cellSize;
+        }
 
         gridDisplay.CalculateGrid(gridSettings.sizeX, gridSettings.sizeZ, gridSettings.cellSize);
     }
@@ -348,11 +354,16 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
         gridSettings.replaceOnCollision = replaceOnCollision;
     }
 
+    public void OnSnapToTerrainOnlyChanged(bool snapToTerrainOnly)
+    {
+        gridSettings.buildOnlyOnTerrain = snapToTerrainOnly;
+    }
+
     public void OnMapBeingLoaded(MapSaveData mapSaveData)
     {
         if (mapSaveData.GridSettings != null)
         {
-            SetGridDimensions(mapSaveData.GridSettings.sizeX, mapSaveData.GridSettings.sizeZ);
+            SetGridDimensions(mapSaveData.GridSettings.sizeX, mapSaveData.GridSettings.sizeZ, false);
         }
     }
 
