@@ -30,6 +30,8 @@ public class MapSaveData
 
     [SerializeField] List<SaveableObject> saveableObjects = new List<SaveableObject>();
 
+    [SerializeField] public GridSettings GridSettings { get; set; }
+
     public List<string> GetResourcePaths()
     {
         return saveableObjects.Select(x => x.resourcePath).ToList();

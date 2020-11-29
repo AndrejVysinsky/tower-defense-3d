@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class PlacementRuleHandler : MonoBehaviour
+public class PlacementRuleHandler : MonoBehaviour, IMapLoaded
 {
     [SerializeField] GameObject defaultObject;
     [SerializeField] List<ObjectPlacementRulesData> objectRulesData;
@@ -17,6 +17,16 @@ public class PlacementRuleHandler : MonoBehaviour
     private bool _isPlaced = false;
 
     private Quaternion _defaultRotation;
+
+    private void OnEnable()
+    {
+        EventManager.AddListener(gameObject);
+    }
+
+    private void OnDisable()
+    {
+        EventManager.RemoveListener(gameObject);
+    }
 
     public void OnObjectPlaced()
     {
@@ -57,24 +67,28 @@ public class PlacementRuleHandler : MonoBehaviour
     {
         int count = Physics.OverlapSphereNonAlloc(transform.position + offset, _overlapSphereRadius, _colliderBuffer);
 
-        if (IsNeighbourObjectTerrain(count, out PlacementRuleHandler otherHandler))
+        if (IsNeighbourObjectTerrain(count, out GameObject otherObject))
         {
-            AddNeighbour(otherHandler.gameObject, checkingDirection);
-            otherHandler.AddNeighbour(gameObject, oppositeDirection);
+            AddNeighbour(otherObject, checkingDirection);
+
+            if (otherObject.TryGetComponent(out PlacementRuleHandler ruleHandler))
+            {
+                ruleHandler.AddNeighbour(gameObject, oppositeDirection);
+            }
         }
     }    
 
-    private bool IsNeighbourObjectTerrain(int neighbourCount, out PlacementRuleHandler placementRuleHandler)
+    private bool IsNeighbourObjectTerrain(int neighbourCount, out GameObject otherObject)
     {
         for (int i = 0; i < neighbourCount; i++)
         {
-            if (_colliderBuffer[i].CompareTag("Terrain") && _colliderBuffer[i].TryGetComponent(out PlacementRuleHandler placementHandler))
+            if (_colliderBuffer[i].CompareTag("Terrain"))
             {
-                placementRuleHandler = placementHandler;
+                otherObject = _colliderBuffer[i].gameObject;
                 return true;
             }
         }
-        placementRuleHandler = null;
+        otherObject = null;
         return false;
     }
 
@@ -165,19 +179,18 @@ public class PlacementRuleHandler : MonoBehaviour
         }
     }
 
-    private void ChangeObjectTo(GameObject newGameObject, float rotation = 0)
+    private void ChangeObjectTo(GameObject newGameObject, float angle = 0)
     {
         var mesh = newGameObject.GetComponent<MeshFilter>().sharedMesh;
 
         gameObject.GetComponent<MeshFilter>().mesh = mesh;
         //gameObject.GetComponent<MeshCollider>().sharedMesh = mesh;
 
-        transform.rotation = _defaultRotation;
+        var rotation = transform.rotation;
 
-        if (rotation != 0)
-        {
-            transform.Rotate(Vector3.up, rotation);
-        }
+        rotation.eulerAngles = new Vector3(0, angle, 0);
+
+        transform.rotation = rotation;
     }
 
     private int GetNeighbourCount()
@@ -192,5 +205,10 @@ public class PlacementRuleHandler : MonoBehaviour
             }
         }
         return count;
+    }
+
+    public void OnMapBeingLoaded(MapSaveData mapSaveData)
+    {
+        OnObjectPlaced();
     }
 }

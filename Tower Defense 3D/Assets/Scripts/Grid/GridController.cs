@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class GridController : MonoBehaviour, IBuildOptionClicked
+public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IMapSaved
 {
     [SerializeField] GridSettings gridSettings;
     [SerializeField] GridDisplay gridDisplay;
@@ -13,6 +13,7 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
 
     private int _objectElevation;
     private float _objectOriginY;
+    private int _objectLayer;
 
     private GameObject _objectToPlacePrefab;
     private GameObject _objectToPlace;
@@ -57,10 +58,10 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
 
         if (_objectToPlace != null)
         {
-            //if (Input.GetAxis("Mouse ScrollWheel") != 0 && Input.GetKey(KeyCode.LeftControl))
-            //{
-            //    ChangeRotation();
-            //}
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                ChangeRotation();
+            }
 
             MoveObject();
 
@@ -85,14 +86,16 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
 
     private void ChangeRotation()
     {
-        if (Input.GetKey(KeyCode.Space))
-        {
-            _objectToPlace.transform.Rotate(Vector3.forward, 90f);
-        }
-        else
-        {
-            _objectToPlace.transform.Rotate(Vector3.up, 90f);
-        }
+        _objectToPlace.transform.Rotate(Vector3.up, 90f);
+
+        //if (Input.GetKey(KeyCode.Space))
+        //{
+        //    _objectToPlace.transform.Rotate(Vector3.forward, 90f);
+        //}
+        //else
+        //{
+        //    _objectToPlace.transform.Rotate(Vector3.up, 90f);
+        //}
         var size = Quaternion.Euler(_objectToPlace.transform.rotation.eulerAngles) * _objectToPlace.GetComponent<Collider>().bounds.size;
 
         size.x = Mathf.Abs(size.x);
@@ -240,7 +243,7 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
             placementRuleHandler.OnObjectPlaced();
         }
 
-        _objectToPlace.layer = (int)LayerEnum.Default;
+        _objectToPlace.layer = _objectLayer;
         //_objectToPlace.GetComponentsInChildren<MonoBehaviour>().ToList().ForEach(x => x.enabled = true);
 
         map.ObjectPlaced(_objectToPlace, _objectToPlacePrefab);
@@ -297,6 +300,7 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
     private void InstantiatePrefab()
     {
         _objectToPlace = Instantiate(_objectToPlacePrefab, map.transform);
+        _objectLayer = _objectToPlace.layer;
         _objectToPlace.layer = (int)LayerEnum.IgnoreRayCast;
         
         _objectToPlaceBuild = _objectToPlace.GetComponent<IUpgradeable>();
@@ -342,5 +346,18 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
     public void OnReplaceOnCollisionChanged(bool replaceOnCollision)
     {
         gridSettings.replaceOnCollision = replaceOnCollision;
+    }
+
+    public void OnMapBeingLoaded(MapSaveData mapSaveData)
+    {
+        if (mapSaveData.GridSettings != null)
+        {
+            SetGridDimensions(mapSaveData.GridSettings.sizeX, mapSaveData.GridSettings.sizeZ);
+        }
+    }
+
+    public void OnMapBeingSaved(MapSaveData mapSaveData)
+    {
+        mapSaveData.GridSettings = gridSettings;
     }
 }

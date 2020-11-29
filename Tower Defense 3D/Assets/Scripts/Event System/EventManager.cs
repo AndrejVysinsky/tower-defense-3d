@@ -25,7 +25,7 @@ public static class EventManager
 
     public static void ExecuteEvent<T>(EventFunction<T> functor) where T : IEventSystemHandler
     {
-        foreach (GameObject gameObject in _listeners)
+        foreach (GameObject gameObject in _listeners.ToArray())
         {
             Execute(gameObject, null, functor);
         }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -57,10 +58,22 @@ public class MapSaveManager : MonoBehaviour
             _mapSaveData.RemoveObjectAt(objectsToRemove[i]);
 
         _mapSaveData.InitializeObjects(gameObjects);
+
+
+        StartCoroutine(NotifyAboutMapLoaded());
+    }
+
+    IEnumerator NotifyAboutMapLoaded()
+    {
+        yield return new WaitForEndOfFrame();
+
+        EventManager.ExecuteEvent<IMapLoaded>((x, y) => x.OnMapBeingLoaded(_mapSaveData));
     }
 
     public void SaveMapData()
     {
+        EventManager.ExecuteEvent<IMapSaved>((x, y) => x.OnMapBeingSaved(_mapSaveData));
+
         FileManager.SaveFile(FileManager.MapPath, "gamesave.save", _mapSaveData);
     }
 
