@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2159476286214812579}
   - component: {fileID: 4704894681835607859}
   - component: {fileID: -4462360615488799928}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Slope Block
   m_TagString: Terrain
   m_Icon: {fileID: 0}
