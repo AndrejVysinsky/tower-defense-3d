@@ -34,6 +34,20 @@ public class GridDisplay : MonoBehaviour
         if (hideGrid)
             return;
 
+        CalculateGridBase(sizeX, sizeZ, gridCellSize);
+        CalculateGridLines(sizeX, sizeZ, gridCellSize);
+
+        GridUpdated();
+    }
+
+    private void CalculateGridBase(int sizeX, int sizeZ, float gridCellSize)
+    {
+        gridBase.transform.localScale = new Vector3(sizeX, sizeZ, 1);
+        gridBase.transform.position = new Vector3(sizeX / 2, 0, sizeZ / 2);
+    }
+
+    private void CalculateGridLines(int sizeX, int sizeZ, float gridCellSize)
+    {
         if (_lines == null)
             _lines = new List<LineRenderer>();
 
@@ -49,15 +63,17 @@ public class GridDisplay : MonoBehaviour
         }
 
         //hide excess lines
-        if (_lines.Count > requiredNumberOfLines)
+        for (int i = 0; i < _lines.Count; i++)
         {
-            for (int i = requiredNumberOfLines; i < _lines.Count; i++)
+            if (i < requiredNumberOfLines)
+            {
+                _lines[i].gameObject.SetActive(true);
+            }
+            else
             {
                 _lines[i].gameObject.SetActive(false);
             }
         }
-
-        GridUpdated();
     }
 
     private void GridUpdated()

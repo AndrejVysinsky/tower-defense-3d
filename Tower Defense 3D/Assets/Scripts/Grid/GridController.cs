@@ -40,6 +40,14 @@ public class GridController : MonoBehaviour, IBuildOptionClicked
         EventManager.RemoveListener(gameObject);
     }
 
+    public void SetGridDimensions(int sizeX, int sizeZ)
+    {
+        gridSettings.sizeX = sizeX * (int)gridSettings.cellSize;
+        gridSettings.sizeZ = sizeZ * (int)gridSettings.cellSize;
+
+        gridDisplay.CalculateGrid(gridSettings.sizeX, gridSettings.sizeZ, gridSettings.cellSize);
+    }
+
     private void Update()
     {
         if (Input.GetAxis("Mouse ScrollWheel") != 0 && Input.GetKey(KeyCode.LeftControl))
