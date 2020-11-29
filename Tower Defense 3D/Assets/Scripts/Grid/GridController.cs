@@ -17,6 +17,7 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
 
     private GameObject _objectToPlacePrefab;
     private GameObject _objectToPlace;
+    private Bounds _objectToPlaceColliderBounds;
     private IUpgradeable _objectToPlaceBuild;
 
     public GridSettings GridSettings => gridSettings;
@@ -94,21 +95,13 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
     {
         _objectToPlace.transform.Rotate(Vector3.up, 90f);
 
-        //if (Input.GetKey(KeyCode.Space))
-        //{
-        //    _objectToPlace.transform.Rotate(Vector3.forward, 90f);
-        //}
-        //else
-        //{
-        //    _objectToPlace.transform.Rotate(Vector3.up, 90f);
-        //}
-        var size = Quaternion.Euler(_objectToPlace.transform.rotation.eulerAngles) * _objectToPlace.GetComponent<Collider>().bounds.size;
+        var size = Quaternion.Euler(_objectToPlace.transform.rotation.eulerAngles) * _objectToPlaceColliderBounds.size;
 
         size.x = Mathf.Abs(size.x);
         size.y = Mathf.Abs(size.y);
         size.z = Mathf.Abs(size.z);
 
-        _objectOriginY = _objectToPlace.transform.position.y + size.y / 2 - _objectToPlace.GetComponent<Collider>().bounds.center.y; ;
+        _objectOriginY = _objectToPlace.transform.position.y + size.y / 2 - _objectToPlace.GetComponent<Collider>().bounds.center.y;
 
         placementValidator.ResizeCollider(size);
     }
@@ -310,9 +303,9 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
         _objectToPlace.layer = (int)LayerEnum.IgnoreRayCast;
         
         _objectToPlaceBuild = _objectToPlace.GetComponent<IUpgradeable>();
-        var objectToPlaceBounds = _objectToPlace.GetComponent<Collider>().bounds;
+        _objectToPlaceColliderBounds = _objectToPlace.GetComponent<Collider>().bounds;
 
-        _objectOriginY = _objectToPlace.transform.position.y + objectToPlaceBounds.extents.y - objectToPlaceBounds.center.y;
+        _objectOriginY = _objectToPlace.transform.position.y + _objectToPlaceColliderBounds.extents.y - _objectToPlaceColliderBounds.center.y;
 
         placementValidator.RegisterParent(_objectToPlace);
 
