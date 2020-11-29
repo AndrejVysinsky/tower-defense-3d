@@ -74,7 +74,7 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     private void ShowTooltip()
     {
-        if (tooltipBase == null)
+        if (tooltipBase == null || TooltipSystem.Instance == null)
             return;
 
         TooltipSystem.Instance.Show(tooltipBase);
@@ -82,7 +82,7 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     private void HideTooltip()
     {
-        if (tooltipBase == null)
+        if (tooltipBase == null || TooltipSystem.Instance == null)
             return;
 
         TooltipSystem.Instance.Hide();
