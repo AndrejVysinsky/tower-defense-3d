@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1276038831590098509}
   - component: {fileID: 3065372026208832314}
   - component: {fileID: 2043489671562712055}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Big Tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d01c11bef89837b4d88004122a990153, type: 2}
+  - {fileID: 2100000, guid: a9774944b5d4a7e429b5aa14befb1b8f, type: 2}
   - {fileID: 2100000, guid: 90aa7297a4507324e87a55dab7e860d6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -95,8 +95,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 4, z: 1.9999999}
-  m_Center: {x: 0.10557273, y: 0.00033259392, z: 0}
+  m_Size: {x: 1.743202, y: 4, z: 1.8329108}
+  m_Center: {x: 0.09201729, y: 0.00033259392, z: 0}
 --- !u!114 &2043489671562712055
 MonoBehaviour:
   m_ObjectHideFlags: 0

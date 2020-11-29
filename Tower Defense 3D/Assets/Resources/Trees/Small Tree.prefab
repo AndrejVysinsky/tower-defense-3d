@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7001944506353724957}
   - component: {fileID: 3104345200903942287}
   - component: {fileID: 3448882872899531352}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Small Tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,8 +95,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.79695505, y: 1.4047141, z: 0.83796805}
-  m_Center: {x: 0.042068392, y: 0.0026329458, z: -0.000000029802322}
+  m_Size: {x: 1.59391, y: 2.80942, z: 1.675936}
+  m_Center: {x: 0.084136784, y: 0.0052658916, z: -0.000000059604645}
 --- !u!114 &3448882872899531352
 MonoBehaviour:
   m_ObjectHideFlags: 0
