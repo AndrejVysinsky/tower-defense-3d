@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8816917771771639}
   - component: {fileID: 1673076137334947462}
   - component: {fileID: 5464956751356299188}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Half Block
   m_TagString: Terrain
   m_Icon: {fileID: 0}

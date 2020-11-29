@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4761732551222061483}
   - component: {fileID: 2484938080397739128}
   - component: {fileID: 1736335320625481530}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Square Block Path
   m_TagString: Terrain
   m_Icon: {fileID: 0}

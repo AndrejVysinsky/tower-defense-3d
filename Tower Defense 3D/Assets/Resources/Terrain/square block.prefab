@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a6a55c38ab77064daf146a0548b2ff2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultObject: {fileID: 919132149155446097, guid: b4b8bff251bbdec44892322fac4b5d52,
+  defaultObject: {fileID: 919132149155446097, guid: d098ec86a383b1d448798b3d2a2c6fec,
     type: 3}
   objectRulesData:
   - {fileID: 11400000, guid: 1001c0747c783aa49ac67202e809eaf9, type: 2}
