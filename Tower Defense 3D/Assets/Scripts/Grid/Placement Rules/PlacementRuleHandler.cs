@@ -130,9 +130,6 @@ public class PlacementRuleHandler : MonoBehaviour, IMapLoaded
     {
         ChangeObjectTo(defaultObject);
 
-        if (_neighbours[(int)DirectionEnum.ABOVE] != null)
-            return;
-
         for (int i = 0; i < objectRulesData.Count; i++)
         {
             for (int j = 0; j < objectRulesData[i].ObjectRules.PlacementRules.Count; j++)
