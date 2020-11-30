@@ -45,7 +45,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 4
+  m_Radius: 6
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2882305233965249878
 MonoBehaviour:
@@ -59,9 +59,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0c583f4f7ddc2b45b3bafdc591e5d13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rangeLineRenderer: {fileID: 6366489405043794212}
-  moveablePart: {fileID: 7441621432694070987}
   firePoint: {fileID: 4499819305644172628}
+  lookAtTargetParts: []
+  lookInDirectionParts: []
 --- !u!1 &3946243956976834257
 GameObject:
   m_ObjectHideFlags: 0

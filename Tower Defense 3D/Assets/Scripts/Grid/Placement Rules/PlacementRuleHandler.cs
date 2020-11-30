@@ -181,6 +181,11 @@ public class PlacementRuleHandler : MonoBehaviour, IMapLoaded
         var mesh = newGameObject.GetComponent<MeshFilter>().sharedMesh;
 
         gameObject.GetComponent<MeshFilter>().mesh = mesh;
+
+        var materials = newGameObject.GetComponent<MeshRenderer>().sharedMaterials;
+
+        gameObject.GetComponent<MeshRenderer>().sharedMaterials = materials;
+
         //gameObject.GetComponent<MeshCollider>().sharedMesh = mesh;
 
         var rotation = transform.rotation;

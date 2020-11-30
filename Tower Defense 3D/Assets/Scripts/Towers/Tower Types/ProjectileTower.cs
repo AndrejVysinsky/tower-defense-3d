@@ -11,7 +11,7 @@ public class ProjectileTower : TowerBase
     {
         base.Awake();
 
-        towerTargeting.enabled = false;
+        towerTargeting.SetTargeting(false);
     }
 
     private void Update()
@@ -30,7 +30,7 @@ public class ProjectileTower : TowerBase
 
     public void Shoot(GameObject target)
     {
-        var projectile = Instantiate(projectilePrefab, towerTargeting.GetFirePoint().transform.position, transform.rotation);
+        var projectile = Instantiate(projectilePrefab, towerTargeting.GetFirePointPosition(), transform.rotation);
 
         projectile.GetComponent<IProjectileMovement>().Initialize(target.transform.position, TowerData.Damage);        
     }
@@ -41,7 +41,7 @@ public class ProjectileTower : TowerBase
 
         if (upgradeStarted)
         {
-            towerTargeting.enabled = false;
+            towerTargeting.SetTargeting(false);
         }
     }
 
@@ -49,14 +49,14 @@ public class ProjectileTower : TowerBase
     {
         base.OnUpgradeFinished(upgradeOption);
 
-        towerTargeting.enabled = true;
+        towerTargeting.SetTargeting(true);
     }
 
     public override void OnUpgradeCanceled()
     {
         base.OnUpgradeCanceled();
 
-        towerTargeting.enabled = true;
+        towerTargeting.SetTargeting(true);
     }
 
     public override void Sell()

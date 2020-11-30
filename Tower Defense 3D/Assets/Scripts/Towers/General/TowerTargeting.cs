@@ -1,26 +1,40 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class TowerTargeting : MonoBehaviour
 {
-    [SerializeField] LineRenderer rangeLineRenderer;
-    [SerializeField] GameObject moveablePart;
+    [Serializable]
+    public class PartRotation
+    {
+        public GameObject part;
+        public Vector3 rotation;
+    }
+
     [SerializeField] GameObject firePoint;
+
+    [SerializeField] List<PartRotation> lookAtTargetParts;
+    [SerializeField] List<PartRotation> lookInDirectionParts;
     
     private List<Enemy> _enemiesInRange;
     
     public RangeRenderer RangeRenderer { get; private set; }
     public GameObject Target { get; private set; }
 
+    private bool _isActive;
+
     private void Awake()
     {
         _enemiesInRange = new List<Enemy>();
-        RangeRenderer = new RangeRenderer(rangeLineRenderer, GetComponent<SphereCollider>().radius);
+        //RangeRenderer = new RangeRenderer(rangeLineRenderer, GetComponent<SphereCollider>().radius);
     }
 
     private void Update()
     {
+        if (_isActive == false)
+            return;
+
         //when target dies get another one
         if (Target == null)
         {
@@ -35,13 +49,25 @@ public class TowerTargeting : MonoBehaviour
 
     private void LookAt(Vector3 position)
     {
-        Quaternion rotation = Quaternion.LookRotation(position - moveablePart.transform.position, moveablePart.transform.TransformDirection(Vector3.back));
+        for (int i = 0; i < lookAtTargetParts.Count; i++)
+        {
+            lookAtTargetParts[i].part.transform.LookAt(position);
 
-        //rotate only z-axis
-        //rotation.x = 0;
-        //rotation.y = 0;
+            var rotation = lookAtTargetParts[i].part.transform.rotation;
+            rotation.eulerAngles += lookAtTargetParts[i].rotation;
+            lookAtTargetParts[i].part.transform.rotation = rotation;
+        }
 
-        moveablePart.transform.rotation = rotation;
+        for (int i = 0; i < lookInDirectionParts.Count; i++)
+        {
+            position.y = lookInDirectionParts[i].part.transform.position.y;
+
+            lookInDirectionParts[i].part.transform.LookAt(position);
+
+            var rotation = lookInDirectionParts[i].part.transform.rotation;
+            rotation.eulerAngles += lookInDirectionParts[i].rotation;
+            lookInDirectionParts[i].part.transform.rotation = rotation;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -74,8 +100,14 @@ public class TowerTargeting : MonoBehaviour
         return _enemiesInRange.Where(enemy => enemy.GetRemainingDistance() == remainingDistance).FirstOrDefault().gameObject;
     }
 
-    public GameObject GetFirePoint()
+    public Vector3 GetFirePointPosition()
     {
-        return firePoint;
+        return firePoint.transform.position;
+    }
+
+    public void SetTargeting(bool active)
+    {
+        _isActive = active;
+        GetComponent<Collider>().enabled = active;
     }
 }

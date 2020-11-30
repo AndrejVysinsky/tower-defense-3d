@@ -9,7 +9,7 @@ public class LaserTower : TowerBase
     {
         base.Awake();
 
-        towerTargeting.enabled = false;
+        towerTargeting.SetTargeting(false);
     }
 
     private void Update()
@@ -30,7 +30,7 @@ public class LaserTower : TowerBase
 
     public void Shoot(GameObject target)
     {
-        laser.SetPosition(0, towerTargeting.GetFirePoint().transform.position);
+        laser.SetPosition(0, towerTargeting.GetFirePointPosition());
         laser.SetPosition(1, target.transform.position);
 
         target.GetComponent<Enemy>().TakeDamage(TowerData.Damage * Time.deltaTime);
@@ -42,7 +42,7 @@ public class LaserTower : TowerBase
 
         if (upgradeStarted)
         {
-            towerTargeting.enabled = false;
+            towerTargeting.SetTargeting(false);
         }
     }
 
@@ -50,14 +50,14 @@ public class LaserTower : TowerBase
     {
         base.OnUpgradeFinished(upgradeOption);
 
-        towerTargeting.enabled = true;
+        towerTargeting.SetTargeting(true);
     }
 
     public override void OnUpgradeCanceled()
     {
         base.OnUpgradeCanceled();
 
-        towerTargeting.enabled = true;
+        towerTargeting.SetTargeting(true);
     }
 
     public override void Sell()
