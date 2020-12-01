@@ -12,6 +12,7 @@ public class TowerTargeting : MonoBehaviour
         public Vector3 rotation;
     }
 
+    [SerializeField] float rotationSpeed = 100f;
     [SerializeField] GameObject firePoint;
 
     [SerializeField] List<PartRotation> lookAtTargetParts;
@@ -21,13 +22,17 @@ public class TowerTargeting : MonoBehaviour
     
     public RangeRenderer RangeRenderer { get; private set; }
     public GameObject Target { get; private set; }
+    public bool IsLookingAtTarget { get; private set; }
 
+    private Quaternion _targetRotation;
     private bool _isActive;
 
     private void Awake()
     {
         _enemiesInRange = new List<Enemy>();
         //RangeRenderer = new RangeRenderer(rangeLineRenderer, GetComponent<SphereCollider>().radius);
+        
+        LookAt(transform.position + transform.forward, 1000000);
     }
 
     private void Update()
@@ -38,36 +43,45 @@ public class TowerTargeting : MonoBehaviour
         //when target dies get another one
         if (Target == null)
         {
+            IsLookingAtTarget = false;
             Target = GetTarget();
         }
 
         if (Target != null)
         {
-            LookAt(Target.transform.position);
+            LookAt(Target.transform.position, rotationSpeed);
         }
     }
 
-    private void LookAt(Vector3 position)
+    private void LookAt(Vector3 position, float rotationSpeed)
     {
+        float currentAngle = 180;
+
         for (int i = 0; i < lookAtTargetParts.Count; i++)
         {
-            lookAtTargetParts[i].part.transform.LookAt(position);
+            _targetRotation = Quaternion.LookRotation(position - lookAtTargetParts[i].part.transform.position);
+            _targetRotation.eulerAngles += lookAtTargetParts[i].rotation;
 
-            var rotation = lookAtTargetParts[i].part.transform.rotation;
-            rotation.eulerAngles += lookAtTargetParts[i].rotation;
-            lookAtTargetParts[i].part.transform.rotation = rotation;
+            var angle = lookAtTargetParts[i].part.transform.rotation.eulerAngles.magnitude - _targetRotation.eulerAngles.magnitude;
+            currentAngle = Mathf.Min(currentAngle, Mathf.Abs(angle));
+
+            lookAtTargetParts[i].part.transform.rotation = Quaternion.RotateTowards(lookAtTargetParts[i].part.transform.rotation, _targetRotation, Time.deltaTime * rotationSpeed);
         }
 
         for (int i = 0; i < lookInDirectionParts.Count; i++)
         {
             position.y = lookInDirectionParts[i].part.transform.position.y;
 
-            lookInDirectionParts[i].part.transform.LookAt(position);
+            _targetRotation = Quaternion.LookRotation(position - lookInDirectionParts[i].part.transform.position);
+            _targetRotation.eulerAngles += lookInDirectionParts[i].rotation;
 
-            var rotation = lookInDirectionParts[i].part.transform.rotation;
-            rotation.eulerAngles += lookInDirectionParts[i].rotation;
-            lookInDirectionParts[i].part.transform.rotation = rotation;
+            var angle = lookInDirectionParts[i].part.transform.rotation.eulerAngles.magnitude - _targetRotation.eulerAngles.magnitude;
+            currentAngle = Mathf.Min(currentAngle, Mathf.Abs(angle));
+
+            lookInDirectionParts[i].part.transform.rotation = Quaternion.RotateTowards(lookInDirectionParts[i].part.transform.rotation, _targetRotation, Time.deltaTime * rotationSpeed);
         }
+
+        IsLookingAtTarget = currentAngle < 5;
     }
 
     private void OnTriggerEnter(Collider other)

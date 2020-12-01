@@ -106,7 +106,10 @@ public class TowerBase : MonoBehaviour, IUpgradeable, ISellable, IInteractable, 
 
         var price = TowerData.Price;
 
-        GameController.Instance.ModifyCurrencyBy(-price, transform.position);
+        var position = transform.position;
+        position.y += GetComponent<Collider>().bounds.size.y / 2;
+
+        GameController.Instance.ModifyCurrencyBy(-price, position);
     }
 
     public virtual void OnUpgradeCanceled()
@@ -121,7 +124,10 @@ public class TowerBase : MonoBehaviour, IUpgradeable, ISellable, IInteractable, 
     {
         var sellValue = TowerData.GetSellValue();
 
-        GameController.Instance.ModifyCurrencyBy(sellValue, transform.position);
+        var position = transform.position;
+        position.y += GetComponent<Collider>().bounds.size.y / 2;
+
+        GameController.Instance.ModifyCurrencyBy(sellValue, position);
 
         Destroy(gameObject);
     }

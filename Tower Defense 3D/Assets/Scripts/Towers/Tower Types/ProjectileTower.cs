@@ -21,7 +21,7 @@ public class ProjectileTower : TowerBase
 
         _timer += Time.deltaTime;
 
-        if (towerTargeting.Target != null && _timer >= TowerData.AttackDelay)
+        if (towerTargeting.Target != null && towerTargeting.IsLookingAtTarget && _timer >= TowerData.AttackDelay)
         {
             _timer = 0;
             Shoot(towerTargeting.Target);
