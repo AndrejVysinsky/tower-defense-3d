@@ -65,8 +65,7 @@ public class EnemySpawner : MonoBehaviour
                 _difficultyMultiplier += difficultyMultiplierToAdd;
             }
 
-            WaveNumber++;
-            //GameController.Instance.WaveSpawned(WaveNumber++);
+            GameController.Instance.WaveSpawned(WaveNumber++);
 
             yield return StartCoroutine(SpawnWave(_waveIndex++));
 

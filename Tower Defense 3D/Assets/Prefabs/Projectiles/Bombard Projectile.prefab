@@ -126,5 +126,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
-  damageRange: 8
+  damageRange: 10
   arcHeight: 1

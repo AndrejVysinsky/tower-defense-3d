@@ -98,14 +98,14 @@ public class GridDisplay : MonoBehaviour
     {
         int lineIndex = 0;
 
-        for (int i = 0; i <= _sizeX; i++)
+        for (int i = 0; i <= _sizeZ; i++)
         {
             _lines[lineIndex].SetPosition(0, new Vector3(0, _heightOffSet + _gridElevation, i * _gridCellSize));
             _lines[lineIndex].SetPosition(1, new Vector3(_sizeX * _gridCellSize, _heightOffSet + _gridElevation, i * _gridCellSize));
             lineIndex++;
         }
 
-        for (int i = 0; i <= _sizeZ; i++)
+        for (int i = 0; i <= _sizeX; i++)
         {
             _lines[lineIndex].SetPosition(0, new Vector3(i * _gridCellSize, _heightOffSet + _gridElevation, 0));
             _lines[lineIndex].SetPosition(1, new Vector3(i * _gridCellSize, _heightOffSet + _gridElevation, _sizeZ * _gridCellSize));
