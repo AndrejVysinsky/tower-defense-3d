@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] List<Path> paths;
+    [SerializeField] Path path;
     [SerializeField] WaveTimer waveTimer;
 
     [SerializeField] float waveDelay;
@@ -19,8 +19,6 @@ public class EnemySpawner : MonoBehaviour
 
     private bool _waveSkipped = false;
 
-    private Path _randomPath;
-
     public int WaveNumber { get; private set; } = 1;
     public int WaveCount => enemyWaves.Count;
 
@@ -28,7 +26,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if (waveTimer == null)
         {
-            waveTimer = paths[0].PortalStart.GetTimer();
+            waveTimer = path.PortalStart.GetTimer();
         }
 
         StartCoroutine(Spawner());
@@ -38,7 +36,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if (waveTimer == null)
         {
-            waveTimer = paths[0].PortalStart.GetTimer();
+            waveTimer = path.PortalStart.GetTimer();
         }
 
         waveTimer.OnTimerSkipped += OnWaveSkipped;
@@ -102,9 +100,7 @@ public class EnemySpawner : MonoBehaviour
 
         var enemyType = enemyWave.EnemyType;
         var enemySprite = enemyWave.GetRandomSprite();
-        var enemyColor = enemyWave.GetRandomColor();
-
-        _randomPath = paths[Random.Range(0, paths.Count)];
+        var enemyColor = enemyWave.GetRandomColor();        
 
         while (numberOfEnemies > 0)
         {
@@ -122,12 +118,7 @@ public class EnemySpawner : MonoBehaviour
     {
         var enemyObject = Instantiate(enemyPrefab, transform);
 
-        //var enemySpriteRenderer = enemyObject.GetComponent<SpriteRenderer>();
-
-        //enemySpriteRenderer.sprite = enemySprite;
-        //enemySpriteRenderer.color = enemyColor;
-
-        enemyObject.GetComponent<Enemy>().Initialize(_randomPath, enemySprite, enemyColor, _difficultyMultiplier);
+        enemyObject.GetComponent<Enemy>().Initialize(path.PortalStart, path.PortalEnd, enemySprite, enemyColor, _difficultyMultiplier);
     }
 
     public void OnWaveSkipped()

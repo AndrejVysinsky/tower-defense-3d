@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: {fileID: 1922081410778728287, guid: 0870212d0822eba4cab4150e8a792a0d,
     type: 3}
-  numberOfEnemies: 5
-  spawnDelay: 1
+  numberOfEnemies: 15
+  spawnDelay: 0.5
   spriteVariations:
   - {fileID: 21300000, guid: 2213a68ce4dab154292bae8b1816c692, type: 3}
   colorVariations:

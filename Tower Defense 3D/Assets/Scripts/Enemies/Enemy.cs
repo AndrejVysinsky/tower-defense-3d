@@ -10,8 +10,8 @@ public class Enemy : MonoBehaviour, IInteractable, IEntity
 
     private float _difficultyModifier;
 
-    private PortalStart _portalStart;
-    private PortalEnd _portalEnd;
+    private PortalStart _start;
+    private PortalEnd _end;
 
     //============================================
     // IEntity
@@ -21,24 +21,20 @@ public class Enemy : MonoBehaviour, IInteractable, IEntity
     public int CurrentHitPoints => (int)healthScript.Health;
     public int TotalHitPoints => (int)healthScript.MaxHealth;
 
+    private bool _isDead;
+
     private void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
         _agent.speed = enemyData.Speed;
     }
 
-    public void Initialize(Path path, Sprite sprite, Color color, float difficultyMultiplier)
+    public void Initialize(PortalStart startPortal, PortalEnd endPortal, Sprite sprite, Color color, float difficultyMultiplier)
     {
-        _portalStart = path.PortalStart;
-        _portalEnd = path.PortalEnd;
-        
-        //var spriteRenderer = GetComponent<SpriteRenderer>();
-        //spriteRenderer.sprite = sprite;
-        //spriteRenderer.color = color;
+        _start = startPortal;
+        _end = endPortal;
 
-        //_healthScript = GetComponent<HealthScript>();
         healthScript.Initialize(enemyData.Health * (1 + difficultyMultiplier));
-
         _difficultyModifier = difficultyMultiplier;
 
         MoveToStart();
@@ -53,9 +49,9 @@ public class Enemy : MonoBehaviour, IInteractable, IEntity
 
     private void MoveToStart()
     {
-        _agent.Warp(_portalStart.transform.position);
+        _agent.Warp(_start.GetRandomStartPosition());
 
-        _agent.SetDestination(_portalEnd.transform.position);
+        _agent.SetDestination(_end.GetRandomEndPosition());
     }
 
     public void OnPortalEndReached()
@@ -68,8 +64,10 @@ public class Enemy : MonoBehaviour, IInteractable, IEntity
     {
         healthScript.SubtractHealth(amount);
 
-        if (healthScript.Health == 0)
+        if (healthScript.Health == 0 && _isDead == false)
         {
+            _isDead = true;
+
             var reward = enemyData.RewardToPlayer * (1 + _difficultyModifier);
 
             GameController.Instance.ModifyCurrencyBy((int)reward, transform.position);

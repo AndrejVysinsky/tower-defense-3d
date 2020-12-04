@@ -624,8 +624,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb18712e088715a469baff832f748949, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  paths:
-  - {fileID: 1539856171}
+  path: {fileID: 1539856171}
   waveTimer: {fileID: 0}
   waveDelay: 20
   difficultyMultiplierToAdd: 1
