@@ -6,58 +6,51 @@ public class ValidityIndicator
     private readonly Material _validPlacementMaterial;
     private readonly Material _invalidPlacementMaterial;
 
-    private List<Material> _originalMaterials;
-
-    private MeshRenderer _objectMeshRenderer;
+    private List<MaterialSwitcher> _materialSwitchers;
 
     public ValidityIndicator(Material validPlacementMaterial, Material invalidPlacementMaterial)
     {
         _validPlacementMaterial = validPlacementMaterial;
         _invalidPlacementMaterial = invalidPlacementMaterial;
 
-        _originalMaterials = new List<Material>();
+        _materialSwitchers = new List<MaterialSwitcher>();
     }
 
     public void RegisterObjectMaterials(GameObject gameObject)
     {
-        _objectMeshRenderer = gameObject.GetComponent<MeshRenderer>();
+        _materialSwitchers.Clear();
 
-        _originalMaterials.Clear();       
-        _originalMaterials.AddRange(_objectMeshRenderer.materials);
+        if (gameObject.TryGetComponent(out MeshRendererContainer meshRendererContainer))
+        {
+            for (int i = 0; i < meshRendererContainer.MeshRenderers.Count; i++)
+            {
+                _materialSwitchers.Add(new MaterialSwitcher(meshRendererContainer.MeshRenderers[i]));
+            }
+        }
+        else if (gameObject.TryGetComponent(out MeshRenderer meshRenderer))
+        {
+            _materialSwitchers.Add(new MaterialSwitcher(meshRenderer));
+        }
+        else
+        {
+            Debug.Log("Cant switch materials because object does not have MeshRenderer");
+        }
     }
 
     public void SwitchBackObjectMaterials()
     {
-        if (_objectMeshRenderer == null)
-            return;
-
-        _objectMeshRenderer.materials = _originalMaterials.ToArray();
+        _materialSwitchers.ForEach(x => x.SetOriginalMaterials());
     }
 
     public void SetMaterial(bool isValidPlacement)
     {
-        if (_objectMeshRenderer == null)
-            return;
-
         if (isValidPlacement)
         {
-            SetMaterial(_validPlacementMaterial);
+            _materialSwitchers.ForEach(x => x.SetMaterial(_validPlacementMaterial));
         }
         else
         {
-            SetMaterial(_invalidPlacementMaterial);
+            _materialSwitchers.ForEach(x => x.SetMaterial(_invalidPlacementMaterial));
         }
-    }
-
-    private void SetMaterial(Material material)
-    {
-        var materials = _objectMeshRenderer.materials;
-
-        for (int i = 0; i < materials.Length; i++)
-        {
-            materials[i] = material;
-        }
-
-        _objectMeshRenderer.materials = materials;
     }
 }

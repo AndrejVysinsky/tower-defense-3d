@@ -57,6 +57,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0c583f4f7ddc2b45b3bafdc591e5d13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationSpeed: 100
   firePoint: {fileID: 2565942769657334629}
   lookAtTargetParts:
   - part: {fileID: 9081016004028966182}
@@ -77,7 +78,7 @@ GameObject:
   - component: {fileID: 1687678798138818788}
   - component: {fileID: 4330049152232915985}
   - component: {fileID: 2663825934812099868}
-  - component: {fileID: 1256364051202181428}
+  - component: {fileID: 620067304947148532}
   m_Layer: 0
   m_Name: Canon Tower
   m_TagString: Untagged
@@ -131,47 +132,24 @@ MonoBehaviour:
   projectilePrefab: {fileID: 714181449567907701, guid: 0135b9e50aa251445aa7692d8c8d4782,
     type: 3}
   towerTargeting: {fileID: 1069530625128871706}
---- !u!23 &1256364051202181428
-MeshRenderer:
+--- !u!114 &620067304947148532
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2169085319361342427}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f944f9e1af81c74d9cd2f36818ea9ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshRenderers:
+  - {fileID: 6121798821476187307}
+  - {fileID: 1456788803527302645}
+  - {fileID: 4168156654759101764}
+  - {fileID: 6652090345083067740}
+  - {fileID: 7780784379761869391}
 --- !u!1001 &6624861392637710295
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -262,9 +240,21 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6624861392637710295}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &6121798821476187307 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1082205047495914364, guid: 4981fa641402faf4c916d693a3f15d0d,
+    type: 3}
+  m_PrefabInstance: {fileID: 6624861392637710295}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &9081016004028966182 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -6487994197024019727, guid: 4981fa641402faf4c916d693a3f15d0d,
+    type: 3}
+  m_PrefabInstance: {fileID: 6624861392637710295}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1456788803527302645 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5748759045953294882, guid: 4981fa641402faf4c916d693a3f15d0d,
     type: 3}
   m_PrefabInstance: {fileID: 6624861392637710295}
   m_PrefabAsset: {fileID: 0}
@@ -280,9 +270,27 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 6624861392637710295}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &4168156654759101764 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -2150336661944923501, guid: 4981fa641402faf4c916d693a3f15d0d,
+    type: 3}
+  m_PrefabInstance: {fileID: 6624861392637710295}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1686179695569798215 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -3704563456361051248, guid: 4981fa641402faf4c916d693a3f15d0d,
+    type: 3}
+  m_PrefabInstance: {fileID: 6624861392637710295}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &6652090345083067740 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 549655460268315275, guid: 4981fa641402faf4c916d693a3f15d0d,
+    type: 3}
+  m_PrefabInstance: {fileID: 6624861392637710295}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &7780784379761869391 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -5761552540986274408, guid: 4981fa641402faf4c916d693a3f15d0d,
     type: 3}
   m_PrefabInstance: {fileID: 6624861392637710295}
   m_PrefabAsset: {fileID: 0}
