@@ -57,7 +57,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AgentTypeID: 0
-  m_CollectObjects: 0
+  m_CollectObjects: 2
   m_Size: {x: 10, y: 10, z: 10}
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
@@ -70,7 +70,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_VoxelSize: 0.2
   m_BuildHeightMesh: 0
   m_NavMeshData: {fileID: 0}
 --- !u!1 &8974992648617935877
@@ -156,6 +156,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 8683805164469997607, guid: 71cb8956f96906248bb3bdd29d7599ba,
+        type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0.16078432
+      objectReference: {fileID: 0}
+    - target: {fileID: 8683805164469997607, guid: 71cb8956f96906248bb3bdd29d7599ba,
+        type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0.22352941
+      objectReference: {fileID: 0}
+    - target: {fileID: 8683805164469997607, guid: 71cb8956f96906248bb3bdd29d7599ba,
+        type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0.21960784
       objectReference: {fileID: 0}
     - target: {fileID: 8683805164760568836, guid: 71cb8956f96906248bb3bdd29d7599ba,
         type: 3}

@@ -5,7 +5,8 @@ Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: Mummy_Eye_mat
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _EMISSION
@@ -72,5 +73,6 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.8679245, g: 0.51527965, b: 0.0040939935, a: 1}
+    - _Color: {r: 0.9433962, g: 0.74947464, b: 0.013349922, a: 1}
     - _EmissionColor: {r: 0.4528302, g: 0.3341553, b: 0.19437523, a: 1}
+  m_BuildTextureStacks: []

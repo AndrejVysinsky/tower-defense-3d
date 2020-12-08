@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour, IInteractable, IEntity
@@ -26,7 +27,7 @@ public class Enemy : MonoBehaviour, IInteractable, IEntity
     private void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
-        _agent.speed = enemyData.Speed;
+        //_agent.speed = enemyData.Speed;
     }
 
     public void Initialize(PortalStart startPortal, PortalEnd endPortal, Sprite sprite, Color color, float difficultyMultiplier)
@@ -52,6 +53,18 @@ public class Enemy : MonoBehaviour, IInteractable, IEntity
         _agent.Warp(_start.GetRandomStartPosition());
 
         _agent.SetDestination(_end.GetRandomEndPosition());
+
+        StartCoroutine(RotateOnFrameEnd());
+    }
+
+    IEnumerator RotateOnFrameEnd()
+    {
+        while (_agent.velocity.normalized == Vector3.zero)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        
+        transform.rotation = Quaternion.LookRotation(_agent.velocity.normalized);
     }
 
     public void OnPortalEndReached()
