@@ -3,10 +3,12 @@ using UnityEngine;
 
 public class BrushObjectsHolder : MonoBehaviour
 {
+    [SerializeField] int brushSize = 1;
+
     private List<GameObject> _objectsToPlace;
     private int _objectLayer;
 
-    private int brushSize = 3;
+    
 
     private PlacementValidator _placementValidator;
 
