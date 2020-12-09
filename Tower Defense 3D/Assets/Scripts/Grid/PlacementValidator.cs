@@ -240,7 +240,7 @@ public class PlacementValidator : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == _parentObject || _objectsInRange.Contains(other.gameObject) || other.gameObject.layer == (int)LayerEnum.UI
+        if (_parentObject == null || other.gameObject == _parentObject || _objectsInRange.Contains(other.gameObject) || other.gameObject.layer == (int)LayerEnum.UI
             || other.gameObject.layer == (int)LayerEnum.IgnoreRayCast)
         {
             return;
@@ -253,7 +253,7 @@ public class PlacementValidator : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject == _parentObject)
+        if (_parentObject == null || other.gameObject == _parentObject)
         {
             return;
         }

@@ -128,7 +128,11 @@ public class PlacementRuleHandler : MonoBehaviour, IMapLoaded
 
     private void OnNeighbourChanged()
     {
-        ChangeObjectTo(defaultObject);
+        if (defaultObject != null)
+            ChangeObjectTo(defaultObject);
+
+        if (objectRulesData.Count == 0)
+            return;
 
         for (int i = 0; i < objectRulesData.Count; i++)
         {

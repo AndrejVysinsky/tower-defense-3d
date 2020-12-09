@@ -14,6 +14,11 @@ public class Enemy : MonoBehaviour, IInteractable, IEntity
     private PortalStart _start;
     private PortalEnd _end;
 
+    //rotation
+    [SerializeField] float rotationSpeed = 100f;
+    private Vector3 _movingDirection;
+    private Quaternion _targetRotation;
+
     //============================================
     // IEntity
     //============================================
@@ -28,6 +33,7 @@ public class Enemy : MonoBehaviour, IInteractable, IEntity
     {
         _agent = GetComponent<NavMeshAgent>();
         //_agent.speed = enemyData.Speed;
+        _agent.updateRotation = false;
     }
 
     public void Initialize(PortalStart startPortal, PortalEnd endPortal, Sprite sprite, Color color, float difficultyMultiplier)
@@ -39,6 +45,24 @@ public class Enemy : MonoBehaviour, IInteractable, IEntity
         _difficultyModifier = difficultyMultiplier;
 
         MoveToStart();
+    }
+
+    private void LateUpdate()
+    {
+        if (_agent.velocity.sqrMagnitude > Mathf.Epsilon)
+        {
+            if (_movingDirection != _agent.velocity.normalized)
+            {
+                _movingDirection = _agent.velocity.normalized;
+
+                var lookVector = _agent.velocity.normalized;
+                lookVector.y = 0;
+
+                _targetRotation = Quaternion.LookRotation(lookVector);
+            }
+
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, _targetRotation, Time.deltaTime * rotationSpeed);
+        }
     }
 
     private void DealDamageToPlayer()

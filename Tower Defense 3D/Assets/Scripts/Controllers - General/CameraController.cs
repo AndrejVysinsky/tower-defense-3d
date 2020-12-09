@@ -105,7 +105,7 @@ public class CameraController : MonoBehaviour
 
         var diff = _targetDistanceFromGround - _currentDistanceFromGround;
 
-        position.y += diff * Time.deltaTime * adjustDistanceSpeed;
+        position.y += diff * adjustDistanceSpeed * Time.deltaTime / Time.timeScale;
 
         _camera.transform.position = position;
     }
@@ -126,7 +126,7 @@ public class CameraController : MonoBehaviour
     {
         float zoomValue = Input.GetAxis("Mouse ScrollWheel") * -1000;
 
-        _targetDistanceFromGround += zoomSensitivity * zoomValue * Time.deltaTime;
+        _targetDistanceFromGround += zoomSensitivity * zoomValue * Time.deltaTime / Time.timeScale;
 
         _targetDistanceFromGround = Mathf.Clamp(_targetDistanceFromGround, minDistanceFromGround, maxDistanceFromGround);
     }
