@@ -8,16 +8,14 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
     [SerializeField] GridSettings gridSettings;
     [SerializeField] GridDisplay gridDisplay;
     [SerializeField] PlacementValidator placementValidator;
+    [SerializeField] BrushObjectsHolder brushObjectsHolder;
     
     [SerializeField] MapSaveManager map;
 
     private int _objectElevation;
     private float _objectOriginY;
-    private int _objectLayer;
 
     private GameObject _objectToPlacePrefab;
-    private GameObject _objectToPlace;
-    private IUpgradeable _objectToPlaceBuild;
 
     public GridSettings GridSettings => gridSettings;
 
@@ -26,6 +24,7 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
     private void Awake()
     {
         placementValidator = Instantiate(placementValidator);
+        brushObjectsHolder = placementValidator.GetComponent<BrushObjectsHolder>();
         placementValidator.GridSettings = GridSettings;
                 
         gridDisplay.CalculateGrid(gridSettings.sizeX, gridSettings.sizeZ, gridSettings.cellSize);
@@ -62,7 +61,7 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
             ChangeElevation();
         }
 
-        if (_objectToPlace != null)
+        if (brushObjectsHolder.IsHoldingObjects)
         {
             if (Input.GetKeyDown(KeyCode.R))
             {
@@ -92,17 +91,7 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
 
     private void ChangeRotation()
     {
-        _objectToPlace.transform.Rotate(Vector3.up, 90f);
-
-        var size = Quaternion.Euler(new Vector3(0, 90f, 0)) * _objectToPlace.GetComponent<Collider>().bounds.size;
-
-        size.x = Mathf.Abs(size.x);
-        size.y = Mathf.Abs(size.y);
-        size.z = Mathf.Abs(size.z);
-
-        _objectOriginY = _objectToPlace.transform.position.y + size.y / 2 - _objectToPlace.GetComponent<Collider>().bounds.center.y;
-
-        placementValidator.ResizeCollider(size);
+        placementValidator.Rotate(Vector3.up, 90f);
     }
 
     private void ChangeElevation()
@@ -159,7 +148,7 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
 
         position = ClampPosition(position);
 
-        _objectToPlace.transform.position = position;
+        //_objectToPlace.transform.position = position;
         placementValidator.SetPosition(position);
     }
 
@@ -228,27 +217,11 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
         }
 
         //if object implements IConstruction interface check if is able to construct and call construction start
-        if (_objectToPlaceBuild != null)
-        {
-            _objectToPlaceBuild.OnUpgradeStarted(_objectToPlaceBuild.CurrentUpgrade, out bool upgradeStarted);
-
-            if (upgradeStarted == false)
-                return;
-        }
-
-        if (_objectToPlace.TryGetComponent(out PlacementRuleHandler placementRuleHandler))
-        {
-            placementRuleHandler.OnObjectPlaced();
-        }
-
-        _objectToPlace.layer = _objectLayer;
-        //_objectToPlace.GetComponentsInChildren<MonoBehaviour>().ToList().ForEach(x => x.enabled = true);
-
-        map.ObjectPlaced(_objectToPlace, _objectToPlacePrefab);
-
-        placementValidator.DeregisterParent();
-        
-        _objectToPlace = null;
+        brushObjectsHolder.TryToConstruct();
+        brushObjectsHolder.TryToPlacementRuleHandler();
+        brushObjectsHolder.SwitchBackLayer();
+        brushObjectsHolder.ReparentToMap(map, _objectToPlacePrefab);
+        brushObjectsHolder.ClearObjects();
 
         if (gridSettings.collisionDetection && gridSettings.replaceOnCollision)
         {
@@ -275,11 +248,10 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
 
     private void DestroyObjectToPlace()
     {
-        if (_objectToPlace != null)
+        if (brushObjectsHolder.IsHoldingObjects)
         {
-            Destroy(_objectToPlace);
+            brushObjectsHolder.DestroyObjects();
         }
-        _objectToPlace = null;
         IsBuildingModeActive = false;
     }
 
@@ -297,17 +269,9 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
 
     private void InstantiatePrefab()
     {
-        _objectToPlace = Instantiate(_objectToPlacePrefab, map.transform);
-        _objectLayer = _objectToPlace.layer;
-        _objectToPlace.layer = (int)LayerEnum.IgnoreRayCast;
-        
-        _objectToPlaceBuild = _objectToPlace.GetComponent<IUpgradeable>();
+        brushObjectsHolder.InstantiateObjects(_objectToPlacePrefab);
 
-        var objectBounds = _objectToPlace.GetComponent<Collider>().bounds;
-
-        _objectOriginY = _objectToPlace.transform.position.y + objectBounds.extents.y - objectBounds.center.y;
-
-        placementValidator.RegisterParent(_objectToPlace);
+        _objectOriginY = brushObjectsHolder.GetOriginY();
 
         SetObjectPosition(gridDisplay.GetGridBasePosition());
     }

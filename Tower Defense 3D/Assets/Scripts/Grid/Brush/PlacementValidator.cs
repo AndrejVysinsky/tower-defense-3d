@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -7,8 +8,7 @@ public class PlacementValidator : MonoBehaviour
     [SerializeField] Material validPlacementMaterial;
     [SerializeField] Material invalidPlacementMaterial;
 
-    private ValidityIndicator _validityIndicator;
-    private GameObject _parentObject;
+    private List<ValidityIndicator> _validityIndicators;
 
     private List<GameObject> _objectsInRange;
     private List<GameObject> _overlappedObjects;
@@ -21,35 +21,47 @@ public class PlacementValidator : MonoBehaviour
 
     public GridSettings GridSettings { get; set; }
 
+    private BrushObjectsHolder _brushObjectsHolder;
+
     private void Awake()
     {
-        _validityIndicator = new ValidityIndicator(validPlacementMaterial, invalidPlacementMaterial);
+        _validityIndicators = new List<ValidityIndicator>();
 
         PlacementCollider = GetComponent<BoxCollider>();
 
         _objectsInRange = new List<GameObject>();
         _overlappedObjects = new List<GameObject>();
+        _brushObjectsHolder = GetComponent<BrushObjectsHolder>();
     }
 
-    public void RegisterParent(GameObject parent)
+    public void RegisterChildren(List<GameObject> children, Vector3 totalSize)
     {
-        _parentObject = parent;
-        _validityIndicator.RegisterObjectMaterials(parent);
+        _validityIndicators.Clear();
 
-        ResizeCollider(parent.GetComponent<Collider>().bounds.size);
-    }
-
-    public void DeregisterParent()
-    {
-        if (_parentObject != null)
+        for (int i = 0; i < children.Count; i++)
         {
-            _parentObject = null;
-            _validityIndicator.SwitchBackObjectMaterials();
+            var validityIndicator = new ValidityIndicator(validPlacementMaterial, invalidPlacementMaterial);
+            validityIndicator.RegisterObjectMaterials(children[i]);
+
+            _validityIndicators.Add(validityIndicator);
         }
+
+        ResizeCollider(totalSize);
+    }
+
+    public void DeregisterChildren()
+    {
+        for (int i = 0; i < _validityIndicators.Count; i++)
+        {
+            _validityIndicators[i].SwitchBackObjectMaterials();
+        }
+        _validityIndicators.Clear();
     }
 
     public void ResizeCollider(Vector3 size)
     {
+        size = GetRotatedColliderSize(size);
+
         Vector3 newSize = size;
 
         if (GridSettings.snapToGrid)
@@ -79,18 +91,27 @@ public class PlacementValidator : MonoBehaviour
 
         transform.position = position;
 
-        CheckValidity();
+        StartCoroutine(CheckValidity());
     }
 
-    private void CheckValidity()
+    public void Rotate(Vector3 direction, float angle)
     {
+        transform.Rotate(direction, angle);
+
+        StartCoroutine(CheckValidity());
+    }
+
+    private IEnumerator CheckValidity()
+    {
+        yield return new WaitForFixedUpdate();
+
         CheckOverlap();
 
         IsOnGround = IsWholeObjectOnGround();
 
         bool isValidPlacement = IsOverlapping == false && IsOnGround;
 
-        _validityIndicator.SetMaterial(isValidPlacement);
+        _validityIndicators.ForEach(x => x.SetMaterial(isValidPlacement));
     }
 
     private void CheckOverlap()
@@ -136,14 +157,16 @@ public class PlacementValidator : MonoBehaviour
             return true;
 
         //check their range
-        float minX = transform.position.x - PlacementCollider.size.x / 2;
-        float maxX = transform.position.x + PlacementCollider.size.x / 2;
+        var myColliderSize = GetRotatedColliderSize(PlacementCollider.size);
 
-        float minZ = transform.position.z - PlacementCollider.size.z / 2;
-        float maxZ = transform.position.z + PlacementCollider.size.z / 2;
+        float minX = transform.position.x - myColliderSize.x / 2;
+        float maxX = transform.position.x + myColliderSize.x / 2;
+
+        float minZ = transform.position.z - myColliderSize.z / 2;
+        float maxZ = transform.position.z + myColliderSize.z / 2;
 
         var point = Vector3.zero;
-        point.y = transform.position.y - PlacementCollider.size.y / 2;
+        point.y = transform.position.y - myColliderSize.y / 2;
 
         for (float i = minX; i <= maxX; i += 0.5f)
         {
@@ -240,7 +263,7 @@ public class PlacementValidator : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (_parentObject == null || other.gameObject == _parentObject || _objectsInRange.Contains(other.gameObject) || other.gameObject.layer == (int)LayerEnum.UI
+        if (_brushObjectsHolder.IsHoldingObjects == false || _objectsInRange.Contains(other.gameObject) || other.gameObject.layer == (int)LayerEnum.UI
             || other.gameObject.layer == (int)LayerEnum.IgnoreRayCast)
         {
             return;
@@ -253,11 +276,22 @@ public class PlacementValidator : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (_parentObject == null || other.gameObject == _parentObject)
+        if (_brushObjectsHolder.IsHoldingObjects == false)
         {
             return;
         }
 
         _objectsInRange.Remove(other.gameObject);
+    }
+
+    private Vector3 GetRotatedColliderSize(Vector3 size)
+    {
+        var rotatedSize = Quaternion.Euler(transform.rotation.eulerAngles) * size;
+
+        rotatedSize.x = Mathf.Abs(rotatedSize.x);
+        rotatedSize.y = Mathf.Abs(rotatedSize.y);
+        rotatedSize.z = Mathf.Abs(rotatedSize.z);
+
+        return rotatedSize;
     }
 }

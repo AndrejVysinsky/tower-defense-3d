@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 6209219634770400541}
   - component: {fileID: -8822502717654209392}
   - component: {fileID: 6209219634770400540}
+  - component: {fileID: 1719573906374404936}
   m_Layer: 2
-  m_Name: Overlap Handler
+  m_Name: Placement Validator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,3 +79,15 @@ MonoBehaviour:
     type: 2}
   invalidPlacementMaterial: {fileID: 2100000, guid: 4fb9c5e7bb992174d89cc7dd560641a0,
     type: 2}
+--- !u!114 &1719573906374404936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6209219634770400542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cf6797c9e03a074db5abd84e64d3c5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
