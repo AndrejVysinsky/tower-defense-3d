@@ -8974,6 +8974,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 117965991039282214, guid: ed98d64e224f89c44bd1289d0b0a116c,
+        type: 3}
+      propertyPath: gridSettings.brushSize
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7189475308025938309, guid: ed98d64e224f89c44bd1289d0b0a116c,
         type: 3}
       propertyPath: m_Name

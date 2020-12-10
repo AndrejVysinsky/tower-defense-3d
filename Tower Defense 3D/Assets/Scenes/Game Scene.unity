@@ -5923,6 +5923,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 207509481600542226, guid: 044e422ab95adb8488de58f5e2d0dd2a,
+        type: 3}
+      propertyPath: gridSettings.brushSize
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 792030019040658628, guid: 044e422ab95adb8488de58f5e2d0dd2a,
         type: 3}
       propertyPath: m_LocalPosition.x

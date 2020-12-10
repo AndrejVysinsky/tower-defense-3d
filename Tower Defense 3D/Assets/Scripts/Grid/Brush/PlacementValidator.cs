@@ -12,7 +12,10 @@ public class PlacementValidator : MonoBehaviour
 
     private List<GameObject> _objectsInRange;
     private List<GameObject> _overlappedObjects;
-    
+
+    private Transform _myTransform;
+    private Collider[] _colliderBuffer = new Collider[500];
+    private BrushObjectsHolder _brushObjectsHolder;
     private readonly float _maxRangeTollerance = 0.05f;
 
     public bool IsOverlapping => _overlappedObjects.Count > 0;
@@ -21,10 +24,10 @@ public class PlacementValidator : MonoBehaviour
 
     public GridSettings GridSettings { get; set; }
 
-    private BrushObjectsHolder _brushObjectsHolder;
-
     private void Awake()
     {
+        _myTransform = transform;
+
         _validityIndicators = new List<ValidityIndicator>();
 
         PlacementCollider = GetComponent<BoxCollider>();
@@ -58,7 +61,7 @@ public class PlacementValidator : MonoBehaviour
         _validityIndicators.Clear();
     }
 
-    public void ResizeCollider(Vector3 size)
+    private void ResizeCollider(Vector3 size)
     {
         size = GetRotatedColliderSize(size);
 
@@ -86,17 +89,17 @@ public class PlacementValidator : MonoBehaviour
 
     public void SetPosition(Vector3 position)
     {
-        if (transform.position == position)
+        if (_myTransform.position == position)
             return;
 
-        transform.position = position;
+        _myTransform.position = position;
 
         StartCoroutine(CheckValidity());
     }
 
     public void Rotate(Vector3 direction, float angle)
     {
-        transform.Rotate(direction, angle);
+        _myTransform.Rotate(direction, angle);
 
         StartCoroutine(CheckValidity());
     }
@@ -111,7 +114,10 @@ public class PlacementValidator : MonoBehaviour
 
         bool isValidPlacement = IsOverlapping == false && IsOnGround;
 
-        _validityIndicators.ForEach(x => x.SetMaterial(isValidPlacement));
+        for (int i = 0; i < _validityIndicators.Count; i++)
+        {
+            _validityIndicators[i].SetMaterial(isValidPlacement);
+        }
     }
 
     private void CheckOverlap()
@@ -123,12 +129,14 @@ public class PlacementValidator : MonoBehaviour
 
         foreach (var overlappedObject in _objectsInRange)
         {
+            var overlappedCollider = overlappedObject.GetComponent<Collider>();
+
             if (IsHigherOrLowerThan(overlappedObject))
             {
                 continue;
             }
 
-            var point = overlappedObject.GetComponent<Collider>().ClosestPoint(transform.position);
+            var point = overlappedObject.GetComponent<Collider>().ClosestPoint(_myTransform.position);
 
             if (IsPointInsideMyBounds(bounds, point))
             {                
@@ -143,48 +151,52 @@ public class PlacementValidator : MonoBehaviour
             return true;
         
         //get lower touching objects
-        List<Collider> colliders = new List<Collider>();
+        int colliderCount = 0;
 
-        _objectsInRange.ForEach(x =>
+        for (int i = 0; i < _objectsInRange.Count; i++)
         {
-            if (IsTouchingBottom(x))
-            {
-                colliders.Add(x.GetComponent<Collider>());
-            }
-        });
+            var collider = _objectsInRange[i].GetComponent<Collider>();
 
-        if (colliders.Count == 0)
+            if (IsTouchingBottom(collider.bounds))
+            {
+                _colliderBuffer[colliderCount++] = collider;
+            }
+        }
+
+        if (colliderCount == 0)
             return true;
 
         //check their range
         var myColliderSize = GetRotatedColliderSize(PlacementCollider.size);
 
-        float minX = transform.position.x - myColliderSize.x / 2;
-        float maxX = transform.position.x + myColliderSize.x / 2;
+        float minX = _myTransform.position.x - myColliderSize.x / 2;
+        float maxX = _myTransform.position.x + myColliderSize.x / 2;
 
-        float minZ = transform.position.z - myColliderSize.z / 2;
-        float maxZ = transform.position.z + myColliderSize.z / 2;
+        float minZ = _myTransform.position.z - myColliderSize.z / 2;
+        float maxZ = _myTransform.position.z + myColliderSize.z / 2;
 
         var point = Vector3.zero;
-        point.y = transform.position.y - myColliderSize.y / 2;
+        point.y = _myTransform.position.y - myColliderSize.y / 2;
 
-        for (float i = minX; i <= maxX; i += 0.5f)
+        //check every corner of collider with incrementing step of smallest grid unit
+        for (float i = minX; i <= maxX; i += GridSettings.cellSize)
         {
-            for (float j = minZ; j <= maxZ; j += 0.5f)
+            for (float j = minZ; j <= maxZ; j += GridSettings.cellSize)
             {
                 point.x = i;
                 point.z = j;
 
                 bool isPointOnGround = false;
 
-                foreach (var collider in colliders)
+                for (int k = 0; k < colliderCount; k++)
                 {
-                    if (GridSettings.avoidUnbuildableTerrain && collider.gameObject.layer == (int)LayerEnum.UnbuildableTerrain)
+                    if (GridSettings.avoidUnbuildableTerrain && _colliderBuffer[k].gameObject.layer == (int)LayerEnum.UnbuildableTerrain)
                         continue;
 
-                    if (IsPointInsideOtherBounds(collider.bounds, point))
+                    if (IsPointInsideOtherBounds(_colliderBuffer[k].bounds.center, _colliderBuffer[k].bounds.extents, point))
                     {
                         isPointOnGround = true;
+                        break;
                     }
                 }
 
@@ -195,23 +207,21 @@ public class PlacementValidator : MonoBehaviour
         return true;
     }
 
-    private bool IsTouchingBottom(GameObject other)
+    private bool IsTouchingBottom(Bounds otherBounds)
     {
-        var otherBounds = other.GetComponent<Collider>().bounds;
-
-        float upperYOfStaticGameObject = other.transform.position.y + otherBounds.extents.y;
-        float lowerYOfMovingGameObject = transform.position.y - PlacementCollider.bounds.extents.y;
+        float upperYOfStaticGameObject = otherBounds.center.y + otherBounds.extents.y;
+        float lowerYOfMovingGameObject = _myTransform.position.y - PlacementCollider.bounds.extents.y;
 
         return Mathf.Abs(upperYOfStaticGameObject - lowerYOfMovingGameObject) <= _maxRangeTollerance;
     }
 
-    private bool IsPointInsideOtherBounds(Bounds bounds, Vector3 point)
+    private bool IsPointInsideOtherBounds(Vector3 center, Vector3 extents, Vector3 point)
     {
-        float minX = bounds.center.x - bounds.extents.x - _maxRangeTollerance;
-        float maxX = bounds.center.x + bounds.extents.x + _maxRangeTollerance;
+        float minX = center.x - extents.x - _maxRangeTollerance;
+        float maxX = center.x + extents.x + _maxRangeTollerance;
 
-        float minZ = bounds.center.z - bounds.extents.z - _maxRangeTollerance;
-        float maxZ = bounds.center.z + bounds.extents.z + _maxRangeTollerance;
+        float minZ = center.z - extents.z - _maxRangeTollerance;
+        float maxZ = center.z + extents.z + _maxRangeTollerance;
 
         if (point.x >= minX && point.x <= maxX && point.z >= minZ && point.z <= maxZ)
         {
@@ -222,11 +232,11 @@ public class PlacementValidator : MonoBehaviour
 
     private bool IsPointInsideMyBounds(Bounds bounds, Vector3 point)
     {
-        float minX = transform.position.x - bounds.extents.x + _maxRangeTollerance;
-        float maxX = transform.position.x + bounds.extents.x - _maxRangeTollerance;
+        float minX = _myTransform.position.x - bounds.extents.x + _maxRangeTollerance;
+        float maxX = _myTransform.position.x + bounds.extents.x - _maxRangeTollerance;
 
-        float minZ = transform.position.z - bounds.extents.z + _maxRangeTollerance;
-        float maxZ = transform.position.z + bounds.extents.z - _maxRangeTollerance;
+        float minZ = _myTransform.position.z - bounds.extents.z + _maxRangeTollerance;
+        float maxZ = _myTransform.position.z + bounds.extents.z - _maxRangeTollerance;
 
         if (point.x > minX && point.x < maxX && point.z > minZ && point.z < maxZ)
         {
@@ -235,20 +245,20 @@ public class PlacementValidator : MonoBehaviour
         return false;
     }
 
-    private bool IsHigherOrLowerThan(GameObject gameObject)
+    private bool IsHigherOrLowerThan(GameObject otherObject)
     {
-        var otherBounds = gameObject.GetComponent<Collider>().bounds;
+        var otherBounds = otherObject.GetComponent<Collider>().bounds;
 
-        var upperYOfStaticGameObject = gameObject.transform.position.y + otherBounds.extents.y - _maxRangeTollerance;
-        var lowerYOfStaticGameObject = gameObject.transform.position.y - otherBounds.extents.y + _maxRangeTollerance;
+        var upperYOfStaticGameObject = otherObject.transform.position.y + otherBounds.extents.y - _maxRangeTollerance;
+        var lowerYOfStaticGameObject = otherObject.transform.position.y - otherBounds.extents.y + _maxRangeTollerance;
 
-        var upperYOfMovingGameObject = transform.position.y + PlacementCollider.bounds.extents.y - _maxRangeTollerance;
-        var lowerYOfMovingGameObject = transform.position.y - PlacementCollider.bounds.extents.y + _maxRangeTollerance;
+        var upperYOfMovingGameObject = _myTransform.position.y + PlacementCollider.bounds.extents.y - _maxRangeTollerance;
+        var lowerYOfMovingGameObject = _myTransform.position.y - PlacementCollider.bounds.extents.y + _maxRangeTollerance;
 
         return lowerYOfMovingGameObject >= upperYOfStaticGameObject || upperYOfMovingGameObject <= lowerYOfStaticGameObject;
     }
 
-    public List<int> RemoveOverlappedObjects()
+    public List<int> DestroyOverlappedObjects()
     {
         List<int> result = new List<int>();
         result.AddRange(_overlappedObjects.Select(x => x.GetInstanceID()));
@@ -271,7 +281,7 @@ public class PlacementValidator : MonoBehaviour
 
         _objectsInRange.Add(other.gameObject);
 
-        CheckValidity();
+        StartCoroutine(CheckValidity());
     }
 
     private void OnTriggerExit(Collider other)
@@ -284,7 +294,7 @@ public class PlacementValidator : MonoBehaviour
         _objectsInRange.Remove(other.gameObject);
     }
 
-    private Vector3 GetRotatedColliderSize(Vector3 size)
+    public Vector3 GetRotatedColliderSize(Vector3 size)
     {
         var rotatedSize = Quaternion.Euler(transform.rotation.eulerAngles) * size;
 

@@ -77,7 +77,7 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
 
             if (Input.GetMouseButtonDown(1))
             {
-                DestroyObjectToPlace();
+                DestroyBrushObjects();
             }
         }
         else
@@ -216,37 +216,34 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
             }
         }
 
-        //if object implements IConstruction interface check if is able to construct and call construction start
-        brushObjectsHolder.TryToConstruct();
-        brushObjectsHolder.TryToPlacementRuleHandler();
-        brushObjectsHolder.SwitchBackLayer();
-        brushObjectsHolder.ReparentToMap(map, _objectToPlacePrefab);
+        brushObjectsHolder.PlaceObjectsOnMap(map);
         brushObjectsHolder.ClearObjects();
 
+        //destroy overlapped objects if setting is turned on
         if (gridSettings.collisionDetection && gridSettings.replaceOnCollision)
         {
-            List<int> removedIds = placementValidator.RemoveOverlappedObjects();
+            List<int> removedIds = placementValidator.DestroyOverlappedObjects();
 
             removedIds.ForEach(x => map.ObjectRemoved(x));
         }
 
         if (gridSettings.continuousBuilding)
         {
-            InstantiatePrefab();
+            InstantiateBrushObjects();
         }
     }
 
     public void OnBuildOptionClicked(GameObject gameObject)
     {
-        DestroyObjectToPlace();
+        DestroyBrushObjects();
 
         _objectToPlacePrefab = gameObject;
         IsBuildingModeActive = true;
 
-        InstantiatePrefab();
+        InstantiateBrushObjects();
     }
 
-    private void DestroyObjectToPlace()
+    private void DestroyBrushObjects()
     {
         if (brushObjectsHolder.IsHoldingObjects)
         {
@@ -267,9 +264,9 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
         }
     }
 
-    private void InstantiatePrefab()
+    private void InstantiateBrushObjects()
     {
-        brushObjectsHolder.InstantiateObjects(_objectToPlacePrefab);
+        brushObjectsHolder.InstantiateObjects(_objectToPlacePrefab, gridSettings.brushSize);
 
         _objectOriginY = brushObjectsHolder.GetOriginY();
 
@@ -327,5 +324,16 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
     public void OnMapBeingSaved(MapSaveData mapSaveData)
     {
         mapSaveData.GridSettings = gridSettings;
+    }
+
+    public void OnBrushSizeChanged(int brushSize)
+    {
+        if (brushSize != gridSettings.brushSize)
+        {
+            gridSettings.brushSize = brushSize;
+
+            DestroyBrushObjects();
+            InstantiateBrushObjects();
+        }
     }
 }

@@ -6,12 +6,16 @@ public class MaterialSwitcher
     private List<Material> _originalMaterials;
     private MeshRenderer _objectMeshRenderer;
 
+    private Material[] _newMaterials;
+
     public MaterialSwitcher(MeshRenderer meshRenderer)
     {
         _objectMeshRenderer = meshRenderer;
 
         _originalMaterials = new List<Material>();
         _originalMaterials.AddRange(meshRenderer.materials);
+
+        _newMaterials = new Material[_originalMaterials.Count];
     }
 
     public void SetOriginalMaterials()
@@ -24,13 +28,10 @@ public class MaterialSwitcher
 
     public void SetMaterial(Material material)
     {
-        var materials = _objectMeshRenderer.materials;
-
-        for (int i = 0; i < materials.Length; i++)
+        for (int i = 0; i < _newMaterials.Length; i++)
         {
-            materials[i] = material;
+            _newMaterials[i] = material;
         }
-
-        _objectMeshRenderer.materials = materials;
+        _objectMeshRenderer.materials = _newMaterials;
     }
 }

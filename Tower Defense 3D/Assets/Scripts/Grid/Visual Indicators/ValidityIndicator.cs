@@ -44,13 +44,11 @@ public class ValidityIndicator
 
     public void SetMaterial(bool isValidPlacement)
     {
-        if (isValidPlacement)
+        var materialToSwitch = isValidPlacement ? _validPlacementMaterial : _invalidPlacementMaterial;
+
+        for (int i = 0; i < _materialSwitchers.Count; i++)
         {
-            _materialSwitchers.ForEach(x => x.SetMaterial(_validPlacementMaterial));
-        }
-        else
-        {
-            _materialSwitchers.ForEach(x => x.SetMaterial(_invalidPlacementMaterial));
+            _materialSwitchers[i].SetMaterial(materialToSwitch);
         }
     }
 }

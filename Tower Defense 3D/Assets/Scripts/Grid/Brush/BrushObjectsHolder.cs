@@ -3,17 +3,12 @@ using UnityEngine;
 
 public class BrushObjectsHolder : MonoBehaviour
 {
-    [SerializeField] int brushSize = 1;
-
     private List<GameObject> _objectsToPlace;
-    private int _objectLayer;
-
-    
+    private GameObject _originalPrefab;
 
     private PlacementValidator _placementValidator;
 
     public bool IsHoldingObjects => _objectsToPlace.Count > 0;
-    public int BrushSize => brushSize;
 
     private void Awake()
     {
@@ -21,19 +16,19 @@ public class BrushObjectsHolder : MonoBehaviour
         _placementValidator = GetComponent<PlacementValidator>();
     }
 
-    public void InstantiateObjects(GameObject toPlacePrefab)
+    public void InstantiateObjects(GameObject toPlacePrefab, int brushSize)
     {
+        _originalPrefab = toPlacePrefab;
+
         for (int i = 0; i < brushSize * brushSize; i++)
         {
             var toPlace = Instantiate(toPlacePrefab, transform);
-
-            _objectLayer = toPlace.layer;
 
             toPlace.layer = (int)LayerEnum.IgnoreRayCast;
 
             _objectsToPlace.Add(toPlace);
         }
-
+        
         var objectBounds = _objectsToPlace[0].GetComponent<Collider>().bounds;
 
         var placementValidatorSize = objectBounds.size;
@@ -44,11 +39,7 @@ public class BrushObjectsHolder : MonoBehaviour
         _placementValidator.RegisterChildren(_objectsToPlace, placementValidatorSize);
 
         //rotated collider size
-        var size = Quaternion.Euler(transform.rotation.eulerAngles) * objectBounds.size;
-
-        size.x = Mathf.Abs(size.x);
-        size.y = Mathf.Abs(size.y);
-        size.z = Mathf.Abs(size.z);
+        var size = _placementValidator.GetRotatedColliderSize(objectBounds.size);
 
         //shift objects by half of placementValidatorSize to left and forward
         var startingX = - (brushSize - 1) * size.x / 2;
@@ -81,54 +72,36 @@ public class BrushObjectsHolder : MonoBehaviour
         return transform.position.y + bounds.extents.y - bounds.center.y;
     }
 
-    public void TryToConstruct()
+    public void PlaceObjectsOnMap(MapSaveManager map)
     {
         for (int i = 0; i < _objectsToPlace.Count; i++)
         {
+            /*
+                if object implements IUpgradeable, try to start upgrade
+                returns false if upgrade did not start (should mean not enough gold) -> skip object placing
+             */
             if (_objectsToPlace[i].TryGetComponent(out IUpgradeable upgradeable))
             {
                 upgradeable.OnUpgradeStarted(upgradeable.CurrentUpgrade, out bool upgradeStarted);
 
                 if (upgradeStarted == false)
-                    return;
+                    continue;
             }
-        }
-    }
 
-    public void TryToPlacementRuleHandler()
-    {
-        for (int i = 0; i < _objectsToPlace.Count; i++)
-        {
+            //check for block visual adaptation (mostly for terrain block connecting)
             if (_objectsToPlace[i].TryGetComponent(out PlacementRuleHandler placementRuleHandler))
             {
                 placementRuleHandler.OnObjectPlaced();
             }
-        }
-    }
 
-    public void SwitchBackLayer()
-    {
-        for (int i = 0; i < _objectsToPlace.Count; i++)
-        {
-            _objectsToPlace[i].layer = _objectLayer;
-        }
-    }
+            //switch back layer
+            _objectsToPlace[i].layer = _originalPrefab.layer;
 
-    public void ReparentToMap(MapSaveManager map, GameObject originalPrefab)
-    {
-        for (int i = 0; i < _objectsToPlace.Count; i++)
-        {
-            //var position = _objectsToPlace[i].transform.localPosition;
-
-            //position += transform.position;
-
+            //reparent to map object
             _objectsToPlace[i].transform.parent = map.transform;
-
-            //_objectsToPlace[i].transform.position = position;
-
-            map.ObjectPlaced(_objectsToPlace[i], originalPrefab);
+            map.ObjectPlaced(_objectsToPlace[i], _originalPrefab);
         }
-    }
+    }    
 
     public void ClearObjects()
     {
