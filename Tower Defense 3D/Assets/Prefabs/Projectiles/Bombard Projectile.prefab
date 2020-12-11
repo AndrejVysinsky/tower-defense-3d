@@ -128,3 +128,5 @@ MonoBehaviour:
   speed: 2
   damageRange: 10
   arcHeight: 1
+  particlesPrefab: {fileID: 7488479327953137949, guid: 3cb1a9d0023ecfa4a8a95fef0d0568cc,
+    type: 3}

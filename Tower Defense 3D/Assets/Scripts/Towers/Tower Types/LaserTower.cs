@@ -3,6 +3,7 @@
 public class LaserTower : TowerBase
 {
     [SerializeField] LineRenderer laser;
+    [SerializeField] ParticleSystem laserParticles;
     [SerializeField] TowerTargeting towerTargeting;
 
     protected override void Awake()
@@ -10,6 +11,8 @@ public class LaserTower : TowerBase
         base.Awake();
 
         towerTargeting.SetTargeting(false);
+
+        laserParticles = Instantiate(laserParticles).GetComponent<ParticleSystem>();
     }
 
     private void Update()
@@ -25,6 +28,9 @@ public class LaserTower : TowerBase
         else
         {
             laser.enabled = false;
+
+            if (laserParticles.isPlaying)
+                laserParticles.Stop();
         }
     }
 
@@ -32,6 +38,12 @@ public class LaserTower : TowerBase
     {
         laser.SetPosition(0, towerTargeting.GetFirePointPosition());
         laser.SetPosition(1, target.transform.position);
+
+        laserParticles.transform.position = target.transform.position;
+        laserParticles.transform.LookAt(transform.position);
+
+        if (laserParticles.isStopped)
+            laserParticles.Play();
 
         target.TakeDamage(TowerData.Damage * Time.deltaTime);
     }

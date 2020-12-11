@@ -254,6 +254,8 @@ MonoBehaviour:
   towerData: {fileID: 11400000, guid: 4b9a912874548f74bbd05b30f4cf4285, type: 2}
   sellableTooltip: {fileID: 11400000, guid: 8857fb61623567b40961d091f74a68f8, type: 2}
   laser: {fileID: 8619833718616983908}
+  laserParticles: {fileID: 7488479327953137949, guid: 0050f9f4301621540afa99fdb9594ebd,
+    type: 3}
   towerTargeting: {fileID: 2882305233965249878}
 --- !u!114 &1042597618034138002
 MonoBehaviour:

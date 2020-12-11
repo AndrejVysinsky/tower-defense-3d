@@ -7,6 +7,7 @@ public class BombardProjectile : MonoBehaviour, IProjectileWithAreaEffect
     [Tooltip("Sets sphere collider radius")]
     [SerializeField] float damageRange;
     [SerializeField] float arcHeight;
+    [SerializeField] ParticleSystem particlesPrefab;
 
     private float _targetDistance;
     private float _damage;
@@ -80,6 +81,10 @@ public class BombardProjectile : MonoBehaviour, IProjectileWithAreaEffect
 
     public void ApplyEffectOnImpact(List<GameObject> targets)
     {
+        var particles = Instantiate(particlesPrefab, transform.position, Quaternion.identity);
+
+        Destroy(particles, particles.main.duration);
+
         foreach (var target in targets)
         {
             if (target == null)
