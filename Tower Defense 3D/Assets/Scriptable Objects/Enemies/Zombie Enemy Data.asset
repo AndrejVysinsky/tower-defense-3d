@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f401524478367984eb7605aeb6edc9b8, type: 3}
-  m_Name: Normal Enemy Data
+  m_Name: Zombie Enemy Data
   m_EditorClassIdentifier: 
-  name: 
-  sprite: {fileID: 0}
+  name: Zombie
+  sprite: {fileID: 21300000, guid: d6e064923f256814f998b9dad96594b3, type: 3}
   speed: 2
-  health: 100
+  health: 50
   damageToPlayer: 1
-  rewardToPlayer: 5
+  rewardToPlayer: 3

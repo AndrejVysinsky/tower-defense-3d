@@ -21,7 +21,7 @@ public class TowerTargeting : MonoBehaviour
     private List<Enemy> _enemiesInRange;
     
     public RangeRenderer RangeRenderer { get; private set; }
-    public GameObject Target { get; private set; }
+    public Enemy Target { get; private set; }
     public bool IsLookingAtTarget { get; private set; }
 
     private Quaternion _targetRotation;
@@ -40,8 +40,7 @@ public class TowerTargeting : MonoBehaviour
         if (_isActive == false)
             return;
 
-        //when target dies get another one
-        if (Target == null)
+        if (Target == null || Target.IsDead)
         {
             IsLookingAtTarget = false;
             Target = GetTarget();
@@ -101,17 +100,17 @@ public class TowerTargeting : MonoBehaviour
         }
     }
 
-    private GameObject GetTarget()
+    private Enemy GetTarget()
     {
         //sometimes target on top of queue is null
-        _enemiesInRange.RemoveAll(enemy => enemy == null);
+        _enemiesInRange.RemoveAll(enemy => enemy == null || enemy.IsDead);
 
         if (_enemiesInRange.Count == 0)
             return null;
 
         float remainingDistance = _enemiesInRange.Min(enemy => enemy.GetRemainingDistance());
 
-        return _enemiesInRange.Where(enemy => enemy.GetRemainingDistance() == remainingDistance).FirstOrDefault().gameObject;
+        return _enemiesInRange.Where(enemy => enemy.GetRemainingDistance() == remainingDistance).FirstOrDefault();
     }
 
     public Vector3 GetFirePointPosition()

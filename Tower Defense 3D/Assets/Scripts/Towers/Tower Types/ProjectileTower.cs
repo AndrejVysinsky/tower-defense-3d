@@ -28,7 +28,7 @@ public class ProjectileTower : TowerBase
         }
     }
 
-    public void Shoot(GameObject target)
+    public void Shoot(Enemy target)
     {
         var projectile = Instantiate(projectilePrefab, towerTargeting.GetFirePointPosition(), transform.rotation);
 

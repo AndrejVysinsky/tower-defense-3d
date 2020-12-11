@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour, IInteractable, IEntity
 {
     [SerializeField] EnemyData enemyData;
     [SerializeField] HealthScript healthScript;
+    [SerializeField] Animator animator;
 
     private NavMeshAgent _agent;
 
@@ -27,7 +28,7 @@ public class Enemy : MonoBehaviour, IInteractable, IEntity
     public int CurrentHitPoints => (int)healthScript.Health;
     public int TotalHitPoints => (int)healthScript.MaxHealth;
 
-    private bool _isDead;
+    public bool IsDead { get; private set; } = false;
 
     private void Awake()
     {
@@ -101,16 +102,26 @@ public class Enemy : MonoBehaviour, IInteractable, IEntity
     {
         healthScript.SubtractHealth(amount);
 
-        if (healthScript.Health == 0 && _isDead == false)
+        if (healthScript.Health == 0 && IsDead == false)
         {
-            _isDead = true;
+            IsDead = true;
 
             var reward = enemyData.RewardToPlayer * (1 + _difficultyModifier);
 
             GameController.Instance.ModifyCurrencyBy((int)reward, transform.position);
 
-            Destroy(gameObject);
+            OnDeath();
         }
+    }
+
+    private void OnDeath()
+    {
+        _agent.enabled = false;
+        GetComponent<Collider>().enabled = false;
+
+        animator.Play("Death");
+
+        Destroy(gameObject, 2f);
     }
 
     public float GetRemainingDistance()

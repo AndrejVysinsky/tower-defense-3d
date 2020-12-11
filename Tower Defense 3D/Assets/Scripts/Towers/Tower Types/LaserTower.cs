@@ -28,12 +28,12 @@ public class LaserTower : TowerBase
         }
     }
 
-    public void Shoot(GameObject target)
+    public void Shoot(Enemy target)
     {
         laser.SetPosition(0, towerTargeting.GetFirePointPosition());
         laser.SetPosition(1, target.transform.position);
 
-        target.GetComponent<Enemy>().TakeDamage(TowerData.Damage * Time.deltaTime);
+        target.TakeDamage(TowerData.Damage * Time.deltaTime);
     }
 
     public override void OnUpgradeStarted(IUpgradeOption upgradeOption, out bool upgradeStarted)

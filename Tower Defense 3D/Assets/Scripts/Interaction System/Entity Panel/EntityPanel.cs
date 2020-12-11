@@ -19,6 +19,7 @@ public class EntityPanel : MonoBehaviour
         {
             entityName.text = entity.Name;
             entityImage.sprite = entity.Sprite;
+            entityImage.preserveAspect = true;
 
             hitPointsPanel.SetEntity(entity);
         }
