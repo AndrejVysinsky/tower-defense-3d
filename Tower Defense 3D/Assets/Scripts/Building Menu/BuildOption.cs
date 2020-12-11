@@ -17,12 +17,6 @@ public class BuildOption : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    public void Initialize(BuildOptionData buildOptionData)
-    {
-        GetComponent<SpriteRenderer>().sprite = buildOptionData.BuildIcon;
-        BuildPrefab = buildOptionData.BuildPrefab;
-    }
-
     public void OnPointerClick(PointerEventData eventData)
     {
         if (buildPrefab == null)

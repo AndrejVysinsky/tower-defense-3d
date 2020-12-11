@@ -326,14 +326,17 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
         mapSaveData.GridSettings = gridSettings;
     }
 
-    public void OnBrushSizeChanged(int brushSize)
+    public void OnBrushSizeChanged(float brushSize)
     {
         if (brushSize != gridSettings.brushSize)
         {
-            gridSettings.brushSize = brushSize;
+            gridSettings.brushSize = (int)brushSize;
 
-            DestroyBrushObjects();
-            InstantiateBrushObjects();
+            if (brushObjectsHolder.IsHoldingObjects)
+            {
+                DestroyBrushObjects();
+                InstantiateBrushObjects();
+            }
         }
     }
 }
