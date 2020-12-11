@@ -72,8 +72,9 @@ public class BrushObjectsHolder : MonoBehaviour
         return transform.position.y + bounds.extents.y - bounds.center.y;
     }
 
-    public void PlaceObjectsOnMap(MapSaveManager map)
+    public bool TryPlaceObjectsOnMap(MapSaveManager map)
     {
+        bool success = false;
         for (int i = 0; i < _objectsToPlace.Count; i++)
         {
             /*
@@ -100,7 +101,9 @@ public class BrushObjectsHolder : MonoBehaviour
             //reparent to map object
             _objectsToPlace[i].transform.parent = map.transform;
             map.ObjectPlaced(_objectsToPlace[i], _originalPrefab);
+            success = true;
         }
+        return success;
     }    
 
     public void ClearObjects()

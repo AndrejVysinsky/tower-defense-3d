@@ -15,6 +15,7 @@ public class UpgradePanel : MonoBehaviour, IPointerDownHandler
         _upgradeOption = upgradeOption;
 
         upgradeImage.sprite = upgradeOption.Sprite;
+        upgradeImage.preserveAspect = true;
     }
 
     public void OnPointerDown(PointerEventData eventData)

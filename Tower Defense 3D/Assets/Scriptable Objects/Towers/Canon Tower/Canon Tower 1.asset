@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Canon Tower 1
   m_EditorClassIdentifier: 
   tooltip: {fileID: 11400000, guid: 808b0029c97f4a14a927da24e2682597, type: 2}
-  sprite: {fileID: -2543360342454924955, guid: f67da7de95233ab4cac3d6ef59eb1f77, type: 3}
+  sprite: {fileID: 21300000, guid: c54f2dc93c318304fa7d00a76d60d655, type: 3}
   hitPoints: 50
   price: 50
   sellFactor: 0.5

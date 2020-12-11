@@ -216,7 +216,11 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
             }
         }
 
-        brushObjectsHolder.PlaceObjectsOnMap(map);
+        bool success = brushObjectsHolder.TryPlaceObjectsOnMap(map);
+
+        if (success == false)
+            return;
+
         brushObjectsHolder.ClearObjects();
 
         //destroy overlapped objects if setting is turned on

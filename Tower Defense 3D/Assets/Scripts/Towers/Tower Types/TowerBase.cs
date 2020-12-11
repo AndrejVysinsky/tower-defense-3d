@@ -99,7 +99,7 @@ public class TowerBase : MonoBehaviour, IUpgradeable, ISellable, IInteractable, 
 
             TowerData = nextTowerData;
 
-            GetComponent<MeshRenderer>().material = TowerData.Material;
+            //GetComponent<MeshRenderer>().material = TowerData.Material;
 
             InteractionSystem.Instance.RefreshInteractions();
         }

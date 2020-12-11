@@ -78,7 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f71ebd16a0ca21d4886c1cd49d186d4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyData: {fileID: 11400000, guid: 73cfc86a1b834864a9d0e0e302737291, type: 2}
+  enemyData: {fileID: 11400000, guid: 6fd26ad88dc814b45b8a9d1b363f2a0f, type: 2}
   healthScript: {fileID: 8106718598506013729}
   rotationSpeed: 100
 --- !u!195 &3707746053083619531

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Laser Tower 2
   m_EditorClassIdentifier: 
   tooltip: {fileID: 11400000, guid: bf4c48e940791be45bd50acf796c78f6, type: 2}
-  sprite: {fileID: 1104702983043596364, guid: f67da7de95233ab4cac3d6ef59eb1f77, type: 3}
+  sprite: {fileID: 21300000, guid: c3b39e8f1c8ecae47be9546261b00d81, type: 3}
   hitPoints: 100
   price: 200
   sellFactor: 0.6
