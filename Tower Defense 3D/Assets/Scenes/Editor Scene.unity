@@ -3235,7 +3235,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &614129505
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8888,7 +8888,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -9662,11 +9662,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 117965991039282214, guid: ed98d64e224f89c44bd1289d0b0a116c,
-        type: 3}
-      propertyPath: gridSettings.brushSize
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7189475308025938309, guid: ed98d64e224f89c44bd1289d0b0a116c,
         type: 3}
       propertyPath: m_Name

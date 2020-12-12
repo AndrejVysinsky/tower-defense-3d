@@ -70,7 +70,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_VoxelSize: 0.2
   m_BuildHeightMesh: 0
   m_NavMeshData: {fileID: 0}
 --- !u!1 &7189475308025938309
@@ -238,6 +238,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8559742424350409293}
     m_Modifications:
+    - target: {fileID: 8658931558366142399, guid: 0faf02dc6f63cde4a805f913d8a455dc,
+        type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8658931558526508101, guid: 0faf02dc6f63cde4a805f913d8a455dc,
         type: 3}
       propertyPath: mapSaveManager
@@ -256,6 +261,11 @@ PrefabInstance:
     - target: {fileID: 8658931559806550153, guid: 0faf02dc6f63cde4a805f913d8a455dc,
         type: 3}
       propertyPath: gridSettings.editorOnlyDestruction
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8658931559806550153, guid: 0faf02dc6f63cde4a805f913d8a455dc,
+        type: 3}
+      propertyPath: gridSettings.brushSize
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8658931559806550154, guid: 0faf02dc6f63cde4a805f913d8a455dc,

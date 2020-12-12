@@ -17,10 +17,7 @@ public static class EventManager
 
     public static void RemoveListener(GameObject listener)
     {
-        if (_listeners.Contains(listener))
-        {
-            _listeners.Remove(listener);
-        }
+        _listeners.Remove(listener);
     }
 
     public static void ExecuteEvent<T>(EventFunction<T> functor) where T : IEventSystemHandler

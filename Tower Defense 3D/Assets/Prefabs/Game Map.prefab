@@ -272,6 +272,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8658931558366142399, guid: 0faf02dc6f63cde4a805f913d8a455dc,
+        type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8658931559509862907, guid: 0faf02dc6f63cde4a805f913d8a455dc,
         type: 3}
       propertyPath: hideGrid
@@ -305,6 +310,11 @@ PrefabInstance:
     - target: {fileID: 8658931559806550153, guid: 0faf02dc6f63cde4a805f913d8a455dc,
         type: 3}
       propertyPath: gridSettings.buildOnlyOnTerrain
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8658931559806550153, guid: 0faf02dc6f63cde4a805f913d8a455dc,
+        type: 3}
+      propertyPath: gridSettings.brushSize
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8658931559806550154, guid: 0faf02dc6f63cde4a805f913d8a455dc,
