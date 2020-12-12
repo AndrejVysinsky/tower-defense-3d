@@ -9,6 +9,8 @@ public class PlacementRuleHandler : MonoBehaviour, IMapLoaded
     [SerializeField] List<ObjectPlacementRulesData> objectRulesData;
 
     private GameObject[] _neighbours = new GameObject[10];
+    private int _neighbourCount = 0;
+
     private Collider[] _colliderBuffer = new Collider[3];
 
     private float _colliderSize;
@@ -109,6 +111,7 @@ public class PlacementRuleHandler : MonoBehaviour, IMapLoaded
     public void AddNeighbour(GameObject neighbourObject, DirectionEnum direction)
     {
         _neighbours[(int)direction] = neighbourObject;
+        _neighbourCount++;
 
         OnNeighbourChanged();
     }
@@ -120,6 +123,7 @@ public class PlacementRuleHandler : MonoBehaviour, IMapLoaded
             if (_neighbours[i] == neighbourObject)
             {
                 _neighbours[i] = null;
+                _neighbourCount--;
                 OnNeighbourChanged();
                 break;
             }
@@ -140,10 +144,10 @@ public class PlacementRuleHandler : MonoBehaviour, IMapLoaded
             {
                 var rules = objectRulesData[i].ObjectRules.PlacementRules[j].Rules;
 
-                if (rules.Count(x => x.IsConnected) > GetNeighbourCount())
-                {
-                    continue;
-                }
+                //if (HasMoreConnectedSidesThanNeighbours(rules))
+                //{
+                //    continue;
+                //}
 
                 bool ruleValid = true;
 
@@ -180,6 +184,19 @@ public class PlacementRuleHandler : MonoBehaviour, IMapLoaded
         }
     }
 
+    private bool HasMoreConnectedSidesThanNeighbours(List<DirectionRule> directionRules)
+    {
+        int connectedSides = 0;
+
+        for (int i = 0; i < directionRules.Count; i++)
+        {
+            if (directionRules[i].IsConnected)
+                connectedSides++;
+        }
+
+        return connectedSides > _neighbourCount;
+    }
+
     private void ChangeObjectTo(GameObject newGameObject, float angle = 0)
     {
         var mesh = newGameObject.GetComponent<MeshFilter>().sharedMesh;
@@ -197,20 +214,6 @@ public class PlacementRuleHandler : MonoBehaviour, IMapLoaded
         rotation.eulerAngles = new Vector3(0, angle, 0);
 
         transform.rotation = rotation;
-    }
-
-    private int GetNeighbourCount()
-    {
-        int count = 0;
-
-        for (int i = 0; i < _neighbours.Length; i++)
-        {
-            if (_neighbours[i] != null)
-            {
-                count++;
-            }
-        }
-        return count;
     }
 
     public void OnMapBeingLoaded(MapSaveData mapSaveData)
