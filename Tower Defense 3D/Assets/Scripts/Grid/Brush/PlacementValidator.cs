@@ -160,7 +160,7 @@ public class PlacementValidator : MonoBehaviour
             return false;
 
         //check their range
-        var myColliderSize = GetRotatedColliderSize(PlacementCollider.size);
+        var myColliderSize = PlacementCollider.bounds.size;
 
         float minX = _myTransform.position.x - myColliderSize.x / 2;
         float maxX = _myTransform.position.x + myColliderSize.x / 2;
