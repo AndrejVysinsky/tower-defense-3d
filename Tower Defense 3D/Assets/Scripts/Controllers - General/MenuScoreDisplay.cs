@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
-public class GameOver : MonoBehaviour
+public class MenuScoreDisplay : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI scoreText;
 

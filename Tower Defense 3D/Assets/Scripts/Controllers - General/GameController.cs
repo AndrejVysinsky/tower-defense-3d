@@ -5,7 +5,8 @@ public class GameController : MonoBehaviour
     public static GameController Instance { get; private set; }
 
     [SerializeField] GameInfoDisplay gameInfoDisplay;
-    [SerializeField] GameOver gameOver;
+    [SerializeField] MenuScoreDisplay gameOver;
+    [SerializeField] MenuScoreDisplay pauseMenu;
     [SerializeField] int startingCurrency;
     [SerializeField] int startingLives;
 
@@ -14,6 +15,8 @@ public class GameController : MonoBehaviour
 
     private int _wave;
     private int _score;
+
+    private bool _isPaused = false;
 
     private void Awake()
     {
@@ -35,6 +38,14 @@ public class GameController : MonoBehaviour
         gameInfoDisplay.UpdateCurrencyText(startingCurrency);
         gameInfoDisplay.UpdateWaveText(_wave);
         gameInfoDisplay.UpdateLivesText(startingLives);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseGame();
+        }
     }
 
     public void ModifyCurrencyBy(int value)
@@ -90,5 +101,25 @@ public class GameController : MonoBehaviour
         _wave = waveNumber;
 
         gameInfoDisplay.UpdateWaveText(waveNumber);
+    }
+
+    public void PauseGame()
+    {
+        if (gameOver.gameObject.activeSelf)
+            return;
+
+        if (_isPaused)
+        {
+            Time.timeScale = 1;
+            pauseMenu.gameObject.SetActive(false);
+        }
+        else
+        {
+            Time.timeScale = 0;
+            pauseMenu.gameObject.SetActive(true);
+            pauseMenu.Initialize(_score);
+        }
+
+        _isPaused = !_isPaused;
     }
 }

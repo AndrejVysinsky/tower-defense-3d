@@ -68,7 +68,7 @@ public class CameraController : MonoBehaviour
         if (Input.GetKey(KeyCode.Q))
             rotationDirection = -1;
 
-        transform.Rotate(Vector3.up, rotationDirection * rotationSpeed * Time.deltaTime / Time.timeScale);
+        transform.Rotate(Vector3.up, rotationDirection * rotationSpeed * GetBaseDeltaTime());
     }
 
     private float GetCurrentDistanceFromGround()
@@ -85,8 +85,8 @@ public class CameraController : MonoBehaviour
 
     private void MoveCamera()
     {
-        float xAxisValue = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime / Time.timeScale;
-        float zAxisValue = Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime / Time.timeScale;
+        float xAxisValue = Input.GetAxis("Horizontal") * moveSpeed * GetBaseDeltaTime();
+        float zAxisValue = Input.GetAxis("Vertical") * moveSpeed * GetBaseDeltaTime();
 
         var moveVector = new Vector3(xAxisValue, 0.0f, zAxisValue);
 
@@ -105,7 +105,7 @@ public class CameraController : MonoBehaviour
 
         var diff = _targetDistanceFromGround - _currentDistanceFromGround;
 
-        position.y += diff * adjustDistanceSpeed * Time.deltaTime / Time.timeScale;
+        position.y += diff * adjustDistanceSpeed * GetBaseDeltaTime();
 
         _camera.transform.position = position;
     }
@@ -126,8 +126,15 @@ public class CameraController : MonoBehaviour
     {
         float zoomValue = Input.GetAxis("Mouse ScrollWheel") * -1000;
 
-        _targetDistanceFromGround += zoomSensitivity * zoomValue * Time.deltaTime / Time.timeScale;
+        _targetDistanceFromGround += zoomSensitivity * zoomValue * GetBaseDeltaTime();
 
         _targetDistanceFromGround = Mathf.Clamp(_targetDistanceFromGround, minDistanceFromGround, maxDistanceFromGround);
+    }
+
+    private float GetBaseDeltaTime()
+    {
+        float timeScale = Time.timeScale == 0 ? 1 : Time.timeScale;
+
+        return Time.deltaTime / timeScale;
     }
 }

@@ -14,5 +14,7 @@ public class SceneLoader : MonoBehaviour
     public void ChangeScene(int buildIndex)
     {
         SceneManager.LoadScene(buildIndex);
+
+        Time.timeScale = 1;
     }
 }
