@@ -26,6 +26,9 @@ public class MapSaveManager : MonoBehaviour
 
         FileManager.LoadFile(FileManager.MapPath, "gamesave.save", out _mapSaveData);
 
+        if (_mapSaveData == null)
+            return;
+
         List<GameObject> gameObjects = new List<GameObject>();
 
         List<int> objectsToRemove = new List<int>();
@@ -83,21 +86,33 @@ public class MapSaveManager : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+        if (_mapSaveData == null)
+            return;
+
         _mapSaveData.RemoveAllObjects();
     }
 
     public void ObjectPlaced(GameObject gameObject, GameObject prefab)
     {
+        if (_mapSaveData == null)
+            _mapSaveData = new MapSaveData();
+
         _mapSaveData.ObjectPlaced(gameObject, prefab);
     }
 
     public void ObjectLayerUpdated(GameObject gameObject)
     {
+        if (_mapSaveData == null)
+            _mapSaveData = new MapSaveData();
+
         _mapSaveData.ObjectLayerUpdated(gameObject);
     }
 
     public void ObjectRemoved(int gameObjectID)
     {
+        if (_mapSaveData == null)
+            _mapSaveData = new MapSaveData();
+
         _mapSaveData.ObjectRemoved(gameObjectID);
     }
 }
