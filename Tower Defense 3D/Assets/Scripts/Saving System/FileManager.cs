@@ -12,7 +12,16 @@ public static class FileManager
         if (Directory.Exists(path) == false)
             Directory.CreateDirectory(path);
 
-        return Directory.GetFiles(path);
+        var filePaths = Directory.GetFiles(path);
+
+        var fileNames = new string[filePaths.Length];
+
+        for (int i = 0; i < filePaths.Length; i++)
+        {
+            fileNames[i] = System.IO.Path.GetFileNameWithoutExtension(filePaths[i]);
+        }
+
+        return fileNames;
     }
 
     public static void LoadFile<T>(string path, string fileName, out T fileData)

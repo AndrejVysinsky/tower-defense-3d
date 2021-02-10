@@ -20,6 +20,11 @@ public class MapSaveManager : MonoBehaviour
         }
     }
 
+    public string[] GetAllMaps()
+    {
+        return FileManager.GetFiles(FileManager.MapPath);
+    }
+
     public void LoadMapData()
     {
         ClearScene();
@@ -78,6 +83,13 @@ public class MapSaveManager : MonoBehaviour
         EventManager.ExecuteEvent<IMapSaved>((x, y) => x.OnMapBeingSaved(_mapSaveData));
 
         FileManager.SaveFile(FileManager.MapPath, "gamesave.save", _mapSaveData);
+    }
+
+    public void SaveMapData(string mapName)
+    {
+        EventManager.ExecuteEvent<IMapSaved>((x, y) => x.OnMapBeingSaved(_mapSaveData));
+
+        FileManager.SaveFile(FileManager.MapPath, mapName, _mapSaveData);
     }
 
     public void ClearScene()
