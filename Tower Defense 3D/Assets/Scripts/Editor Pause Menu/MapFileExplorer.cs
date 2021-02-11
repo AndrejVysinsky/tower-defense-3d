@@ -7,6 +7,9 @@ public class MapFileExplorer : MonoBehaviour
     [SerializeField] GameObject mapFilePrefab;
     [SerializeField] MapSaveManager mapManager;
 
+    [SerializeField] GameObject savePanel;
+    [SerializeField] GameObject loadPanel;
+
     [SerializeField] TMP_InputField mapFileNameInput;
 
     private string[] _mapNames;
@@ -16,7 +19,7 @@ public class MapFileExplorer : MonoBehaviour
     {
         _mapNames = mapManager.GetAllMaps();
 
-        while (_mapNames.Length > transform.childCount)
+        while (_mapNames.Length > mapFileExplorerWindow.childCount)
         {
             Instantiate(mapFilePrefab, mapFileExplorerWindow);
         }
@@ -43,7 +46,7 @@ public class MapFileExplorer : MonoBehaviour
         }
 
         _selectedMapFile = mapFile;
-        mapFileNameInput.text = mapFile.name;
+        mapFileNameInput.text = mapFile.MapName;
     }
 
     public void SaveMapFile()
@@ -55,5 +58,34 @@ public class MapFileExplorer : MonoBehaviour
         }
 
         mapManager.SaveMapData(mapFileNameInput.text);
+
+        ShowMapFiles();
+    }
+
+    public void LoadMapFile()
+    {
+        if (_selectedMapFile == null)
+        {
+            Debug.Log("Missing map name.");
+            return;
+        }
+
+        mapManager.LoadMapData(_selectedMapFile.MapName);
+    }
+
+    public void ShowSavePanel()
+    {
+        loadPanel.SetActive(false);
+        savePanel.SetActive(true);
+
+        ShowMapFiles();
+    }
+
+    public void ShowLoadPanel()
+    {
+        loadPanel.SetActive(true);
+        savePanel.SetActive(false);
+
+        ShowMapFiles();
     }
 }

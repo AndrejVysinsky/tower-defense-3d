@@ -25,11 +25,11 @@ public class MapSaveManager : MonoBehaviour
         return FileManager.GetFiles(FileManager.MapPath);
     }
 
-    public void LoadMapData()
+    public void LoadMapData(string mapName = "gamesave.save")
     {
         ClearScene();
 
-        FileManager.LoadFile(FileManager.MapPath, "gamesave.save", out _mapSaveData);
+        FileManager.LoadFile(FileManager.MapPath, mapName, out _mapSaveData);
 
         if (_mapSaveData == null)
             return;
