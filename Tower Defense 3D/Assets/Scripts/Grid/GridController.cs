@@ -114,16 +114,20 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
 
     private void MoveObject()
     {
-        if (gridSettings.buildOnlyOnTerrain)
+        if (gridSettings.autoHeight)
         {
-            if (RayCaster.RayCastGameObject(out RaycastHit hitInfo, "Terrain"))
+            if (RayCaster.RayCastGameObject(out RaycastHit terrainHitInfo, "Terrain"))
             {
-                SetObjectPosition(hitInfo.point);
+                SetObjectPosition(terrainHitInfo.point);
+            }
+            else if (RayCaster.RayCastGameObject(out RaycastHit gridHitInfo, "Grid"))
+            {
+                SetObjectPosition(gridHitInfo.point);
             }
         }
         else
         {
-            if (RayCaster.RayCastGameObject(out RaycastHit hitInfo))
+            if (RayCaster.RayCastGameObject(out RaycastHit hitInfo, "Grid"))
             {
                 SetObjectPosition(hitInfo.point);
             }
@@ -312,10 +316,10 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
         gridSettings.replaceOnCollision = replaceOnCollision;
     }
 
-    public void OnSnapToTerrainOnlyChanged(bool snapToTerrainOnly)
-    {
-        gridSettings.buildOnlyOnTerrain = snapToTerrainOnly;
-    }
+    //public void OnSnapToTerrainOnlyChanged(bool snapToTerrainOnly)
+    //{
+    //    gridSettings.buildOnlyOnTerrain = snapToTerrainOnly;
+    //}
 
     public void OnMapBeingLoaded(MapSaveData mapSaveData)
     {

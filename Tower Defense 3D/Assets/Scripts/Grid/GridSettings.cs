@@ -12,7 +12,7 @@ public class GridSettings
     [Header("On/off settings")]
     public bool continuousBuilding;
     public bool avoidUnbuildableTerrain;
-    public bool buildOnlyOnTerrain;
+    public bool buildOnlyOnTerrain; //obsolete, keep for save file integrity
     public bool snapToGrid;
     public bool autoHeight;
     public bool collisionDetection;

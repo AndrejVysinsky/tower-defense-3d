@@ -50,6 +50,12 @@ public class PlacementValidator : MonoBehaviour
 
     public void DeregisterChildren()
     {
+        for (int i = 0; i < _overlappedColliders.Count; i++)
+        {
+            if (_overlappedColliders[i].gameObject.activeSelf == false)
+                _overlappedColliders[i].gameObject.SetActive(true);
+        }
+
         for (int i = 0; i < _validityIndicators.Count; i++)
         {
             _validityIndicators[i].SwitchBackObjectMaterials();
@@ -108,15 +114,38 @@ public class PlacementValidator : MonoBehaviour
 
         bool isValidPlacement = IsOverlapping == false && IsOnGround;
 
-        for (int i = 0; i < _validityIndicators.Count; i++)
+        if (GridSettings.replaceOnCollision)
         {
-            _validityIndicators[i].SetMaterial(isValidPlacement);
+            for (int i = 0; i < _validityIndicators.Count; i++)
+            {
+                _validityIndicators[i].SwitchBackObjectMaterials();
+            }
+
+            //hide colliding objects
+            foreach (var overlappedCollider in _overlappedColliders)
+            {
+                overlappedCollider.gameObject.SetActive(false);
+            }
+        }
+
+        if (GridSettings.replaceOnCollision == false || IsOnGround == false)
+        {
+            for (int i = 0; i < _validityIndicators.Count; i++)
+            {
+                _validityIndicators[i].SetMaterial(isValidPlacement);
+            }
         }
     }
 
     private void CheckOverlap()
     {
         var bounds = PlacementCollider.bounds;
+
+        foreach (var overlappedCollider in _overlappedColliders)
+        {
+            if (overlappedCollider.gameObject.activeSelf == false)
+                overlappedCollider.gameObject.SetActive(true);
+        }
 
         _overlappedColliders.Clear();
 
