@@ -90,10 +90,10 @@ public class BrushObjectsHolder : MonoBehaviour
             }
 
             //check for block visual adaptation (mostly for terrain block connecting)
-            if (_objectsToPlace[i].TryGetComponent(out PlacementRuleHandler placementRuleHandler))
-            {
-                placementRuleHandler.OnObjectPlaced();
-            }
+            //if (_objectsToPlace[i].TryGetComponent(out PlacementRuleHandler placementRuleHandler))
+            //{
+            //    placementRuleHandler.OnObjectPlaced();
+            //}
 
             //switch back layer
             _objectsToPlace[i].layer = _originalPrefab.layer;
