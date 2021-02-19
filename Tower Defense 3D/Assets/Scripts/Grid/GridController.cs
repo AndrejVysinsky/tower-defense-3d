@@ -153,6 +153,11 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
         position = ClampPosition(position);
 
         //_objectToPlace.transform.position = position;
+        if (_objectToPlacePrefab.TryGetComponent(out IGridObjectPositionUpdated gridEvent))
+        {
+            position = gridEvent.OnGridObjectPositionUpdated(position);
+        }
+
         placementValidator.SetPosition(position);
     }
 
@@ -266,6 +271,19 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
         {
             if (hitInfo.transform.IsChildOf(map.transform))
             {
+                if (hitInfo.transform.gameObject.TryGetComponent(out IGridObjectTryToRemove gridObjectTryToRemove))
+                {
+                    if (gridObjectTryToRemove.OnGridObjectTryToRemove() == false)
+                    {
+                        return;
+                    }
+                }
+
+                if (hitInfo.transform.gameObject.TryGetComponent(out IGridObjectRemoved gridObjectRemoved))
+                {
+                    gridObjectRemoved.OnGridObjectRemoved();
+                }
+
                 map.ObjectRemoved(hitInfo.transform.gameObject.GetInstanceID());
                 Destroy(hitInfo.transform.gameObject);
             }

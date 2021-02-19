@@ -1,5 +1,51 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &77449262
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 77449263}
+  - component: {fileID: 77449264}
+  m_Layer: 0
+  m_Name: Pathway
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &77449263
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 77449262}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8559742424350409293}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &77449264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 77449262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9516888ef4fb0ad4e9295fa341679521, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  map: {fileID: 117965990585871806}
+  startCheckpointPrefab: {fileID: 1002858712796394669, guid: b5b5fae54ccec994fa6c23b5092cfc73,
+    type: 3}
 --- !u!1 &117965990585871804
 GameObject:
   m_ObjectHideFlags: 0
@@ -103,6 +149,7 @@ Transform:
   - {fileID: 117965991558858037}
   - {fileID: 117965991039282210}
   - {fileID: 117965990585871805}
+  - {fileID: 77449263}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -238,6 +285,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8559742424350409293}
     m_Modifications:
+    - target: {fileID: 8658931558366142393, guid: 0faf02dc6f63cde4a805f913d8a455dc,
+        type: 3}
+      propertyPath: m_TagString
+      value: Grid
+      objectReference: {fileID: 0}
     - target: {fileID: 8658931558366142399, guid: 0faf02dc6f63cde4a805f913d8a455dc,
         type: 3}
       propertyPath: m_Convex

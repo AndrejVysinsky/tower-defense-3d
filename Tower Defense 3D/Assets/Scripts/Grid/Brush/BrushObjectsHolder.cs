@@ -115,7 +115,17 @@ public class BrushObjectsHolder : MonoBehaviour
     public void DestroyObjects()
     {
         _placementValidator.DeregisterChildren();
-        _objectsToPlace.ForEach(x => Destroy(x));
+
+        foreach (var objectToPlace in _objectsToPlace)
+        {
+            if (objectToPlace.TryGetComponent(out IGridObjectRemoved gridObjectRemoved))
+            {
+                gridObjectRemoved.OnGridObjectRemoved();
+            }
+
+            Destroy(objectToPlace);
+        }
+
         _objectsToPlace.Clear();
     }
 }
