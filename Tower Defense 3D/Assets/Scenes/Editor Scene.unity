@@ -12543,6 +12543,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 77449264, guid: ed98d64e224f89c44bd1289d0b0a116c, type: 3}
+      propertyPath: checkpointConnectorPrefab
+      value: 
+      objectReference: {fileID: 6889638540412222175, guid: 0957bec0bd8c5ee4ab7fb03c67f029cb,
+        type: 3}
+    - target: {fileID: 77449264, guid: ed98d64e224f89c44bd1289d0b0a116c, type: 3}
+      propertyPath: checkpointLineRendererPrefab
+      value: 
+      objectReference: {fileID: 6889638540412222175, guid: 0957bec0bd8c5ee4ab7fb03c67f029cb,
+        type: 3}
+    - target: {fileID: 77449264, guid: ed98d64e224f89c44bd1289d0b0a116c, type: 3}
+      propertyPath: lineRendererPrefab
+      value: 
+      objectReference: {fileID: 6889638540412222175, guid: 0957bec0bd8c5ee4ab7fb03c67f029cb,
+        type: 3}
     - target: {fileID: 7189475308025938309, guid: ed98d64e224f89c44bd1289d0b0a116c,
         type: 3}
       propertyPath: m_Name

@@ -95,6 +95,11 @@ public class BrushObjectsHolder : MonoBehaviour
             //    placementRuleHandler.OnObjectPlaced();
             //}
 
+            if (_objectsToPlace[i].TryGetComponent(out IGridObjectPlaced gridObjectPlaced))
+            {
+                gridObjectPlaced.OnGridObjectPlaced();
+            }
+
             //switch back layer
             _objectsToPlace[i].layer = _originalPrefab.layer;
 

@@ -7,27 +7,6 @@ using UnityEngine;
 [Serializable]
 public class MapSaveData
 {
-    [Serializable]
-    public class SaveableObject
-    {
-        [SerializeField] public int id;
-        [SerializeField] public int layer;
-
-        [SerializeField] public float positionX;
-        [SerializeField] public float positionY;
-        [SerializeField] public float positionZ;
-
-        [SerializeField] public float rotationX;
-        [SerializeField] public float rotationY;
-        [SerializeField] public float rotationZ;
-
-        [SerializeField] public float scaleX;
-        [SerializeField] public float scaleY;
-        [SerializeField] public float scaleZ;
-
-        [SerializeField] public string resourcePath;
-    }
-
     [SerializeField] List<SaveableObject> saveableObjects = new List<SaveableObject>();
 
     [SerializeField] public GridSettings GridSettings { get; set; }
@@ -117,6 +96,23 @@ public class MapSaveData
 
             index++;
         });
+    }
+
+    public SaveableObject GetSaveableObject(int id)
+    {
+        return saveableObjects.FirstOrDefault(obj => obj.id == id);
+    }
+
+    public void UpdateSaveableObject(int id, SaveableObject newSaveableObject)
+    {
+        for (int i = 0; i < saveableObjects.Count; i++)
+        {
+            if (saveableObjects[i].id == id)
+            {
+                saveableObjects[i] = newSaveableObject;
+                break;
+            }
+        }
     }
 
     public void RemoveAllObjects()

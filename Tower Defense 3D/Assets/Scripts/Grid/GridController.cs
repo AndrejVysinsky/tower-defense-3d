@@ -151,14 +151,8 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
         }
 
         position = ClampPosition(position);
-
-        //_objectToPlace.transform.position = position;
-        if (_objectToPlacePrefab.TryGetComponent(out IGridObjectPositionUpdated gridEvent))
-        {
-            position = gridEvent.OnGridObjectPositionUpdated(position);
-        }
-
-        placementValidator.SetPosition(position);
+                
+        placementValidator.SetPosition(position, _objectToPlacePrefab);
     }
 
     private Vector3 GetNearestPointOnGrid(Vector3 point)
@@ -229,6 +223,8 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
 
         if (success == false)
             return;
+
+
 
         brushObjectsHolder.ClearObjects();
 

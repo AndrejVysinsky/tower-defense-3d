@@ -89,10 +89,15 @@ public class PlacementValidator : MonoBehaviour
         PlacementCollider.enabled = true;
     }
 
-    public void SetPosition(Vector3 position)
+    public void SetPosition(Vector3 position, GameObject objectToPlacePrefab)
     {
         if (_myTransform.position == position)
             return;
+
+        if (objectToPlacePrefab.TryGetComponent(out IGridObjectPositionUpdated gridEvent))
+        {
+            position = gridEvent.OnGridObjectPositionUpdated(position);
+        }
 
         _myTransform.position = position;
 
