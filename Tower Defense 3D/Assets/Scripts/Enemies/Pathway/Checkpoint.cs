@@ -1,16 +1,22 @@
 ﻿using UnityEngine;
 
-public class Checkpoint : MonoBehaviour, IGridObjectPositionUpdated, IGridObjectTryToRemove, IGridObjectRemoved, IGridObjectPlaced, IMapSaved, IMapLoaded
+public class Checkpoint : MonoBehaviour, IGridObjectPositionUpdated, IGridObjectTryToRemove, IGridObjectRemoved, IGridObjectPlaced, IGridObjectInitialized, IMapSaved, IMapLoaded
 {
-    private SaveableCheckpoint _saveableCheckpoint;
+    public SaveableCheckpoint SaveableCheckpoint { get; private set; }
+
+    public int CheckpointNumber { get; set; }
+
     private Pathway _pathway;
-
-    private int checkpointNumber;
-
-    private void Start()
-    {
-        _pathway = FindObjectOfType<Pathway>();
-        checkpointNumber = _pathway.AddCheckpoint(gameObject);
+    private Pathway Pathway 
+    { 
+        get 
+        {
+            if (_pathway == null)
+            {
+                _pathway = FindObjectOfType<Pathway>();
+            }
+            return _pathway;
+        }
     }
 
     private void OnEnable()
@@ -25,15 +31,10 @@ public class Checkpoint : MonoBehaviour, IGridObjectPositionUpdated, IGridObject
 
     public Vector3 OnGridObjectPositionUpdated(Vector3 position)
     {
-        if (_pathway == null)
-        {
-            _pathway = FindObjectOfType<Pathway>();
-        }
-
-        if (_pathway.NumberOfCheckpoints == 0)
+        if (Pathway.NumberOfCheckpoints == 0)
             return position;
 
-        var lastPosition = _pathway.GetPositionOfLastCheckpoint();
+        var lastPosition = Pathway.GetPositionOfLastCheckpoint();
 
         if (Mathf.Abs(lastPosition.x - position.x) >= Mathf.Abs(lastPosition.z - position.z))
         {
@@ -43,37 +44,47 @@ public class Checkpoint : MonoBehaviour, IGridObjectPositionUpdated, IGridObject
         {
             position.x = lastPosition.x;
         }
-        _pathway.UpdateCheckpointConnectorsPosition(position);
+        Pathway.UpdateCheckpointConnectorsPosition(position);
 
         return position;
     }
 
     public bool OnGridObjectTryToRemove()
     {
-        return _pathway.IsCheckpointLast(gameObject);
+        return Pathway.IsCheckpointLast(gameObject);
     }
 
     public void OnGridObjectRemoved()
     {
-        _pathway.LastCheckpointDestroyed();
+        Pathway.LastCheckpointDestroyed();
     }
 
     public void OnGridObjectPlaced()
     {
-        _pathway.CheckpointPlaced();
+        CheckpointNumber = Pathway.CheckpointPlaced();
+    }
+
+    public void OnGridObjectInitialized()
+    {
+        Pathway.AddCheckpoint(gameObject);
     }
 
     public void OnMapBeingSaved(MapSaveData mapSaveData)
     {
         var saveableBase = mapSaveData.GetSaveableObject(gameObject.GetInstanceID());
 
-        _saveableCheckpoint = new SaveableCheckpoint(saveableBase, checkpointNumber);
+        SaveableCheckpoint = new SaveableCheckpoint(saveableBase, CheckpointNumber);
 
-        mapSaveData.UpdateSaveableObject(gameObject.GetInstanceID(), _saveableCheckpoint);
+        mapSaveData.UpdateSaveableObject(gameObject.GetInstanceID(), SaveableCheckpoint);
     }
 
     public void OnMapBeingLoaded(MapSaveData mapSaveData)
     {
-        _saveableCheckpoint = (SaveableCheckpoint)mapSaveData.GetSaveableObject(gameObject.GetInstanceID());
+        SaveableCheckpoint = (SaveableCheckpoint)mapSaveData.GetSaveableObject(gameObject.GetInstanceID());
+
+        CheckpointNumber = SaveableCheckpoint.checkpointNumber;
+
+        Pathway.LoadCheckpoint(gameObject);
+        Pathway.CheckpointPlaced();
     }
 }

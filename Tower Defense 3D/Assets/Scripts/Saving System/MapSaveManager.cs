@@ -67,7 +67,6 @@ public class MapSaveManager : MonoBehaviour
 
         _mapSaveData.InitializeObjects(gameObjects);
 
-
         StartCoroutine(NotifyAboutMapLoaded());
     }
 
@@ -94,6 +93,8 @@ public class MapSaveManager : MonoBehaviour
 
     public void ClearScene()
     {
+        EventManager.ExecuteEvent<IMapCleared>((x, y) => x.OnMapBeingCleared());
+
         foreach (Transform child in transform)
         {
             Destroy(child.gameObject);

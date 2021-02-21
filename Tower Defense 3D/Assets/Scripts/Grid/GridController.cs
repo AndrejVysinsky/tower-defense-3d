@@ -224,8 +224,6 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
         if (success == false)
             return;
 
-
-
         brushObjectsHolder.ClearObjects();
 
         //destroy overlapped objects if setting is turned on
@@ -238,7 +236,7 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
 
         if (gridSettings.continuousBuilding)
         {
-            InstantiateBrushObjects();
+            InstantiateBrushObjects(placementValidator.transform.position);
         }
     }
 
@@ -249,7 +247,7 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
         _objectToPlacePrefab = gameObject;
         IsBuildingModeActive = true;
 
-        InstantiateBrushObjects();
+        InstantiateBrushObjects(gridDisplay.GetGridBasePosition());
     }
 
     private void DestroyBrushObjects()
@@ -286,13 +284,13 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
         }
     }
 
-    private void InstantiateBrushObjects()
+    private void InstantiateBrushObjects(Vector3 position)
     {
         brushObjectsHolder.InstantiateObjects(_objectToPlacePrefab, gridSettings.brushSize);
 
         _objectOriginY = brushObjectsHolder.GetOriginY();
 
-        SetObjectPosition(gridDisplay.GetGridBasePosition());
+        SetObjectPosition(position);
     }
 
     public void OnBuildingModeChanged(bool continuous)
@@ -357,7 +355,7 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
             if (brushObjectsHolder.IsHoldingObjects)
             {
                 DestroyBrushObjects();
-                InstantiateBrushObjects();
+                InstantiateBrushObjects(placementValidator.transform.position);
             }
         }
     }

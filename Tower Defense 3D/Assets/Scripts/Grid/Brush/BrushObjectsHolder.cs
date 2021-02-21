@@ -26,6 +26,11 @@ public class BrushObjectsHolder : MonoBehaviour
 
             toPlace.layer = (int)LayerEnum.IgnoreRayCast;
 
+            if (toPlace.TryGetComponent(out IGridObjectInitialized gridObjectInitialized))
+            {
+                gridObjectInitialized.OnGridObjectInitialized();
+            }
+
             _objectsToPlace.Add(toPlace);
         }
         

@@ -146,8 +146,13 @@ public class PlacementValidator : MonoBehaviour
     {
         var bounds = PlacementCollider.bounds;
 
+        //show colliding objects from last update
         foreach (var overlappedCollider in _overlappedColliders)
         {
+            //sometimes null, no idea why
+            if (overlappedCollider == null)
+                continue;
+
             if (overlappedCollider.gameObject.activeSelf == false)
                 overlappedCollider.gameObject.SetActive(true);
         }
