@@ -44,7 +44,7 @@ public class Checkpoint : MonoBehaviour, IGridObjectPositionUpdated, IGridObject
         {
             position.x = lastPosition.x;
         }
-        Pathway.UpdateCheckpointConnectorsPosition(position);
+        Pathway.UpdatePathwayLastPosition(position);
 
         return position;
     }
@@ -84,7 +84,7 @@ public class Checkpoint : MonoBehaviour, IGridObjectPositionUpdated, IGridObject
 
         CheckpointNumber = SaveableCheckpoint.checkpointNumber;
 
-        Pathway.LoadCheckpoint(gameObject);
+        Pathway.AddCheckpoint(gameObject);
         Pathway.CheckpointPlaced();
     }
 }

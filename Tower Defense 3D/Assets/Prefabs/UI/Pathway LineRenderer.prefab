@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6113417774869782629}
   - component: {fileID: 7538610371182323362}
   m_Layer: 8
-  m_Name: Checkpoint LineRenderer
+  m_Name: Pathway LineRenderer
   m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +76,7 @@ LineRenderer:
   - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 1
+    widthMultiplier: 0.5
     widthCurve:
       serializedVersion: 2
       m_Curve:

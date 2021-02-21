@@ -8,11 +8,23 @@ public class Pathway : MonoBehaviour, IMapCleared
     [SerializeField] GameObject lineRendererPrefab;
 
     private List<GameObject> _checkpoints = new List<GameObject>();
-    private List<LineRenderer> _lineRenderers = new List<LineRenderer>();
+    private LineRenderer _pathwayLineRenderer;
 
     private bool _canUpdatePosition;
 
     public int NumberOfCheckpoints => _checkpoints.Count;
+
+    private void Start()
+    {
+        if (_pathwayLineRenderer == null)
+        {
+            var pathwayRendererObject = Instantiate(lineRendererPrefab, map.transform);
+            _pathwayLineRenderer = pathwayRendererObject.GetComponent<LineRenderer>();
+            _pathwayLineRenderer.positionCount = 0;
+        }
+
+        
+    }
 
     private void OnEnable()
     {
@@ -38,7 +50,7 @@ public class Pathway : MonoBehaviour, IMapCleared
         return _checkpoints[_checkpoints.Count - 2].transform.position;
     }
 
-    public void UpdateCheckpointConnectorsPosition(Vector3 newCheckpointPosition)
+    public void UpdatePathwayLastPosition(Vector3 newCheckpointPosition)
     {
         if (_checkpoints.Count < 2)
             return;
@@ -46,13 +58,8 @@ public class Pathway : MonoBehaviour, IMapCleared
         if (_canUpdatePosition == false)
             return;
 
-        var lastCheckpointPosition = _checkpoints[_checkpoints.Count - 2].transform.position;
-
-        var lineRenderer = _lineRenderers[_lineRenderers.Count - 1];
-
-        lineRenderer.SetPosition(0, lastCheckpointPosition);
-        lineRenderer.SetPosition(1, newCheckpointPosition);
-    }    
+        _pathwayLineRenderer.SetPosition(_pathwayLineRenderer.positionCount - 1, newCheckpointPosition);
+    }
 
     public bool IsCheckpointLast(GameObject checkpoint)
     {
@@ -63,11 +70,8 @@ public class Pathway : MonoBehaviour, IMapCleared
     {
         _checkpoints.RemoveAt(_checkpoints.Count - 1);
 
-        if (_lineRenderers.Count == 0)
-            return;
-
-        Destroy(_lineRenderers[_lineRenderers.Count - 1].gameObject);
-        _lineRenderers.RemoveAt(_lineRenderers.Count - 1);
+        if (_pathwayLineRenderer.positionCount > 0)
+            _pathwayLineRenderer.positionCount--;
 
         _canUpdatePosition = false;
     }
@@ -82,48 +86,18 @@ public class Pathway : MonoBehaviour, IMapCleared
             checkpointScript.CheckpointNumber = _checkpoints.Count;
         }
 
-        if (_checkpoints.Count > 1)
-        {
-            InstantiateRequiredNumberOfLineRenderers();
-            var lineRenderer = _lineRenderers[_lineRenderers.Count - 1];
-
-            lineRenderer.SetPosition(0, _checkpoints[_checkpoints.Count - 2].transform.position);
-            lineRenderer.SetPosition(1, _checkpoints[_checkpoints.Count - 1].transform.position);
-        }
-
-        _canUpdatePosition = true;
-    }
-
-    public void LoadCheckpoint(GameObject checkpoint)
-    {
-        _checkpoints.Add(checkpoint);
         _checkpoints = _checkpoints.OrderBy(c => c.GetComponent<Checkpoint>().CheckpointNumber).ToList();
 
-        InstantiateRequiredNumberOfLineRenderers();
-
-        for (int i = 0; i < _checkpoints.Count - 1; i++)
+        if (_pathwayLineRenderer == null)
         {
-            var currentCheckpoint = _checkpoints[i].GetComponent<Checkpoint>();
-            var nextCheckpoint = _checkpoints[i + 1].GetComponent<Checkpoint>();
-
-            if (nextCheckpoint.CheckpointNumber - currentCheckpoint.CheckpointNumber == 1)
-            {
-                _lineRenderers[i].SetPosition(0, currentCheckpoint.transform.position);
-                _lineRenderers[i].SetPosition(1, nextCheckpoint.transform.position);
-            }
+            var pathwayRendererObject = Instantiate(lineRendererPrefab, map.transform);
+            _pathwayLineRenderer = pathwayRendererObject.GetComponent<LineRenderer>();
         }
-    }
 
-    private void InstantiateRequiredNumberOfLineRenderers()
-    {
-        while (_checkpoints.Count - 1 > _lineRenderers.Count)
-        {
-            var lineObject = Instantiate(lineRendererPrefab, map.transform);
+        _pathwayLineRenderer.positionCount = _checkpoints.Count;
+        _pathwayLineRenderer.SetPositions(_checkpoints.Select(x => x.transform.position).ToArray());
 
-            var lineRenderer = lineObject.GetComponent<LineRenderer>();
-
-            _lineRenderers.Add(lineRenderer);
-        }
+        _canUpdatePosition = true;
     }
 
     public int CheckpointPlaced()
@@ -136,9 +110,6 @@ public class Pathway : MonoBehaviour, IMapCleared
     public void OnMapBeingCleared()
     {
         _checkpoints.Clear();
-
-        _lineRenderers.ForEach(line => Destroy(line.gameObject));
-        _lineRenderers.Clear();
     }
 }
 
