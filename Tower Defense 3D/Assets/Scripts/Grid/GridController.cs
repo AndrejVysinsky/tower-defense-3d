@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IMapSaved
@@ -20,6 +21,8 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
     public GridSettings GridSettings => gridSettings;
 
     public static bool IsBuildingModeActive { get; private set; } = false;
+
+    public UnityEvent<int> OnBrushSizeChangedEvent;
 
     private void Awake()
     {
@@ -247,6 +250,8 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
         _objectToPlacePrefab = gameObject;
         IsBuildingModeActive = true;
 
+        GridSettings.brushSize = 1;
+        OnBrushSizeChangedEvent?.Invoke(1);
         InstantiateBrushObjects(gridDisplay.GetGridBasePosition());
     }
 
@@ -346,11 +351,23 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
         mapSaveData.GridSettings = gridSettings;
     }
 
-    public void OnBrushSizeChanged(float brushSize)
+    public int OnBrushSizeChanged(int brushSize)
     {
+        if (_objectToPlacePrefab == null || brushObjectsHolder.IsHoldingObjects == false)
+            return 1;
+
+        if (_objectToPlacePrefab.TryGetComponent(out IGridObjectTryChangeBrushSize gridObjectTryChangeBrushSize))
+        {
+            if (gridObjectTryChangeBrushSize.OnGridObjectTryChangeBrushSize(brushSize) == false)
+            {
+                OnBrushSizeChangedEvent?.Invoke(1);
+                return 1;
+            }
+        }
+
         if (brushSize != gridSettings.brushSize)
         {
-            gridSettings.brushSize = (int)brushSize;
+            gridSettings.brushSize = brushSize;
 
             if (brushObjectsHolder.IsHoldingObjects)
             {
@@ -358,5 +375,8 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
                 InstantiateBrushObjects(placementValidator.transform.position);
             }
         }
+
+        OnBrushSizeChangedEvent?.Invoke(gridSettings.brushSize);
+        return gridSettings.brushSize;
     }
 }

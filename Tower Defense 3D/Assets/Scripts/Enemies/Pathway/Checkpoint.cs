@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Checkpoint : MonoBehaviour, IGridObjectPositionUpdated, IGridObjectTryToRemove, IGridObjectRemoved, IGridObjectPlaced, IGridObjectInitialized, IMapSaved, IMapLoaded
+public class Checkpoint : MonoBehaviour, IGridObjectPositionUpdated, IGridObjectTryToRemove, IGridObjectRemoved, IGridObjectTryChangeBrushSize, IGridObjectPlaced, IGridObjectInitialized, IMapSaved, IMapLoaded
 {
     public SaveableCheckpoint SaveableCheckpoint { get; private set; }
 
@@ -86,5 +86,10 @@ public class Checkpoint : MonoBehaviour, IGridObjectPositionUpdated, IGridObject
 
         Pathway.AddCheckpoint(gameObject);
         Pathway.CheckpointPlaced();
+    }
+
+    public bool OnGridObjectTryChangeBrushSize(int newBrushSize)
+    {
+        return false;
     }
 }

@@ -21,12 +21,26 @@ public class BrushSizeSlider : MonoBehaviour
         slider.value = gridController.GridSettings.brushSize;
     }
 
+    private void OnEnable()
+    {
+        gridController.OnBrushSizeChangedEvent.AddListener(UpdateSliderValue);
+    }
+
+    private void OnDisable()
+    {
+        gridController.OnBrushSizeChangedEvent.RemoveListener(UpdateSliderValue);
+    }
+
     public void OnValueChanged(float value)
     {
-        int brushSize = (int)value;
+        var newValue = gridController.OnBrushSizeChanged((int)value);
 
-        textValue.text = brushSize.ToString();
+        textValue.text = newValue.ToString();
+    }
 
-        gridController.OnBrushSizeChanged(brushSize);
+    public void UpdateSliderValue(int value)
+    {
+        textValue.text = value.ToString();
+        slider.value = value;
     }
 }
