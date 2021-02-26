@@ -226,9 +226,9 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
         {
             for (int i = 0; i < placementValidator.OverlappedColliders.Count; i++)
             {
-                if (placementValidator.OverlappedColliders[i].TryGetComponent(out IGridObjectTryToRemove gridObjectTryToRemove))
+                if (placementValidator.OverlappedColliders[i].TryGetComponent(out IGridObjectTryToReplace objectTryToReplace))
                 {
-                    if (gridObjectTryToRemove.OnGridObjectTryToRemove() == false)
+                    if (objectTryToReplace.OnGridObjectTryToReplace() == false)
                     {
                         return;
                     }
