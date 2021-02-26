@@ -25,7 +25,7 @@ public class MapSaveManager : MonoBehaviour
         return FileManager.GetFiles(FileManager.MapPath);
     }
 
-    public void LoadMapData(string mapName = "gamesave")
+    public void LoadMapData(string mapName = "defaultGameMap")
     {
         ClearScene();
 

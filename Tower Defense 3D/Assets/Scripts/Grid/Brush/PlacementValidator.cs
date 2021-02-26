@@ -10,12 +10,11 @@ public class PlacementValidator : MonoBehaviour
     private List<ValidityIndicator> _validityIndicators;
 
     private Collider[] _colliderBuffer;
-    private List<Collider> _overlappedColliders;
-
     private Transform _myTransform;
     private readonly float _maxRangeTollerance = 0.05f;
 
-    public bool IsOverlapping => _overlappedColliders.Count > 0;
+    public List<Collider> OverlappedColliders { get; private set; }
+    public bool IsOverlapping => OverlappedColliders.Count > 0;
     public bool IsOnGround { get; private set; }
     public BoxCollider PlacementCollider { get; private set; }
 
@@ -30,7 +29,7 @@ public class PlacementValidator : MonoBehaviour
         PlacementCollider = GetComponent<BoxCollider>();
 
         _colliderBuffer = new Collider[500];
-        _overlappedColliders = new List<Collider>();
+        OverlappedColliders = new List<Collider>();
     }
 
     public void RegisterChildren(List<GameObject> children, Vector3 totalSize)
@@ -50,10 +49,10 @@ public class PlacementValidator : MonoBehaviour
 
     public void DeregisterChildren()
     {
-        for (int i = 0; i < _overlappedColliders.Count; i++)
+        for (int i = 0; i < OverlappedColliders.Count; i++)
         {
-            if (_overlappedColliders[i].gameObject.activeSelf == false)
-                _overlappedColliders[i].gameObject.SetActive(true);
+            if (OverlappedColliders[i].gameObject.activeSelf == false)
+                OverlappedColliders[i].gameObject.SetActive(true);
         }
 
         for (int i = 0; i < _validityIndicators.Count; i++)
@@ -127,7 +126,7 @@ public class PlacementValidator : MonoBehaviour
             }
 
             //hide colliding objects
-            foreach (var overlappedCollider in _overlappedColliders)
+            foreach (var overlappedCollider in OverlappedColliders)
             {
                 overlappedCollider.gameObject.SetActive(false);
             }
@@ -147,7 +146,7 @@ public class PlacementValidator : MonoBehaviour
         var bounds = PlacementCollider.bounds;
 
         //show colliding objects from last update
-        foreach (var overlappedCollider in _overlappedColliders)
+        foreach (var overlappedCollider in OverlappedColliders)
         {
             //sometimes null, no idea why
             if (overlappedCollider == null)
@@ -157,7 +156,7 @@ public class PlacementValidator : MonoBehaviour
                 overlappedCollider.gameObject.SetActive(true);
         }
 
-        _overlappedColliders.Clear();
+        OverlappedColliders.Clear();
 
         /*
             smaller extents in all directions so Overlap does not contain colliders that only touch
@@ -179,7 +178,7 @@ public class PlacementValidator : MonoBehaviour
             if (_colliderBuffer[i].gameObject.name == "Grid Base")
                 continue;
 
-            _overlappedColliders.Add(_colliderBuffer[i]);
+            OverlappedColliders.Add(_colliderBuffer[i]);
         }
     }
 
@@ -260,10 +259,10 @@ public class PlacementValidator : MonoBehaviour
     public List<int> DestroyOverlappedObjects()
     {
         List<int> result = new List<int>();
-        result.AddRange(_overlappedColliders.Select(collider => collider.gameObject.GetInstanceID()));
+        result.AddRange(OverlappedColliders.Select(collider => collider.gameObject.GetInstanceID()));
 
-        _overlappedColliders.ForEach(collider => Destroy(collider.gameObject));
-        _overlappedColliders.Clear();
+        OverlappedColliders.ForEach(collider => Destroy(collider.gameObject));
+        OverlappedColliders.Clear();
 
         return result;
     }    

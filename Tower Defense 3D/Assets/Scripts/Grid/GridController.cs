@@ -222,6 +222,20 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
             }
         }
 
+        if (gridSettings.replaceOnCollision == true && placementValidator.IsOverlapping)
+        {
+            for (int i = 0; i < placementValidator.OverlappedColliders.Count; i++)
+            {
+                if (placementValidator.OverlappedColliders[i].TryGetComponent(out IGridObjectTryToRemove gridObjectTryToRemove))
+                {
+                    if (gridObjectTryToRemove.OnGridObjectTryToRemove() == false)
+                    {
+                        return;
+                    }
+                }
+            }
+        }
+
         bool success = brushObjectsHolder.TryPlaceObjectsOnMap(map);
 
         if (success == false)
