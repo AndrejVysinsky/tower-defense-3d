@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -7,6 +8,11 @@ public class Pathway : MonoBehaviour, IMapCleared
     [SerializeField] MapSaveManager map;
     [SerializeField] GameObject lineRendererPrefab;
     [SerializeField] GameObject pathwayColliderPrefab;
+
+    [Header("Checkpoint materials")]
+    [SerializeField] Material startCheckpointMaterial;
+    [SerializeField] Material defaultCheckpointMaterial;
+    [SerializeField] Material endCheckpointMaterial;
 
     private List<GameObject> _checkpoints = new List<GameObject>();
     private List<GameObject> _pathwayColliders = new List<GameObject>();
@@ -82,6 +88,8 @@ public class Pathway : MonoBehaviour, IMapCleared
             _pathwayColliders.RemoveAt(_pathwayColliders.Count - 1);
         }
 
+        StartCoroutine(UpdateCheckpointMaterial());
+
         _canUpdatePosition = false;
     }
 
@@ -113,6 +121,8 @@ public class Pathway : MonoBehaviour, IMapCleared
     {
         _canUpdatePosition = false;
 
+        StartCoroutine(UpdateCheckpointMaterial());
+
         if (_checkpoints.Count > 1)
         {
             AddPathwayCollider(_checkpoints[_checkpoints.Count - 2].transform.position,
@@ -120,6 +130,32 @@ public class Pathway : MonoBehaviour, IMapCleared
         }
 
         return _checkpoints.Count;
+    }
+
+    private IEnumerator UpdateCheckpointMaterial()
+    {
+        yield return new WaitForEndOfFrame();
+
+        if (_checkpoints.Count > 0)
+        {
+            _checkpoints[0].GetComponent<Checkpoint>().SetMaterial(startCheckpointMaterial);
+        }
+
+        int lastPlacedIndex = 0;
+        for (int i = _checkpoints.Count - 1; i > 0; i--)
+        {
+            if (_checkpoints[i].GetComponent<Checkpoint>().IsPlaced)
+            {
+                lastPlacedIndex = i;
+                _checkpoints[i].GetComponent<Checkpoint>().SetMaterial(endCheckpointMaterial);
+                break;
+            }
+        }
+
+        if (lastPlacedIndex > 1)
+        {
+            _checkpoints[lastPlacedIndex - 1].GetComponent<Checkpoint>().SetMaterial(defaultCheckpointMaterial);
+        }
     }
 
     private void AddPathwayCollider(Vector3 startPosition, Vector3 endPosition)

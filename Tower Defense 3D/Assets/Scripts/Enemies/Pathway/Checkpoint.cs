@@ -5,9 +5,12 @@ public class Checkpoint : MonoBehaviour,
     IGridObjectTryToRemove, IGridObjectTryChangeBrushSize, IGridObjectTryToReplace,
     IMapSaved, IMapLoaded
 {
+    [SerializeField] MeshRenderer myMeshRenderer;
+
     public SaveableCheckpoint SaveableCheckpoint { get; private set; }
 
     public int CheckpointNumber { get; set; }
+    public bool IsPlaced { get; private set; }
 
     private Pathway _pathway;
     private Pathway Pathway 
@@ -20,6 +23,11 @@ public class Checkpoint : MonoBehaviour,
             }
             return _pathway;
         }
+    }
+
+    private void Awake()
+    {
+        IsPlaced = false;
     }
 
     private void OnEnable()
@@ -69,6 +77,7 @@ public class Checkpoint : MonoBehaviour,
 
     public void OnGridObjectPlaced()
     {
+        IsPlaced = true;
         CheckpointNumber = Pathway.CheckpointPlaced();
     }
 
@@ -93,11 +102,17 @@ public class Checkpoint : MonoBehaviour,
         CheckpointNumber = SaveableCheckpoint.checkpointNumber;
 
         Pathway.AddCheckpoint(gameObject);
+        IsPlaced = true;
         Pathway.CheckpointPlaced();
     }
 
     public bool OnGridObjectTryChangeBrushSize(int newBrushSize)
     {
         return false;
+    }
+
+    public void SetMaterial(Material material)
+    {
+        myMeshRenderer.material = material;
     }
 }
