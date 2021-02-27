@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 929607030391758668}
   - component: {fileID: 4321656244167379508}
   - component: {fileID: -8891211923745154217}
-  - component: {fileID: 3707746053083619531}
   m_Layer: 0
   m_Name: Grunt
   m_TagString: Enemy
@@ -49,7 +48,7 @@ CapsuleCollider:
   m_Radius: 0.6
   m_Height: 1.24
   m_Direction: 1
-  m_Center: {x: 0, y: 0.12, z: 0}
+  m_Center: {x: 0, y: 0.6, z: 0}
 --- !u!54 &4321656244167379508
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -82,28 +81,6 @@ MonoBehaviour:
   healthScript: {fileID: 8106718598506013729}
   animator: {fileID: 2635565985276297564}
   rotationSpeed: 100
---- !u!195 &3707746053083619531
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1922081410778728287}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.64
-  m_Speed: 1.5
-  m_Acceleration: 100
-  avoidancePriority: 50
-  m_AngularSpeed: 400
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 1.18
-  m_BaseOffset: 0.5
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 0
 --- !u!1 &2617339198663091050
 GameObject:
   m_ObjectHideFlags: 0
@@ -229,7 +206,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5574801736514169576}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.948, z: 0}
+  m_LocalPosition: {x: 0, y: 1.548, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 189994495872249369}
@@ -483,7 +460,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 388476416, guid: 7df524699deb44341b3693c8538df185, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 388476416, guid: 7df524699deb44341b3693c8538df185, type: 3}
       propertyPath: m_LocalPosition.z

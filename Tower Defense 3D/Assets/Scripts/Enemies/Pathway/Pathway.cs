@@ -162,13 +162,7 @@ public class Pathway : MonoBehaviour, IMapCleared
     {
         var colliderObject = Instantiate(pathwayColliderPrefab, map.transform);
 
-        colliderObject.transform.position = (startPosition + endPosition) / 2;
-
-        var localScale = colliderObject.transform.localScale;
-        localScale.x = Mathf.Abs(startPosition.x - endPosition.x);
-        localScale.z = Mathf.Abs(startPosition.z - endPosition.z);
-
-        colliderObject.transform.localScale = localScale;
+        colliderObject.GetComponent<PathwayCollider>().PlaceColliderBetweenPositions(startPosition, endPosition);
 
         _pathwayColliders.Add(colliderObject);
     }
@@ -177,6 +171,14 @@ public class Pathway : MonoBehaviour, IMapCleared
     {
         _checkpoints.Clear();
         _pathwayColliders.Clear();
+    }
+
+    public Vector3 GetCheckpointGroundPosition(int index)
+    {
+        if (index < 0 || index >= _checkpoints.Count)
+            return Vector3.zero;
+
+        return _checkpoints[index].GetComponent<Checkpoint>().GetGroundPosition();
     }
 }
 

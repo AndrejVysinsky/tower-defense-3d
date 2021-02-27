@@ -8,17 +8,11 @@ public class Enemy : MonoBehaviour, IInteractable, IEntity
     [SerializeField] HealthScript healthScript;
     [SerializeField] Animator animator;
 
-    private NavMeshAgent _agent;
-
     private float _difficultyModifier;
 
-    private PortalStart _start;
-    private PortalEnd _end;
-
-    //rotation
-    [SerializeField] float rotationSpeed = 100f;
-    private Vector3 _movingDirection;
-    private Quaternion _targetRotation;
+    private Pathway _pathway;
+    private int _currentCheckpoint;
+    private Vector3 _currentCheckpointPosition;
 
     //============================================
     // IEntity
@@ -30,40 +24,41 @@ public class Enemy : MonoBehaviour, IInteractable, IEntity
 
     public bool IsDead { get; private set; } = false;
 
-    private void Awake()
+    public void Initialize(Pathway pathway, Sprite sprite, Color color, float difficultyMultiplier)
     {
-        _agent = GetComponent<NavMeshAgent>();
-        //_agent.speed = enemyData.Speed;
-        _agent.updateRotation = false;
-    }
-
-    public void Initialize(PortalStart startPortal, PortalEnd endPortal, Sprite sprite, Color color, float difficultyMultiplier)
-    {
-        _start = startPortal;
-        _end = endPortal;
+        _pathway = pathway;
+        transform.position = _pathway.GetCheckpointGroundPosition(0);
+        SetNextCheckpoint();
 
         healthScript.Initialize(enemyData.Health * (1 + difficultyMultiplier));
         _difficultyModifier = difficultyMultiplier;
-
-        MoveToStart();
     }
 
-    private void LateUpdate()
+    private void Update()
     {
-        if (_agent.velocity.sqrMagnitude > Mathf.Epsilon)
+        if (transform.position == _currentCheckpointPosition)
         {
-            if (_movingDirection != _agent.velocity.normalized)
-            {
-                _movingDirection = _agent.velocity.normalized;
-
-                var lookVector = _agent.velocity.normalized;
-                lookVector.y = 0;
-
-                _targetRotation = Quaternion.LookRotation(lookVector);
-            }
-
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, _targetRotation, Time.deltaTime * rotationSpeed);
+            SetNextCheckpoint();
         }
+
+        transform.position = Vector3.MoveTowards(transform.position, _currentCheckpointPosition, enemyData.Speed * Time.deltaTime);
+    }
+
+    private void SetNextCheckpoint()
+    {
+        if (_currentCheckpoint >= _pathway.NumberOfCheckpoints - 1)
+        {
+            DealDamageToPlayer();
+
+            _currentCheckpoint = 0;
+            transform.position = _pathway.GetCheckpointGroundPosition(_currentCheckpoint);
+        }
+        
+        _currentCheckpoint++;
+
+        _currentCheckpointPosition = _pathway.GetCheckpointGroundPosition(_currentCheckpoint);
+
+        transform.LookAt(_currentCheckpointPosition);
     }
 
     private void DealDamageToPlayer()
@@ -71,31 +66,6 @@ public class Enemy : MonoBehaviour, IInteractable, IEntity
         var damage = enemyData.DamageToPlayer;
 
         GameController.Instance.ModifyLivesBy(-damage, transform.position);
-    }
-
-    private void MoveToStart()
-    {
-        _agent.Warp(_start.GetRandomStartPosition());
-
-        _agent.SetDestination(_end.GetRandomEndPosition());
-
-        StartCoroutine(RotateOnFrameEnd());
-    }
-
-    IEnumerator RotateOnFrameEnd()
-    {
-        while (_agent.velocity.normalized == Vector3.zero)
-        {
-            yield return new WaitForEndOfFrame();
-        }
-        
-        transform.rotation = Quaternion.LookRotation(_agent.velocity.normalized);
-    }
-
-    public void OnPortalEndReached()
-    {
-        DealDamageToPlayer();
-        MoveToStart();
     }
 
     public void TakeDamage(float amount)
@@ -116,7 +86,6 @@ public class Enemy : MonoBehaviour, IInteractable, IEntity
 
     private void OnDeath()
     {
-        _agent.enabled = false;
         GetComponent<Collider>().enabled = false;
 
         animator.Play("Death");
@@ -126,6 +95,13 @@ public class Enemy : MonoBehaviour, IInteractable, IEntity
 
     public float GetRemainingDistance()
     {
-        return _agent.remainingDistance;
+        var remainingDistance = Vector3.Distance(transform.position, _currentCheckpointPosition);
+
+        for (int i = _currentCheckpoint + 1; i < _pathway.NumberOfCheckpoints; i++)
+        {
+            remainingDistance += Vector3.Distance(_pathway.GetCheckpointGroundPosition(i - 1), _pathway.GetCheckpointGroundPosition(i));
+        }
+
+        return remainingDistance;
     }
 }

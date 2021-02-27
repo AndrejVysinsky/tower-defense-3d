@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] Path path;
+    [SerializeField] Pathway pathway;
     [SerializeField] WaveTimer waveTimer;
 
     [SerializeField] float waveDelay;
@@ -24,21 +24,11 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
-        if (waveTimer == null)
-        {
-            waveTimer = path.PortalStart.GetTimer();
-        }
-
         StartCoroutine(Spawner());
     }
 
     private void OnEnable()
     {
-        if (waveTimer == null)
-        {
-            waveTimer = path.PortalStart.GetTimer();
-        }
-
         waveTimer.OnTimerSkipped += OnWaveSkipped;
     }
 
@@ -118,7 +108,7 @@ public class EnemySpawner : MonoBehaviour
     {
         var enemyObject = Instantiate(enemyPrefab, transform);
 
-        enemyObject.GetComponent<Enemy>().Initialize(path.PortalStart, path.PortalEnd, enemySprite, enemyColor, _difficultyMultiplier);
+        enemyObject.GetComponent<Enemy>().Initialize(pathway, enemySprite, enemyColor, _difficultyMultiplier);
     }
 
     public void OnWaveSkipped()

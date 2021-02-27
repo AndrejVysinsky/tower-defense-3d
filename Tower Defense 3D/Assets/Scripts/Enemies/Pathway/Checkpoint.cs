@@ -115,4 +115,13 @@ public class Checkpoint : MonoBehaviour,
     {
         myMeshRenderer.material = material;
     }
+
+    public Vector3 GetGroundPosition()
+    {
+        var groundPosition = transform.position;
+
+        groundPosition.y -= GetComponent<BoxCollider>().size.y / 2;
+
+        return groundPosition;
+    }
 }
