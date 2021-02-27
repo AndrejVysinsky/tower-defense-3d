@@ -37,7 +37,7 @@ public class LaserTower : TowerBase
     public void Shoot(Enemy target)
     {
         laser.SetPosition(0, towerTargeting.GetFirePointPosition());
-        laser.SetPosition(1, target.transform.position);
+        laser.SetPosition(1, target.GetEnemyHitPoint());
 
         laserParticles.transform.position = target.transform.position;
         laserParticles.transform.LookAt(transform.position);

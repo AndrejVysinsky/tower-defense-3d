@@ -32,7 +32,7 @@ public class ProjectileTower : TowerBase
     {
         var projectile = Instantiate(projectilePrefab, towerTargeting.GetFirePointPosition(), transform.rotation);
 
-        projectile.GetComponent<IProjectileMovement>().Initialize(target.transform.position, TowerData.Damage);        
+        projectile.GetComponent<IProjectileMovement>().Initialize(target.GetEnemyHitPoint(), TowerData.Damage);        
     }
 
     public override void OnUpgradeStarted(IUpgradeOption upgradeOption, out bool upgradeStarted)
