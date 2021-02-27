@@ -23,9 +23,13 @@ public class CameraController : MonoBehaviour
         _camera = GetComponentInChildren<Camera>();
 
         //_camera.transform.LookAt(transform.position);
-        
+
         var position = _camera.transform.position;
+
+        position.x = gridController.GridSettings.sizeX / 2;
         position.y = maxDistanceFromGround;
+        position.z = gridController.GridSettings.sizeZ / 2 - 10;
+
         _camera.transform.position = position;
 
         _targetDistanceFromGround = defaultDistanceFromGround;

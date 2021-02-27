@@ -36,6 +36,9 @@ public class Enemy : MonoBehaviour, IInteractable, IEntity
 
     private void Update()
     {
+        if (IsDead)
+            return;
+
         if (transform.position == _currentCheckpointPosition)
         {
             SetNextCheckpoint();
@@ -103,5 +106,10 @@ public class Enemy : MonoBehaviour, IInteractable, IEntity
         }
 
         return remainingDistance;
+    }
+
+    public Vector3 GetEnemyHitPoint()
+    {
+        return GetComponent<Collider>().bounds.center;
     }
 }

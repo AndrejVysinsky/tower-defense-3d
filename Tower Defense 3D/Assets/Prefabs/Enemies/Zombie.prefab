@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 1922081410778728287}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1.4, y: 1.4, z: 1.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 547499007045533745}
   - {fileID: 1017779666006237277}
@@ -80,7 +80,6 @@ MonoBehaviour:
   enemyData: {fileID: 11400000, guid: 73cfc86a1b834864a9d0e0e302737291, type: 2}
   healthScript: {fileID: 8106718598506013729}
   animator: {fileID: 1017779665998974971}
-  rotationSpeed: 100
 --- !u!1 &2617339198663091050
 GameObject:
   m_ObjectHideFlags: 0

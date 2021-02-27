@@ -48,7 +48,7 @@ public class TowerTargeting : MonoBehaviour
 
         if (Target != null)
         {
-            LookAt(Target.transform.position, rotationSpeed);
+            LookAt(Target.GetEnemyHitPoint(), rotationSpeed);
         }
     }
 
