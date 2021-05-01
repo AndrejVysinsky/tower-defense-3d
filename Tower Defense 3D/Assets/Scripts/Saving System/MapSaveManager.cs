@@ -25,7 +25,7 @@ public class MapSaveManager : MonoBehaviour
         return FileManager.GetFiles(FileManager.MapPath);
     }
 
-    public void LoadMapData(string mapName = "defaultGameMap")
+    public void LoadMapData(bool isLoadingInEditor, string mapName = "defaultGameMap")
     {
         ClearScene();
 
@@ -67,14 +67,14 @@ public class MapSaveManager : MonoBehaviour
 
         _mapSaveData.InitializeObjects(gameObjects);
 
-        StartCoroutine(NotifyAboutMapLoaded());
+        StartCoroutine(NotifyAboutMapLoaded(isLoadingInEditor));
     }
 
-    IEnumerator NotifyAboutMapLoaded()
+    IEnumerator NotifyAboutMapLoaded(bool isLoadingInEditor)
     {
         yield return new WaitForEndOfFrame();
 
-        EventManager.ExecuteEvent<IMapLoaded>((x, y) => x.OnMapBeingLoaded(_mapSaveData));
+        EventManager.ExecuteEvent<IMapLoaded>((x, y) => x.OnMapBeingLoaded(_mapSaveData, isLoadingInEditor));
     }
 
     public void SaveMapData()

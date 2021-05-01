@@ -6,6 +6,6 @@ public class MapController : MonoBehaviour
 
     private void Awake()
     {
-        saveManager.LoadMapData();
+        saveManager.LoadMapData(false);
     }
 }

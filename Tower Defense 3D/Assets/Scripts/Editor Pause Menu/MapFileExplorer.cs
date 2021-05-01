@@ -62,7 +62,7 @@ public class MapFileExplorer : MonoBehaviour
         ShowMapFiles();
     }
 
-    public void LoadMapFile()
+    public void LoadMapFile(bool isLoadingInEditor)
     {
         if (_selectedMapFile == null)
         {
@@ -70,7 +70,7 @@ public class MapFileExplorer : MonoBehaviour
             return;
         }
 
-        mapManager.LoadMapData(_selectedMapFile.MapName);
+        mapManager.LoadMapData(isLoadingInEditor, _selectedMapFile.MapName);
     }
 
     public void ShowSavePanel()

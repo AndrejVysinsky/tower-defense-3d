@@ -117,17 +117,28 @@ public class Pathway : MonoBehaviour, IMapCleared
         _canUpdatePosition = true;
     }
 
-    public int CheckpointPlaced()
+    /// <returns></returns>
+    /// <summary>
+    /// Updates checkpoint material and initializes pathway collider between this and last checkpoint.
+    /// </summary>
+    /// <param name="isEditor">If checkpoint is placed in game, disable pathway collider ray casting. Otherwise stays turned on.</param>
+    /// <returns>Number of placed checkpoints.</returns>
+    public int CheckpointPlaced(bool isEditor)
     {
         _canUpdatePosition = false;
 
-        StartCoroutine(UpdateCheckpointMaterial());
+        if (isEditor)
+            StartCoroutine(UpdateCheckpointMaterial());
 
         if (_checkpoints.Count > 1)
         {
             AddPathwayCollider(_checkpoints[_checkpoints.Count - 2].transform.position,
-                                _checkpoints[_checkpoints.Count - 1].transform.position);
+                                _checkpoints[_checkpoints.Count - 1].transform.position,
+                                isEditor);
         }
+
+        if (isEditor == false && _pathwayLineRenderer.enabled == true)
+            _pathwayLineRenderer.enabled = false;
 
         return _checkpoints.Count;
     }
@@ -158,11 +169,14 @@ public class Pathway : MonoBehaviour, IMapCleared
         }
     }
 
-    private void AddPathwayCollider(Vector3 startPosition, Vector3 endPosition)
+    private void AddPathwayCollider(Vector3 startPosition, Vector3 endPosition, bool isEditor)
     {
         var colliderObject = Instantiate(pathwayColliderPrefab, map.transform);
 
         colliderObject.GetComponent<PathwayCollider>().PlaceColliderBetweenPositions(startPosition, endPosition);
+        
+        if (isEditor == false)
+            colliderObject.layer = (int)LayerEnum.IgnoreRayCast;
 
         _pathwayColliders.Add(colliderObject);
     }

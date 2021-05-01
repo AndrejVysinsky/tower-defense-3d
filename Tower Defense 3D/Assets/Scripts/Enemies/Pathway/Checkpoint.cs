@@ -6,6 +6,7 @@ public class Checkpoint : MonoBehaviour,
     IMapSaved, IMapLoaded
 {
     [SerializeField] MeshRenderer myMeshRenderer;
+    [SerializeField] BoxCollider myBoxCollider;
 
     public SaveableCheckpoint SaveableCheckpoint { get; private set; }
 
@@ -78,7 +79,7 @@ public class Checkpoint : MonoBehaviour,
     public void OnGridObjectPlaced()
     {
         IsPlaced = true;
-        CheckpointNumber = Pathway.CheckpointPlaced();
+        CheckpointNumber = Pathway.CheckpointPlaced(true);
     }
 
     public void OnGridObjectInitialized()
@@ -95,7 +96,7 @@ public class Checkpoint : MonoBehaviour,
         mapSaveData.UpdateSaveableObject(gameObject.GetInstanceID(), SaveableCheckpoint);
     }
 
-    public void OnMapBeingLoaded(MapSaveData mapSaveData)
+    public void OnMapBeingLoaded(MapSaveData mapSaveData, bool isLoadingInEditor)
     {
         SaveableCheckpoint = (SaveableCheckpoint)mapSaveData.GetSaveableObject(gameObject.GetInstanceID());
 
@@ -103,7 +104,14 @@ public class Checkpoint : MonoBehaviour,
 
         Pathway.AddCheckpoint(gameObject);
         IsPlaced = true;
-        Pathway.CheckpointPlaced();
+        Pathway.CheckpointPlaced(isLoadingInEditor);
+
+        //hide checkpoint in game
+        if (isLoadingInEditor == false)
+        {
+            myMeshRenderer.enabled = false;
+            myBoxCollider.enabled = false;
+        }
     }
 
     public bool OnGridObjectTryChangeBrushSize(int newBrushSize)

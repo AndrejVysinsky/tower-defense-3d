@@ -352,7 +352,7 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
     //    gridSettings.buildOnlyOnTerrain = snapToTerrainOnly;
     //}
 
-    public void OnMapBeingLoaded(MapSaveData mapSaveData)
+    public void OnMapBeingLoaded(MapSaveData mapSaveData, bool isLoadingInEditor)
     {
         if (mapSaveData.GridSettings != null)
         {

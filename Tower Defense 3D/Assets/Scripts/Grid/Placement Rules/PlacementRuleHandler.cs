@@ -216,7 +216,7 @@ public class PlacementRuleHandler : MonoBehaviour, IMapLoaded
         transform.rotation = rotation;
     }
 
-    public void OnMapBeingLoaded(MapSaveData mapSaveData)
+    public void OnMapBeingLoaded(MapSaveData mapSaveData, bool isLoadingInEditor)
     {
         OnObjectPlaced();
     }

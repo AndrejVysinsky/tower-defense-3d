@@ -61,6 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myMeshRenderer: {fileID: 7840565871320043813}
+  myBoxCollider: {fileID: 1106226484323308366}
 --- !u!114 &4466328890432480765
 MonoBehaviour:
   m_ObjectHideFlags: 0
