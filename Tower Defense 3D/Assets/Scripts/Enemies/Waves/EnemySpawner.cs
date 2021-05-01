@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using Mirror;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySpawner : MonoBehaviour
+public class EnemySpawner : NetworkBehaviour, IMapLoaded
 {
     [SerializeField] Pathway pathway;
     [SerializeField] WaveTimer waveTimer;
@@ -22,21 +23,23 @@ public class EnemySpawner : MonoBehaviour
     public int WaveNumber { get; private set; } = 1;
     public int WaveCount => enemyWaves.Count;
 
-    void Start()
-    {
-        StartCoroutine(Spawner());
-    }
-
+    [Server]
     private void OnEnable()
     {
         waveTimer.OnTimerSkipped += OnWaveSkipped;
+
+        EventManager.AddListener(gameObject);
     }
 
+    [Server]
     private void OnDisable()
     {
         waveTimer.OnTimerSkipped -= OnWaveSkipped;
+
+        EventManager.RemoveListener(gameObject);
     }
 
+    [Server]
     IEnumerator Spawner()
     {
         yield return StartCoroutine(WaitForWaveDelay());
@@ -61,18 +64,16 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
+    [Server]
     IEnumerator WaitForWaveDelay()
     {
-        int waitCount = 0;
-
         waveTimer.RefreshTimer(waveDelay);
 
-        while (waitCount < waveDelay)
+        while (waveTimer.RemainingTime > 0)
         {
             if (_waveSkipped)
                 break;
 
-            waitCount++;
             yield return new WaitForSeconds(1f);
         }
 
@@ -82,6 +83,7 @@ public class EnemySpawner : MonoBehaviour
         _waveSkipped = false;
     }
 
+    [Server]
     IEnumerator SpawnWave(int index)
     {
         var enemyWave = enemyWaves[index];
@@ -89,12 +91,12 @@ public class EnemySpawner : MonoBehaviour
         int numberOfEnemies = enemyWave.NumberOfEnemies;
 
         var enemyType = enemyWave.EnemyType;
-        var enemySprite = enemyWave.GetRandomSprite();
-        var enemyColor = enemyWave.GetRandomColor();        
+        //var enemySprite = enemyWave.GetRandomSprite();
+        //var enemyColor = enemyWave.GetRandomColor();        
 
         while (numberOfEnemies > 0)
         {
-            SpawnEnemy(enemyType, enemySprite, enemyColor);
+            RpcSpawnEnemy(index);
             numberOfEnemies--;
 
             yield return new WaitForSeconds(enemyWave.SpawnDelay);
@@ -104,15 +106,26 @@ public class EnemySpawner : MonoBehaviour
         yield return new WaitForSeconds(2f);
     }
 
-    private void SpawnEnemy(GameObject enemyPrefab, Sprite enemySprite, Color enemyColor)
+    [ClientRpc]
+    private void RpcSpawnEnemy(int waveIndex)
     {
-        var enemyObject = Instantiate(enemyPrefab, transform);
+        var enemyWave = enemyWaves[waveIndex];
 
-        enemyObject.GetComponent<Enemy>().Initialize(pathway, enemySprite, enemyColor, _difficultyMultiplier);
+        Debug.Log(waveIndex);
+
+        var enemyObject = Instantiate(enemyWave.EnemyType, transform);
+
+        enemyObject.GetComponent<Enemy>().Initialize(pathway, _difficultyMultiplier);
     }
 
-    public void OnWaveSkipped()
+    private void OnWaveSkipped()
     {
         _waveSkipped = true;
+    }
+
+    [Server]
+    public void OnMapBeingLoaded(MapSaveData mapSaveData, bool isLoadingInEditor)
+    {
+        StartCoroutine(Spawner());
     }
 }

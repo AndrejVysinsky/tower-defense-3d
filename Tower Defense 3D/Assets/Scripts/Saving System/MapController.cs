@@ -1,10 +1,18 @@
-﻿using UnityEngine;
+﻿using Mirror;
+using UnityEngine;
 
-public class MapController : MonoBehaviour
+public class MapController : NetworkBehaviour
 {
     [SerializeField] MapSaveManager saveManager;
 
-    private void Awake()
+    [Server]
+    public void LoadMap()
+    {
+        RpcLoadMap();
+    }
+
+    [ClientRpc]
+    private void RpcLoadMap()
     {
         saveManager.LoadMapData(false);
     }

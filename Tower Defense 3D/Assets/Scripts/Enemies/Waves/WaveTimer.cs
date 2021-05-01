@@ -1,44 +1,52 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using Mirror;
+using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class WaveTimer : MonoBehaviour
+public class WaveTimer : NetworkBehaviour
 {
     [SerializeField] TextMeshProUGUI timeText;
 
     private float _time;
     private float _remainingTime;
 
+    public float RemainingTime => _remainingTime;
+
     public event Action OnTimerSkipped;
 
+    [Server]
     private void Update()
     {
-        _remainingTime -= Time.deltaTime;
-        UpdateTime(_remainingTime);
+        if (_time == 0)
+            return;
 
-        if (_remainingTime <= 0)
+        _remainingTime -= Time.deltaTime;
+        RpcUpdateTime(_remainingTime);
+    }
+
+    [ClientRpc]
+    private void RpcUpdateTime(float remainingTime)
+    {
+        if (remainingTime <= 0)
         {
             timeText.text = "---";
         }
+        else
+        {
+            int seconds = Mathf.RoundToInt(remainingTime);
+            timeText.text = seconds.ToString();
+        }
     }
 
-    private void UpdateTime(float remainingTime)
-    {
-        int seconds = Mathf.RoundToInt(remainingTime);
-        timeText.text = seconds.ToString();
-        //timeImage.fillAmount = remainingTime / _time;
-    }
-
+    [Server]
     public void RefreshTimer(float time)
     {
         _time = time;
         _remainingTime = time;
-        UpdateTime(_time);
+        RpcUpdateTime(_time);
     }
 
+    [Server]
     public void SkipTimer()
     {
         OnTimerSkipped?.Invoke();

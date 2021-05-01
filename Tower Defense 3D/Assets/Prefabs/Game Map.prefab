@@ -137,6 +137,7 @@ GameObject:
   m_Component:
   - component: {fileID: 792030019040658628}
   - component: {fileID: 7561463932794506205}
+  - component: {fileID: 1131151400}
   m_Layer: 0
   m_Name: Game Map
   m_TagString: Untagged
@@ -174,7 +175,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdc28640a8c93ef4692b1729338aa77c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   saveManager: {fileID: 8848320538533611822}
+--- !u!114 &1131151400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8974992648617935877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1001 &8848320537603343723
 PrefabInstance:
   m_ObjectHideFlags: 0

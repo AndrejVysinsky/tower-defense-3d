@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -2275716636036314022}
   - component: {fileID: -2450254903410633123}
   m_Layer: 0
-  m_Name: Square Block
+  m_Name: square block
   m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

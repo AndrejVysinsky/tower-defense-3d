@@ -24,7 +24,7 @@ public class Enemy : MonoBehaviour, IInteractable, IEntity
 
     public bool IsDead { get; private set; } = false;
 
-    public void Initialize(Pathway pathway, Sprite sprite, Color color, float difficultyMultiplier)
+    public void Initialize(Pathway pathway, float difficultyMultiplier)
     {
         _pathway = pathway;
         transform.position = _pathway.GetCheckpointGroundPosition(0);

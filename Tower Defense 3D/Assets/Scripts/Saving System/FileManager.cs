@@ -32,7 +32,7 @@ public static class FileManager
         if (File.Exists(path + fileName))
         {
             BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(path + fileName, FileMode.Open);
+            FileStream file = File.Open(path + fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
             fileData = (T)bf.Deserialize(file);
             file.Close();
         }

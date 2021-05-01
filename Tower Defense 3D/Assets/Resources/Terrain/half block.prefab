@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1673076137334947462}
   - component: {fileID: 5464956751356299188}
   m_Layer: 8
-  m_Name: Half Block
+  m_Name: half block
   m_TagString: Water
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
