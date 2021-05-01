@@ -22,16 +22,6 @@ public class Pathway : MonoBehaviour, IMapCleared
 
     public int NumberOfCheckpoints => _checkpoints.Count;
 
-    private void Start()
-    {
-        if (_pathwayLineRenderer == null)
-        {
-            var pathwayRendererObject = Instantiate(lineRendererPrefab, map.transform);
-            _pathwayLineRenderer = pathwayRendererObject.GetComponent<LineRenderer>();
-            _pathwayLineRenderer.positionCount = 0;
-        }
-    }
-
     private void OnEnable()
     {
         EventManager.AddListener(gameObject);
@@ -76,17 +66,14 @@ public class Pathway : MonoBehaviour, IMapCleared
     {
         _checkpoints.RemoveAt(_checkpoints.Count - 1);
 
-        if (_pathwayLineRenderer.positionCount > 0)
-        {
-            _pathwayLineRenderer.positionCount--;
-        }
-
         if (_pathwayColliders.Count > 0 && _pathwayColliders.Count + 1 > _checkpoints.Count)
         {
             //destroy last pathway collider
             Destroy(_pathwayColliders[_pathwayColliders.Count - 1]);
             _pathwayColliders.RemoveAt(_pathwayColliders.Count - 1);
         }
+
+        UpdatePathwayLineRenderer();
 
         StartCoroutine(UpdateCheckpointMaterial());
 
@@ -105,6 +92,13 @@ public class Pathway : MonoBehaviour, IMapCleared
 
         _checkpoints = _checkpoints.OrderBy(c => c.GetComponent<Checkpoint>().CheckpointNumber).ToList();
 
+        UpdatePathwayLineRenderer();
+
+        _canUpdatePosition = true;
+    }
+
+    private void UpdatePathwayLineRenderer()
+    {
         if (_pathwayLineRenderer == null)
         {
             var pathwayRendererObject = Instantiate(lineRendererPrefab, map.transform);
@@ -113,8 +107,6 @@ public class Pathway : MonoBehaviour, IMapCleared
 
         _pathwayLineRenderer.positionCount = _checkpoints.Count;
         _pathwayLineRenderer.SetPositions(_checkpoints.Select(x => x.transform.position).ToArray());
-
-        _canUpdatePosition = true;
     }
 
     /// <returns></returns>
