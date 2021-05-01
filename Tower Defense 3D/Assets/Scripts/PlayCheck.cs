@@ -12,19 +12,14 @@ public class PlayCheck : MonoBehaviour
     [SerializeField] TextMeshProUGUI errorText;
     [SerializeField] SceneLoader sceneLoader;
 
-    private string _mapPath;
-
-    public void Awake()
-    {
-        _mapPath = Application.persistentDataPath + "/Maps/";
-    }
-
     public void CheckMap()
     {
-        if (Directory.Exists(_mapPath) == false)
-            Directory.CreateDirectory(_mapPath);
+        string mapPath = FileManager.MapPath;
 
-        if (File.Exists(_mapPath + "gamesave.save"))
+        if (Directory.Exists(mapPath) == false)
+            Directory.CreateDirectory(mapPath);
+
+        if (File.Exists(mapPath + "defaultGameMap"))
         {
             errorText.gameObject.SetActive(false);
             sceneLoader.ChangeScene(1);
