@@ -64,38 +64,54 @@ public class MapSaveData
         saveableObjects.RemoveAll(x => x.id == gameObjectID);
     }
 
-    public void InitializeObjects(List<GameObject> gameObjects)
+    public void InitializeObjects(List<GameObject> gameObjects, int numberOfPlayers)
     {
         int index = 0;
 
-        saveableObjects.ForEach(obj =>
+        /*
+         * inner foreach iterates over all objects of currently loaded map
+         * and initializes all gameObjects - position, rotation, etc
+         * 
+         * do this for every player - because gameObjects list contains "numberOfPlayers" amount of map objects
+         */
+
+        for (int i = 0; i < numberOfPlayers; i++)
         {
-            obj.id = gameObjects[index].GetInstanceID();
+            saveableObjects.ForEach(obj =>
+            {
+                if (obj is SaveableCheckpoint saveableCheckpoint && gameObjects[index].TryGetComponent(out Checkpoint checkpoint))
+                {
+                    checkpoint.SaveableCheckpoint = saveableCheckpoint;
+                }
 
-            gameObjects[index].layer = obj.layer;
+                //kind of useless because if there is more than 1 player it gets overriden in next iteration
+                obj.id = gameObjects[index].GetInstanceID();
 
-            var position = gameObjects[index].transform.position;
+                gameObjects[index].layer = obj.layer;
 
-            position.x = obj.positionX;
-            position.y = obj.positionY;
-            position.z = obj.positionZ;
+                var position = gameObjects[index].transform.position;
 
-            gameObjects[index].transform.position = position;
+                position.x = obj.positionX + (GridSettings.sizeX + 2) * i;
+                position.y = obj.positionY;
+                position.z = obj.positionZ;
 
-            gameObjects[index].transform.rotation = Quaternion.Euler(obj.rotationX, obj.rotationY, obj.rotationZ);
+                gameObjects[index].transform.position = position;
 
-            //gameObjects[index].transform.Rotate(new Vector3(obj.rotationX, obj.rotationY, obj.rotationZ));
+                gameObjects[index].transform.rotation = Quaternion.Euler(obj.rotationX, obj.rotationY, obj.rotationZ);
 
-            var scale = gameObjects[index].transform.localScale;
+                //gameObjects[index].transform.Rotate(new Vector3(obj.rotationX, obj.rotationY, obj.rotationZ));
 
-            scale.x = obj.scaleX;
-            scale.y = obj.scaleY;
-            scale.z = obj.scaleZ;
+                var scale = gameObjects[index].transform.localScale;
 
-            gameObjects[index].transform.localScale = scale;
+                scale.x = obj.scaleX;
+                scale.y = obj.scaleY;
+                scale.z = obj.scaleZ;
 
-            index++;
-        });
+                gameObjects[index].transform.localScale = scale;
+
+                index++;
+            });
+        }
     }
 
     public SaveableObject GetSaveableObject(int id)

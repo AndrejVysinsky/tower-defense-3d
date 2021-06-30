@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Pathway : MonoBehaviour, IMapCleared
 {
-    [SerializeField] MapSaveManager map;
     [SerializeField] GameObject lineRendererPrefab;
     [SerializeField] GameObject pathwayColliderPrefab;
 
@@ -19,8 +18,17 @@ public class Pathway : MonoBehaviour, IMapCleared
     private LineRenderer _pathwayLineRenderer;
 
     private bool _canUpdatePosition;
+    private MapSaveManager _map;
+    private int _mapId;
 
     public int NumberOfCheckpoints => _checkpoints.Count;
+    public int MapId => _mapId;
+
+    public void Initialize(MapSaveManager map, int mapId)
+    {
+        _map = map;
+        _mapId = mapId;
+    }
 
     private void OnEnable()
     {
@@ -101,7 +109,7 @@ public class Pathway : MonoBehaviour, IMapCleared
     {
         if (_pathwayLineRenderer == null)
         {
-            var pathwayRendererObject = Instantiate(lineRendererPrefab, map.transform);
+            var pathwayRendererObject = Instantiate(lineRendererPrefab, _map.transform);
             _pathwayLineRenderer = pathwayRendererObject.GetComponent<LineRenderer>();
         }
 
@@ -163,7 +171,7 @@ public class Pathway : MonoBehaviour, IMapCleared
 
     private void AddPathwayCollider(Vector3 startPosition, Vector3 endPosition, bool isEditor)
     {
-        var colliderObject = Instantiate(pathwayColliderPrefab, map.transform);
+        var colliderObject = Instantiate(pathwayColliderPrefab, _map.transform);
 
         colliderObject.GetComponent<PathwayCollider>().PlaceColliderBetweenPositions(startPosition, endPosition);
         

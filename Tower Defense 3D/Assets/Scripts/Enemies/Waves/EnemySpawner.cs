@@ -5,15 +5,16 @@ using UnityEngine;
 
 public class EnemySpawner : NetworkBehaviour, IMapLoaded
 {
-    [SerializeField] Pathway pathway;
+    [Header("Settings")]
     [SerializeField] WaveTimer waveTimer;
-
     [SerializeField] float waveDelay;
 
     [Range(0, 5)] [SerializeField] float difficultyMultiplierToAdd;
     [SerializeField] int addMultiplierEveryXWaves;
 
     [SerializeField] List<EnemyWaveData> enemyWaves;
+
+    private Pathway[] _pathways;
 
     private int _waveIndex = 0;
     private float _difficultyMultiplier = 0;
@@ -113,9 +114,12 @@ public class EnemySpawner : NetworkBehaviour, IMapLoaded
 
         Debug.Log(waveIndex);
 
-        var enemyObject = Instantiate(enemyWave.EnemyType, transform);
+        for (int i = 0; i < _pathways.Length; i++)
+        {
+            var enemyObject = Instantiate(enemyWave.EnemyType, transform);
 
-        enemyObject.GetComponent<Enemy>().Initialize(pathway, _difficultyMultiplier);
+            enemyObject.GetComponent<Enemy>().Initialize(_pathways[i], _difficultyMultiplier);
+        }
     }
 
     private void OnWaveSkipped()
@@ -126,6 +130,13 @@ public class EnemySpawner : NetworkBehaviour, IMapLoaded
     [Server]
     public void OnMapBeingLoaded(MapSaveData mapSaveData, bool isLoadingInEditor)
     {
+        RpcFindPathways();
         StartCoroutine(Spawner());
+    }
+
+    [ClientRpc]
+    private void RpcFindPathways()
+    {
+        _pathways = FindObjectsOfType<Pathway>();
     }
 }

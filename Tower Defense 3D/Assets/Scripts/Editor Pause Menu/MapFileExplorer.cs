@@ -70,7 +70,7 @@ public class MapFileExplorer : MonoBehaviour
             return;
         }
 
-        mapManager.LoadMapData(isLoadingInEditor, _selectedMapFile.MapName);
+        mapManager.LoadMapData(isLoadingInEditor, mapName: _selectedMapFile.MapName);
     }
 
     public void ShowSavePanel()

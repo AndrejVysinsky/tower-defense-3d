@@ -8,23 +8,12 @@ public class Checkpoint : MonoBehaviour,
     [SerializeField] MeshRenderer myMeshRenderer;
     [SerializeField] BoxCollider myBoxCollider;
 
-    public SaveableCheckpoint SaveableCheckpoint { get; private set; }
+    public SaveableCheckpoint SaveableCheckpoint { get; set; }
 
     public int CheckpointNumber { get; set; }
     public bool IsPlaced { get; private set; }
 
-    private Pathway _pathway;
-    private Pathway Pathway 
-    { 
-        get 
-        {
-            if (_pathway == null)
-            {
-                _pathway = FindObjectOfType<Pathway>();
-            }
-            return _pathway;
-        }
-    }
+    public Pathway Pathway { get; set; }
 
     private void Awake()
     {
@@ -97,9 +86,8 @@ public class Checkpoint : MonoBehaviour,
     }
 
     public void OnMapBeingLoaded(MapSaveData mapSaveData, bool isLoadingInEditor)
-    {
-        SaveableCheckpoint = (SaveableCheckpoint)mapSaveData.GetSaveableObject(gameObject.GetInstanceID());
-
+    {       
+        //SaveableCheckpoint should be initialized at this point -> in MapSaveData
         CheckpointNumber = SaveableCheckpoint.checkpointNumber;
 
         Pathway.AddCheckpoint(gameObject);

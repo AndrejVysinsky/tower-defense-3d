@@ -8,12 +8,19 @@ public class MapController : NetworkBehaviour
     [Server]
     public void LoadMap()
     {
-        RpcLoadMap();
+        //TODO:
+        //1. get number of players connected
+        //2. pass it to RpcLoadMap so every player has own map
+
+        //connection can be null, should add check later
+        int numberOfPlayers = NetworkServer.connections.Count;
+
+        RpcLoadMap(numberOfPlayers);
     }
 
     [ClientRpc]
-    private void RpcLoadMap()
+    private void RpcLoadMap(int numberOfPlayers)
     {
-        saveManager.LoadMapData(false);
+        saveManager.LoadMapData(false, numberOfPlayers);
     }
 }

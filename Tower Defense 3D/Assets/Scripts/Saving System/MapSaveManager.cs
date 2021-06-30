@@ -6,6 +6,8 @@ using UnityEngine.AI;
 
 public class MapSaveManager : MonoBehaviour
 {
+    [SerializeField] GameObject pathwayPrefab;
+
     private MapSaveData _mapSaveData;
 
     private void Awake()
@@ -26,7 +28,7 @@ public class MapSaveManager : MonoBehaviour
         return FileManager.GetFiles(FileManager.MapPath);
     }
 
-    public void LoadMapData(bool isLoadingInEditor, string mapName = "defaultGameMap")
+    public void LoadMapData(bool isLoadingInEditor, int numberOfPlayers = 1, string mapName = "defaultGameMap")
     {
         ClearScene();
 
@@ -39,34 +41,49 @@ public class MapSaveManager : MonoBehaviour
 
         List<int> objectsToRemove = new List<int>();
 
-        int index = 0;
-        foreach (var path in _mapSaveData.GetResourcePaths())
+        //inner foreach instantiates all objects from map data
+        //do this for every player - so everyone has own map
+        for (int i = 0; i < numberOfPlayers; i++)
         {
-            var resource = Resources.Load<GameObject>(path);
+            //initialize checkpoint Pathway for every map
+            var pathwayObject = Instantiate(pathwayPrefab, transform);
+            var pathwayScript = pathwayObject.GetComponent<Pathway>();
+            pathwayScript.Initialize(this, i);
 
-            if (resource == null)
+            int index = 0;
+            foreach (var path in _mapSaveData.GetResourcePaths())
             {
-                Debug.Log($"Resource \"{resource}\" in path \"{path}\" not found");
-                objectsToRemove.Add(index);
-                continue;
+                var resource = Resources.Load<GameObject>(path);
+
+                if (resource == null)
+                {
+                    Debug.Log($"Resource \"{resource}\" in path \"{path}\" not found");
+                    objectsToRemove.Add(index);
+                    continue;
+                }
+
+                var gameObject = Instantiate(resource, transform);
+
+                if (gameObject.TryGetComponent(out Checkpoint checkpoint))
+                {
+                    checkpoint.Pathway = pathwayScript;
+                }
+
+                //if (gameObject.TryGetComponent(out PlacementRuleHandler placementRuleHandler))
+                //{
+                //    placementRuleHandler.OnObjectPlaced();
+                //}
+
+                gameObjects.Add(gameObject);
+
+                index++;
             }
-
-            var gameObject = Instantiate(resource, transform);
-
-            //if (gameObject.TryGetComponent(out PlacementRuleHandler placementRuleHandler))
-            //{
-            //    placementRuleHandler.OnObjectPlaced();
-            //}
-
-            gameObjects.Add(gameObject);
-
-            index++;
         }
 
         for (int i = objectsToRemove.Count - 1; i >= 0; i--)
             _mapSaveData.RemoveObjectAt(objectsToRemove[i]);
 
-        _mapSaveData.InitializeObjects(gameObjects);
+        _mapSaveData.InitializeObjects(gameObjects, numberOfPlayers);
 
         StartCoroutine(NotifyAboutMapLoaded(isLoadingInEditor));
     }
