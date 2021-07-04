@@ -97,7 +97,7 @@ public class EnemySpawner : NetworkBehaviour, IMapLoaded
 
         while (numberOfEnemies > 0)
         {
-            RpcSpawnEnemy(index);
+            SpawnEnemy(index);
             numberOfEnemies--;
 
             yield return new WaitForSeconds(enemyWave.SpawnDelay);
@@ -107,18 +107,17 @@ public class EnemySpawner : NetworkBehaviour, IMapLoaded
         yield return new WaitForSeconds(2f);
     }
 
-    [ClientRpc]
-    private void RpcSpawnEnemy(int waveIndex)
+    [Server]
+    private void SpawnEnemy(int waveIndex)
     {
         var enemyWave = enemyWaves[waveIndex];
-
-        Debug.Log(waveIndex);
 
         for (int i = 0; i < _pathways.Length; i++)
         {
             var enemyObject = Instantiate(enemyWave.EnemyType, transform);
-
             enemyObject.GetComponent<Enemy>().Initialize(_pathways[i], _difficultyMultiplier);
+
+            NetworkServer.Spawn(enemyObject);
         }
     }
 

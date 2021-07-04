@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using Mirror;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy : MonoBehaviour, IInteractable, IEntity
+public class Enemy : NetworkBehaviour, IInteractable, IEntity
 {
     [SerializeField] EnemyData enemyData;
     [SerializeField] HealthScript healthScript;
@@ -24,6 +25,7 @@ public class Enemy : MonoBehaviour, IInteractable, IEntity
 
     public bool IsDead { get; private set; } = false;
 
+    [Server]
     public void Initialize(Pathway pathway, float difficultyMultiplier)
     {
         _pathway = pathway;
@@ -34,6 +36,7 @@ public class Enemy : MonoBehaviour, IInteractable, IEntity
         _difficultyModifier = difficultyMultiplier;
     }
 
+    [Server]
     private void Update()
     {
         if (IsDead)
@@ -45,8 +48,11 @@ public class Enemy : MonoBehaviour, IInteractable, IEntity
         }
 
         transform.position = Vector3.MoveTowards(transform.position, _currentCheckpointPosition, enemyData.Speed * Time.deltaTime);
+
+        RpcUpdatePositionAndRotation(transform.position, transform.rotation);
     }
 
+    [Server]
     private void SetNextCheckpoint()
     {
         if (_currentCheckpoint >= _pathway.NumberOfCheckpoints - 1)
@@ -62,13 +68,25 @@ public class Enemy : MonoBehaviour, IInteractable, IEntity
         _currentCheckpointPosition = _pathway.GetCheckpointGroundPosition(_currentCheckpoint);
 
         transform.LookAt(_currentCheckpointPosition);
+
+        RpcUpdatePositionAndRotation(transform.position, transform.rotation);
     }
 
+    [ClientRpc]
+    private void RpcUpdatePositionAndRotation(Vector3 position, Quaternion rotation)
+    {
+        transform.position = position;
+        transform.rotation = rotation;
+    }
+
+    [Server]
     private void DealDamageToPlayer()
     {
         var damage = enemyData.DamageToPlayer;
 
         GameController.Instance.ModifyLivesBy(-damage, transform.position);
+
+        NetworkClient.localPlayer.gameObject.GetComponent<NetworkPlayer>().Counter();
     }
 
     public void TakeDamage(float amount)

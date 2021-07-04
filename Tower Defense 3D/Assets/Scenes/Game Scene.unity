@@ -813,7 +813,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  pathway: {fileID: 0}
   waveTimer: {fileID: 1419332535}
   waveDelay: 20
   difficultyMultiplierToAdd: 1
@@ -2885,7 +2884,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 812209248}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26a1523f4dd730747b76374424236afb, type: 3}
+  m_Script: {fileID: 11500000, guid: 4fbacdff68e0a184bbe09f36cc164f08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   dontDestroyOnLoad: 1
@@ -2899,7 +2898,7 @@ MonoBehaviour:
   onlineScene: 
   transport: {fileID: 812209250}
   networkAddress: localhost
-  maxConnections: 100
+  maxConnections: 5
   disconnectInactiveConnections: 0
   disconnectInactiveTimeout: 60
   authenticator: {fileID: 0}
@@ -2907,7 +2906,11 @@ MonoBehaviour:
     type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
-  spawnPrefabs: []
+  spawnPrefabs:
+  - {fileID: 1922081410778728287, guid: 5f67ef82051524e4aae14ca425412109, type: 3}
+  - {fileID: 1922081410778728287, guid: 17cd76eef21f7a148bc2532f3b16a02d, type: 3}
+  - {fileID: 1922081410778728287, guid: 4d86e85e38ecf664784ee1638b498652, type: 3}
+  - {fileID: 1922081410778728287, guid: 0870212d0822eba4cab4150e8a792a0d, type: 3}
 --- !u!4 &812209252
 Transform:
   m_ObjectHideFlags: 0

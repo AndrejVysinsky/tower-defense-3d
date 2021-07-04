@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 929607030391758668}
   - component: {fileID: 4321656244167379508}
   - component: {fileID: -8891211923745154217}
+  - component: {fileID: 7649172382476221320}
   m_Layer: 0
   m_Name: Grunt
   m_TagString: Enemy
@@ -77,9 +78,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f71ebd16a0ca21d4886c1cd49d186d4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   enemyData: {fileID: 11400000, guid: 39b4c5b6113f43c40ab85e1ba549e9b5, type: 2}
   healthScript: {fileID: 8106718598506013729}
   animator: {fileID: 2635565985276297564}
+--- !u!114 &7649172382476221320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1922081410778728287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1 &2617339198663091050
 GameObject:
   m_ObjectHideFlags: 0
