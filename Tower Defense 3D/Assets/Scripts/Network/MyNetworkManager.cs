@@ -7,6 +7,7 @@ public class MyNetworkManager : NetworkManager
 {
     private List<NetworkConnection> _networkConnections = new List<NetworkConnection>();
 
+    #region NetworkManager methods
     public override void OnClientConnect(NetworkConnection conn)
     {
         base.OnClientConnect(conn);
@@ -39,5 +40,21 @@ public class MyNetworkManager : NetworkManager
             var networkPlayer = networkConnection.identity.GetComponent<NetworkPlayer>();
             networkPlayer.PlayerDisconnected(conn);
         }
+    }
+
+    #endregion
+
+    public List<NetworkPlayer> GetNetworkPlayers()
+    {
+        List<NetworkPlayer> networkPlayers = new List<NetworkPlayer>();
+
+        for (int i = 0; i < _networkConnections.Count; i++)
+        {
+            if (_networkConnections[i] != null)
+            {
+                networkPlayers.Add(_networkConnections[i].identity.GetComponent<NetworkPlayer>());
+            }
+        }
+        return networkPlayers;
     }
 }

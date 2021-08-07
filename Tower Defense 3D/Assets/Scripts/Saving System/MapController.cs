@@ -1,4 +1,5 @@
 ﻿using Mirror;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MapController : NetworkBehaviour
@@ -12,15 +13,15 @@ public class MapController : NetworkBehaviour
         //1. get number of players connected
         //2. pass it to RpcLoadMap so every player has own map
 
-        //connection can be null, should add check later
-        int numberOfPlayers = NetworkServer.connections.Count;
+        //get list of connected players and pass it to map loader
+        var myNetworkManager = (MyNetworkManager)NetworkManager.singleton;
 
-        RpcLoadMap(numberOfPlayers);
+        RpcLoadMap(myNetworkManager.GetNetworkPlayers());
     }
 
     [ClientRpc]
-    private void RpcLoadMap(int numberOfPlayers)
+    private void RpcLoadMap(List<NetworkPlayer> networkPlayers)
     {
-        saveManager.LoadMapData(false, numberOfPlayers);
+        saveManager.LoadMapData(false, networkPlayers);
     }
 }

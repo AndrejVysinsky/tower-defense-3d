@@ -28,7 +28,7 @@ public class MapSaveManager : MonoBehaviour
         return FileManager.GetFiles(FileManager.MapPath);
     }
 
-    public void LoadMapData(bool isLoadingInEditor, int numberOfPlayers = 1, string mapName = "defaultGameMap")
+    public void LoadMapData(bool isLoadingInEditor, List<NetworkPlayer> networkPlayers, string mapName = "defaultGameMap")
     {
         ClearScene();
 
@@ -38,12 +38,11 @@ public class MapSaveManager : MonoBehaviour
             return;
 
         List<GameObject> gameObjects = new List<GameObject>();
-
         List<int> objectsToRemove = new List<int>();
 
         //inner foreach instantiates all objects from map data
         //do this for every player - so everyone has own map
-        for (int i = 0; i < numberOfPlayers; i++)
+        for (int i = 0; i < networkPlayers.Count; i++)
         {
             //initialize checkpoint Pathway for every map
             var pathwayObject = Instantiate(pathwayPrefab, transform);
@@ -83,7 +82,7 @@ public class MapSaveManager : MonoBehaviour
         for (int i = objectsToRemove.Count - 1; i >= 0; i--)
             _mapSaveData.RemoveObjectAt(objectsToRemove[i]);
 
-        _mapSaveData.InitializeObjects(gameObjects, numberOfPlayers);
+        _mapSaveData.InitializeObjects(gameObjects, networkPlayers);
 
         StartCoroutine(NotifyAboutMapLoaded(isLoadingInEditor));
     }

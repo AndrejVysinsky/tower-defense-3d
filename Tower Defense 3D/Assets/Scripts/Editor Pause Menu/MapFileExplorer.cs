@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using Mirror;
+using TMPro;
 using UnityEngine;
 
 public class MapFileExplorer : MonoBehaviour
@@ -70,7 +71,10 @@ public class MapFileExplorer : MonoBehaviour
             return;
         }
 
-        mapManager.LoadMapData(isLoadingInEditor, mapName: _selectedMapFile.MapName);
+        //TODO: this call should not be here - temporary workaround
+        var myNetworkManager = (MyNetworkManager)NetworkManager.singleton;
+
+        mapManager.LoadMapData(isLoadingInEditor, myNetworkManager.GetNetworkPlayers(), mapName: _selectedMapFile.MapName);
     }
 
     public void ShowSavePanel()

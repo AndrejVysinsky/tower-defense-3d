@@ -64,7 +64,7 @@ public class MapSaveData
         saveableObjects.RemoveAll(x => x.id == gameObjectID);
     }
 
-    public void InitializeObjects(List<GameObject> gameObjects, int numberOfPlayers)
+    public void InitializeObjects(List<GameObject> gameObjects, List<NetworkPlayer> networkPlayers)
     {
         int index = 0;
 
@@ -75,8 +75,19 @@ public class MapSaveData
          * do this for every player - because gameObjects list contains "numberOfPlayers" amount of map objects
          */
 
-        for (int i = 0; i < numberOfPlayers; i++)
+        for (int i = 0; i < networkPlayers.Count; i++)
         {
+            int xShift = (GridSettings.sizeX + (int)GridSettings.cellSize) * i;
+            int zShift = (GridSettings.sizeZ + (int)GridSettings.cellSize) * i;
+
+            networkPlayers[i].Boundaries = new NetworkPlayer.PlayersBoundaries
+            {
+                MinX = 0 + xShift,
+                MaxX = GridSettings.sizeX + xShift,
+                MinZ = 0,
+                MaxZ = GridSettings.sizeZ
+            };
+
             saveableObjects.ForEach(obj =>
             {
                 if (obj is SaveableCheckpoint saveableCheckpoint && gameObjects[index].TryGetComponent(out Checkpoint checkpoint))
@@ -91,7 +102,7 @@ public class MapSaveData
 
                 var position = gameObjects[index].transform.position;
 
-                position.x = obj.positionX + (GridSettings.sizeX + 2) * i;
+                position.x = obj.positionX + xShift;
                 position.y = obj.positionY;
                 position.z = obj.positionZ;
 
