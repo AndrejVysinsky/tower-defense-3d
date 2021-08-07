@@ -85,8 +85,6 @@ public class Enemy : NetworkBehaviour, IInteractable, IEntity
         var damage = enemyData.DamageToPlayer;
 
         GameController.Instance.ModifyLivesBy(-damage, transform.position);
-
-        NetworkClient.localPlayer.gameObject.GetComponent<NetworkPlayer>().Counter();
     }
 
     public void TakeDamage(float amount)

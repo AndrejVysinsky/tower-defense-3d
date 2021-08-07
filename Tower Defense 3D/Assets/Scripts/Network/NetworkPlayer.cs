@@ -4,23 +4,15 @@ using UnityEngine;
 
 public class NetworkPlayer : NetworkBehaviour
 {
-    private List<NetworkPlayer> _networkPlayers = new List<NetworkPlayer>();
+    private List<NetworkConnection> _networkConnections = new List<NetworkConnection>();
 
-    private int counter = 0;
-
-    public void PlayerConnected(NetworkPlayer networkPlayer)
+    public void PlayerConnected(NetworkConnection networkConnection)
     {
-        _networkPlayers.Add(networkPlayer);
+        _networkConnections.Add(networkConnection);
     }
 
-    public void PlayerDisconnected(NetworkPlayer networkPlayer)
+    public void PlayerDisconnected(NetworkConnection networkConnection)
     {
-        _networkPlayers.Remove(networkPlayer);
-    }
-
-    public void Counter()
-    {
-        counter++;
-        Debug.Log(NetworkClient.localPlayer.connectionToServer.connectionId + ": " + counter);
+        _networkConnections.Remove(networkConnection);
     }
 }

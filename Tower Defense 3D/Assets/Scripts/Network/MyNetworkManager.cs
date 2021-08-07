@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MyNetworkManager : NetworkManager
 {
-    private List<NetworkPlayer> _networkPlayers = new List<NetworkPlayer>();
+    private List<NetworkConnection> _networkConnections = new List<NetworkConnection>();
 
     public override void OnClientConnect(NetworkConnection conn)
     {
@@ -16,16 +16,28 @@ public class MyNetworkManager : NetworkManager
     {
         base.OnServerAddPlayer(conn);
 
-        Debug.Log($"Player was added! There are {numPlayers} players connected.");
+        NetworkPlayer connectedPlayer = conn.identity.GetComponent<NetworkPlayer>();
 
-        NetworkPlayer connectedPlayer = conn.identity.gameObject.GetComponent<NetworkPlayer>();
-
-        foreach (NetworkPlayer networkPlayer in _networkPlayers)
+        foreach (NetworkConnection networkConnection in _networkConnections)
         {
-            networkPlayer.PlayerConnected(connectedPlayer);
-            connectedPlayer.PlayerConnected(networkPlayer);
+            var networkPlayer = networkConnection.identity.GetComponent<NetworkPlayer>();
+            networkPlayer.PlayerConnected(conn);
+            connectedPlayer.PlayerConnected(networkConnection);
         }
 
-        _networkPlayers.Add(connectedPlayer);
+        _networkConnections.Add(conn);
+    }
+
+    public override void OnServerDisconnect(NetworkConnection conn)
+    {
+        base.OnServerDisconnect(conn);
+
+        _networkConnections.Remove(conn);
+
+        foreach (NetworkConnection networkConnection in _networkConnections)
+        {
+            var networkPlayer = networkConnection.identity.GetComponent<NetworkPlayer>();
+            networkPlayer.PlayerDisconnected(conn);
+        }
     }
 }
