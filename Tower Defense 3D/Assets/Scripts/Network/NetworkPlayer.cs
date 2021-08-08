@@ -1,5 +1,6 @@
 ﻿using Mirror;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class NetworkPlayer : NetworkBehaviour
@@ -12,7 +13,6 @@ public class NetworkPlayer : NetworkBehaviour
     private Boundaries _mapBoundaries;
     private CameraController _cameraController;
     private GridController _gridController;
-    private GameObject _objectToSpawn;
 
     private void Awake()
     {
@@ -49,25 +49,35 @@ public class NetworkPlayer : NetworkBehaviour
 
     public void Spawn(int spawnableIndex, Vector3 pos, Quaternion rotation)
     {
-        CmdSpawn(spawnableIndex, pos, rotation);
+        CmdSpawnTower(spawnableIndex, pos, rotation, GetComponent<NetworkIdentity>().netId);
     }
 
     [Command]
-    private void CmdSpawn(int spawnableIndex, Vector3 pos, Quaternion rotation)
+    private void CmdSpawnTower(int spawnableIndex, Vector3 pos, Quaternion rotation, uint playersNetId)
     {
+        var playerGameObject = FindObjectsOfType<NetworkIdentity>().FirstOrDefault(x => x.netId == playersNetId).gameObject;
+
         var objectToSpawn = Instantiate(_spawnPrefabs[spawnableIndex], pos, rotation);
+        NetworkServer.Spawn(objectToSpawn, playerGameObject);
 
-        if (objectToSpawn.TryGetComponent(out IUpgradeable upgradeable))
+        RpcUpgradeTower(objectToSpawn.GetComponent<NetworkIdentity>().netId);
+    }
+
+    [ClientRpc]
+    public void RpcUpgradeTower(uint towerNetId)
+    {
+        var towers = FindObjectsOfType<TowerBase>();
+
+        for (int i = 0; i < towers.Length; i++)
         {
-            upgradeable.OnUpgradeStarted(upgradeable.CurrentUpgrade, out bool upgradeStarted);
-
-            if (upgradeStarted == false)
+            if (towers[i].TryGetComponent(out NetworkIdentity networkIdentity))
             {
-                Destroy(objectToSpawn);
-                return;
+                if (networkIdentity.netId == towerNetId)
+                {
+                    var upgradeable = towers[i].GetComponent<IUpgradeable>();
+                    towers[i].OnUpgradeStarted(upgradeable.CurrentUpgrade, out bool upgradeStarted);
+                }
             }
         }
-
-        NetworkServer.Spawn(objectToSpawn, NetworkClient.localPlayer.gameObject);
     }
 }
