@@ -14,6 +14,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] float minDistanceFromGround;
 
     private Camera _camera;
+    private Boundaries _cameraBoundaries;
 
     private float _targetDistanceFromGround;
     private float _currentDistanceFromGround;
@@ -22,13 +23,10 @@ public class CameraController : MonoBehaviour
     {
         _camera = GetComponentInChildren<Camera>();
 
-        var position = _camera.transform.position;
-
-        position.x = gridController.GridSettings.sizeX / 2;
-        position.y = defaultDistanceFromGround;
-        position.z = gridController.GridSettings.sizeZ / 2 - 10;
-
-        _camera.transform.position = position;
+        //default camera boundaries to grid size
+        var tempBoundaries = new Boundaries();
+        tempBoundaries.SetBoundaries(0, gridController.GridSettings.sizeX, 0, gridController.GridSettings.sizeZ);
+        SetCameraBoundaries(tempBoundaries);
 
         _targetDistanceFromGround = defaultDistanceFromGround;
         _currentDistanceFromGround = GetCurrentDistanceFromGround();
@@ -58,6 +56,23 @@ public class CameraController : MonoBehaviour
         {
             AdjustHeightToTerrain();
         }
+    }
+
+    public void SetCameraBoundaries(Boundaries cameraBoundaries)
+    {
+        _cameraBoundaries = cameraBoundaries;
+    }
+
+    public void SetCameraPosition(float x, float z)
+    {
+        var position = _camera.transform.position;
+        position.y = defaultDistanceFromGround;
+        _camera.transform.position = position;
+
+        position = transform.position;
+        position.x = x;
+        position.z = z;
+        transform.position = position;
     }
 
     private void RotateCamera()
@@ -118,8 +133,8 @@ public class CameraController : MonoBehaviour
 
         var position = transform.position;
 
-        position.x = Mathf.Clamp(position.x, 0 - outOfMapDistance, gridController.GridSettings.sizeX + outOfMapDistance);
-        position.z = Mathf.Clamp(position.z, 0 - outOfMapDistance, gridController.GridSettings.sizeZ + outOfMapDistance);
+        position.x = Mathf.Clamp(position.x, _cameraBoundaries.X1 - outOfMapDistance, _cameraBoundaries.X2 + outOfMapDistance);
+        position.z = Mathf.Clamp(position.z, _cameraBoundaries.Z1 - outOfMapDistance, _cameraBoundaries.Z2 + outOfMapDistance);
 
         transform.position = position;
     }

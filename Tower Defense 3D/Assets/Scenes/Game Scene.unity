@@ -8613,75 +8613,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 8683805164469997600, guid: 71cb8956f96906248bb3bdd29d7599ba,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8683805164469997600, guid: 71cb8956f96906248bb3bdd29d7599ba,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8683805164469997600, guid: 71cb8956f96906248bb3bdd29d7599ba,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8683805164469997600, guid: 71cb8956f96906248bb3bdd29d7599ba,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.8660254
-      objectReference: {fileID: 0}
-    - target: {fileID: 8683805164469997600, guid: 71cb8956f96906248bb3bdd29d7599ba,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8683805164469997600, guid: 71cb8956f96906248bb3bdd29d7599ba,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 8683805164469997607, guid: 71cb8956f96906248bb3bdd29d7599ba,
-        type: 3}
-      propertyPath: m_BackGroundColor.r
-      value: 0.5471698
-      objectReference: {fileID: 0}
-    - target: {fileID: 8683805164469997607, guid: 71cb8956f96906248bb3bdd29d7599ba,
-        type: 3}
-      propertyPath: m_BackGroundColor.g
-      value: 0.5471698
-      objectReference: {fileID: 0}
-    - target: {fileID: 8683805164469997607, guid: 71cb8956f96906248bb3bdd29d7599ba,
-        type: 3}
-      propertyPath: m_BackGroundColor.b
-      value: 0.5471698
-      objectReference: {fileID: 0}
     - target: {fileID: 8683805164760568836, guid: 71cb8956f96906248bb3bdd29d7599ba,
         type: 3}
       propertyPath: gridController
       value: 
       objectReference: {fileID: 363907035}
-    - target: {fileID: 8683805164760568836, guid: 71cb8956f96906248bb3bdd29d7599ba,
-        type: 3}
-      propertyPath: maxDistanceFromGround
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 8683805164760568836, guid: 71cb8956f96906248bb3bdd29d7599ba,
-        type: 3}
-      propertyPath: zoomSensitivity
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8683805164760568836, guid: 71cb8956f96906248bb3bdd29d7599ba,
-        type: 3}
-      propertyPath: defaultDistanceFromGround
-      value: 15
-      objectReference: {fileID: 0}
     - target: {fileID: 8683805164760568837, guid: 71cb8956f96906248bb3bdd29d7599ba,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8683805164760568837, guid: 71cb8956f96906248bb3bdd29d7599ba,
         type: 3}
@@ -8691,7 +8631,7 @@ PrefabInstance:
     - target: {fileID: 8683805164760568837, guid: 71cb8956f96906248bb3bdd29d7599ba,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8683805164760568837, guid: 71cb8956f96906248bb3bdd29d7599ba,
         type: 3}

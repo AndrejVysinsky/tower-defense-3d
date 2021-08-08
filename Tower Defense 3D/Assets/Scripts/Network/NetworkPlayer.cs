@@ -6,13 +6,28 @@ public class NetworkPlayer : NetworkBehaviour
 {
     private List<NetworkConnection> _networkConnections = new List<NetworkConnection>();
 
-    public PlayersBoundaries Boundaries { get; set; }
-    public class PlayersBoundaries
+    public Boundaries PlayerBoundaries { get; set; }
+
+    private Boundaries _mapBoundaries;
+    private CameraController _cameraController;
+
+    private void Awake()
     {
-        public int MinX { get; set; }
-        public int MaxX { get; set; }
-        public int MinZ { get; set; }
-        public int MaxZ { get; set; }
+        _cameraController = FindObjectOfType<CameraController>();
+    }
+
+    public void SetMapBoundaries(Boundaries mapBoundaries)
+    {
+        if (mapBoundaries == null)
+            return;
+
+        _mapBoundaries = mapBoundaries;
+
+        if (isLocalPlayer)
+        {
+            _cameraController.SetCameraBoundaries(_mapBoundaries);
+            _cameraController.SetCameraPosition(PlayerBoundaries.GetMiddlePoint().x, PlayerBoundaries.GetMiddlePoint().z);
+        }
     }
 
     public void PlayerConnected(NetworkConnection networkConnection)

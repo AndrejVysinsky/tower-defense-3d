@@ -75,18 +75,19 @@ public class MapSaveData
          * do this for every player - because gameObjects list contains "numberOfPlayers" amount of map objects
          */
 
+        var mapBoundaries = new Boundaries();
+
         for (int i = 0; i < networkPlayers.Count; i++)
         {
             int xShift = (GridSettings.sizeX + (int)GridSettings.cellSize) * i;
             int zShift = (GridSettings.sizeZ + (int)GridSettings.cellSize) * i;
 
-            networkPlayers[i].Boundaries = new NetworkPlayer.PlayersBoundaries
-            {
-                MinX = 0 + xShift,
-                MaxX = GridSettings.sizeX + xShift,
-                MinZ = 0,
-                MaxZ = GridSettings.sizeZ
-            };
+            if (networkPlayers[i].PlayerBoundaries == null)
+                networkPlayers[i].PlayerBoundaries = new Boundaries();
+
+            networkPlayers[i].PlayerBoundaries.SetBoundaries(0 + xShift, GridSettings.sizeX + xShift, 0, GridSettings.sizeZ);
+
+            mapBoundaries.ExtendBoundariesTo(networkPlayers[i].PlayerBoundaries);
 
             saveableObjects.ForEach(obj =>
             {
@@ -122,6 +123,11 @@ public class MapSaveData
 
                 index++;
             });
+        }
+
+        for (int i = 0; i < networkPlayers.Count; i++)
+        {
+            networkPlayers[i].SetMapBoundaries(mapBoundaries);
         }
     }
 
