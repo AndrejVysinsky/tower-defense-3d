@@ -79,6 +79,7 @@ GameObject:
   - component: {fileID: 4330049152232915985}
   - component: {fileID: 2663825934812099868}
   - component: {fileID: 5132520390635155646}
+  - component: {fileID: 1707858391559959442}
   m_Layer: 0
   m_Name: Bombard Tower
   m_TagString: Untagged
@@ -127,6 +128,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a34a79eb041d9b49b8774ffda5c1389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   towerData: {fileID: 11400000, guid: aca56b6182729c040b82d11c0ca5f362, type: 2}
   sellableTooltip: {fileID: 11400000, guid: 8857fb61623567b40961d091f74a68f8, type: 2}
   projectilePrefab: {fileID: 714181449567907701, guid: 1f8c90ba5a07db7408e83c46ccc05756,
@@ -149,6 +152,23 @@ MonoBehaviour:
   - {fileID: 1158354407643333221}
   - {fileID: 3271029352802518801}
   - {fileID: 741218091308163388}
+--- !u!114 &1707858391559959442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2169085319361342427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1001 &4198357126919728292
 PrefabInstance:
   m_ObjectHideFlags: 0

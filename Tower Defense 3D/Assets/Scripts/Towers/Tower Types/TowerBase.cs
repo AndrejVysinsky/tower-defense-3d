@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using Mirror;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TowerBase : MonoBehaviour, IUpgradeable, ISellable, IInteractable, IEntity, IEntityDamage
+public class TowerBase : NetworkBehaviour, IUpgradeable, ISellable, IInteractable, IEntity, IEntityDamage
 {
     [SerializeField] TowerData towerData;
     [SerializeField] SellableTooltip sellableTooltip;

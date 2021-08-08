@@ -19,6 +19,7 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
     private GameObject _objectToPlacePrefab;
 
     public GridSettings GridSettings => gridSettings;
+    public Boundaries Boundaries { get; set; }
 
     public static bool IsBuildingModeActive { get; private set; } = false;
 
@@ -196,8 +197,16 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
         var offsetX = bounds.extents.x;
         var offsetZ = bounds.extents.z;
 
-        position.x = Mathf.Clamp(position.x, 0 + offsetX, gridSettings.sizeX - offsetX);
-        position.z = Mathf.Clamp(position.z, 0 + offsetZ, gridSettings.sizeZ - offsetZ);
+        if (Boundaries == null)
+        {
+            position.x = Mathf.Clamp(position.x, 0 + offsetX, gridSettings.sizeX - offsetX);
+            position.z = Mathf.Clamp(position.z, 0 + offsetZ, gridSettings.sizeZ - offsetZ);
+        } 
+        else
+        {
+            position.x = Mathf.Clamp(position.x, Boundaries.X1 + offsetX, Boundaries.X2 - offsetX);
+            position.z = Mathf.Clamp(position.z, Boundaries.Z1 + offsetZ, Boundaries.Z2 - offsetZ);
+        }
 
         position.y = _objectOriginY + _objectElevation;
 
@@ -213,6 +222,8 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
         //if grid was NOT clicked return
         if (RayCaster.RayCastGameObject(out RaycastHit hitInfo) == false)
             return;
+
+        placementValidator.RefreshCollider();
 
         if (gridSettings.collisionDetection && gridSettings.replaceOnCollision == false)
         {
@@ -239,7 +250,11 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
         bool success = brushObjectsHolder.TryPlaceObjectsOnMap(map);
 
         if (success == false)
+        {
+            placementValidator.RefreshCollider();
             return;
+        }
+           
 
         brushObjectsHolder.ClearObjects();
 
@@ -255,6 +270,8 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
         {
             InstantiateBrushObjects(placementValidator.transform.position);
         }
+
+        placementValidator.RefreshCollider();
     }
 
     public void OnBuildOptionClicked(GameObject gameObject)

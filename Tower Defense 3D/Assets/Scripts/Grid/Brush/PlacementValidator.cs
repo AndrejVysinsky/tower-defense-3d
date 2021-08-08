@@ -88,6 +88,14 @@ public class PlacementValidator : MonoBehaviour
         PlacementCollider.enabled = true;
     }
 
+    public void RefreshCollider()
+    {
+        PlacementCollider.enabled = false;
+        PlacementCollider.enabled = true;
+
+        CheckValidity();
+    }
+
     public void SetPosition(Vector3 position, GameObject objectToPlacePrefab)
     {
         if (_myTransform.position == position)

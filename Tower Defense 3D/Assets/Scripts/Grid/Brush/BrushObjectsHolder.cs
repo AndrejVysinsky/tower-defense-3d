@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Mirror;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BrushObjectsHolder : MonoBehaviour
@@ -82,18 +83,27 @@ public class BrushObjectsHolder : MonoBehaviour
         bool success = false;
         for (int i = 0; i < _objectsToPlace.Count; i++)
         {
+            if (_objectsToPlace[i].TryGetComponent(out NetworkBehaviour networkBehaviour))
+            {
+                int spawnableIndex = FindObjectOfType<MyNetworkManager>().spawnPrefabs.IndexOf(_originalPrefab);
+
+                NetworkClient.localPlayer.gameObject.GetComponent<NetworkPlayer>().Spawn(spawnableIndex, _objectsToPlace[i].transform.position, _objectsToPlace[i].transform.rotation);
+
+                return false;
+            }
+
             /*
                 if object implements IUpgradeable, try to start upgrade
                 returns false if upgrade did not start (should mean not enough gold) -> skip object placing
              */
-            if (_objectsToPlace[i].TryGetComponent(out IUpgradeable upgradeable))
-            {
-                upgradeable.OnUpgradeStarted(upgradeable.CurrentUpgrade, out bool upgradeStarted);
+            //if (_objectsToPlace[i].TryGetComponent(out IUpgradeable upgradeable))
+            //{
+            //    upgradeable.OnUpgradeStarted(upgradeable.CurrentUpgrade, out bool upgradeStarted);
 
-                if (upgradeStarted == false)
-                    continue;
-            }
-
+            //    if (upgradeStarted == false)
+            //        continue;
+            //}
+            
             //check for block visual adaptation (mostly for terrain block connecting)
             //if (_objectsToPlace[i].TryGetComponent(out PlacementRuleHandler placementRuleHandler))
             //{
@@ -111,10 +121,11 @@ public class BrushObjectsHolder : MonoBehaviour
             //reparent to map object
             _objectsToPlace[i].transform.parent = map.transform;
             map.ObjectPlaced(_objectsToPlace[i], _originalPrefab);
+
             success = true;
         }
         return success;
-    }    
+    }
 
     public void ClearObjects()
     {
