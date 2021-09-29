@@ -40,42 +40,17 @@ public class MapSaveManager : MonoBehaviour
         List<GameObject> gameObjects = new List<GameObject>();
         List<int> objectsToRemove = new List<int>();
 
-        //inner foreach instantiates all objects from map data
-        //do this for every player - so everyone has own map
-        for (int i = 0; i < networkPlayers.Count; i++)
+        //load map instance for every player
+        //in case of editor (no network players) load once
+        if (networkPlayers.Count == 0)
         {
-            //initialize checkpoint Pathway for every map
-            var pathwayObject = Instantiate(pathwayPrefab, transform);
-            var pathwayScript = pathwayObject.GetComponent<Pathway>();
-            pathwayScript.Initialize(this, i);
-
-            int index = 0;
-            foreach (var path in _mapSaveData.GetResourcePaths())
+            LoadMapInstance(0, gameObjects, objectsToRemove);
+        }
+        else
+        {
+            for (int i = 0; i < networkPlayers.Count; i++)
             {
-                var resource = Resources.Load<GameObject>(path);
-
-                if (resource == null)
-                {
-                    Debug.Log($"Resource \"{resource}\" in path \"{path}\" not found");
-                    objectsToRemove.Add(index);
-                    continue;
-                }
-
-                var gameObject = Instantiate(resource, transform);
-
-                if (gameObject.TryGetComponent(out Checkpoint checkpoint))
-                {
-                    checkpoint.Pathway = pathwayScript;
-                }
-
-                //if (gameObject.TryGetComponent(out PlacementRuleHandler placementRuleHandler))
-                //{
-                //    placementRuleHandler.OnObjectPlaced();
-                //}
-
-                gameObjects.Add(gameObject);
-
-                index++;
+                LoadMapInstance(i, gameObjects, objectsToRemove);
             }
         }
 
@@ -85,6 +60,44 @@ public class MapSaveManager : MonoBehaviour
         _mapSaveData.InitializeObjects(gameObjects, networkPlayers);
 
         StartCoroutine(NotifyAboutMapLoaded(isLoadingInEditor));
+    }
+
+    private void LoadMapInstance(int mapInstanceIndex, List<GameObject> gameObjects, List<int> objectsToRemove)
+    {
+        //initialize checkpoint Pathway for every map
+        var pathwayObject = Instantiate(pathwayPrefab, transform);
+        var pathwayScript = pathwayObject.GetComponent<Pathway>();
+        pathwayScript.Initialize(this, mapInstanceIndex);
+
+        int index = 0;
+        //instantiates all objects from map data
+        foreach (var path in _mapSaveData.GetResourcePaths())
+        {
+            var resource = Resources.Load<GameObject>(path);
+
+            if (resource == null)
+            {
+                Debug.Log($"Resource \"{resource}\" in path \"{path}\" not found");
+                objectsToRemove.Add(index);
+                continue;
+            }
+
+            var gameObject = Instantiate(resource, transform);
+
+            if (gameObject.TryGetComponent(out Checkpoint checkpoint))
+            {
+                checkpoint.Pathway = pathwayScript;
+            }
+
+            //if (gameObject.TryGetComponent(out PlacementRuleHandler placementRuleHandler))
+            //{
+            //    placementRuleHandler.OnObjectPlaced();
+            //}
+
+            gameObjects.Add(gameObject);
+
+            index++;
+        }
     }
 
     IEnumerator NotifyAboutMapLoaded(bool isLoadingInEditor)

@@ -50,7 +50,7 @@ public class MyNetworkManager : NetworkManager
 
         for (int i = 0; i < _networkConnections.Count; i++)
         {
-            if (_networkConnections[i] != null)
+            if (_networkConnections[i] != null && _networkConnections[i].identity != null)
             {
                 networkPlayers.Add(_networkConnections[i].identity.GetComponent<NetworkPlayer>());
             }
