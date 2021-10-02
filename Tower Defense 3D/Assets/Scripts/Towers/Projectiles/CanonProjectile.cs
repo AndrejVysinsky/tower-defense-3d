@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Mirror;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class CanonProjectile : MonoBehaviour, IProjectileSingleTarget
+public class CanonProjectile : NetworkBehaviour, IProjectileSingleTarget
 {
     [SerializeField] float speed;
     [SerializeField] float travelledDistanceAfterReachingTarget;
@@ -16,6 +17,7 @@ public class CanonProjectile : MonoBehaviour, IProjectileSingleTarget
     private float _travelledDistance;
     private float _damage;
 
+    [Server]
     public void Initialize(Vector3 targetPosition, float effectValue)
     {
         _targetDistance = Vector3.Distance(transform.position, targetPosition);
@@ -24,6 +26,7 @@ public class CanonProjectile : MonoBehaviour, IProjectileSingleTarget
         _damage = effectValue;
     }
 
+    [Server]
     private void Update()
     {
         MoveInPositionOfTarget();
@@ -44,6 +47,7 @@ public class CanonProjectile : MonoBehaviour, IProjectileSingleTarget
 
     }
 
+    [Server]
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
@@ -52,9 +56,10 @@ public class CanonProjectile : MonoBehaviour, IProjectileSingleTarget
         }
     }
     
+    [Server]
     public void ApplyEffectOnImpact(GameObject target)
     {
-        target.GetComponent<Enemy>().TakeDamage(_damage);
+        target.GetComponent<Enemy>().CmdTakeDamage(_damage);
         Destroy(gameObject);
     }
 }

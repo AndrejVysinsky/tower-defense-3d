@@ -48,8 +48,6 @@ public class Enemy : NetworkBehaviour, IInteractable, IEntity
         }
 
         transform.position = Vector3.MoveTowards(transform.position, _currentCheckpointPosition, enemyData.Speed * Time.deltaTime);
-
-        RpcUpdatePositionAndRotation(transform.position, transform.rotation);
     }
 
     [Server]
@@ -68,15 +66,6 @@ public class Enemy : NetworkBehaviour, IInteractable, IEntity
         _currentCheckpointPosition = _pathway.GetCheckpointGroundPosition(_currentCheckpoint);
 
         transform.LookAt(_currentCheckpointPosition);
-
-        RpcUpdatePositionAndRotation(transform.position, transform.rotation);
-    }
-
-    [ClientRpc]
-    private void RpcUpdatePositionAndRotation(Vector3 position, Quaternion rotation)
-    {
-        transform.position = position;
-        transform.rotation = rotation;
     }
 
     [Server]
@@ -87,20 +76,32 @@ public class Enemy : NetworkBehaviour, IInteractable, IEntity
         GameController.Instance.ModifyLivesBy(-damage, transform.position);
     }
 
-    public void TakeDamage(float amount)
+    [Command]
+    public void CmdTakeDamage(float amount)
     {
+        //healthScript.SubtractHealth(amount);
+
+        //if (healthScript.Health == 0 && IsDead == false)
+        //{
+        //    IsDead = true;
+
+        //    var reward = enemyData.RewardToPlayer * (1 + _difficultyModifier);
+
+        //    GameController.Instance.ModifyCurrencyBy((int)reward, transform.position);
+
+        //    OnDeath();
+        //}
+        Debug.Log("cmddamage");
+
+        RpcTakeDamage(amount);
+    }
+
+    [ClientRpc]
+    private void RpcTakeDamage(float amount)
+    {
+        Debug.Log("rpcdamage");
+
         healthScript.SubtractHealth(amount);
-
-        if (healthScript.Health == 0 && IsDead == false)
-        {
-            IsDead = true;
-
-            var reward = enemyData.RewardToPlayer * (1 + _difficultyModifier);
-
-            GameController.Instance.ModifyCurrencyBy((int)reward, transform.position);
-
-            OnDeath();
-        }
     }
 
     private void OnDeath()

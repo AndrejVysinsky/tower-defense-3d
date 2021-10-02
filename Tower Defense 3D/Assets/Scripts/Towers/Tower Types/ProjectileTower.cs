@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Mirror;
+using UnityEngine;
 
 public class ProjectileTower : TowerBase
 {
@@ -24,15 +25,18 @@ public class ProjectileTower : TowerBase
         if (towerTargeting.Target != null && towerTargeting.IsLookingAtTarget && _timer >= TowerData.AttackDelay)
         {
             _timer = 0;
-            Shoot(towerTargeting.Target);
+            CmdShoot(towerTargeting.Target);
         }
     }
 
-    public void Shoot(Enemy target)
+    [Command]
+    public void CmdShoot(Enemy target)
     {
         var projectile = Instantiate(projectilePrefab, towerTargeting.GetFirePointPosition(), transform.rotation);
 
-        projectile.GetComponent<IProjectileMovement>().Initialize(target.GetEnemyHitPoint(), TowerData.Damage);        
+        projectile.GetComponent<IProjectileMovement>().Initialize(target.GetEnemyHitPoint(), TowerData.Damage);
+
+        NetworkServer.Spawn(projectile);
     }
 
     public override void OnUpgradeStarted(IUpgradeOption upgradeOption, out bool upgradeStarted)
