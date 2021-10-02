@@ -64,7 +64,7 @@ public class MapSaveData
         saveableObjects.RemoveAll(x => x.id == gameObjectID);
     }
 
-    public void InitializeObjects(List<GameObject> gameObjects, List<NetworkPlayer> networkPlayers)
+    public void InitializeObjects(bool isLoadingInEditor, List<GameObject> gameObjects, List<NetworkPlayer> networkPlayers)
     {
         int index = 0;
 
@@ -75,19 +75,29 @@ public class MapSaveData
          * do this for every player - because gameObjects list contains "numberOfPlayers" amount of map objects
          */
 
+        int numberOfMapInstances = 1;
+
+        if (isLoadingInEditor == false)
+        {
+            numberOfMapInstances = networkPlayers.Count;
+        }
+
         var mapBoundaries = new Boundaries();
 
-        for (int i = 0; i < networkPlayers.Count; i++)
+        for (int i = 0; i < numberOfMapInstances; i++)
         {
             int xShift = (GridSettings.sizeX + (int)GridSettings.cellSize) * i;
             int zShift = (GridSettings.sizeZ + (int)GridSettings.cellSize) * i;
 
-            if (networkPlayers[i].PlayerBoundaries == null)
-                networkPlayers[i].PlayerBoundaries = new Boundaries();
+            if (isLoadingInEditor == false)
+            {
+                if (networkPlayers[i].PlayerBoundaries == null)
+                    networkPlayers[i].PlayerBoundaries = new Boundaries();
 
-            networkPlayers[i].PlayerBoundaries.SetBoundaries(0 + xShift, GridSettings.sizeX + xShift, 0, GridSettings.sizeZ);
+                networkPlayers[i].PlayerBoundaries.SetBoundaries(0 + xShift, GridSettings.sizeX + xShift, 0, GridSettings.sizeZ);
 
-            mapBoundaries.ExtendBoundariesTo(networkPlayers[i].PlayerBoundaries);
+                mapBoundaries.ExtendBoundariesTo(networkPlayers[i].PlayerBoundaries);
+            }
 
             saveableObjects.ForEach(obj =>
             {
@@ -125,9 +135,12 @@ public class MapSaveData
             });
         }
 
-        for (int i = 0; i < networkPlayers.Count; i++)
+        if (isLoadingInEditor == false)
         {
-            networkPlayers[i].SetMapBoundaries(mapBoundaries);
+            for (int i = 0; i < networkPlayers.Count; i++)
+            {
+                networkPlayers[i].SetMapBoundaries(mapBoundaries);
+            }
         }
     }
 

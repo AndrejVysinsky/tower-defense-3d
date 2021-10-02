@@ -5155,7 +5155,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.75, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 23.78, y: -21.93}
+  m_AnchoredPosition: {x: 23.78003, y: -21.929993}
   m_SizeDelta: {x: -47.546448, y: 43.88417}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &986727503
@@ -12543,6 +12543,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 77449262, guid: ed98d64e224f89c44bd1289d0b0a116c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 77449264, guid: ed98d64e224f89c44bd1289d0b0a116c, type: 3}
       propertyPath: checkpointConnectorPrefab
       value: 
@@ -12575,6 +12579,12 @@ PrefabInstance:
       propertyPath: endCheckpointMaterial
       value: 
       objectReference: {fileID: 2100000, guid: 9571b220b4b7574408d92ed6b533d80c, type: 2}
+    - target: {fileID: 117965990585871806, guid: ed98d64e224f89c44bd1289d0b0a116c,
+        type: 3}
+      propertyPath: pathwayPrefab
+      value: 
+      objectReference: {fileID: 8665296711976885834, guid: a7191266cfcf1f0449911e3b6c26494f,
+        type: 3}
     - target: {fileID: 7189475308025938309, guid: ed98d64e224f89c44bd1289d0b0a116c,
         type: 3}
       propertyPath: m_Name

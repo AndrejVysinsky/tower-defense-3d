@@ -42,22 +42,22 @@ public class MapSaveManager : MonoBehaviour
 
         //load map instance for every player
         //in case of editor (no network players) load once
-        if (networkPlayers.Count == 0)
+        int numberOfMapInstances = 1;
+
+        if (isLoadingInEditor == false)
         {
-            LoadMapInstance(0, gameObjects, objectsToRemove);
+            numberOfMapInstances = networkPlayers.Count;
         }
-        else
+
+        for (int i = 0; i < numberOfMapInstances; i++)
         {
-            for (int i = 0; i < networkPlayers.Count; i++)
-            {
-                LoadMapInstance(i, gameObjects, objectsToRemove);
-            }
+            LoadMapInstance(i, gameObjects, objectsToRemove);
         }
 
         for (int i = objectsToRemove.Count - 1; i >= 0; i--)
             _mapSaveData.RemoveObjectAt(objectsToRemove[i]);
 
-        _mapSaveData.InitializeObjects(gameObjects, networkPlayers);
+        _mapSaveData.InitializeObjects(isLoadingInEditor, gameObjects, networkPlayers);
 
         StartCoroutine(NotifyAboutMapLoaded(isLoadingInEditor));
     }
