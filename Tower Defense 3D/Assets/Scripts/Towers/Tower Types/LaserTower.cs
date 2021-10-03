@@ -45,7 +45,7 @@ public class LaserTower : TowerBase
         if (laserParticles.isStopped)
             laserParticles.Play();
 
-        target.CmdTakeDamage(TowerData.Damage * Time.deltaTime);
+        target.TakeDamage(TowerData.Damage * Time.deltaTime);
     }
 
     public override void OnUpgradeStarted(IUpgradeOption upgradeOption, out bool upgradeStarted)

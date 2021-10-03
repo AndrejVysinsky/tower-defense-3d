@@ -9,6 +9,7 @@ public class Enemy : NetworkBehaviour, IInteractable, IEntity
     [SerializeField] HealthScript healthScript;
     [SerializeField] Animator animator;
 
+    [SyncVar]
     private float _difficultyModifier;
 
     private Pathway _pathway;
@@ -25,18 +26,21 @@ public class Enemy : NetworkBehaviour, IInteractable, IEntity
 
     public bool IsDead { get; private set; } = false;
 
-    [Server]
     public void Initialize(Pathway pathway, float difficultyMultiplier)
     {
         _pathway = pathway;
         transform.position = _pathway.GetCheckpointGroundPosition(0);
         SetNextCheckpoint();
-
-        healthScript.Initialize(enemyData.Health * (1 + difficultyMultiplier));
-        _difficultyModifier = difficultyMultiplier;
     }
 
-    [Server]
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+
+        healthScript.Initialize(enemyData.Health * (1 + _difficultyModifier));
+    }
+
+    [ServerCallback]
     private void Update()
     {
         if (IsDead)
@@ -76,41 +80,37 @@ public class Enemy : NetworkBehaviour, IInteractable, IEntity
         GameController.Instance.ModifyLivesBy(-damage, transform.position);
     }
 
-    [Command]
-    public void CmdTakeDamage(float amount)
+    [Server]
+    public void TakeDamage(float amount)
     {
-        //healthScript.SubtractHealth(amount);
-
-        //if (healthScript.Health == 0 && IsDead == false)
-        //{
-        //    IsDead = true;
-
-        //    var reward = enemyData.RewardToPlayer * (1 + _difficultyModifier);
-
-        //    GameController.Instance.ModifyCurrencyBy((int)reward, transform.position);
-
-        //    OnDeath();
-        //}
-        Debug.Log("cmddamage");
-
-        RpcTakeDamage(amount);
-    }
-
-    [ClientRpc]
-    private void RpcTakeDamage(float amount)
-    {
-        Debug.Log("rpcdamage");
-
         healthScript.SubtractHealth(amount);
+
+        if (healthScript.Health == 0 && IsDead == false)
+        {
+            IsDead = true;
+
+            var reward = enemyData.RewardToPlayer * (1 + _difficultyModifier);
+
+            GameController.Instance.ModifyCurrencyBy((int)reward, transform.position);
+
+            OnDeath();
+        }
     }
 
+    [Server]
     private void OnDeath()
     {
         GetComponent<Collider>().enabled = false;
 
-        animator.Play("Death");
+        RpcDeathEffect();
 
         Destroy(gameObject, 2f);
+    }
+
+    [ClientRpc]
+    private void RpcDeathEffect()
+    {
+        animator.Play("Death");
     }
 
     public float GetRemainingDistance()

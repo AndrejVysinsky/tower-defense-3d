@@ -14,7 +14,7 @@ public class WaveTimer : NetworkBehaviour
 
     public event Action OnTimerSkipped;
 
-    [Server]
+    [ServerCallback]
     private void Update()
     {
         if (_time == 0)

@@ -94,7 +94,7 @@ public class BombardProjectile : MonoBehaviour, IProjectileWithAreaEffect
 
             var damageFactor = 1 - distance / damageRange;
 
-            target.GetComponent<Enemy>().CmdTakeDamage(_damage * damageFactor);
+            target.GetComponent<Enemy>().TakeDamage(_damage * damageFactor);
         }
 
         Destroy(gameObject);

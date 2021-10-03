@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Mirror;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class TowerTargeting : MonoBehaviour
+public class TowerTargeting : NetworkBehaviour
 {
     [Serializable]
     public class PartRotation
@@ -35,6 +36,7 @@ public class TowerTargeting : MonoBehaviour
         LookAt(transform.position + transform.forward, 1000000);
     }
 
+    [ServerCallback]
     private void Update()
     {
         if (_isActive == false)
@@ -83,6 +85,7 @@ public class TowerTargeting : MonoBehaviour
         IsLookingAtTarget = currentAngle < 5;
     }
 
+    [ServerCallback]
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Enemy"))
@@ -91,6 +94,7 @@ public class TowerTargeting : MonoBehaviour
         }
     }
 
+    [ServerCallback]
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Enemy"))

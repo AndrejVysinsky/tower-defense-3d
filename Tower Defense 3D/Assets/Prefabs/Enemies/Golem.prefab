@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 929607030391758668}
   - component: {fileID: 4321656244167379508}
   - component: {fileID: -8891211923745154217}
+  - component: {fileID: 4812217901544596269}
   - component: {fileID: -4616729006961526779}
   - component: {fileID: 5426078296391396891}
   m_Layer: 0
@@ -82,8 +83,30 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   enemyData: {fileID: 11400000, guid: 6fd26ad88dc814b45b8a9d1b363f2a0f, type: 2}
-  healthScript: {fileID: 8106718598506013729}
+  healthScript: {fileID: 4812217901544596269}
   animator: {fileID: 6097299539296532425}
+--- !u!114 &4812217901544596269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1922081410778728287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d647e545ffa9e9b44a16763884cca201, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  slider: {fileID: 2998072364724558707}
+  healthIndicator: {fileID: 5736847683802873432}
+  fullHealthColor:
+    serializedVersion: 2
+    rgba: 4278311687
+  lowHealthColor:
+    serializedVersion: 2
+    rgba: 4278190335
 --- !u!114 &-4616729006961526779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,10 +253,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 547499007045533745}
-  - component: {fileID: 8106718598506013729}
   - component: {fileID: 2604838655650329597}
   m_Layer: 0
-  m_Name: Health
+  m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -254,26 +276,6 @@ Transform:
   m_Father: {fileID: 1431423040307129440}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8106718598506013729
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5574801736514169576}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d647e545ffa9e9b44a16763884cca201, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slider: {fileID: 2998072364724558707}
-  healthIndicator: {fileID: 5736847683802873432}
-  fullHealthColor:
-    serializedVersion: 2
-    rgba: 4278311687
-  lowHealthColor:
-    serializedVersion: 2
-    rgba: 4278190335
 --- !u!114 &2604838655650329597
 MonoBehaviour:
   m_ObjectHideFlags: 0

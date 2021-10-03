@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using Mirror;
+using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthScript : MonoBehaviour
+public class HealthScript : NetworkBehaviour
 {
     [SerializeField] Slider slider;
     [SerializeField] Image healthIndicator;
@@ -11,8 +12,11 @@ public class HealthScript : MonoBehaviour
 
     private Gradient _gradient;
 
-    public float Health { get; private set; }
+    public float Health => _health;
     public float MaxHealth { get; private set; }
+
+    [SyncVar(hook = nameof(UpdateHealthHook))]
+    private float _health;
 
     private void Awake()
     {
@@ -28,23 +32,29 @@ public class HealthScript : MonoBehaviour
 
     public void Initialize(float health)
     {
-        Health = health;
+        _health = health;
         MaxHealth = health;
     }
 
+    [Server]
     public void SubtractHealth(float amount)
     {
-        Health -= amount;
+        _health -= amount;
 
-        if (Health < 0)
-            Health = 0;
-        
+        if (_health < 0)
+            _health = 0;
+    }
+
+    public void UpdateHealthHook(float oldHealth, float newHealth)
+    {
+        _health = newHealth;
+
         VisualiseDamage();
     }
 
     private void VisualiseDamage()
     {
-        float value = Health / MaxHealth;
+        float value = _health / MaxHealth;
 
         slider.value = value;
         healthIndicator.color = _gradient.Evaluate(value);

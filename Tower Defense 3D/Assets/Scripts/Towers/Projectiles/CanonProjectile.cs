@@ -26,12 +26,13 @@ public class CanonProjectile : NetworkBehaviour, IProjectileSingleTarget
         _damage = effectValue;
     }
 
-    [Server]
+    [ServerCallback]
     private void Update()
     {
         MoveInPositionOfTarget();
     }
 
+    [Server]
     public void MoveInPositionOfTarget()
     {
         if (_moveDirection == null || _travelledDistance >= travelledDistanceAfterReachingTarget + _targetDistance)
@@ -47,7 +48,7 @@ public class CanonProjectile : NetworkBehaviour, IProjectileSingleTarget
 
     }
 
-    [Server]
+    [ServerCallback]
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
@@ -59,7 +60,7 @@ public class CanonProjectile : NetworkBehaviour, IProjectileSingleTarget
     [Server]
     public void ApplyEffectOnImpact(GameObject target)
     {
-        target.GetComponent<Enemy>().CmdTakeDamage(_damage);
+        target.GetComponent<Enemy>().TakeDamage(_damage);
         Destroy(gameObject);
     }
 }

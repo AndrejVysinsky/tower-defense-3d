@@ -24,7 +24,7 @@ public class EnemySpawner : NetworkBehaviour, IMapLoaded
     public int WaveNumber { get; private set; } = 1;
     public int WaveCount => enemyWaves.Count;
 
-    [Server]
+    [ServerCallback]
     private void OnEnable()
     {
         waveTimer.OnTimerSkipped += OnWaveSkipped;
@@ -32,7 +32,7 @@ public class EnemySpawner : NetworkBehaviour, IMapLoaded
         EventManager.AddListener(gameObject);
     }
 
-    [Server]
+    [ServerCallback]
     private void OnDisable()
     {
         waveTimer.OnTimerSkipped -= OnWaveSkipped;
