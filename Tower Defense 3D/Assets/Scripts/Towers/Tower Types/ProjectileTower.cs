@@ -25,7 +25,11 @@ public class ProjectileTower : TowerBase
         if (towerTargeting.Target != null && towerTargeting.IsLookingAtTarget && _timer >= TowerData.AttackDelay)
         {
             _timer = 0;
-            CmdShoot(towerTargeting.Target);
+
+            if (hasAuthority)
+            {
+                CmdShoot(towerTargeting.Target);
+            }
         }
     }
 

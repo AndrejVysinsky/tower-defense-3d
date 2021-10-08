@@ -5238,7 +5238,7 @@ MonoBehaviour:
   gameOver: {fileID: 1775746374}
   pauseMenu: {fileID: 354256499}
   startingCurrency: 200
-  startingLives: 30
+  startingLives: 300
 --- !u!4 &1461662756
 Transform:
   m_ObjectHideFlags: 0

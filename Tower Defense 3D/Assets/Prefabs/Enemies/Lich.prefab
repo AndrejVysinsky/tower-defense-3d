@@ -12,7 +12,9 @@ GameObject:
   - component: {fileID: 929607030391758668}
   - component: {fileID: 4321656244167379508}
   - component: {fileID: -8891211923745154217}
+  - component: {fileID: 3570726811195979129}
   - component: {fileID: -4706752612991139005}
+  - component: {fileID: 7237477493645979729}
   m_Layer: 0
   m_Name: Lich
   m_TagString: Enemy
@@ -81,8 +83,30 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   enemyData: {fileID: 11400000, guid: ee89893df2c3aff46a516d82d7fb5a44, type: 2}
-  healthScript: {fileID: 8106718598506013729}
+  healthScript: {fileID: 3570726811195979129}
   animator: {fileID: 1544766662186704334}
+--- !u!114 &3570726811195979129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1922081410778728287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d647e545ffa9e9b44a16763884cca201, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  slider: {fileID: 2998072364724558707}
+  healthIndicator: {fileID: 5736847683802873432}
+  fullHealthColor:
+    serializedVersion: 2
+    rgba: 4278311687
+  lowHealthColor:
+    serializedVersion: 2
+    rgba: 4278190335
 --- !u!114 &-4706752612991139005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,6 +124,27 @@ MonoBehaviour:
   visible: 0
   m_AssetId: 
   hasSpawned: 0
+--- !u!114 &7237477493645979729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1922081410778728287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  localPositionSensitivity: 0.01
+  localRotationSensitivity: 0.01
+  localScaleSensitivity: 0.01
+  compressRotation: 0
+  interpolateScale: 1
+  syncScale: 1
 --- !u!1 &2617339198663091050
 GameObject:
   m_ObjectHideFlags: 0
@@ -208,7 +253,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 547499007045533745}
-  - component: {fileID: 8106718598506013729}
   - component: {fileID: 2604838655650329597}
   m_Layer: 0
   m_Name: Health
@@ -232,26 +276,6 @@ Transform:
   m_Father: {fileID: 1431423040307129440}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8106718598506013729
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5574801736514169576}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d647e545ffa9e9b44a16763884cca201, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slider: {fileID: 2998072364724558707}
-  healthIndicator: {fileID: 5736847683802873432}
-  fullHealthColor:
-    serializedVersion: 2
-    rgba: 4278311687
-  lowHealthColor:
-    serializedVersion: 2
-    rgba: 4278190335
 --- !u!114 &2604838655650329597
 MonoBehaviour:
   m_ObjectHideFlags: 0

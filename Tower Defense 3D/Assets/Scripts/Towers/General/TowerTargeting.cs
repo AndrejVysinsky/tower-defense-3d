@@ -18,9 +18,10 @@ public class TowerTargeting : NetworkBehaviour
 
     [SerializeField] List<PartRotation> lookAtTargetParts;
     [SerializeField] List<PartRotation> lookInDirectionParts;
-    
+
+    [SyncVar]
     private List<Enemy> _enemiesInRange;
-    
+
     public RangeRenderer RangeRenderer { get; private set; }
     public Enemy Target { get; private set; }
     public bool IsLookingAtTarget { get; private set; }
@@ -32,7 +33,7 @@ public class TowerTargeting : NetworkBehaviour
     {
         _enemiesInRange = new List<Enemy>();
         //RangeRenderer = new RangeRenderer(rangeLineRenderer, GetComponent<SphereCollider>().radius);
-        
+
         LookAt(transform.position + transform.forward, 1000000);
     }
 
@@ -88,6 +89,7 @@ public class TowerTargeting : NetworkBehaviour
     [ServerCallback]
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("enter");
         if (other.gameObject.CompareTag("Enemy"))
         {
             _enemiesInRange.Add(other.gameObject.GetComponent<Enemy>());
