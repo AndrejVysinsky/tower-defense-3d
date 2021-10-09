@@ -10,12 +10,12 @@ public class CanonProjectile : NetworkBehaviour, IProjectileSingleTarget
 {
     [SerializeField] float speed;
     [SerializeField] float travelledDistanceAfterReachingTarget;
-    
-    private Vector3 _moveDirection;
 
-    private float _targetDistance;
+    [SyncVar] private Vector3 _moveDirection;
+    [SyncVar] private float _targetDistance;
+    [SyncVar] private float _damage;
+
     private float _travelledDistance;
-    private float _damage;
 
     [Server]
     public void Initialize(Vector3 targetPosition, float effectValue)
@@ -26,13 +26,11 @@ public class CanonProjectile : NetworkBehaviour, IProjectileSingleTarget
         _damage = effectValue;
     }
 
-    [ServerCallback]
     private void Update()
     {
         MoveInPositionOfTarget();
     }
 
-    [Server]
     public void MoveInPositionOfTarget()
     {
         if (_moveDirection == null || _travelledDistance >= travelledDistanceAfterReachingTarget + _targetDistance)
@@ -48,12 +46,19 @@ public class CanonProjectile : NetworkBehaviour, IProjectileSingleTarget
 
     }
 
-    [ServerCallback]
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            ApplyEffectOnImpact(collision.gameObject);
+            if (isServer)
+            {
+                ApplyEffectOnImpact(collision.gameObject);
+            }
+            else
+            {
+                //prevents projectile in clients from overshooting - going through enemy
+                HideProjectile();
+            }
         }
     }
     
@@ -62,5 +67,10 @@ public class CanonProjectile : NetworkBehaviour, IProjectileSingleTarget
     {
         target.GetComponent<Enemy>().TakeDamage(_damage);
         Destroy(gameObject);
+    }
+
+    private void HideProjectile()
+    {
+        GetComponent<MeshRenderer>().enabled = false;
     }
 }

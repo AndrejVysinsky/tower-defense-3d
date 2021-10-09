@@ -1,4 +1,5 @@
 ﻿using Mirror;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ProjectileTower : TowerBase
@@ -41,6 +42,20 @@ public class ProjectileTower : TowerBase
         projectile.GetComponent<IProjectileMovement>().Initialize(target.GetEnemyHitPoint(), TowerData.Damage);
 
         NetworkServer.Spawn(projectile);
+    }
+
+    protected override void SetTarget(Enemy enemy)
+    {
+        base.SetTarget(enemy);
+
+        towerTargeting.Target = enemy;
+    }
+
+    protected override void SetLookingAtTarget(bool isLookingAtTarget)
+    {
+        base.SetLookingAtTarget(isLookingAtTarget);
+
+        towerTargeting.IsLookingAtTarget = isLookingAtTarget;
     }
 
     public override void OnUpgradeStarted(IUpgradeOption upgradeOption, out bool upgradeStarted)

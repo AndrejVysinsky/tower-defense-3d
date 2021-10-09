@@ -1,6 +1,7 @@
 ﻿using Mirror;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class TowerBase : NetworkBehaviour, IUpgradeable, ISellable, IInteractable, IEntity, IEntityDamage
@@ -61,7 +62,35 @@ public class TowerBase : NetworkBehaviour, IUpgradeable, ISellable, IInteractabl
     protected virtual void Start()
     {
 
-    }    
+    }
+
+    //============================================
+    // Network
+    //============================================
+
+    [ClientRpc]
+    public void RpcSetTarget(uint networkIdentityId)
+    {
+        var enemy = FindObjectsOfType<NetworkIdentity>().FirstOrDefault(x => x.netId == networkIdentityId).GetComponent<Enemy>();
+
+        SetTarget(enemy);
+    }
+    
+    [ClientRpc]
+    public void RpcSetLookingAtTarget(bool isLookingAtTarget)
+    {
+        SetLookingAtTarget(isLookingAtTarget);
+    }
+
+    protected virtual void SetTarget(Enemy enemy)
+    {
+
+    }
+
+    protected virtual void SetLookingAtTarget(bool isLookingAtTarget)
+    {
+
+    }
 
     //============================================
     // IUpgradeable

@@ -19,19 +19,24 @@ public class TowerTargeting : NetworkBehaviour
     [SerializeField] List<PartRotation> lookAtTargetParts;
     [SerializeField] List<PartRotation> lookInDirectionParts;
 
-    [SyncVar]
     private List<Enemy> _enemiesInRange;
 
     public RangeRenderer RangeRenderer { get; private set; }
-    public Enemy Target { get; private set; }
-    public bool IsLookingAtTarget { get; private set; }
+
+    public Enemy Target { get; set; }
+    public bool IsLookingAtTarget { get; set; }
 
     private Quaternion _targetRotation;
     private bool _isActive;
 
+    private TowerBase _towerBase;
+
+    [ServerCallback]
     private void Awake()
     {
+        _towerBase = GetComponentInParent<TowerBase>();
         _enemiesInRange = new List<Enemy>();
+        
         //RangeRenderer = new RangeRenderer(rangeLineRenderer, GetComponent<SphereCollider>().radius);
 
         LookAt(transform.position + transform.forward, 1000000);
@@ -46,7 +51,13 @@ public class TowerTargeting : NetworkBehaviour
         if (Target == null || Target.IsDead)
         {
             IsLookingAtTarget = false;
+            _towerBase.RpcSetLookingAtTarget(IsLookingAtTarget);
+
             Target = GetTarget();
+            if (Target != null)
+            {
+                _towerBase.RpcSetTarget(Target.GetComponent<NetworkIdentity>().netId);
+            }
         }
 
         if (Target != null)
@@ -55,6 +66,7 @@ public class TowerTargeting : NetworkBehaviour
         }
     }
 
+    [Server]
     private void LookAt(Vector3 position, float rotationSpeed)
     {
         float currentAngle = 180;
@@ -84,12 +96,12 @@ public class TowerTargeting : NetworkBehaviour
         }
 
         IsLookingAtTarget = currentAngle < 5;
+        _towerBase.RpcSetLookingAtTarget(IsLookingAtTarget);
     }
 
     [ServerCallback]
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("enter");
         if (other.gameObject.CompareTag("Enemy"))
         {
             _enemiesInRange.Add(other.gameObject.GetComponent<Enemy>());
@@ -103,6 +115,10 @@ public class TowerTargeting : NetworkBehaviour
         {
             _enemiesInRange.Remove(other.gameObject.GetComponent<Enemy>());
             Target = GetTarget();
+            if (Target != null)
+            {
+                _towerBase.RpcSetTarget(Target.GetComponent<NetworkIdentity>().netId);
+            }
         }
     }
 
