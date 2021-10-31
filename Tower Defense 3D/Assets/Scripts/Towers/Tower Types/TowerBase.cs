@@ -107,6 +107,13 @@ public class TowerBase : NetworkBehaviour, IUpgradeable, ISellable, IInteractabl
         upgradeStarted = true;
         IsUnderUpgrade = true;
 
+        var price = TowerData.Price;
+
+        var position = transform.position;
+        position.y += GetComponent<Collider>().bounds.size.y / 2;
+
+        GameController.Instance.ModifyCurrencyBy(-price, position);
+
         //simulate construction time
         //after finished
         StartCoroutine(OnUpgradeRunning(upgradeOption));
@@ -131,18 +138,14 @@ public class TowerBase : NetworkBehaviour, IUpgradeable, ISellable, IInteractabl
 
             InteractionSystem.Instance.RefreshInteractions();
         }
-
-        var price = TowerData.Price;
-
-        var position = transform.position;
-        position.y += GetComponent<Collider>().bounds.size.y / 2;
-
-        GameController.Instance.ModifyCurrencyBy(-price, position);
     }
 
     public virtual void OnUpgradeCanceled()
     {
         IsUnderUpgrade = false;
+
+        var price = TowerData.Price;
+        GameController.Instance.ModifyCurrencyBy(-price);
     }
 
     //============================================
