@@ -16,12 +16,12 @@ public class MapController : NetworkBehaviour
         //get list of connected players and pass it to map loader
         var myNetworkManager = (MyNetworkManager)NetworkManager.singleton;
 
-        RpcLoadMap(myNetworkManager.GetNetworkPlayers());
+        RpcLoadMap(myNetworkManager.GetPlayerIds());
     }
 
     [ClientRpc]
-    private void RpcLoadMap(List<NetworkPlayer> networkPlayers)
+    private void RpcLoadMap(List<uint> playerIds)
     {
-        saveManager.LoadMapData(false, networkPlayers);
+        saveManager.LoadMapData(false, playerIds);
     }
 }

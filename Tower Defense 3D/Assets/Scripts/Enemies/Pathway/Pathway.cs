@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using Mirror;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Pathway : MonoBehaviour, IMapCleared
+public class Pathway : NetworkBehaviour, IMapCleared
 {
     [SerializeField] GameObject lineRendererPrefab;
     [SerializeField] GameObject pathwayColliderPrefab;
@@ -19,15 +20,16 @@ public class Pathway : MonoBehaviour, IMapCleared
 
     private bool _canUpdatePosition;
     private MapSaveManager _map;
-    private int _mapId;
+    [SyncVar] private uint _playerId;
 
     public int NumberOfCheckpoints => _checkpoints.Count;
-    public int MapId => _mapId;
+    
+    public uint PlayerId => _playerId;
 
-    public void Initialize(MapSaveManager map, int mapId)
+    public void Initialize(MapSaveManager map, uint playerId)
     {
         _map = map;
-        _mapId = mapId;
+        _playerId = playerId;
     }
 
     private void OnEnable()

@@ -75,13 +75,13 @@ public class MapFileExplorer : MonoBehaviour
         //TODO: this call should not be here - temporary workaround
         var myNetworkManager = (MyNetworkManager)NetworkManager.singleton;
 
-        List<NetworkPlayer> networkPlayers = null;
+        List<uint> playerIds = null;
         if (myNetworkManager != null)
         {
-            networkPlayers = myNetworkManager.GetNetworkPlayers();
+            playerIds = myNetworkManager.GetPlayerIds();
         }
 
-        mapManager.LoadMapData(isLoadingInEditor, networkPlayers, mapName: _selectedMapFile.MapName);
+        mapManager.LoadMapData(isLoadingInEditor, playerIds, mapName: _selectedMapFile.MapName);
     }
 
     public void ShowSavePanel()

@@ -25,6 +25,7 @@ public class Enemy : NetworkBehaviour, IInteractable, IEntity
     public int TotalHitPoints => (int)healthScript.MaxHealth;
 
     public bool IsDead { get; private set; } = false;
+    public uint PlayerId => _pathway.PlayerId;
 
     public void Initialize(Pathway pathway, float difficultyMultiplier)
     {

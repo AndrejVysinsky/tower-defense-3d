@@ -1,6 +1,7 @@
 ﻿using Mirror;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -28,7 +29,7 @@ public class MapSaveManager : MonoBehaviour
         return FileManager.GetFiles(FileManager.MapPath);
     }
 
-    public void LoadMapData(bool isLoadingInEditor, List<NetworkPlayer> networkPlayers, string mapName = "defaultGameMap")
+    public void LoadMapData(bool isLoadingInEditor, List<uint> playerIds, string mapName = "defaultGameMap")
     {
         ClearScene();
 
@@ -41,17 +42,37 @@ public class MapSaveManager : MonoBehaviour
         List<int> objectsToRemove = new List<int>();
 
         //load map instance for every player
-        //in case of editor (no network players) load once
+        //in case of editor (no network players! no network manager!) load once
         int numberOfMapInstances = 1;
 
+        List<NetworkPlayer> networkPlayers = new List<NetworkPlayer>();
         if (isLoadingInEditor == false)
         {
-            numberOfMapInstances = networkPlayers.Count;
+            numberOfMapInstances = playerIds.Count;
+
+            var temp = FindObjectsOfType<NetworkPlayer>();
+
+            for (int i = 0; i < playerIds.Count; i++)
+            {
+                for (int j = 0; j < temp.Length; j++)
+                {
+                    if (playerIds[i] == temp[j].GetComponent<NetworkIdentity>().netId)
+                    {
+                        networkPlayers.Add(temp[j]);
+                    }
+                }
+            }
         }
 
         for (int i = 0; i < numberOfMapInstances; i++)
         {
-            LoadMapInstance(i, gameObjects, objectsToRemove);
+            uint playerId = 0;
+            if (playerIds != null)
+            {
+                playerId = playerIds[i];
+            }
+
+            LoadMapInstance(playerId, gameObjects, objectsToRemove);
         }
 
         for (int i = objectsToRemove.Count - 1; i >= 0; i--)
@@ -62,12 +83,12 @@ public class MapSaveManager : MonoBehaviour
         StartCoroutine(NotifyAboutMapLoaded(isLoadingInEditor));
     }
 
-    private void LoadMapInstance(int mapInstanceIndex, List<GameObject> gameObjects, List<int> objectsToRemove)
+    private void LoadMapInstance(uint playerId, List<GameObject> gameObjects, List<int> objectsToRemove)
     {
         //initialize checkpoint Pathway for every map
         var pathwayObject = Instantiate(pathwayPrefab, transform);
         var pathwayScript = pathwayObject.GetComponent<Pathway>();
-        pathwayScript.Initialize(this, mapInstanceIndex);
+        pathwayScript.Initialize(this, playerId);
 
         int index = 0;
         //instantiates all objects from map data

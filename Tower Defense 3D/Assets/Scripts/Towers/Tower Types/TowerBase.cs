@@ -20,7 +20,10 @@ public class TowerBase : NetworkBehaviour, IUpgradeable, ISellable, IInteractabl
             towerData = value;
         }
     }
-        
+
+    [SyncVar] private uint _playerId;
+    public uint PlayerId => _playerId;
+
     //============================================
     // IUpgradeable
     //============================================
@@ -67,6 +70,10 @@ public class TowerBase : NetworkBehaviour, IUpgradeable, ISellable, IInteractabl
     //============================================
     // Network
     //============================================
+    public void SetPlayerId(uint playerId)
+    {
+        _playerId = playerId;
+    }
 
     [ClientRpc]
     public void RpcSetTarget(uint networkIdentityId)
