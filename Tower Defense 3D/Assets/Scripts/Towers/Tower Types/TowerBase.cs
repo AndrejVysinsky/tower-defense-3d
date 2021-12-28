@@ -82,7 +82,7 @@ public class TowerBase : NetworkBehaviour, IUpgradeable, ISellable, IInteractabl
 
         SetTarget(enemy);
     }
-    
+
     [ClientRpc]
     public void RpcSetLookingAtTarget(bool isLookingAtTarget)
     {
@@ -104,24 +104,11 @@ public class TowerBase : NetworkBehaviour, IUpgradeable, ISellable, IInteractabl
     //============================================
     public virtual void OnUpgradeStarted(IUpgradeOption upgradeOption, out bool upgradeStarted)
     {
-        if (GameController.Instance.Currency < upgradeOption.Price)
-        {
-            Debug.Log("Not enough gold!");
-            upgradeStarted = false;
-            return;
-        }
-
         upgradeStarted = true;
         IsUnderUpgrade = true;
 
-        var price = TowerData.Price;
-
-        var position = transform.position;
-        position.y += GetComponent<Collider>().bounds.size.y / 2;
-
-        GameController.Instance.ModifyCurrencyBy(-price, position);
-
         //simulate construction time
+
         //after finished
         StartCoroutine(OnUpgradeRunning(upgradeOption));
     }
@@ -147,12 +134,10 @@ public class TowerBase : NetworkBehaviour, IUpgradeable, ISellable, IInteractabl
         }
     }
 
+    //not used
     public virtual void OnUpgradeCanceled()
     {
         IsUnderUpgrade = false;
-
-        var price = TowerData.Price;
-        GameController.Instance.ModifyCurrencyBy(-price);
     }
 
     //============================================
@@ -160,14 +145,28 @@ public class TowerBase : NetworkBehaviour, IUpgradeable, ISellable, IInteractabl
     //============================================
     public virtual void Sell()
     {
+        CmdSell(PlayerId);
+    }
+
+    [Command]
+    public void CmdSell(uint playerId)
+    {
         var sellValue = TowerData.GetSellValue();
 
+        var identity = FindObjectsOfType<NetworkIdentity>().FirstOrDefault(x => x.netId == playerId);
+        identity.GetComponent<NetworkPlayer>().UpdateCurrency(PlayerId, sellValue, GetFloatTextPosition());
+
+        NetworkServer.Destroy(gameObject);
+    }
+
+    //============================================
+    // Misc
+    //============================================
+    public virtual Vector3 GetFloatTextPosition()
+    {
         var position = transform.position;
         position.y += GetComponent<Collider>().bounds.size.y / 2;
 
-        GameController.Instance.ModifyCurrencyBy(sellValue, position);
-
-        Destroy(gameObject);
+        return position;
     }
-    
 }

@@ -13,7 +13,18 @@ public class Checkpoint : MonoBehaviour,
     public int CheckpointNumber { get; set; }
     public bool IsPlaced { get; private set; }
 
-    public Pathway Pathway { get; set; }
+    private Pathway _pathway;
+    private Pathway Pathway
+    {
+        get
+        {
+            if (_pathway == null)
+            {
+                _pathway = FindObjectOfType<Pathway>();
+            }
+            return _pathway;
+        }
+    }
 
     private void Awake()
     {
@@ -28,6 +39,11 @@ public class Checkpoint : MonoBehaviour,
     private void OnDisable()
     {
         EventManager.RemoveListener(gameObject);
+    }
+
+    public void SetPathway(Pathway pathway)
+    {
+        _pathway = pathway;
     }
 
     public Vector3 OnGridObjectPositionUpdated(Vector3 position)

@@ -14,6 +14,11 @@ public class MapSaveManager : MonoBehaviour
     private void Awake()
     {
         _mapSaveData = new MapSaveData();
+
+        //initialize checkpoint Pathway for every map
+        var pathwayObject = Instantiate(pathwayPrefab, transform);
+        var pathwayScript = pathwayObject.GetComponent<Pathway>();
+        pathwayScript.Initialize(this, 0);
     }
 
     private void Start()
@@ -107,7 +112,7 @@ public class MapSaveManager : MonoBehaviour
 
             if (gameObject.TryGetComponent(out Checkpoint checkpoint))
             {
-                checkpoint.Pathway = pathwayScript;
+                checkpoint.SetPathway(pathwayScript);
             }
 
             //if (gameObject.TryGetComponent(out PlacementRuleHandler placementRuleHandler))

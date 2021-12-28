@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6113417774869782629}
   - component: {fileID: 7538610371182323362}
-  - component: {fileID: -621402858615824437}
   m_Layer: 0
   m_Name: Pathway LineRenderer
   m_TagString: Untagged
@@ -130,16 +129,3 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
---- !u!114 &-621402858615824437
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6889638540412222175}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd59a6ec512148f479c8984d963da50a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lineRenderer: {fileID: 7538610371182323362}

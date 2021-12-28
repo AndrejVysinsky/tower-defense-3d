@@ -10,6 +10,7 @@ namespace Assets.Scripts.Network
 {
     public class PlayerStatusManager : MonoBehaviour, IPlayerEvents, IServerEvents
     {
+        [SerializeField] int heightWithoutPlayers = 60;
         [SerializeField] GameObject playerStatusPrefab;
         [SerializeField] GameObject playerStatusContainer;
 
@@ -18,9 +19,12 @@ namespace Assets.Scripts.Network
 
         private NetworkPlayer _localPlayer;
 
+        private RectTransform _rectTransform;
+
         private void Awake()
         {
-            _playerStatusList = new List<PlayerStatus>();
+            _rectTransform = GetComponent<RectTransform>();
+            _playerStatusList = new List<PlayerStatus>();                        
         }
 
         public void OnPlayerInitialized()
@@ -88,6 +92,9 @@ namespace Assets.Scripts.Network
 
                 _playerStatusList.Add(playerStatus);
             }
+
+            var playerStatusHeight = playerStatusPrefab.GetComponent<RectTransform>().sizeDelta.y + 10;
+            _rectTransform.SetHeight(heightWithoutPlayers + networkPlayers.Count * playerStatusHeight);
 
             //if player has status but is disconnected, delete it / grey out
             //or use ondisconnect in network manager

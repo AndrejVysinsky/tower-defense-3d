@@ -39,6 +39,7 @@ public class TowerTargeting : NetworkBehaviour
         
         //RangeRenderer = new RangeRenderer(rangeLineRenderer, GetComponent<SphereCollider>().radius);
 
+        //fix for strange initial rotation
         LookAt(transform.position + transform.forward, 1000000);
     }
 
@@ -95,6 +96,9 @@ public class TowerTargeting : NetworkBehaviour
             lookInDirectionParts[i].part.transform.rotation = Quaternion.RotateTowards(lookInDirectionParts[i].part.transform.rotation, _targetRotation, Time.deltaTime * rotationSpeed);
         }
 
+        if (_isActive == false)
+            return;
+
         IsLookingAtTarget = currentAngle < 5;
         _towerBase.RpcSetLookingAtTarget(IsLookingAtTarget);
     }
@@ -104,7 +108,15 @@ public class TowerTargeting : NetworkBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            _enemiesInRange.Add(other.gameObject.GetComponent<Enemy>());
+            var enemy = other.gameObject.GetComponent<Enemy>();
+
+            //enemy is assigned to player but player id does not match owner of tower
+            if (enemy.PlayerId != 0 && enemy.PlayerId != _towerBase.PlayerId)
+            {
+                return;
+            }
+
+            _enemiesInRange.Add(enemy);
         }
     }
 
@@ -113,7 +125,15 @@ public class TowerTargeting : NetworkBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            _enemiesInRange.Remove(other.gameObject.GetComponent<Enemy>());
+            var enemy = other.gameObject.GetComponent<Enemy>();
+
+            //enemy is assigned to player but player id does not match owner of tower
+            if (enemy.PlayerId != 0 && enemy.PlayerId != _towerBase.PlayerId)
+            {
+                return;
+            }
+
+            _enemiesInRange.Remove(enemy);
             Target = GetTarget();
             if (Target != null)
             {

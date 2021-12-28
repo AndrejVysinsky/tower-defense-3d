@@ -64,7 +64,6 @@ public class NetworkPlayer : NetworkBehaviour
     public void PlayerConnected(uint playerId)
     {
         connectedPlayers.Add(playerId);
-        Debug.Log("connected with id " + playerId);
     }
 
     [Server]
@@ -102,7 +101,7 @@ public class NetworkPlayer : NetworkBehaviour
         NetworkServer.Spawn(towerObject, playerGameObject);
 
         RpcUpgradeTower(towerObject.GetComponent<NetworkIdentity>().netId);
-        UpdateCurrency(playersNetId, -price);
+        UpdateCurrency(playersNetId, -price, towerObject.GetComponent<TowerBase>().GetFloatTextPosition());
     }
 
     [ClientRpc]
@@ -124,34 +123,53 @@ public class NetworkPlayer : NetworkBehaviour
     }
 
     [Server]
-    public void UpdateCurrency(uint playersNetId, int value)
+    public void UpdateCurrency(uint playersNetId, int value, Vector3 position)
     {
         _currency += value;
 
+        var conn = FindObjectsOfType<NetworkIdentity>().FirstOrDefault(x => x.netId == playersNetId).connectionToClient;
+        TargetDisplayCurrencyChange(conn, value, position);
+
         RpcUpdateCurrency(playersNetId, _currency);
+    }
+
+    [TargetRpc]
+    public void TargetDisplayCurrencyChange(NetworkConnection target, int value, Vector3 position)
+    {
+        GameController.Instance.DisplayCurrencyChange(value, position);
     }
 
     [ClientRpc]
     public void RpcUpdateCurrency(uint playersNetId, int currency)
     {
-        Debug.Log("Updating currency for clients");
-
         EventManager.ExecuteEvent<IPlayerEvents>((x, y) => x.OnCurrencyUpdated(playersNetId, currency));
     }
 
     [Server]
-    public void UpdateLives(uint playersNetId, int value)
+    public void UpdateLives(uint playersNetId, int value, Vector3 position)
     {
         _lives += value;
 
+        var conn = FindObjectsOfType<NetworkIdentity>().FirstOrDefault(x => x.netId == playersNetId).connectionToClient;
+        TargetDisplayLivesChange(conn, value, position);
+
         RpcUpdateLives(playersNetId, _lives);
+
+        if (_lives <= 0)
+        {
+            GameController.Instance.GameOver();
+        }
     }
 
     [ClientRpc]
     public void RpcUpdateLives(uint playersNetId, int lives)
     {
-        Debug.Log("Updating lives for clients");
-
         EventManager.ExecuteEvent<IPlayerEvents>((x, y) => x.OnLivesUpdated(playersNetId, lives));
+    }
+
+    [TargetRpc]
+    public void TargetDisplayLivesChange(NetworkConnection target, int value, Vector3 position)
+    {
+        GameController.Instance.DisplayLivesChange(value, position);
     }
 }

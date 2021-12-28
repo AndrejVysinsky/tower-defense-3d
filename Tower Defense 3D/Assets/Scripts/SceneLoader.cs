@@ -13,8 +13,15 @@ public class SceneLoader : MonoBehaviour
 
     public void ChangeScene(int buildIndex)
     {
-        SceneManager.LoadScene(buildIndex);
+        var sceneName = SceneManager.GetSceneByBuildIndex(buildIndex).name;
 
+        if (sceneName == "Menu Scene" || sceneName == "Editor Scene")
+        {
+            Destroy(FindObjectOfType<MyNetworkManager>());
+        }
+
+        SceneManager.LoadScene(buildIndex);
+        
         Time.timeScale = 1;
     }
 }

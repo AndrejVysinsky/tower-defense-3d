@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileTower : TowerBase
+public class ProjectileTower : TowerBase, IGridObjectInitialized, IGridObjectPlaced
 {
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] TowerTargeting towerTargeting;
@@ -12,8 +12,16 @@ public class ProjectileTower : TowerBase
     protected override void Awake()
     {
         base.Awake();
+    }
 
+    public void OnGridObjectInitialized()
+    {
         towerTargeting.SetTargeting(false);
+    }
+
+    public void OnGridObjectPlaced()
+    {
+        towerTargeting.SetTargeting(true);
     }
 
     private void Update()

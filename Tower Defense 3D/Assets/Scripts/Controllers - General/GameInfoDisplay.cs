@@ -3,51 +3,18 @@ using UnityEngine;
 
 public class GameInfoDisplay : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI currencyText;
     [SerializeField] TextMeshProUGUI waveText;
-    [SerializeField] TextMeshProUGUI livesText;
 
     [SerializeField] GameObject floatingTextPrefab;
-
-    public void UpdateCurrencyText(int total)
-    {
-        currencyText.text = GetParsedCurrency(total);
-    }
-
-    private string GetParsedCurrency(float value)
-    {
-        char thousandsChar = default;
-
-        if (value / 1000000 >= 1)
-        {
-            value /= 1000000;
-            thousandsChar = 'm';
-        }
-        else if (value / 1000 >= 1)
-        {
-            value /= 1000;
-            thousandsChar = 'k';
-        }
-
-        return value.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture) + thousandsChar;
-    }
-
+    
     public void DisplayCurrencyChangeText(int change, Vector3 position)
     {
-        //TODO: spawn text at position
         var floatingText = Instantiate(floatingTextPrefab);
         floatingText.GetComponent<FloatingTextScript>().Initialize(change.ToString(), position);
     }
 
-    public void UpdateLivesText(int total)
-    {
-        //TODO: spawn text at position
-        livesText.text = total.ToString();
-    }
-
     public void DisplayLivesChangeText(int change, Vector3 position)
     {
-        //TODO: spawn text at position
         var floatingText = Instantiate(floatingTextPrefab);
         floatingText.GetComponent<FloatingTextScript>().Initialize(change.ToString(), position);
     }

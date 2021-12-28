@@ -1,5 +1,6 @@
 ﻿using Mirror;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -30,6 +31,7 @@ public class Enemy : NetworkBehaviour, IInteractable, IEntity
     public void Initialize(Pathway pathway, float difficultyMultiplier)
     {
         _pathway = pathway;
+        _difficultyModifier = difficultyMultiplier;
         transform.position = _pathway.GetCheckpointGroundPosition(0);
         SetNextCheckpoint();
     }
@@ -78,7 +80,8 @@ public class Enemy : NetworkBehaviour, IInteractable, IEntity
     {
         var damage = enemyData.DamageToPlayer;
 
-        GameController.Instance.ModifyLivesBy(-damage, transform.position);
+        var identity = FindObjectsOfType<NetworkIdentity>().FirstOrDefault(x => x.netId == PlayerId);
+        identity.GetComponent<NetworkPlayer>().UpdateLives(PlayerId, -damage, GetEnemyHitPoint());
     }
 
     [Server]
@@ -92,7 +95,8 @@ public class Enemy : NetworkBehaviour, IInteractable, IEntity
 
             var reward = enemyData.RewardToPlayer * (1 + _difficultyModifier);
 
-            GameController.Instance.ModifyCurrencyBy((int)reward, transform.position);
+            var identity = FindObjectsOfType<NetworkIdentity>().FirstOrDefault(x => x.netId == PlayerId);
+            identity.GetComponent<NetworkPlayer>().UpdateCurrency(PlayerId, (int)reward, GetEnemyHitPoint());
 
             OnDeath();
         }

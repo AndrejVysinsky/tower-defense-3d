@@ -1,51 +1,115 @@
-﻿using UnityEngine;
+﻿using Mirror;
+using UnityEngine;
 
-public class LaserTower : TowerBase
+public class LaserTower : TowerBase, IGridObjectInitialized, IGridObjectPlaced
 {
     [SerializeField] LineRenderer laser;
     [SerializeField] ParticleSystem laserParticles;
     [SerializeField] TowerTargeting towerTargeting;
 
+    [SyncVar]
+    private bool _isShooting = false;
+
+    [SyncVar]
+    private Enemy _target = null;
+
     protected override void Awake()
     {
         base.Awake();
 
-        towerTargeting.SetTargeting(false);
-
         laserParticles = Instantiate(laserParticles).GetComponent<ParticleSystem>();
+    }
+
+    public void OnGridObjectInitialized()
+    {
+        towerTargeting.SetTargeting(false);
+    }
+
+    public void OnGridObjectPlaced()
+    {
+        towerTargeting.SetTargeting(true);
     }
 
     private void Update()
     {
+        if (!hasAuthority)
+            return;
+
         if (IsUnderUpgrade)
             return;
 
         if (towerTargeting.Target != null)
         {
-            laser.enabled = true;
-            Shoot(towerTargeting.Target);
+            CmdShoot();
         }
         else
         {
-            laser.enabled = false;
-
-            if (laserParticles.isPlaying)
-                laserParticles.Stop();
+            CmdStopShooting();
         }
     }
 
-    public void Shoot(Enemy target)
+    [Command]
+    public void CmdShoot()
     {
-        laser.SetPosition(0, towerTargeting.GetFirePointPosition());
-        laser.SetPosition(1, target.GetEnemyHitPoint());
+        if (towerTargeting.Target == null)
+            return;
 
-        laserParticles.transform.position = target.transform.position;
-        laserParticles.transform.LookAt(transform.position);
+        _target.TakeDamage(TowerData.Damage * Time.deltaTime);
+
+        RpcShowLaser();
+    }
+
+    [Command]
+    public void CmdStopShooting()
+    {
+        _isShooting = false;
+
+        RpcHideLaser();
+    }
+
+    [ClientRpc]
+    public void RpcShowLaser()
+    {
+        if (_target == null)
+        {
+            Debug.Log("Target null on RpcShowLaser");
+            return;
+        }
+
+        var startPosition = towerTargeting.GetFirePointPosition();
+        var endPosition = _target.GetEnemyHitPoint();
+        var particlePosition = _target.transform.position;
+        var particleOrientation = transform.position;
+
+        laser.enabled = true;
+        laser.SetPosition(0, startPosition);
+        laser.SetPosition(1, endPosition);
+
+        laserParticles.transform.position = particlePosition;
+        laserParticles.transform.LookAt(particleOrientation);
 
         if (laserParticles.isStopped)
+        {
             laserParticles.Play();
+        }
+    }
 
-        target.TakeDamage(TowerData.Damage * Time.deltaTime);
+    [ClientRpc]
+    public void RpcHideLaser()
+    {
+        laser.enabled = false;
+        if (laserParticles.isPlaying)
+        {
+            laserParticles.Stop();
+        }
+    }
+
+    protected override void SetTarget(Enemy enemy)
+    {
+        base.SetTarget(enemy);
+
+        towerTargeting.Target = enemy;
+        _target = enemy;
     }
 
     public override void OnUpgradeStarted(IUpgradeOption upgradeOption, out bool upgradeStarted)

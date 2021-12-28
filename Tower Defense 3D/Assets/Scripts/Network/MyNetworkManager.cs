@@ -15,6 +15,12 @@ public class MyNetworkManager : NetworkManager
         base.OnClientConnect(conn);
     }
 
+    /*
+     * NetworkManager.singleton.StopClient();
+     * NetworkManager.singleton.StopHost();
+     * 
+     */
+
     public override void OnServerAddPlayer(NetworkConnection conn)
     {
         base.OnServerAddPlayer(conn);
