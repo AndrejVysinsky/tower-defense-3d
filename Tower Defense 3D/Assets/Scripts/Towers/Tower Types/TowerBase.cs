@@ -84,6 +84,12 @@ public class TowerBase : NetworkBehaviour, IUpgradeable, ISellable, IInteractabl
     }
 
     [ClientRpc]
+    public void RpcResetTarget()
+    {
+        SetTarget(null);
+    }
+
+    [ClientRpc]
     public void RpcSetLookingAtTarget(bool isLookingAtTarget)
     {
         SetLookingAtTarget(isLookingAtTarget);

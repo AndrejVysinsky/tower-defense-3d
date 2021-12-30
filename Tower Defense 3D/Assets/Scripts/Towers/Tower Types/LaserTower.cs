@@ -1,4 +1,5 @@
 ﻿using Mirror;
+using System.Linq;
 using UnityEngine;
 
 public class LaserTower : TowerBase, IGridObjectInitialized, IGridObjectPlaced
@@ -10,14 +11,17 @@ public class LaserTower : TowerBase, IGridObjectInitialized, IGridObjectPlaced
     [SyncVar]
     private bool _isShooting = false;
 
-    [SyncVar]
-    private Enemy _target = null;
+    private float _timer;
+    private float _syncInterval = 0.1f;
 
     protected override void Awake()
     {
         base.Awake();
 
         laserParticles = Instantiate(laserParticles).GetComponent<ParticleSystem>();
+
+        laser.enabled = false;
+        laserParticles.Stop();
     }
 
     public void OnGridObjectInitialized()
@@ -32,20 +36,49 @@ public class LaserTower : TowerBase, IGridObjectInitialized, IGridObjectPlaced
 
     private void Update()
     {
+        if (towerTargeting.Target != null)
+        {
+            UpdateLaserPosition();
+        }
+
         if (!hasAuthority)
             return;
 
         if (IsUnderUpgrade)
             return;
 
-        if (towerTargeting.Target != null)
+        if (towerTargeting.Target == null)
+        {
+            if (_isShooting)
+            {
+                CmdStopShooting();
+            }
+            return;
+        }
+        
+        _timer += Time.deltaTime;
+
+        if (_isShooting == false)
         {
             CmdShoot();
         }
         else
         {
-            CmdStopShooting();
+            if (_timer >= _syncInterval)
+            {
+                CmdDealDamage(_timer);
+                _timer = 0;
+            }
         }
+    }
+
+    [Command]
+    public void CmdDealDamage(float time)
+    {
+        if (towerTargeting.Target == null)
+            return;
+
+        towerTargeting.Target.TakeDamage(TowerData.Damage * time);
     }
 
     [Command]
@@ -54,8 +87,7 @@ public class LaserTower : TowerBase, IGridObjectInitialized, IGridObjectPlaced
         if (towerTargeting.Target == null)
             return;
 
-        _target.TakeDamage(TowerData.Damage * Time.deltaTime);
-
+        _isShooting = true;
         RpcShowLaser();
     }
 
@@ -63,35 +95,38 @@ public class LaserTower : TowerBase, IGridObjectInitialized, IGridObjectPlaced
     public void CmdStopShooting()
     {
         _isShooting = false;
-
         RpcHideLaser();
     }
 
     [ClientRpc]
     public void RpcShowLaser()
-    {
-        if (_target == null)
+    {      
+        if (towerTargeting.Target == null)
         {
             Debug.Log("Target null on RpcShowLaser");
             return;
         }
 
+        laser.enabled = true;        
+        if (laserParticles.isStopped)
+        {
+            laserParticles.Play();
+        }
+        UpdateLaserPosition();
+    }
+
+    private void UpdateLaserPosition()
+    {
         var startPosition = towerTargeting.GetFirePointPosition();
-        var endPosition = _target.GetEnemyHitPoint();
-        var particlePosition = _target.transform.position;
+        var endPosition = towerTargeting.Target.GetEnemyHitPoint();
+        var particlePosition = towerTargeting.Target.transform.position;
         var particleOrientation = transform.position;
 
-        laser.enabled = true;
         laser.SetPosition(0, startPosition);
         laser.SetPosition(1, endPosition);
 
         laserParticles.transform.position = particlePosition;
         laserParticles.transform.LookAt(particleOrientation);
-
-        if (laserParticles.isStopped)
-        {
-            laserParticles.Play();
-        }
     }
 
     [ClientRpc]
@@ -109,7 +144,11 @@ public class LaserTower : TowerBase, IGridObjectInitialized, IGridObjectPlaced
         base.SetTarget(enemy);
 
         towerTargeting.Target = enemy;
-        _target = enemy;
+
+        if (hasAuthority)
+        {
+            CmdStopShooting();
+        }
     }
 
     public override void OnUpgradeStarted(IUpgradeOption upgradeOption, out bool upgradeStarted)

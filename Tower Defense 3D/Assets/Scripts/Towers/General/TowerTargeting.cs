@@ -59,6 +59,10 @@ public class TowerTargeting : NetworkBehaviour
             {
                 _towerBase.RpcSetTarget(Target.GetComponent<NetworkIdentity>().netId);
             }
+            else
+            {
+                _towerBase.RpcResetTarget();
+            }
         }
 
         if (Target != null)
@@ -138,6 +142,10 @@ public class TowerTargeting : NetworkBehaviour
             if (Target != null)
             {
                 _towerBase.RpcSetTarget(Target.GetComponent<NetworkIdentity>().netId);
+            }
+            else
+            {
+                _towerBase.RpcResetTarget();
             }
         }
     }
