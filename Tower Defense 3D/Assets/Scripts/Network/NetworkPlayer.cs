@@ -79,8 +79,13 @@ public class NetworkPlayer : NetworkBehaviour
 
     public void Spawn(int spawnableIndex, Vector3 pos, Quaternion rotation)
     {
+        if (isLocalPlayer == false)
+        {
+            return;
+        }
+
         CmdSpawnTower(spawnableIndex, pos, rotation, PlayerId);
-    }
+    }       
 
     [Command]
     private void CmdSpawnTower(int spawnableIndex, Vector3 pos, Quaternion rotation, uint playersNetId)
@@ -100,12 +105,36 @@ public class NetworkPlayer : NetworkBehaviour
 
         NetworkServer.Spawn(towerObject, playerGameObject);
 
-        RpcUpgradeTower(towerObject.GetComponent<NetworkIdentity>().netId);
+        RpcUpgradeTower(towerObject.GetComponent<NetworkIdentity>().netId, -1);
         UpdateCurrency(playersNetId, -price, towerObject.GetComponent<TowerBase>().GetFloatTextPosition());
     }
 
+    public void UpgradeTower(TowerBase towerBase, int upgradePrice, int upgradeIndex)
+    {
+        if (towerBase.GetComponent<NetworkIdentity>().hasAuthority == false)
+        {
+            return;
+        }
+        
+        CmdUpgradeTower(towerBase.GetComponent<NetworkIdentity>().netId, upgradePrice, upgradeIndex, towerBase.GetFloatTextPosition(), PlayerId);
+    }
+
+    [Command]
+    public void CmdUpgradeTower(uint towerNetId, int upgradePrice, int upgradeIndex, Vector3 upgradePosition, uint playersNetId)
+    {
+        //has enough currency
+        if (Currency < upgradePrice)
+        {
+            Debug.Log("Not enough currency!");
+            return;
+        }
+
+        RpcUpgradeTower(towerNetId, upgradeIndex);
+        UpdateCurrency(playersNetId, -upgradePrice, upgradePosition);
+    }
+
     [ClientRpc]
-    public void RpcUpgradeTower(uint towerNetId)
+    public void RpcUpgradeTower(uint towerNetId, int upgradeIndex)
     {
         var towers = FindObjectsOfType<TowerBase>();
 
@@ -115,8 +144,17 @@ public class NetworkPlayer : NetworkBehaviour
             {
                 if (networkIdentity.netId == towerNetId)
                 {
-                    var upgradeable = towers[i].GetComponent<IUpgradeable>();
-                    towers[i].OnUpgradeStarted(upgradeable.CurrentUpgrade, out bool upgradeStarted);
+                    IUpgradeOption upgradeOption;
+                    if (upgradeIndex == -1)
+                    {
+                        upgradeOption = towers[i].GetComponent<IUpgradeable>().CurrentUpgrade;
+                    }
+                    else
+                    {
+                        upgradeOption = towers[i].GetComponent<IUpgradeable>().UpgradeOptions[upgradeIndex];
+                    }
+
+                    towers[i].OnUpgradeStarted(upgradeOption, out bool upgradeStarted);
                 }
             }
         }

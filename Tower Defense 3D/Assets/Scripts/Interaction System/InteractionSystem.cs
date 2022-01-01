@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Mirror;
+using UnityEngine;
 
 public class InteractionSystem : MonoBehaviour
 {
@@ -55,9 +56,26 @@ public class InteractionSystem : MonoBehaviour
 
     private void ShowInteractions()
     {
+        bool hasAuthority = false;
+        if (InteractingGameObject.TryGetComponent(out NetworkIdentity networkIdentity))
+        {
+            if (networkIdentity.hasAuthority)
+            {
+                hasAuthority = true;
+            }
+        }
+        else
+        {
+            hasAuthority = true;
+        }
+
         entityPanel.SetActive(true);
-        interactionPanel.SetActive(true);
         interactionIndicator.SetActive(true);
+        
+        if (hasAuthority)
+        {
+            interactionPanel.SetActive(true);
+        }
 
         buyContainer.SetActive(false);
     }
@@ -65,10 +83,10 @@ public class InteractionSystem : MonoBehaviour
     private void HideInteractions()
     {
         entityPanel.SetActive(false);
-        interactionPanel.SetActive(false);
         interactionIndicator.SetActive(false);
+        interactionPanel.SetActive(false);
 
-        buyContainer.SetActive(true);
+        buyContainer.SetActive(true);        
     }
 
     public void RefreshInteractions()

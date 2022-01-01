@@ -133,9 +133,7 @@ public class TowerBase : NetworkBehaviour, IUpgradeable, ISellable, IInteractabl
         if (upgradeOption != CurrentUpgrade)
         {
             var nextTowerData = TowerData.NextUpgrades.Find(x => x == upgradeOption);
-
             TowerData = nextTowerData;
-
             InteractionSystem.Instance.RefreshInteractions();
         }
     }
@@ -151,6 +149,11 @@ public class TowerBase : NetworkBehaviour, IUpgradeable, ISellable, IInteractabl
     //============================================
     public virtual void Sell()
     {
+        if (hasAuthority == false)
+        {
+            return;
+        }
+
         CmdSell(PlayerId);
     }
 

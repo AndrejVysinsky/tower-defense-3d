@@ -43,7 +43,7 @@ public class InteractionPanel : MonoBehaviour
                 var upgradePanel = Instantiate(upgradePrefab, transform);
                 _interactions.Add(upgradePanel);
 
-                upgradePanel.GetComponent<UpgradePanel>().SetUpgrade(upgradable, upgradeOption);
+                upgradePanel.GetComponent<UpgradePanel>().SetUpgrade(upgradable, upgradeOption, i);
                 upgradePanel.GetComponent<TooltipTrigger>().SetTooltip(upgradeOption.Tooltip);
             }
         }

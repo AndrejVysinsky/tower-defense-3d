@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Network;
+using Mirror;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -8,11 +10,13 @@ public class UpgradePanel : MonoBehaviour, IPointerDownHandler
 
     private IUpgradeable _upgradable;
     private IUpgradeOption _upgradeOption;
+    private int _upgradeIndex;
 
-    public void SetUpgrade(IUpgradeable upgradable, IUpgradeOption upgradeOption)
+    public void SetUpgrade(IUpgradeable upgradable, IUpgradeOption upgradeOption, int upgradeIndex)
     {
         _upgradable = upgradable;
         _upgradeOption = upgradeOption;
+        _upgradeIndex = upgradeIndex;
 
         upgradeImage.sprite = upgradeOption.Sprite;
         upgradeImage.preserveAspect = true;
@@ -20,11 +24,12 @@ public class UpgradePanel : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        _upgradable.OnUpgradeStarted(_upgradeOption, out bool upgradeStarted);
+        var interactingObject = InteractionSystem.Instance.InteractingGameObject;
 
-        if (upgradeStarted)
+        if (interactingObject.TryGetComponent(out TowerBase towerBase))
         {
-            InteractionSystem.Instance.RefreshInteractions();
+            var localPlayer = NetworkClient.localPlayer.gameObject.GetComponent<NetworkPlayer>();
+            localPlayer.UpgradeTower(towerBase, _upgradeOption.Price, _upgradeIndex);
         }
     }
 }
