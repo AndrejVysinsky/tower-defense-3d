@@ -4,6 +4,6 @@ namespace Assets.Scripts.Network
 {
     public interface IServerEvents : IEventSystemHandler
     {
-        void OnPlayerInitialized();
+        void OnPlayerInitialized(NetworkPlayer networkPlayer);
     }
 }

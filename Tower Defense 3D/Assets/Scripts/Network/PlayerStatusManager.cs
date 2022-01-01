@@ -14,7 +14,6 @@ namespace Assets.Scripts.Network
         [SerializeField] GameObject playerStatusPrefab;
         [SerializeField] GameObject playerStatusContainer;
 
-        private MyNetworkManager _networkManager;
         private List<PlayerStatus> _playerStatusList;
 
         private NetworkPlayer _localPlayer;
@@ -27,13 +26,14 @@ namespace Assets.Scripts.Network
             _playerStatusList = new List<PlayerStatus>();                        
         }
 
-        public void OnPlayerInitialized()
+        public void OnPlayerInitialized(NetworkPlayer networkPlayer)
         {
-            _localPlayer = NetworkClient.localPlayer.gameObject.GetComponent<NetworkPlayer>();
-            _networkManager = (MyNetworkManager)NetworkManager.singleton;
+            if (_localPlayer == null)
+            {
+                _localPlayer = NetworkClient.localPlayer.gameObject.GetComponent<NetworkPlayer>();
+            }
 
-            var networkPlayers = _networkManager.GetNetworkPlayers(_localPlayer.GetPlayerConnections());
-            UpdatePlayerDisplay(networkPlayers);
+            AddPlayerDisplay(networkPlayer);
         }
 
         private void OnEnable()
@@ -48,10 +48,7 @@ namespace Assets.Scripts.Network
 
         public void OnCurrencyUpdated(uint playersNetId, int currentValue)
         {
-            var networkPlayers = _networkManager.GetNetworkPlayers(_localPlayer.GetPlayerConnections());
-            UpdatePlayerDisplay(networkPlayers);
-
-            for (int i = 0; i < networkPlayers.Count; i++)
+            for (int i = 0; i < _playerStatusList.Count; i++)
             {
                 if (_playerStatusList[i].Id == playersNetId)
                 {
@@ -62,10 +59,7 @@ namespace Assets.Scripts.Network
 
         public void OnLivesUpdated(uint playersNetId, int currentValue)
         {
-            var networkPlayers = _networkManager.GetNetworkPlayers(_localPlayer.GetPlayerConnections());
-            UpdatePlayerDisplay(networkPlayers);
-
-            for (int i = 0; i < networkPlayers.Count; i++)
+            for (int i = 0; i < _playerStatusList.Count; i++)
             {
                 if (_playerStatusList[i].Id == playersNetId)
                 {
@@ -74,27 +68,26 @@ namespace Assets.Scripts.Network
             }
         }
 
-        private void UpdatePlayerDisplay(List<NetworkPlayer> networkPlayers)
+        private void AddPlayerDisplay(NetworkPlayer networkPlayer)
         {
             //if player does not have status, create it
-            for (int i = 0; i < networkPlayers.Count; i++)
+            uint playerId = networkPlayer.GetComponent<NetworkIdentity>().netId;
+            if (_playerStatusList.Any(x => x.Id == playerId) == true)
             {
-                uint playerId = networkPlayers[i].GetComponent<NetworkIdentity>().netId;
-                if (_playerStatusList.Any(x => x.Id == playerId) == true)
-                {
-                    continue;
-                }
-                
-                var playerStatusObject = Instantiate(playerStatusPrefab, playerStatusContainer.transform);
-
-                var playerStatus = playerStatusObject.GetComponent<PlayerStatus>();
-                playerStatus.SetPlayerStatus(playerId, "Player " + playerId, networkPlayers[i].Lives, networkPlayers[i].Currency);
-
-                _playerStatusList.Add(playerStatus);
+                Debug.Log(playerId + " already in status list");
+                return;
             }
 
-            var playerStatusHeight = playerStatusPrefab.GetComponent<RectTransform>().sizeDelta.y + 10;
-            _rectTransform.SetHeight(heightWithoutPlayers + networkPlayers.Count * playerStatusHeight);
+            var playerStatusObject = Instantiate(playerStatusPrefab, playerStatusContainer.transform);
+
+            var playerStatus = playerStatusObject.GetComponent<PlayerStatus>();
+            playerStatus.SetPlayerStatus(playerId, networkPlayer.MyInfo.name, networkPlayer.MyInfo.color, networkPlayer.Lives, networkPlayer.Currency);
+
+            _playerStatusList.Add(playerStatus);
+
+
+            var playerStatusHeight = playerStatusPrefab.GetComponent<RectTransform>().sizeDelta.y;
+            _rectTransform.SetHeight(heightWithoutPlayers + _playerStatusList.Count * playerStatusHeight);
 
             //if player has status but is disconnected, delete it / grey out
             //or use ondisconnect in network manager

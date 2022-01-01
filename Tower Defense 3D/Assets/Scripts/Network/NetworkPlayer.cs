@@ -9,23 +9,21 @@ public class NetworkPlayer : NetworkBehaviour
     [SerializeField] int startingCurrency;
     [SerializeField] int startingLives;
 
-    public readonly SyncList<uint> connectedPlayers = new SyncList<uint>();
+    public readonly SyncList<BasePlayerInfo> _playerInfoList = new SyncList<BasePlayerInfo>();
 
-    private List<NetworkConnection> _networkConnections = new List<NetworkConnection>();
     private List<GameObject> _spawnPrefabs;
 
     public Boundaries PlayerBoundaries { get; set; }
-
     private Boundaries _mapBoundaries;
     private CameraController _cameraController;
     private GridController _gridController;
 
     [SyncVar] private int _currency;
     [SyncVar] private int _lives;
+    [SyncVar] private int _myInfoIndex = -1;
     public int Currency => _currency;
     public int Lives => _lives;
-
-    public uint PlayerId { get; private set; }
+    public BasePlayerInfo MyInfo => _playerInfoList[_myInfoIndex];
 
     private void Awake()
     {
@@ -39,9 +37,7 @@ public class NetworkPlayer : NetworkBehaviour
 
     private void Start()
     {
-        PlayerId = GetComponent<NetworkIdentity>().netId;
-
-        EventManager.ExecuteEvent<IServerEvents>((x, y) => x.OnPlayerInitialized());
+        EventManager.ExecuteEvent<IServerEvents>((x, y) => x.OnPlayerInitialized(this));
     }
 
     public void SetMapBoundaries(Boundaries mapBoundaries)
@@ -61,20 +57,36 @@ public class NetworkPlayer : NetworkBehaviour
     }
 
     [Server]
-    public void PlayerConnected(uint playerId)
+    public void PlayerConnected(uint netId, string name, Color color)
     {
-        connectedPlayers.Add(playerId);
+        var playerInfo = new BasePlayerInfo
+        {
+            netId = netId,
+            name = name,
+            color = color
+        };
+        _playerInfoList.Add(playerInfo);
+
+        if (GetComponent<NetworkIdentity>().netId == netId)
+        {
+            _myInfoIndex = _playerInfoList.Count - 1;
+        }
     }
 
     [Server]
     public void PlayerDisconnected(uint playerId)
     {
-        connectedPlayers.Remove(playerId);
+        _playerInfoList.RemoveAll(x => x.netId == playerId);
     }
 
-    public SyncList<uint> GetPlayerConnections()
+    public List<uint> GetPlayerConnections()
     {
-        return connectedPlayers;
+        return _playerInfoList.Select(x => x.netId).ToList();
+    }
+
+    public NetworkPlayer GetNetworkPlayer(uint netId)
+    {
+        return FindObjectsOfType<NetworkIdentity>().FirstOrDefault(x => x.netId == netId).GetComponent<NetworkPlayer>();
     }
 
     public void Spawn(int spawnableIndex, Vector3 pos, Quaternion rotation)
@@ -84,7 +96,7 @@ public class NetworkPlayer : NetworkBehaviour
             return;
         }
 
-        CmdSpawnTower(spawnableIndex, pos, rotation, PlayerId);
+        CmdSpawnTower(spawnableIndex, pos, rotation, MyInfo.netId);
     }       
 
     [Command]
@@ -116,7 +128,7 @@ public class NetworkPlayer : NetworkBehaviour
             return;
         }
         
-        CmdUpgradeTower(towerBase.GetComponent<NetworkIdentity>().netId, upgradePrice, upgradeIndex, towerBase.GetFloatTextPosition(), PlayerId);
+        CmdUpgradeTower(towerBase.GetComponent<NetworkIdentity>().netId, upgradePrice, upgradeIndex, towerBase.GetFloatTextPosition(), MyInfo.netId);
     }
 
     [Command]

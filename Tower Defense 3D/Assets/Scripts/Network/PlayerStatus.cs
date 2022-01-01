@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mirror;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,15 +20,22 @@ namespace Assets.Scripts.Network
 
         private void Awake()
         {
-            SetPlayerStatus(0, "Name not set", 0, 0);
+            SetPlayerStatus(0, "Name not set", Color.gray, 0, 0);
         }
 
-        public void SetPlayerStatus(uint id, string name, int lives, int currency)
+        public void SetPlayerStatus(uint id, string name, Color color, int lives, int currency)
         {
             Id = id;
 
+            if (NetworkClient.localPlayer.netId == id)
+            {
+                name += " (you)";
+            }
+
             //idText.text = id.ToString();
+            nameText.color = color;
             nameText.text = name;
+            
             livesText.text = lives.ToString();
             currencyText.text = currency.ToString();
         }
