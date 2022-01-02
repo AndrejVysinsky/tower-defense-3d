@@ -5,10 +5,10 @@ public class InteractionSystem : MonoBehaviour
 {
     public static InteractionSystem Instance { get; private set; }
 
-    [SerializeField] GameObject buyContainer;
+    [SerializeField] GameObject towerPanel;
+    [SerializeField] GameObject enemyPanel;
+    [SerializeField] GameObject buyPanel;
 
-    [SerializeField] GameObject entityPanel;
-    [SerializeField] GameObject interactionPanel;
     [SerializeField] GameObject interactionIndicator;
 
     public GameObject InteractingGameObject { get; private set; }
@@ -69,24 +69,31 @@ public class InteractionSystem : MonoBehaviour
             hasAuthority = true;
         }
 
-        entityPanel.SetActive(true);
         interactionIndicator.SetActive(true);
         
         if (hasAuthority)
         {
-            interactionPanel.SetActive(true);
+            if (InteractingGameObject.TryGetComponent(out TowerBase towerBase))
+            {
+                towerPanel.SetActive(true);
+            }
         }
 
-        buyContainer.SetActive(false);
+        if (InteractingGameObject.TryGetComponent(out Enemy enemy))
+        {
+            enemyPanel.SetActive(true);
+        }
+
+        buyPanel.SetActive(false);
     }
 
     private void HideInteractions()
     {
-        entityPanel.SetActive(false);
         interactionIndicator.SetActive(false);
-        interactionPanel.SetActive(false);
+        towerPanel.SetActive(false);
+        enemyPanel.SetActive(false);
 
-        buyContainer.SetActive(true);        
+        buyPanel.SetActive(true);        
     }
 
     public void RefreshInteractions()

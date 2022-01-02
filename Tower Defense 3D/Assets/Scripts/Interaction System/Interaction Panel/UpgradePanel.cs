@@ -7,23 +7,40 @@ using UnityEngine.UI;
 public class UpgradePanel : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField] Image upgradeImage;
+    [SerializeField] Color upgradeAvailable;
+    [SerializeField] Color noUpgradeAvailable;
 
-    private IUpgradeable _upgradable;
-    private IUpgradeOption _upgradeOption;
+    private TowerData _upgradeOption;
     private int _upgradeIndex;
 
-    public void SetUpgrade(IUpgradeable upgradable, IUpgradeOption upgradeOption, int upgradeIndex)
+    private bool _isUpgradeAvailable;
+
+    public void SetUpgrade(TowerData upgradeOption, int upgradeIndex)
     {
-        _upgradable = upgradable;
+        _isUpgradeAvailable = true;
+        upgradeImage.color = upgradeAvailable;
+
         _upgradeOption = upgradeOption;
         _upgradeIndex = upgradeIndex;
 
-        upgradeImage.sprite = upgradeOption.Sprite;
-        upgradeImage.preserveAspect = true;
+        //enable cursor hand
+    }
+
+    public void SetNoUpgradeAvailable()
+    {
+        _isUpgradeAvailable = false;
+        upgradeImage.color = noUpgradeAvailable;
+
+        //disable cursor hand
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (_isUpgradeAvailable == false)
+        {
+            return;
+        }
+
         var interactingObject = InteractionSystem.Instance.InteractingGameObject;
 
         if (interactingObject.TryGetComponent(out TowerBase towerBase))

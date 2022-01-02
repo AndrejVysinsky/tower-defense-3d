@@ -24,6 +24,8 @@ public class Enemy : NetworkBehaviour, IInteractable, IEntity
     public Sprite Sprite => enemyData.Sprite;
     public int CurrentHitPoints => (int)healthScript.Health;
     public int TotalHitPoints => (int)healthScript.MaxHealth;
+    public EnemyData EnemyData => enemyData;
+    public int ScaledReward => (int)(enemyData.RewardToPlayer * (1 + _difficultyModifier));
 
     public bool IsDead { get; private set; } = false;
     public uint PlayerId => _pathway.PlayerId;
