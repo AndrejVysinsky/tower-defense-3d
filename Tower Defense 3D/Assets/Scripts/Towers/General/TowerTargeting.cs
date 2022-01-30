@@ -104,6 +104,12 @@ public class TowerTargeting : NetworkBehaviour
             return;
 
         IsLookingAtTarget = currentAngle < 5;
+
+        if (lookAtTargetParts.Count == 0 && lookInDirectionParts.Count == 0)
+        {
+            IsLookingAtTarget = true;
+        }
+
         _towerBase.RpcSetLookingAtTarget(IsLookingAtTarget);
     }
 

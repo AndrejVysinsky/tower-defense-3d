@@ -63,5 +63,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  startingCurrency: 200
+  startingCurrency: 2000
   startingLives: 100

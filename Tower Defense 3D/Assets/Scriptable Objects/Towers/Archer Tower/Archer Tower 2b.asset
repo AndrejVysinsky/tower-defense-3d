@@ -10,17 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7e811fbc105d5e0408c32c09ec45435a, type: 3}
-  m_Name: Canon Tower 1
+  m_Name: Archer Tower 2b
   m_EditorClassIdentifier: 
-  tooltip: {fileID: 11400000, guid: 808b0029c97f4a14a927da24e2682597, type: 2}
+  tooltip: {fileID: 11400000, guid: e2c4941da6718884585ac403acaa3669, type: 2}
   sprite: {fileID: 21300000, guid: c54f2dc93c318304fa7d00a76d60d655, type: 3}
   hitPoints: 50
   price: 50
-  sellFactor: 0.5
-  damage: 40
-  attackDelay: 1
+  sellFactor: 3
+  damage: 120
+  attackDelay: 0.5
   radius: 50
-  material: {fileID: 2100000, guid: 8e996807ad0effb47a54b11232e2a358, type: 2}
-  nextUpgrades:
-  - {fileID: 11400000, guid: 2526b3d11b28a49408c055120f5354b3, type: 2}
-  - {fileID: 11400000, guid: 42f277d369fc04f4285b76f4b871b564, type: 2}
+  material: {fileID: 2100000, guid: 3a56629c1970b4540942c5565d2e2663, type: 2}
+  nextUpgrades: []

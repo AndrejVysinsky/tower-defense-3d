@@ -24,6 +24,8 @@ public class CanonProjectile : NetworkBehaviour, IProjectileSingleTarget
 
         _moveDirection = (targetPosition - transform.position).normalized;
         _damage = effectValue;
+
+        transform.LookAt(targetPosition);
     }
 
     private void Update()
@@ -43,7 +45,6 @@ public class CanonProjectile : NetworkBehaviour, IProjectileSingleTarget
 
         _travelledDistance += distanceDelta.magnitude;
         transform.position += distanceDelta;
-
     }
 
     private void OnTriggerEnter(Collider collision)
