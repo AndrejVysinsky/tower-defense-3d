@@ -70,7 +70,7 @@ public class LobbyConfig : MonoBehaviour
         {
             return (LobbyType)PlayerPrefs.GetInt(lobbyTypeKey);
         }
-        return LobbyType.Mirror;
+        return LobbyType.Steam;
     }
 
     public JoinType GetJoinType()

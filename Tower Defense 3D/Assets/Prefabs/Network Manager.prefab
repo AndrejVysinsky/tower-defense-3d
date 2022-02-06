@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1535366981250527401}
   - component: {fileID: 1535366981250527406}
-  - component: {fileID: 1535366981250527407}
   - component: {fileID: 1822130455}
+  - component: {fileID: 4848162463815791007}
   m_Layer: 0
   m_Name: Network Manager
   m_TagString: Untagged
@@ -54,7 +54,7 @@ MonoBehaviour:
   serverBatchInterval: 0
   offlineScene: 
   onlineScene: 
-  transport: {fileID: 1535366981250527407}
+  transport: {fileID: 4848162463815791007}
   networkAddress: localhost
   maxConnections: 8
   disconnectInactiveConnections: 0
@@ -73,28 +73,6 @@ MonoBehaviour:
   - {fileID: 2169085319361342427, guid: 927d7bec36f646547afe93767dcfa4bd, type: 3}
   - {fileID: 4093102055030679959, guid: b15a241b5114f6e46a8494e9d11e1917, type: 3}
   - {fileID: 714181449567907701, guid: 0135b9e50aa251445aa7692d8c8d4782, type: 3}
---- !u!114 &1535366981250527407
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1535366981250527405}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b0fecffa3f624585964b0d0eb21b18e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Port: 7777
-  NoDelay: 1
-  Interval: 10
-  FastResend: 2
-  CongestionWindow: 0
-  SendWindowSize: 4096
-  ReceiveWindowSize: 4096
-  debugLog: 0
-  statisticsGUI: 0
-  statisticsLog: 0
 --- !u!114 &1822130455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,3 +85,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04de178d27fa4ce45b88e57dab605a85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4848162463815791007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1535366981250527405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea368fb6f27ec2f40a40e20977992b9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Channels: 0200000001000000
+  Timeout: 25
+  SteamAppID: 480
+  AllowSteamRelay: 1
+  SteamUserID: 0
