@@ -44,6 +44,12 @@ public class MyNetworkManager : NetworkManager
      * 
      */
 
+    public override void OnServerChangeScene(string newSceneName)
+    {
+        base.OnServerChangeScene(newSceneName);
+        _networkConnections.Clear();
+    }
+
     public override void OnServerAddPlayer(NetworkConnection conn)
     {
         base.OnServerAddPlayer(conn);

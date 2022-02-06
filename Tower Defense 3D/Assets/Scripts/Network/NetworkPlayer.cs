@@ -93,8 +93,13 @@ public class NetworkPlayer : NetworkBehaviour
         if (isLocalPlayer == false)
             return;
 
-        var sceneLoader = FindObjectOfType<SceneLoader>();
-        sceneLoader.ChangeScene(0);
+        //scene transition to game did NOT happen
+        //so either client or host disconnected -> go back to menu scene
+        if (LobbyConfig.Instance.GetLobbyStatus() == LobbyConfig.LobbyStatus.Waiting)
+        {
+            var sceneLoader = FindObjectOfType<SceneLoader>();
+            sceneLoader.ChangeScene(0);
+        }
     }
 
     public List<uint> GetPlayerConnections()

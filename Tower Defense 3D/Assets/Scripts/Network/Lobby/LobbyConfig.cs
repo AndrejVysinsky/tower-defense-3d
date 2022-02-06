@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class LobbyConfig : MonoBehaviour
 {
+    private readonly string lobbyStatusKey = "LobbyStatus";
     private readonly string lobbyTypeKey = "LobbyType";
     private readonly string joinTypeKey = "JoinType";
+
+    public enum LobbyStatus
+    {
+        Waiting,
+        InGame
+    }
     
     public enum LobbyType
     {
@@ -33,6 +40,11 @@ public class LobbyConfig : MonoBehaviour
         }
     }
 
+    public void SetLobbyStatus(LobbyStatus lobbyStatus)
+    {
+        PlayerPrefs.SetInt(lobbyStatusKey, (int)lobbyStatus);
+    }
+
     public void SetLobbyType(int lobbyType)
     {
         PlayerPrefs.SetInt(lobbyTypeKey, lobbyType);
@@ -41,6 +53,15 @@ public class LobbyConfig : MonoBehaviour
     public void SetJoinType(int joinType)
     {
         PlayerPrefs.SetInt(joinTypeKey, joinType);
+    }
+
+    public LobbyStatus GetLobbyStatus()
+    {
+        if (PlayerPrefs.HasKey(lobbyStatusKey))
+        {
+            return (LobbyStatus)PlayerPrefs.GetInt(lobbyStatusKey);
+        }
+        return LobbyStatus.Waiting;
     }
 
     public LobbyType GetLobbyType()
