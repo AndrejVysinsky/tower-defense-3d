@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MyNetworkManager : NetworkManager
 {
@@ -51,7 +52,7 @@ public class MyNetworkManager : NetworkManager
 
         BasePlayerInfo addedPlayerInfo = new BasePlayerInfo();
         addedPlayerInfo.netId = conn.identity.netId;
-        addedPlayerInfo.name = "Player" + conn.identity.netId;
+        addedPlayerInfo.name = "Player" + (_networkConnections.Count + 1);
         addedPlayerInfo.color = _colors[random];
 
         _playerInfoList.Add(addedPlayerInfo);
@@ -80,16 +81,10 @@ public class MyNetworkManager : NetworkManager
 
     public override void OnServerDisconnect(NetworkConnection conn)
     {
-        base.OnServerDisconnect(conn);
-
         _networkConnections.Remove(conn);
-
-        //foreach (NetworkConnection networkConnection in _networkConnections)
-        //{
-        //    var networkPlayer = networkConnection.identity.GetComponent<NetworkPlayer>();
-        //    networkPlayer.PlayerDisconnected(conn.identity.netId);
-        //}
+        base.OnServerDisconnect(conn);
     }
+
     #endregion
 
     public List<uint> GetPlayerIds()

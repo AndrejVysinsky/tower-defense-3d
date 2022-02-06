@@ -36,17 +36,30 @@ namespace Assets.Scripts.Network
             nameText.color = color;
             nameText.text = name;
             
-            livesText.text = lives.ToString();
-            currencyText.text = currency.ToString();
+            if (livesText != null)
+            {
+                livesText.text = lives.ToString();
+            }
+
+            if (currencyText != null)
+            {
+                currencyText.text = currency.ToString();
+            }
         }
 
         public void SetLives(int lives)
         {
+            if (livesText == null)
+                return;
+
             livesText.text = lives.ToString();
         }
 
         public void SetCurrency(int currency)
         {
+            if (currencyText == null)
+                return;
+
             currencyText.text = GetParsedCurrency(currency);
         }
 

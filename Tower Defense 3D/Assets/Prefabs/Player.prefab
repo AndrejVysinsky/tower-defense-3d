@@ -65,3 +65,4 @@ MonoBehaviour:
   syncInterval: 0.1
   startingCurrency: 2000
   startingLives: 100
+  playerImage: {fileID: 21300000, guid: 49f66ddb6cf8bc54a9c9fc72c1f39bd3, type: 3}

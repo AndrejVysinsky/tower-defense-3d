@@ -1,16 +1,11 @@
-﻿using System.Collections;
+﻿using Mirror;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
-    // Start is called before the first frame update
-    private void Start()
-    {
-        
-    }
-
     public void ChangeScene(int buildIndex)
     {
         var sceneName = SceneManager.GetSceneByBuildIndex(buildIndex).name;
@@ -23,5 +18,19 @@ public class SceneLoader : MonoBehaviour
         SceneManager.LoadScene(buildIndex);
         
         Time.timeScale = 1;
+    }
+
+    public void Start()
+    {
+        var networkManager = NetworkManager.singleton;
+
+        if (networkManager == null)
+            return;
+
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            Destroy(networkManager.gameObject);
+            NetworkManager.Shutdown();
+        }
     }
 }

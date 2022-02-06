@@ -36,6 +36,11 @@ namespace Assets.Scripts.Network
             AddPlayerDisplay(networkPlayer);
         }
 
+        public void OnPlayerDisconnected(uint playerId)
+        {
+            RemovePlayerDisplay(playerId);
+        }
+
         private void OnEnable()
         {
             EventManager.AddListener(gameObject);
@@ -91,6 +96,13 @@ namespace Assets.Scripts.Network
 
             //if player has status but is disconnected, delete it / grey out
             //or use ondisconnect in network manager
+        }
+
+        private void RemovePlayerDisplay(uint playerId)
+        {
+            var playerStatus = _playerStatusList.FirstOrDefault(x => x.Id == playerId);
+            _playerStatusList.Remove(playerStatus);
+            Destroy(playerStatus.gameObject);
         }
     }
 }

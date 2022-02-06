@@ -8,6 +8,7 @@ public class NetworkPlayer : NetworkBehaviour
 {
     [SerializeField] int startingCurrency;
     [SerializeField] int startingLives;
+    [SerializeField] Sprite playerImage;
 
     public readonly SyncList<BasePlayerInfo> _playerInfoList = new SyncList<BasePlayerInfo>();
 
@@ -18,15 +19,19 @@ public class NetworkPlayer : NetworkBehaviour
     private CameraController _cameraController;
     private GridController _gridController;
 
+    private MyNetworkManager _myNetworkManager;
+
     [SyncVar] private int _currency;
     [SyncVar] private int _lives;
     [SyncVar] private int _myInfoIndex = -1;
     public int Currency => _currency;
     public int Lives => _lives;
     public BasePlayerInfo MyInfo => _playerInfoList[_myInfoIndex];
+    public Sprite PlayerImage => playerImage;
 
     private void Awake()
     {
+        _myNetworkManager = FindObjectOfType<MyNetworkManager>();
         _cameraController = FindObjectOfType<CameraController>();
         _gridController = FindObjectOfType<GridController>();
         _spawnPrefabs = FindObjectOfType<NetworkManager>().spawnPrefabs;
@@ -77,6 +82,16 @@ public class NetworkPlayer : NetworkBehaviour
     public void PlayerDisconnected(uint playerId)
     {
         _playerInfoList.RemoveAll(x => x.netId == playerId);
+
+        EventManager.ExecuteEvent<IServerEvents>((x, y) => x.OnPlayerDisconnected(playerId));
+    }
+
+    public override void OnStopClient()
+    {
+        base.OnStopClient();
+
+        var sceneLoader = FindObjectOfType<SceneLoader>();
+        sceneLoader.ChangeScene(0);
     }
 
     public List<uint> GetPlayerConnections()

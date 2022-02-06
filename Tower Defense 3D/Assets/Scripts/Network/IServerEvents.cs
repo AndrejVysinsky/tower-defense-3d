@@ -5,5 +5,6 @@ namespace Assets.Scripts.Network
     public interface IServerEvents : IEventSystemHandler
     {
         void OnPlayerInitialized(NetworkPlayer networkPlayer);
+        void OnPlayerDisconnected(uint playerId);
     }
 }
