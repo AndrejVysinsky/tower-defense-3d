@@ -9,7 +9,21 @@ public class LeaveGameHandler : NetworkBehaviour
         var networkManager = FindObjectOfType<MyNetworkManager>();
         var sceneLoader = FindObjectOfType<SceneLoader>();
 
-        networkManager.StopHost();
+        foreach (var player in players)
+        {
+            if (player.isLocalPlayer == false)
+                continue;
+
+            if (player.isServer)
+            {
+                networkManager.StopHost();
+            }
+            else
+            {
+                networkManager.StopClient();
+            }
+        }
+        
         sceneLoader.ChangeScene(0);
     }
 }

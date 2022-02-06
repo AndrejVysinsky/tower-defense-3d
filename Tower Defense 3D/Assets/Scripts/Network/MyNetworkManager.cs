@@ -82,6 +82,10 @@ public class MyNetworkManager : NetworkManager
     public override void OnServerDisconnect(NetworkConnection conn)
     {
         _networkConnections.Remove(conn);
+        foreach (var connection in _networkConnections)
+        {
+            connection.identity.GetComponent<NetworkPlayer>().PlayerDisconnected(conn.identity.netId);
+        }
         base.OnServerDisconnect(conn);
     }
 

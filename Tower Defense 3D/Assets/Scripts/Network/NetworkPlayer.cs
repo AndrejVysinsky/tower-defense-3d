@@ -90,6 +90,9 @@ public class NetworkPlayer : NetworkBehaviour
     {
         base.OnStopClient();
 
+        if (isLocalPlayer == false)
+            return;
+
         var sceneLoader = FindObjectOfType<SceneLoader>();
         sceneLoader.ChangeScene(0);
     }
