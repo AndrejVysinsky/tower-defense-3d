@@ -62,11 +62,12 @@ public class NetworkPlayer : NetworkBehaviour
     }
 
     [Server]
-    public void PlayerConnected(uint netId, string name, Color color)
+    public void PlayerConnected(uint netId, ulong steamId, string name, Color color)
     {
         var playerInfo = new BasePlayerInfo
         {
             netId = netId,
+            steamId = steamId,
             name = name,
             color = color
         };

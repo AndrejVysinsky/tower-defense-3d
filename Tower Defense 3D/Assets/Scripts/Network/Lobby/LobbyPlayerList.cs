@@ -55,7 +55,7 @@ public class LobbyPlayerList : MonoBehaviour, IServerEvents
         var playerStatusObject = Instantiate(lobbyPlayerStatusPrefab, lobbyPlayerStatusContainer.transform);
 
         var playerStatus = playerStatusObject.GetComponent<LobbyPlayerStatus>();
-        playerStatus.SetPlayerStatus(playerId, networkPlayer.MyInfo.name, networkPlayer.MyInfo.color, networkPlayer.PlayerImage);
+        playerStatus.SetPlayerStatus(playerId, networkPlayer.MyInfo.steamId, networkPlayer.MyInfo.name, networkPlayer.MyInfo.color);
 
         _playerList.Add(playerStatus);
     }

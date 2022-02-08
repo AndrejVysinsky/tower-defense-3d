@@ -20,17 +20,28 @@ public class SceneLoader : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    public void Start()
-    {
-        var networkManager = NetworkManager.singleton;
+    //public void Start()
+    //{
+    //    var networkManager = NetworkManager.singleton;
 
-        if (networkManager == null)
-            return;
+    //    if (networkManager == null)
+    //        return;
 
-        if (SceneManager.GetActiveScene().buildIndex == 0)
-        {
-            Destroy(networkManager.gameObject);
-            NetworkManager.Shutdown();
-        }
-    }
+    //    if (SceneManager.GetActiveScene().buildIndex == 0)
+    //    {
+    //        networkManager.GetComponent<MyLobbyManager>().DisableCallbacks();
+
+    //        Destroy(networkManager.gameObject);
+    //        NetworkManager.Shutdown();
+    //    }
+    //}
+
+    //private void Update()
+    //{
+    //    var networkManager = GameObject.Find("Network Manager");
+    //    if (networkManager != null)
+    //    {
+    //        Destroy(networkManager);
+    //    }
+    //}
 }
