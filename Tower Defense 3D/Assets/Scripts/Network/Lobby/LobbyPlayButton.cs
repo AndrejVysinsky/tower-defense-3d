@@ -24,6 +24,12 @@ public class LobbyPlayButton : MonoBehaviour, IServerEvents
 
     public void ChangeToGameScene()
     {
+        var mapExplorer = FindObjectOfType<MapExplorer>();
+
+        var selectedMap = mapExplorer.SelectedMapCard.MapName;
+        var isCustomMap = mapExplorer.SelectedMapCard.IsCustomMap;
+
+        LobbyConfig.Instance.SetSelectedMap(selectedMap, isCustomMap);
         LobbyConfig.Instance.SetLobbyStatus(LobbyConfig.LobbyStatus.InGame);
         NetworkManager.singleton.ServerChangeScene("Game Scene");
     }

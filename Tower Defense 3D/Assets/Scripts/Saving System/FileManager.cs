@@ -6,6 +6,21 @@ public static class FileManager
 {
     public static string SavePath { get; } = Application.persistentDataPath + "/SavedGames/";
     public static string MapPath { get; } = Application.persistentDataPath + "/Maps/";
+    public static string ResourceMapPath { get; } = "Maps/";
+
+    public static string[] DefaultMaps { get; } = new string[]
+    {
+        "Lake Map",
+        "Castle Map",
+        "Desert Map"
+    };
+
+    public static string[] DefaultMapsSprites { get; } = new string[]
+    {
+        "Lake Map Sprite",
+        "Castle Map Sprite",
+        "Desert Map Sprite"
+    };
 
     public static string[] GetFiles(string path)
     {

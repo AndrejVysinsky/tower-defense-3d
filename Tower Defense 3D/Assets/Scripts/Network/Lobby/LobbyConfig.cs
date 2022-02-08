@@ -1,12 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LobbyConfig : MonoBehaviour
 {
     private readonly string lobbyStatusKey = "LobbyStatus";
     private readonly string lobbyTypeKey = "LobbyType";
-    private readonly string joinTypeKey = "JoinType";
+    private readonly string lobbyIdKey = "LobbyId";
+    private readonly string selectedMapKey = "SelectedMap";
+    private readonly string selectedMapIsCustomKey = "SelectedMapIsCustom";
 
     public enum LobbyStatus
     {
@@ -15,12 +16,6 @@ public class LobbyConfig : MonoBehaviour
     }
     
     public enum LobbyType
-    {
-        Mirror,
-        Steam
-    }
-
-    public enum JoinType
     {
         Host,
         Client
@@ -40,6 +35,23 @@ public class LobbyConfig : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        if (SceneManager.GetActiveScene().name == "Menu Scene")
+        {
+            ResetLobbyData();
+        }
+    }
+
+    private void ResetLobbyData()
+    {
+        PlayerPrefs.DeleteKey(lobbyStatusKey);
+        PlayerPrefs.DeleteKey(lobbyTypeKey);
+        PlayerPrefs.DeleteKey(lobbyIdKey);
+        PlayerPrefs.DeleteKey(selectedMapKey);
+        PlayerPrefs.DeleteKey(selectedMapIsCustomKey);
+    }
+
     public void SetLobbyStatus(LobbyStatus lobbyStatus)
     {
         PlayerPrefs.SetInt(lobbyStatusKey, (int)lobbyStatus);
@@ -50,9 +62,24 @@ public class LobbyConfig : MonoBehaviour
         PlayerPrefs.SetInt(lobbyTypeKey, lobbyType);
     }
 
-    public void SetJoinType(int joinType)
+    public void SetLobbyId(string lobbyId)
     {
-        PlayerPrefs.SetInt(joinTypeKey, joinType);
+        PlayerPrefs.SetString(lobbyIdKey, lobbyId);
+    }
+
+    public void SetSelectedMap(string selectedMap, bool isCustomMap)
+    {
+        PlayerPrefs.SetString(selectedMapKey, selectedMap);
+        PlayerPrefs.SetInt(selectedMapIsCustomKey, isCustomMap == true ? 1 : 0);
+    }
+
+    public LobbyType GetLobbyType()
+    {
+        if (PlayerPrefs.HasKey(lobbyTypeKey))
+        {
+            return (LobbyType)PlayerPrefs.GetInt(lobbyTypeKey);
+        }
+        return LobbyType.Host;
     }
 
     public LobbyStatus GetLobbyStatus()
@@ -64,21 +91,21 @@ public class LobbyConfig : MonoBehaviour
         return LobbyStatus.Waiting;
     }
 
-    public LobbyType GetLobbyType()
+    public string GetLobbyId()
     {
-        if (PlayerPrefs.HasKey(lobbyTypeKey))
+        if (PlayerPrefs.HasKey(lobbyIdKey))
         {
-            return (LobbyType)PlayerPrefs.GetInt(lobbyTypeKey);
+            return PlayerPrefs.GetString(lobbyIdKey);
         }
-        return LobbyType.Steam;
+        return null;
     }
 
-    public JoinType GetJoinType()
+    public (bool isCustomMap, string mapName) GetSelectedMap()
     {
-        if (PlayerPrefs.HasKey(joinTypeKey))
+        if (PlayerPrefs.HasKey(selectedMapKey))
         {
-            return (JoinType)PlayerPrefs.GetInt(joinTypeKey);
+            return (PlayerPrefs.GetInt(selectedMapIsCustomKey) == 1, PlayerPrefs.GetString(selectedMapKey));
         }
-        return JoinType.Host;
+        return (false, FileManager.DefaultMaps[0]);
     }
 }

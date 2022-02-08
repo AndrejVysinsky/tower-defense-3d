@@ -1,6 +1,5 @@
 ﻿using Mirror;
 using Steamworks;
-using System;
 using UnityEngine;
 
 public class MyLobbyManager : MonoBehaviour
@@ -17,22 +16,34 @@ public class MyLobbyManager : MonoBehaviour
     {
         _myNetworkManager = GetComponent<MyNetworkManager>();
 
-        //if (LobbyConfig.Instance.GetLobbyType() == LobbyConfig.LobbyType.Mirror)
-        //{
-        //    InitializeMirrorLobby();
-        //    return;
-        //}
-
         if (!SteamManager.Initialized)
-            return;
-
-        lobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
-        gameLobbyJoinRequested = Callback<GameLobbyJoinRequested_t>.Create(OnGameLobbyJoinRequested);
-        lobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
-
-        if (LobbyConfig.Instance.GetJoinType() == LobbyConfig.JoinType.Host)
         {
-            InitializeSteamLobby();
+            InitializeMirrorLobby();
+        }
+        else
+        {
+            lobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
+            gameLobbyJoinRequested = Callback<GameLobbyJoinRequested_t>.Create(OnGameLobbyJoinRequested);
+            lobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
+
+            if (LobbyConfig.Instance.GetLobbyType() == LobbyConfig.LobbyType.Host)
+            {
+                InitializeSteamLobby();
+            }
+            else if (LobbyConfig.Instance.GetLobbyType() == LobbyConfig.LobbyType.Client)
+            {
+                var lobbyIdString = LobbyConfig.Instance.GetLobbyId();
+
+                if (string.IsNullOrEmpty(lobbyIdString))
+                {
+                    return;
+                }
+
+                if (ulong.TryParse(lobbyIdString, out ulong lobbyId))
+                {
+                    JoinLobby(lobbyId);
+                }
+            }
         }
     }
 
@@ -43,7 +54,7 @@ public class MyLobbyManager : MonoBehaviour
 
     private void InitializeMirrorLobby()
     {
-        if (LobbyConfig.Instance.GetJoinType() == LobbyConfig.JoinType.Host)
+        if (LobbyConfig.Instance.GetLobbyType() == LobbyConfig.LobbyType.Host)
         {
             _myNetworkManager.StartHost();
         }
@@ -71,13 +82,18 @@ public class MyLobbyManager : MonoBehaviour
 
     private void OnLobbyEntered(LobbyEnter_t callback)
     {
-        //server is active on this client - host
+        JoinLobby(callback.m_ulSteamIDLobby);
+    }
+
+    private void JoinLobby(ulong lobbyId)
+    {
+        //server is active on this client -> is host
         if (NetworkServer.active)
         {
             return;
         }
 
-        string hostAddress = SteamMatchmaking.GetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), hostAddressKey);
+        string hostAddress = SteamMatchmaking.GetLobbyData(new CSteamID(lobbyId), hostAddressKey);
 
         _myNetworkManager.networkAddress = hostAddress;
         _myNetworkManager.StartClient();
