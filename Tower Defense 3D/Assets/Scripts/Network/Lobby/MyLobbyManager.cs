@@ -59,6 +59,9 @@ public class MyLobbyManager : MonoBehaviour
         gameLobbyJoinRequested = null;
         lobbyEntered = null;
 
+        if (!SteamManager.Initialized)
+            return;
+
         SteamMatchmaking.LeaveLobby(LobbyId);
     }
 

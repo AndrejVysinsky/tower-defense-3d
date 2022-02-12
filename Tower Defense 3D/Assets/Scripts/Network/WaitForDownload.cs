@@ -7,7 +7,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using TMPro;
 using UnityEngine;
 
-public class WaitForPlayers : NetworkBehaviour
+public class WaitForDownload : NetworkBehaviour
 {
     [SerializeField] TMP_Text playerCountText;
 
@@ -103,6 +103,18 @@ public class WaitForPlayers : NetworkBehaviour
             //send map to player
             TargetDownloadMap(conn, _mapByteArray, _mapName);
         }
+
+        if (_playersReady == _totalPlayerCount)
+        {
+            FindObjectOfType<MapController>().LoadMap(_mapName, _isCustomMap);
+            RpcHideWaitMessage();
+        }
+    }
+
+    [ClientRpc]
+    public void RpcHideWaitMessage()
+    {
+        gameObject.SetActive(false);
     }
 
     [Server]

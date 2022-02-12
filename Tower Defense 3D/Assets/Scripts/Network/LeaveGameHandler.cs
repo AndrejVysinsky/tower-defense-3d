@@ -13,18 +13,17 @@ public class LeaveGameHandler : MonoBehaviour
             return;
         }
 
-        if (NetworkServer.active)
-        {
-            NetworkManager.singleton.StopHost();
-        }
-        else
-        {
-            NetworkManager.singleton.StopClient();
-        }
-        
+        //if (NetworkServer.active)
+        //{
+        //    NetworkManager.singleton.StopHost();
+        //}
+        //else
+        //{
+        //    NetworkManager.singleton.StopClient();
+        //}
 
-        //FindObjectOfType<MyLobbyManager>()?.DisableCallbacks();
-        //Destroy(NetworkManager.singleton.gameObject);
-        //NetworkManager.Shutdown();
+        FindObjectOfType<MyLobbyManager>()?.DisableCallbacks();
+        Destroy(NetworkManager.singleton.gameObject);
+        NetworkManager.Shutdown();
     }
 }

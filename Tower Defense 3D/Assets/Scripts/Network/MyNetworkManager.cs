@@ -57,12 +57,11 @@ public class MyNetworkManager : NetworkManager
     {
         base.OnServerAddPlayer(conn);
 
-        CSteamID steamId = SteamMatchmaking.GetLobbyMemberByIndex(MyLobbyManager.LobbyId, numPlayers - 1);
-
         BasePlayerInfo addedPlayerInfo = new BasePlayerInfo();
 
-        if (steamId != CSteamID.Nil)
+        if (SteamManager.Initialized)
         {
+            CSteamID steamId = SteamMatchmaking.GetLobbyMemberByIndex(MyLobbyManager.LobbyId, numPlayers - 1);
             addedPlayerInfo.steamId = steamId.m_SteamID;
         }
 
@@ -89,7 +88,7 @@ public class MyNetworkManager : NetworkManager
             addedPlayer.PlayerConnected(connectedPlayerInfo.netId, addedPlayerInfo.steamId, connectedPlayerInfo.name, connectedPlayerInfo.color);
         }
 
-        var waitForPlayers = FindObjectOfType<WaitForPlayers>();
+        var waitForPlayers = FindObjectOfType<WaitForDownload>();
         if (waitForPlayers != null)
         {
             waitForPlayers.PlayerJoined(conn);

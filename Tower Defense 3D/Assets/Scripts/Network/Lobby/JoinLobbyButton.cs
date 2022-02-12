@@ -8,7 +8,7 @@ public class JoinLobbyButton : MonoBehaviour
 
     public void JoinSteamLobby()
     {
-        if (string.IsNullOrWhiteSpace(steamIdText.text))
+        if (SteamManager.Initialized && string.IsNullOrWhiteSpace(steamIdText.text))
         {
             return;
         }

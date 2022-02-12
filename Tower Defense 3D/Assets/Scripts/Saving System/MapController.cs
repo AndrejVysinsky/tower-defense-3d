@@ -7,7 +7,7 @@ public class MapController : NetworkBehaviour
     [SerializeField] MapSaveManager saveManager;
 
     [Server]
-    public void LoadMap()
+    public void LoadMap(string mapName, bool isCustomMap)
     {
         //TODO:
         //1. get number of players connected
@@ -16,12 +16,16 @@ public class MapController : NetworkBehaviour
         //get list of connected players and pass it to map loader
         var myNetworkManager = (MyNetworkManager)NetworkManager.singleton;
 
-        RpcLoadMap(myNetworkManager.GetPlayerIds());
+        Debug.Log("Load Map called");
+
+        RpcLoadMap(myNetworkManager.GetPlayerIds(), mapName, isCustomMap);
     }
 
     [ClientRpc]
-    private void RpcLoadMap(List<uint> playerIds)
+    private void RpcLoadMap(List<uint> playerIds, string mapName, bool isCustomMap)
     {
-        saveManager.LoadMapData(false, playerIds);
+        Debug.Log("RPC Load Map called");
+
+        saveManager.LoadMapData(false, playerIds, mapName, isCustomMap);
     }
 }

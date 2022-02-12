@@ -34,11 +34,18 @@ public class MapSaveManager : MonoBehaviour
         return FileManager.GetFiles(FileManager.MapPath);
     }
 
-    public void LoadMapData(bool isLoadingInEditor, List<uint> playerIds, string mapName = "defaultGameMap")
+    public void LoadMapData(bool isLoadingInEditor, List<uint> playerIds, string mapName = "defaultGameMap", bool isCustomMap = true)
     {
         ClearScene();
 
-        FileManager.LoadFile(FileManager.MapPath, mapName, out _mapSaveData);
+        if (isCustomMap)
+        {
+            FileManager.LoadFile(FileManager.MapPath, mapName, out _mapSaveData);
+        }
+        else
+        {
+            FileManager.LoadResourceFile(FileManager.ResourceMapPath, mapName, out _mapSaveData);
+        }
 
         if (_mapSaveData == null)
             return;

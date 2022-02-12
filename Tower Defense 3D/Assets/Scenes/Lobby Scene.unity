@@ -1299,11 +1299,42 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1535366981250527406, guid: 427f21980b8aa1c4fa9b62cf6ff04631,
         type: 3}
-      propertyPath: dontDestroyOnLoad
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
+      propertyPath: transport
+      value: 
+      objectReference: {fileID: 747199708}
+    m_RemovedComponents:
+    - {fileID: 4848162463815791007, guid: 427f21980b8aa1c4fa9b62cf6ff04631, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 427f21980b8aa1c4fa9b62cf6ff04631, type: 3}
+--- !u!1 &747199707 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1535366981250527405, guid: 427f21980b8aa1c4fa9b62cf6ff04631,
+    type: 3}
+  m_PrefabInstance: {fileID: 747199706}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &747199708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 747199707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7424c1070fad4ba2a7a96b02fbeb4bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  port: 7777
+  NoDelay: 1
+  SendTimeout: 5000
+  ReceiveTimeout: 30000
+  serverMaxMessageSize: 16384
+  serverMaxReceivesPerTick: 10000
+  serverSendQueueLimitPerConnection: 10000
+  serverReceiveQueueLimitPerConnection: 10000
+  clientMaxMessageSize: 16384
+  clientMaxReceivesPerTick: 1000
+  clientSendQueueLimit: 10000
+  clientReceiveQueueLimit: 10000
 --- !u!1 &884610937
 GameObject:
   m_ObjectHideFlags: 0
