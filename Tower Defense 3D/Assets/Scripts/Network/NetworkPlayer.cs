@@ -96,7 +96,7 @@ public class NetworkPlayer : NetworkBehaviour
 
         //scene transition to game did NOT happen
         //so either client or host disconnected -> go back to menu scene
-        if (LobbyConfig.Instance.GetLobbyStatus() == LobbyConfig.LobbyStatus.Waiting)
+        if (LobbyConfig.Instance.GetLobbyStatus() == LobbyConfig.LobbyStatus.InLobby)
         {
             var sceneLoader = FindObjectOfType<SceneLoader>();
             sceneLoader.ChangeScene(0);

@@ -89,6 +89,12 @@ public class MyNetworkManager : NetworkManager
             addedPlayer.PlayerConnected(connectedPlayerInfo.netId, addedPlayerInfo.steamId, connectedPlayerInfo.name, connectedPlayerInfo.color);
         }
 
+        var waitForPlayers = FindObjectOfType<WaitForPlayers>();
+        if (waitForPlayers != null)
+        {
+            waitForPlayers.PlayerJoined(conn);
+        }
+
         _networkConnections.Add(conn);
     }
 

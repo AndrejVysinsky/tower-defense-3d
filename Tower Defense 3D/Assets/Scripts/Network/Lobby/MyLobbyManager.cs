@@ -21,30 +21,34 @@ public class MyLobbyManager : MonoBehaviour
         if (!SteamManager.Initialized)
         {
             InitializeMirrorLobby();
+            return;
         }
-        else
+
+
+        lobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
+        gameLobbyJoinRequested = Callback<GameLobbyJoinRequested_t>.Create(OnGameLobbyJoinRequested);
+        lobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
+
+        if (LobbyConfig.Instance.GetLobbyType() == LobbyConfig.LobbyType.Host)
         {
-            lobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
-            gameLobbyJoinRequested = Callback<GameLobbyJoinRequested_t>.Create(OnGameLobbyJoinRequested);
-            lobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
+            InitializeSteamLobby();
+        }
+        else if (LobbyConfig.Instance.GetLobbyType() == LobbyConfig.LobbyType.Client)
+        {
+            Debug.Log("trying join with id");
 
-            if (LobbyConfig.Instance.GetLobbyType() == LobbyConfig.LobbyType.Host)
+            var lobbyIdString = LobbyConfig.Instance.GetLobbyId();
+
+            if (string.IsNullOrEmpty(lobbyIdString))
             {
-                InitializeSteamLobby();
+                Debug.Log("id is null");
+                return;
             }
-            else if (LobbyConfig.Instance.GetLobbyType() == LobbyConfig.LobbyType.Client)
+
+            if (ulong.TryParse(lobbyIdString, out ulong lobbyId))
             {
-                var lobbyIdString = LobbyConfig.Instance.GetLobbyId();
-
-                if (string.IsNullOrEmpty(lobbyIdString))
-                {
-                    return;
-                }
-
-                if (ulong.TryParse(lobbyIdString, out ulong lobbyId))
-                {
-                    JoinLobby(lobbyId);
-                }
+                Debug.Log("joining with id");
+                RequestSteamJoinLobby(lobbyId);
             }
         }
     }
@@ -91,17 +95,25 @@ public class MyLobbyManager : MonoBehaviour
 
     private void OnGameLobbyJoinRequested(GameLobbyJoinRequested_t callback)
     {
+        Debug.Log("lobby join requested");
         SteamMatchmaking.JoinLobby(callback.m_steamIDLobby);
+    }
+
+    private void RequestSteamJoinLobby(ulong lobbyId)
+    {
+        SteamMatchmaking.JoinLobby(new CSteamID(lobbyId));
     }
 
     private void OnLobbyEntered(LobbyEnter_t callback)
     {
+        Debug.Log("lobby entered");
         JoinLobby(callback.m_ulSteamIDLobby);
     }
 
     private void JoinLobby(ulong lobbyId)
     {
         //server is active on this client -> is host
+        Debug.Log("joining lobby with id " + lobbyId);
         if (NetworkServer.active)
         {
             return;
@@ -111,5 +123,9 @@ public class MyLobbyManager : MonoBehaviour
 
         _myNetworkManager.networkAddress = hostAddress;
         _myNetworkManager.StartClient();
+
+        LobbyId = new CSteamID(lobbyId);
+
+        Debug.Log("starting client in steam");
     }
 }

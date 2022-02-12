@@ -57,6 +57,14 @@ public static class FileManager
         }
     }
 
+    public static void LoadResourceFile<T>(string path, string fileName, out T fileData)
+    {
+        TextAsset asset = Resources.Load<TextAsset>(path + fileName);
+        Stream s = new MemoryStream(asset.bytes);
+        BinaryFormatter bf = new BinaryFormatter();
+        fileData = (T)bf.Deserialize(s);
+    }
+
     public static void SaveFile<T>(string path, string fileName, T fileData)
     {
         if (Directory.Exists(path) == false)

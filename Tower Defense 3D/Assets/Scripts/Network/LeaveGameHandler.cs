@@ -1,33 +1,30 @@
 ﻿using Mirror;
+using System.Collections;
 using UnityEngine;
 
-public class LeaveGameHandler : NetworkBehaviour
+public class LeaveGameHandler : MonoBehaviour
 {
     public void LeaveGame()
     {
-        var players = FindObjectsOfType<NetworkPlayer>();
-        var networkManager = FindObjectOfType<MyNetworkManager>();
-        var sceneLoader = FindObjectOfType<SceneLoader>();
+        if (NetworkManager.singleton == null)
+        {
+            var sceneLoader = FindObjectOfType<SceneLoader>();
+            sceneLoader.ChangeScene(0);
+            return;
+        }
 
-        //foreach (var player in players)
-        //{
-        //    if (player.isLocalPlayer == false)
-        //        continue;
-
-        //    if (player.isServer)
-        //    {
-        //        networkManager.StopHost();
-        //    }
-        //    else
-        //    {
-        //        networkManager.StopClient();
-        //    }
-        //}
-
-        FindObjectOfType<MyLobbyManager>().DisableCallbacks();
-        Destroy(NetworkManager.singleton.gameObject);
-        NetworkManager.Shutdown();
+        if (NetworkServer.active)
+        {
+            NetworkManager.singleton.StopHost();
+        }
+        else
+        {
+            NetworkManager.singleton.StopClient();
+        }
         
-        sceneLoader.ChangeScene(0);
+
+        //FindObjectOfType<MyLobbyManager>()?.DisableCallbacks();
+        //Destroy(NetworkManager.singleton.gameObject);
+        //NetworkManager.Shutdown();
     }
 }

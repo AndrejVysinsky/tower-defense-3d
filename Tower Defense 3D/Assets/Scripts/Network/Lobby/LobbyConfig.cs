@@ -8,10 +8,11 @@ public class LobbyConfig : MonoBehaviour
     private readonly string lobbyIdKey = "LobbyId";
     private readonly string selectedMapKey = "SelectedMap";
     private readonly string selectedMapIsCustomKey = "SelectedMapIsCustom";
+    private readonly string playerCountKey = "PlayerCount";
 
     public enum LobbyStatus
     {
-        Waiting,
+        InLobby,
         InGame
     }
     
@@ -73,6 +74,11 @@ public class LobbyConfig : MonoBehaviour
         PlayerPrefs.SetInt(selectedMapIsCustomKey, isCustomMap == true ? 1 : 0);
     }
 
+    public void SetLobbyPlayerCount(int playerCount)
+    {
+        PlayerPrefs.SetInt(playerCountKey, playerCount);
+    }
+
     public LobbyType GetLobbyType()
     {
         if (PlayerPrefs.HasKey(lobbyTypeKey))
@@ -88,7 +94,7 @@ public class LobbyConfig : MonoBehaviour
         {
             return (LobbyStatus)PlayerPrefs.GetInt(lobbyStatusKey);
         }
-        return LobbyStatus.Waiting;
+        return LobbyStatus.InLobby;
     }
 
     public string GetLobbyId()
@@ -107,5 +113,14 @@ public class LobbyConfig : MonoBehaviour
             return (PlayerPrefs.GetInt(selectedMapIsCustomKey) == 1, PlayerPrefs.GetString(selectedMapKey));
         }
         return (false, FileManager.DefaultMaps[0]);
+    }
+
+    public int GetPlayerCount()
+    {
+        if (PlayerPrefs.HasKey(playerCountKey))
+        {
+            return PlayerPrefs.GetInt(playerCountKey);
+        }
+        return 1;
     }
 }

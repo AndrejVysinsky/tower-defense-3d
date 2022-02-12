@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class SteamLobbyListener : MonoBehaviour
 {
-    protected Callback<LobbyEnter_t> lobbyEntered;
+    protected Callback<GameLobbyJoinRequested_t> gameLobbyJoinRequested;
 
     void Start()
     {
@@ -15,19 +15,15 @@ public class SteamLobbyListener : MonoBehaviour
         {
             return;
         }
-        
-        lobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
+
+        gameLobbyJoinRequested = Callback<GameLobbyJoinRequested_t>.Create(OnGameLobbyJoinRequested);
     }
 
-    private void OnLobbyEntered(LobbyEnter_t callback)
+    private void OnGameLobbyJoinRequested(GameLobbyJoinRequested_t callback)
     {
-        //server is active on this client -> is host
-        if (NetworkServer.active)
-        {
-            return;
-        }
+        Debug.Log("lobby join requested steam listener");
 
-        LobbyConfig.Instance.SetLobbyId(callback.m_ulSteamIDLobby.ToString());
+        LobbyConfig.Instance.SetLobbyId(callback.m_steamIDLobby.m_SteamID.ToString());
         SceneManager.LoadScene("Lobby Scene");
     }
 }

@@ -31,6 +31,7 @@ public class LobbyPlayButton : MonoBehaviour, IServerEvents
 
         LobbyConfig.Instance.SetSelectedMap(selectedMap, isCustomMap);
         LobbyConfig.Instance.SetLobbyStatus(LobbyConfig.LobbyStatus.InGame);
+        LobbyConfig.Instance.SetLobbyPlayerCount(NetworkServer.connections.Count);
         NetworkManager.singleton.ServerChangeScene("Game Scene");
     }
 

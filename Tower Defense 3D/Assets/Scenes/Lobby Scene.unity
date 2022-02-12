@@ -461,7 +461,6 @@ GameObject:
   - component: {fileID: 363715946}
   - component: {fileID: 363715945}
   - component: {fileID: 363715948}
-  - component: {fileID: 363715949}
   m_Layer: 5
   m_Name: Menu Button
   m_TagString: Untagged
@@ -594,25 +593,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e270db21b69d8f42a19497ebdf9bbb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
---- !u!114 &363715949
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 363715943}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 1315749082
-  serverOnly: 0
-  visible: 0
-  m_AssetId: 
-  hasSpawned: 0
 --- !u!1 &365540085
 GameObject:
   m_ObjectHideFlags: 0
@@ -1317,6 +1297,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Network Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 1535366981250527406, guid: 427f21980b8aa1c4fa9b62cf6ff04631,
+        type: 3}
+      propertyPath: dontDestroyOnLoad
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 427f21980b8aa1c4fa9b62cf6ff04631, type: 3}
 --- !u!1 &884610937
@@ -1729,7 +1714,6 @@ GameObject:
   m_Component:
   - component: {fileID: 936786522}
   - component: {fileID: 936786528}
-  - component: {fileID: 936786524}
   - component: {fileID: 936786523}
   m_Layer: 5
   m_Name: Play Button
@@ -1771,23 +1755,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 622167570}
---- !u!114 &936786524
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 936786521}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 868223629
-  serverOnly: 0
-  visible: 0
-  m_AssetId: 
-  hasSpawned: 0
 --- !u!222 &936786528
 CanvasRenderer:
   m_ObjectHideFlags: 0
