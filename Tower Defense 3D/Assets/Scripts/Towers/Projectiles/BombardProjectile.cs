@@ -81,7 +81,8 @@ public class BombardProjectile : MonoBehaviour, IProjectileWithAreaEffect
 
     public void ApplyEffectOnImpact(List<GameObject> targets)
     {
-        var particles = Instantiate(particlesPrefab, transform.position, Quaternion.identity);
+        var particles = Instantiate(particlesPrefab);
+        particles.transform.position = transform.position;
 
         Destroy(particles, particles.main.duration);
 
