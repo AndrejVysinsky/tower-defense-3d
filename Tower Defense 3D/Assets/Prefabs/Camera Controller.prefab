@@ -131,7 +131,7 @@ MonoBehaviour:
   adjustDistanceSpeed: 5
   rotationSpeed: 50
   gridController: {fileID: 0}
-  zoomSensitivity: 5
-  defaultDistanceFromGround: 15
+  zoomSensitivity: 4
+  defaultDistanceFromGround: 17
   maxDistanceFromGround: 25
   minDistanceFromGround: 8

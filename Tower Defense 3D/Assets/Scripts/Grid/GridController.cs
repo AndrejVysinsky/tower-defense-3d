@@ -3,6 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IMapSaved
 {
@@ -22,7 +23,6 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
     public Boundaries Boundaries { get; set; }
 
     public static bool IsBuildingModeActive { get; private set; } = false;
-
     public UnityEvent<int> OnBrushSizeChangedEvent;
 
     private void Awake()
@@ -53,6 +53,13 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
         {
             gridSettings.sizeX *= (int)gridSettings.cellSize;
             gridSettings.sizeZ *= (int)gridSettings.cellSize;
+        }
+
+        if (SceneManager.GetActiveScene().name == "Editor Scene")
+        {
+            Boundaries boundaries = new Boundaries();
+            boundaries.SetBoundaries(0, gridSettings.sizeX, 0, gridSettings.sizeZ);
+            FindObjectOfType<CameraController>().SetCameraBoundaries(boundaries);
         }
 
         gridDisplay.CalculateGrid(gridSettings.sizeX, gridSettings.sizeZ, gridSettings.cellSize);

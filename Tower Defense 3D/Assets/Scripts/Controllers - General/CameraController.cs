@@ -61,6 +61,7 @@ public class CameraController : MonoBehaviour
     public void SetCameraBoundaries(Boundaries cameraBoundaries)
     {
         _cameraBoundaries = cameraBoundaries;
+        ClampPosition();
     }
 
     public void SetCameraPosition(float x, float z)
@@ -90,6 +91,8 @@ public class CameraController : MonoBehaviour
 
     private float GetCurrentDistanceFromGround()
     {
+        return _camera.transform.position.y;
+
         if (RayCaster.RaycastGameObjectWithTagFromCameraCenter(out RaycastHit hitInfo, _camera, "Terrain"))
         {
            return _camera.transform.position.y - hitInfo.point.y;
