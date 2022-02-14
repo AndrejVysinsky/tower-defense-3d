@@ -11,6 +11,21 @@ public class MapSaveData
 
     [SerializeField] public GridSettings GridSettings { get; set; }
 
+    [SerializeField] string mapHash;
+
+    public string GetMapHash()
+    {
+        return mapHash;
+    }
+
+    public void GenerateMapHash(string mapName, DateTime saveTime)
+    {
+        var hash = new Hash128();
+        hash.Append(mapName);
+        hash.Append(saveTime.ToString());
+        mapHash = hash.ToString();
+    }
+
     public List<string> GetResourcePaths()
     {
         return saveableObjects.Select(x => x.resourcePath).ToList();

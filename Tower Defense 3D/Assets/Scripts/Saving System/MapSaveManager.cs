@@ -1,4 +1,5 @@
 ﻿using Mirror;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -150,6 +151,8 @@ public class MapSaveManager : MonoBehaviour
     public void SaveMapData(string mapName)
     {
         EventManager.ExecuteEvent<IMapSaved>((x, y) => x.OnMapBeingSaved(_mapSaveData));
+
+        _mapSaveData.GenerateMapHash(mapName, DateTime.Now);
 
         FileManager.SaveFile(FileManager.MapPath, mapName, _mapSaveData);
     }

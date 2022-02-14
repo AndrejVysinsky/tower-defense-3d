@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Network;
 using Mirror;
 using System;
+using System.Collections;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -25,6 +26,7 @@ public class WaitForDownload : NetworkBehaviour
     private int _currentPlayerCount;
     private byte[] _mapByteArray;
     private string _mapName;
+    private string _mapHash;
     private bool _isCustomMap;
 
     private float waitingTime = 0;
@@ -39,7 +41,6 @@ public class WaitForDownload : NetworkBehaviour
     private void Awake()
     {
         playerCountText.text = $"Waiting for players... ({_playersReady}/{_totalPlayerCount})";
-        ChangeStatusText(false);
     }
 
     [ServerCallback]
@@ -66,8 +67,6 @@ public class WaitForDownload : NetworkBehaviour
     {
         base.OnStartServer();
 
-        Debug.Log("Server started");
-
         _totalPlayerCount = LobbyConfig.Instance.GetPlayerCount();
 
         var map = LobbyConfig.Instance.GetSelectedMap();
@@ -84,6 +83,7 @@ public class WaitForDownload : NetworkBehaviour
         }
 
         _mapByteArray = ByteSerializer.ObjectToByteArray(mapSaveData);
+        _mapHash = mapSaveData.GetMapHash();
         _mapName = map.mapName;
         _isCustomMap = map.isCustomMap;
 
@@ -94,21 +94,31 @@ public class WaitForDownload : NetworkBehaviour
     {
         if (hasMapMessage.hasMap)
         {
-            //player is ready to play
             _playersReady++;
-            Debug.Log("player ready");
+            OnPlayersReadyUpdated();
         }
         else
         {
-            //send map to player
             TargetDownloadMap(conn, _mapByteArray, _mapName);
         }
+    }
 
+    [Server]
+    private void OnPlayersReadyUpdated()
+    {
         if (_playersReady == _totalPlayerCount)
         {
-            FindObjectOfType<MapController>().LoadMap(_mapName, _isCustomMap);
-            RpcHideWaitMessage();
+            StartCoroutine(WaitForNetworkUpdate());
         }
+    }
+
+    [Server]
+    private IEnumerator WaitForNetworkUpdate()
+    {
+        yield return new WaitForSecondsRealtime(1);
+
+        FindObjectOfType<MapController>().LoadMap(_mapHash, _isCustomMap);
+        RpcHideWaitMessage();
     }
 
     [ClientRpc]
@@ -120,38 +130,44 @@ public class WaitForDownload : NetworkBehaviour
     [Server]
     public void PlayerJoined(NetworkConnection connection)
     {
-        Debug.Log("Player joined");
-
         _currentPlayerCount++;
-        //gameObject.GetComponent<NetworkIdentity>().AssignClientAuthority(connection);
 
-        //if (_isCustomMap)
-        //{
+        if (_isCustomMap)
+        {
+            TargetCheckMapAlreadyDownloaded(connection, _mapHash);
+        }
+        else
+        {
+            _playersReady++;
+            TargetChangeStatusToReady(connection);
+            OnPlayersReadyUpdated();
+        }        
+    }
 
-        //}
-        TargetCheckMapAlreadyDownloaded(connection, "superHash");
+    [TargetRpc]
+    private void TargetChangeStatusToReady(NetworkConnection target)
+    {
+        ChangeStatusText(true);
     }
 
     [TargetRpc]
     public void TargetCheckMapAlreadyDownloaded(NetworkConnection target, string mapHash)
     {
         var fileNames = FileManager.GetFiles(FileManager.MapPath);
-        //MapSaveData mapSaveData;
+        MapSaveData mapSaveData;
         bool hasMap = false;
-        //foreach (var fileName in fileNames)
-        //{
-        //    FileManager.LoadFile(FileManager.MapPath, fileName, out mapSaveData);
+        foreach (var fileName in fileNames)
+        {
+            FileManager.LoadFile(FileManager.MapPath, fileName, out mapSaveData);
 
-        //    //check for mapHash value
-        //    if (true)
-        //    {
-        //        hasMap = true; 
-        //        break;
-        //    }
-        //}
+            if (mapSaveData.GetMapHash() == mapHash)
+            {
+                hasMap = true;
+                break;
+            }
+        }
 
-        Debug.Log("map check on client, hasMap = " + hasMap);
-        //CmdNotifyAboutMap(hasMap);
+        ChangeStatusText(hasMap);
 
         HasMapMessage hasMapMessage = new HasMapMessage { hasMap = hasMap };
         NetworkClient.Send(hasMapMessage);
@@ -161,22 +177,25 @@ public class WaitForDownload : NetworkBehaviour
     public void TargetDownloadMap(NetworkConnection target, byte[] mapByteArray, string mapName)
     {
         var mapSaveData = ByteSerializer.ByteArrayToObject<MapSaveData>(mapByteArray);
-        
-        //save locally
-        //mapName = $"{mapName} - {DateTime.Now}";
-        //FileManager.SaveFile(FileManager.MapPath, mapName, mapSaveData);
 
-        Debug.Log("Map download called");
+        //save locally
+        var localFiles = FileManager.GetFiles(FileManager.MapPath);
+        var i = 1;
+        var uniqueMapName = mapName;
+        while (localFiles.Contains(uniqueMapName))
+        {
+            uniqueMapName = $"{mapName} ({i++})";
+        }
+        FileManager.SaveFile(FileManager.MapPath, uniqueMapName, mapSaveData);
+
         ChangeStatusText(true);
-        //CmdNotifyAboutMap(true);
+        
         HasMapMessage hasMapMessage = new HasMapMessage { hasMap = true };
         NetworkClient.Send(hasMapMessage);
     }
 
     public void OnCurrentPlayerCountUpdated(int oldValue, int newValue)
     {
-        Debug.Log("Hook called");
-
         playerCountText.text = $"Waiting for players... ({newValue}/{_totalPlayerCount})";
     }
 
