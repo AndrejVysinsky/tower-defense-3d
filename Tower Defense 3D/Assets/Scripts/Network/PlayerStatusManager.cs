@@ -86,7 +86,7 @@ namespace Assets.Scripts.Network
             var playerStatusObject = Instantiate(playerStatusPrefab, playerStatusContainer.transform);
 
             var playerStatus = playerStatusObject.GetComponent<PlayerStatus>();
-            playerStatus.SetPlayerStatus(playerId, networkPlayer.MyInfo.name, networkPlayer.MyInfo.color, networkPlayer.Lives, networkPlayer.Currency);
+            playerStatus.SetPlayerStatus(playerId, networkPlayer.MyInfo.steamId, networkPlayer.MyInfo.name, networkPlayer.MyInfo.color, networkPlayer.Lives, networkPlayer.Currency);
 
             _playerStatusList.Add(playerStatus);
 

@@ -19,7 +19,7 @@ public class LobbyPlayerStatus : MonoBehaviour
 
     protected Callback<AvatarImageLoaded_t> avatarImageLoaded;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         SetPlayerStatus(0, 0, "Name not set", Color.gray);
     }

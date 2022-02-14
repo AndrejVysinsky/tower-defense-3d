@@ -16,7 +16,6 @@ public class MyNetworkManager : NetworkManager
         //https://www.imgonline.com.ua/eng/color-palette.php
 
         new Color32(255,99,71,255), //tomato
-        new Color32(255,140,0,255), //dark orange
         new Color32(255,215,0,255), //gold
         new Color32(173,255,47,255), //green yellow
         new Color32(64,224,208,255), //turquoise
@@ -51,6 +50,7 @@ public class MyNetworkManager : NetworkManager
     {
         base.OnServerChangeScene(newSceneName);
         _networkConnections.Clear();
+        _colorIndex = 0;
     }
 
     public override void OnServerAddPlayer(NetworkConnection conn)

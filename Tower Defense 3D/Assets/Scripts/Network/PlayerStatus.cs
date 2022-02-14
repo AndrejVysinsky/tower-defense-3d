@@ -9,32 +9,19 @@ using UnityEngine;
 
 namespace Assets.Scripts.Network
 {
-    public class PlayerStatus : MonoBehaviour
+    public class PlayerStatus : LobbyPlayerStatus
     {
-        //[SerializeField] TextMeshProUGUI idText;
-        [SerializeField] TextMeshProUGUI nameText;
         [SerializeField] TextMeshProUGUI livesText;
         [SerializeField] TextMeshProUGUI currencyText;
 
-        public uint Id { get; private set; }
-
-        private void Awake()
+        protected override void Awake()
         {
-            SetPlayerStatus(0, "Name not set", Color.gray, 0, 0);
+            SetPlayerStatus(0, 0, "Name not set", Color.gray, 0, 0);
         }
 
-        public void SetPlayerStatus(uint id, string name, Color color, int lives, int currency)
+        public void SetPlayerStatus(uint id, ulong steamId, string name, Color color, int lives, int currency)
         {
-            Id = id;
-
-            if (NetworkClient.localPlayer.netId == id)
-            {
-                name += " (you)";
-            }
-
-            //idText.text = id.ToString();
-            nameText.color = color;
-            nameText.text = name;
+            SetPlayerStatus(id, steamId, name, color);
             
             if (livesText != null)
             {
