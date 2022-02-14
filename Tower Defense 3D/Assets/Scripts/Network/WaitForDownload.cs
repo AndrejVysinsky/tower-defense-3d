@@ -10,6 +10,7 @@ using UnityEngine;
 
 public class WaitForDownload : NetworkBehaviour
 {
+    [SerializeField] GameObject waitPanel;
     [SerializeField] TMP_Text playerCountText;
 
     [Header("Player status")]
@@ -40,6 +41,7 @@ public class WaitForDownload : NetworkBehaviour
 
     private void Awake()
     {
+        waitPanel.SetActive(true);
         playerCountText.text = $"Waiting for players... ({_playersReady}/{_totalPlayerCount})";
     }
 
@@ -124,6 +126,7 @@ public class WaitForDownload : NetworkBehaviour
     [ClientRpc]
     public void RpcHideWaitMessage()
     {
+        waitPanel.SetActive(false);
         gameObject.SetActive(false);
     }
 
