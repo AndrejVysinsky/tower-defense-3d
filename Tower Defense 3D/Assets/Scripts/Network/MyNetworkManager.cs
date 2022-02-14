@@ -107,6 +107,26 @@ public class MyNetworkManager : NetworkManager
         base.OnServerDisconnect(conn);
     }
 
+    public override void ServerChangeScene(string newSceneName)
+    {
+        foreach (NetworkConnection connection in _networkConnections)
+        {
+            connection.identity.GetComponent<NetworkPlayer>().ChangeLobbyStatus(LobbyConfig.LobbyStatus.SceneChange);
+        }
+
+        base.ServerChangeScene(newSceneName);
+    }
+
+    public override void OnServerSceneChanged(string sceneName)
+    {
+        foreach (NetworkConnection connection in _networkConnections)
+        {
+            connection.identity.GetComponent<NetworkPlayer>().ChangeLobbyStatus(LobbyConfig.LobbyStatus.InGame);
+        }
+
+        base.OnServerSceneChanged(sceneName);
+    }
+
     #endregion
 
     public List<uint> GetPlayerIds()

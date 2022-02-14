@@ -13,7 +13,9 @@ public class LobbyConfig : MonoBehaviour
     public enum LobbyStatus
     {
         InLobby,
-        InGame
+        SceneChange,
+        InGame,
+        Left
     }
     
     public enum LobbyType

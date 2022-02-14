@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Network;
 using Mirror;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -79,28 +80,39 @@ public class NetworkPlayer : NetworkBehaviour
         }
     }
 
+    public void ChangeLobbyStatus(LobbyConfig.LobbyStatus lobbyStatus)
+    {
+        LobbyConfig.Instance.SetLobbyStatus(lobbyStatus);
+    }
+
+    public override void OnStopClient()
+    {
+        if (isLocalPlayer == false)
+            return;
+
+        if (LobbyConfig.Instance.GetLobbyStatus() == LobbyConfig.LobbyStatus.SceneChange)
+            return;
+
+        if (LobbyConfig.Instance.GetLobbyStatus() != LobbyConfig.LobbyStatus.Left)
+        {
+            var myLobbyManager = FindObjectOfType<MyLobbyManager>();
+
+            if (myLobbyManager != null) {
+                myLobbyManager.DisableCallbacks();
+                Destroy(myLobbyManager);
+            }
+
+            var sceneLoader = FindObjectOfType<SceneLoader>();
+            sceneLoader.ChangeScene(0);
+        }
+    }
+
     [Server]
     public void PlayerDisconnected(uint playerId)
     {
         _playerInfoList.RemoveAll(x => x.netId == playerId);
 
         EventManager.ExecuteEvent<IServerEvents>((x, y) => x.OnPlayerDisconnected(playerId));
-    }
-
-    public override void OnStopClient()
-    {
-        base.OnStopClient();
-
-        if (isLocalPlayer == false)
-            return;
-
-        //scene transition to game did NOT happen
-        //so either client or host disconnected -> go back to menu scene
-        if (LobbyConfig.Instance.GetLobbyStatus() == LobbyConfig.LobbyStatus.InLobby)
-        {
-            var sceneLoader = FindObjectOfType<SceneLoader>();
-            sceneLoader.ChangeScene(0);
-        }
     }
 
     public List<uint> GetPlayerConnections()
