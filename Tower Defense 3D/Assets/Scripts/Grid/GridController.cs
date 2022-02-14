@@ -30,8 +30,8 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
         placementValidator = Instantiate(placementValidator);
         brushObjectsHolder = placementValidator.GetComponent<BrushObjectsHolder>();
         placementValidator.GridSettings = GridSettings;
-                
-        gridDisplay.CalculateGrid(gridSettings.sizeX, gridSettings.sizeZ, gridSettings.cellSize);
+
+        SetGridDimensions(gridSettings.sizeX, gridSettings.sizeZ, false);
     }
 
     private void OnEnable()
@@ -59,7 +59,10 @@ public class GridController : MonoBehaviour, IBuildOptionClicked, IMapLoaded, IM
         {
             Boundaries boundaries = new Boundaries();
             boundaries.SetBoundaries(0, gridSettings.sizeX, 0, gridSettings.sizeZ);
-            FindObjectOfType<CameraController>().SetCameraBoundaries(boundaries);
+
+            var cameraController = FindObjectOfType<CameraController>();
+            cameraController.SetCameraBoundaries(boundaries);
+            cameraController.SetCameraPosition(boundaries.GetMiddlePoint().x, boundaries.GetMiddlePoint().z);
         }
 
         gridDisplay.CalculateGrid(gridSettings.sizeX, gridSettings.sizeZ, gridSettings.cellSize);

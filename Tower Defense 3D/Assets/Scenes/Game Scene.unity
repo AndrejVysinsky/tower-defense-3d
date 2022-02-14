@@ -12111,6 +12111,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8683805164469997600, guid: 71cb8956f96906248bb3bdd29d7599ba,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -5
+      objectReference: {fileID: 0}
     - target: {fileID: 8683805164469997607, guid: 71cb8956f96906248bb3bdd29d7599ba,
         type: 3}
       propertyPath: m_HDR
