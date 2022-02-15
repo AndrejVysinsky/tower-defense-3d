@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class SellPanel : MonoBehaviour, IPointerDownHandler
+public class SellPanel : MonoBehaviour
 {
     private TowerBase _towerBase;
 
@@ -15,7 +15,7 @@ public class SellPanel : MonoBehaviour, IPointerDownHandler
         return _towerBase.TowerData;
     }
 
-    public void OnPointerDown(PointerEventData eventData)
+    public void SellTower()
     {
         _towerBase.Sell();
 

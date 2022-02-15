@@ -4,11 +4,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UpgradePanel : MonoBehaviour, IPointerDownHandler
+public class UpgradePanel : MonoBehaviour
 {
-    [SerializeField] Image upgradeImage;
-    [SerializeField] Color upgradeAvailable;
-    [SerializeField] Color noUpgradeAvailable;
+    [SerializeField] GameObject upgradeButton;
 
     private TowerData _upgradeOption;
     private int _upgradeIndex;
@@ -18,7 +16,7 @@ public class UpgradePanel : MonoBehaviour, IPointerDownHandler
     public void SetUpgrade(TowerData upgradeOption, int upgradeIndex)
     {
         _isUpgradeAvailable = true;
-        upgradeImage.color = upgradeAvailable;
+        upgradeButton.SetActive(true);
 
         _upgradeOption = upgradeOption;
         _upgradeIndex = upgradeIndex;
@@ -29,7 +27,7 @@ public class UpgradePanel : MonoBehaviour, IPointerDownHandler
     public void SetNoUpgradeAvailable()
     {
         _isUpgradeAvailable = false;
-        upgradeImage.color = noUpgradeAvailable;
+        upgradeButton.SetActive(false);
 
         //disable cursor hand
     }
@@ -42,7 +40,7 @@ public class UpgradePanel : MonoBehaviour, IPointerDownHandler
         return _upgradeOption;
     }
 
-    public void OnPointerDown(PointerEventData eventData)
+    public void UpgradeTower()
     {
         if (_isUpgradeAvailable == false)
         {
