@@ -10,15 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7e811fbc105d5e0408c32c09ec45435a, type: 3}
-  m_Name: Archer Tower 2a
+  m_Name: Archer Tower 4
   m_EditorClassIdentifier: 
-  tooltip: {fileID: 11400000, guid: b8870fe1f9074c54f909f929f38ae849, type: 2}
+  tooltip: {fileID: 11400000, guid: e2c4941da6718884585ac403acaa3669, type: 2}
+  name: Archer Tower 4
   sprite: {fileID: 21300000, guid: 3133b1586d5aa4d499af28c14fe48345, type: 3}
   hitPoints: 50
   price: 50
-  sellFactor: 2
-  damage: 80
+  sellFactor: 3
+  damage: 120
   attackDelay: 0.5
   radius: 50
-  material: {fileID: 2100000, guid: 8e3c8b7560a95c84787e8a33ecce1aed, type: 2}
-  nextUpgrades: []
+  nextUpgrades:
+  - {fileID: 11400000, guid: 17b0211b49e8db34cb3ad91447c8e102, type: 2}
+  description: Base line of defense. Shoots arrow projectiles at enemies with high
+    attack speed.

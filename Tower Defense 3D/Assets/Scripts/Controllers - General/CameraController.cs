@@ -93,14 +93,14 @@ public class CameraController : MonoBehaviour
     {
         return _camera.transform.position.y;
 
-        if (RayCaster.RaycastGameObjectWithTagFromCameraCenter(out RaycastHit hitInfo, _camera, "Terrain"))
-        {
-           return _camera.transform.position.y - hitInfo.point.y;
-        }
-        else
-        {
-            return _camera.transform.position.y;
-        }
+        //if (RayCaster.RaycastGameObjectWithTagFromCameraCenter(out RaycastHit hitInfo, _camera, "Terrain"))
+        //{
+        //   return _camera.transform.position.y - hitInfo.point.y;
+        //}
+        //else
+        //{
+        //    return _camera.transform.position.y;
+        //}
     }
 
     private void MoveCamera()

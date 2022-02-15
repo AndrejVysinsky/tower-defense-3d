@@ -3,16 +3,21 @@ using UnityEngine.EventSystems;
 
 public class SellPanel : MonoBehaviour, IPointerDownHandler
 {
-    private ISellable _sellable;
+    private TowerBase _towerBase;
 
-    public void SetSell(ISellable sellable)
+    public void SetTowerData(TowerBase towerBase)
     {
-        _sellable = sellable;
+        _towerBase = towerBase;
+    }
+
+    public TowerData GetTowerData()
+    {
+        return _towerBase.TowerData;
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        _sellable.Sell();
+        _towerBase.Sell();
 
         InteractionSystem.Instance.RefreshInteractions();
     }

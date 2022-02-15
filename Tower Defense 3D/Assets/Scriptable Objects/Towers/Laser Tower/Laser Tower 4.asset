@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7e811fbc105d5e0408c32c09ec45435a, type: 3}
-  m_Name: Laser Tower 1
+  m_Name: Laser Tower 4
   m_EditorClassIdentifier: 
-  tooltip: {fileID: 11400000, guid: 2b3f3ea7a6f991f408684533e2bacfb9, type: 2}
-  name: Laser Tower 1
+  tooltip: {fileID: 11400000, guid: bf4c48e940791be45bd50acf796c78f6, type: 2}
+  name: Laser Tower 4
   sprite: {fileID: 21300000, guid: c8c20d3cdb32c6e4c85543847247e113, type: 3}
-  hitPoints: 50
-  price: 80
-  sellFactor: 0.4
-  damage: 50
+  hitPoints: 100
+  price: 200
+  sellFactor: 0.6
+  damage: 150
   attackDelay: 0
-  radius: 10
+  radius: 20
   nextUpgrades:
-  - {fileID: 11400000, guid: 5258a9b1c79804f4eb0fc0d6bab42aef, type: 2}
+  - {fileID: 11400000, guid: 50975456f9f09ea4c81d10716fbb916e, type: 2}
   description: Shoots beam of energy on enemies which deals constant damage and slow
     down their movement.

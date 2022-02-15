@@ -34,6 +34,14 @@ public class UpgradePanel : MonoBehaviour, IPointerDownHandler
         //disable cursor hand
     }
 
+    public TowerData GetUpgradeData()
+    {
+        if (_isUpgradeAvailable == false)
+            return null;
+
+        return _upgradeOption;
+    }
+
     public void OnPointerDown(PointerEventData eventData)
     {
         if (_isUpgradeAvailable == false)

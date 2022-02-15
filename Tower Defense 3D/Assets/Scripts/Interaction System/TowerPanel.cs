@@ -77,7 +77,7 @@ namespace Assets.Scripts.Interaction_System
                 upgradePanel.SetNoUpgradeAvailable();
             }
 
-            sellPanel.SetSell(_towerBase);
+            sellPanel.SetTowerData(_towerBase);
         }
     }
 }

@@ -4,7 +4,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Tower Data", menuName = "Data/Tower Data")]
 public class TowerData : ScriptableObject, IUpgradeOption
 {
-    [SerializeField] BuyableTooltip tooltip; 
+    [SerializeField] BuyableTooltip tooltip;
+    [SerializeField] new string name;
     [SerializeField] Sprite sprite;
     [SerializeField] int hitPoints;
 
@@ -15,11 +16,9 @@ public class TowerData : ScriptableObject, IUpgradeOption
     [SerializeField] float attackDelay;
     [SerializeField] float radius;
 
-    [SerializeField] Material material; //temporary solution
-
     [SerializeField] List<TowerData> nextUpgrades;
 
-    public string Name => tooltip.Header;
+    public string Name => name;
     public Sprite Sprite => sprite;
     public int HitPoints => hitPoints;
 
@@ -29,7 +28,8 @@ public class TowerData : ScriptableObject, IUpgradeOption
     public float AttackDelay => attackDelay;
     public float Radius => radius;
 
-    public Material Material => material;
+    [SerializeField] [TextArea(3, 10)] string description;
+    public string Description => description;
 
     public List<TowerData> NextUpgrades => nextUpgrades;
 
