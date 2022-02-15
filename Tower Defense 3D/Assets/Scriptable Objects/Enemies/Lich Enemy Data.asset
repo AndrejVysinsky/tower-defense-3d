@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Lich Enemy Data
   m_EditorClassIdentifier: 
   name: Lich
-  sprite: {fileID: 21300000, guid: fba2a2999b018854abee395848ad74ce, type: 3}
+  sprite: {fileID: 21300000, guid: 119b93ef6c76b1c439413d43f8c2fcf9, type: 3}
   speed: 2
   health: 75
   damageToPlayer: 1

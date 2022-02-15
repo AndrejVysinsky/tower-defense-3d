@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tooltip: {fileID: 11400000, guid: 2b3f3ea7a6f991f408684533e2bacfb9, type: 2}
   name: Laser Tower 1
-  sprite: {fileID: 21300000, guid: c8c20d3cdb32c6e4c85543847247e113, type: 3}
+  sprite: {fileID: 21300000, guid: ae24a21efe983e340a5d8ead9ba1d56c, type: 3}
   hitPoints: 50
   price: 80
   sellFactor: 0.4

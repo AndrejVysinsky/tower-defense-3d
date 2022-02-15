@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Zombie Enemy Data
   m_EditorClassIdentifier: 
   name: Zombie
-  sprite: {fileID: 21300000, guid: d6e064923f256814f998b9dad96594b3, type: 3}
+  sprite: {fileID: 21300000, guid: 15d74efaf2acbec4d9a4b3ffb58b65ff, type: 3}
   speed: 2
   health: 50
   damageToPlayer: 1

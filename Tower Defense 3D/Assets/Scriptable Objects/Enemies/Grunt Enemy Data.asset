@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Grunt Enemy Data
   m_EditorClassIdentifier: 
   name: Grunt
-  sprite: {fileID: 21300000, guid: 91fa51605b7d3bb4ab70026953e227e3, type: 3}
+  sprite: {fileID: 21300000, guid: a93b85c24c45ea74aad8c2fd752eed81, type: 3}
   speed: 2
   health: 150
   damageToPlayer: 1
