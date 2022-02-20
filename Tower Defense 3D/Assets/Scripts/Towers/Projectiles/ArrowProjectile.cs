@@ -1,7 +1,7 @@
 ﻿using Mirror;
 using UnityEngine;
 
-public class CanonProjectile : NetworkBehaviour, IProjectileSingleTarget
+public class ArrowProjectile : NetworkBehaviour, IProjectileSingleTarget
 {
     [SerializeField] MeshRenderer meshRenderer;
     [SerializeField] float speed;

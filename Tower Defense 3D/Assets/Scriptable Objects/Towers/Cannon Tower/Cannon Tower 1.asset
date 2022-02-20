@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7e811fbc105d5e0408c32c09ec45435a, type: 3}
-  m_Name: Canon Tower 1
+  m_Name: Cannon Tower 1
   m_EditorClassIdentifier: 
   tooltip: {fileID: 11400000, guid: df486b717ae41cf4aabf3e4bea25ffb1, type: 2}
   name: Cannon Tower 1

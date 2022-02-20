@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BombardProjectile : NetworkBehaviour, IProjectileWithAreaEffect
+public class CannonProjectile : NetworkBehaviour, IProjectileWithAreaEffect
 {
     [SerializeField] float speed;
     [Tooltip("Sets sphere collider radius")]
