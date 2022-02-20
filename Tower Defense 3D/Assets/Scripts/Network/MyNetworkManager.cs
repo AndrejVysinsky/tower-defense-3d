@@ -13,21 +13,14 @@ public class MyNetworkManager : NetworkManager
 
     private List<Color> _colors = new List<Color>()
     {
-        //https://www.imgonline.com.ua/eng/color-palette.php
-
-        new Color32(255,99,71,255), //tomato
-        new Color32(255,215,0,255), //gold
-        new Color32(173,255,47,255), //green yellow
-        new Color32(64,224,208,255), //turquoise
-        new Color32(0,191,255,255), //deep sky blue
-        new Color32(255,105,80,255), //hot pink
-        new Color32(255,160,122,255), //light salmon
-        new Color32(255,228,181,255), //moccasin
-        new Color32(240,230,140,255), //khaki
-        new Color32(143,188,143,255), //dark sea green
-        new Color32(144,238,144,255), //light green
-        new Color32(135,206,235,255), //sky blue
-        new Color32(230,230,250,255), //lavender
+        new Color32(255,50,50,255), //red
+        new Color32(49,115,255,255), //blue
+        new Color32(255,139,49,255), //orange
+        new Color32(55,186,86,255), //green
+        new Color32(250,255,51,255), //yellow
+        new Color32(45,255,153,255), //cyan to green?
+        new Color32(44,227,255,255), //light blue
+        new Color32(110,62,255,255), //purple
     };
 
     private int _colorIndex = 0;

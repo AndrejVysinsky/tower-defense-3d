@@ -107,10 +107,11 @@ GameObject:
   - component: {fileID: 4330049152232915985}
   - component: {fileID: 2663825934812099868}
   - component: {fileID: 5132520390635155646}
+  - component: {fileID: 66051170783696297}
   - component: {fileID: 1707858391559959442}
   - component: {fileID: 559806440570035610}
   m_Layer: 0
-  m_Name: Bombard Tower
+  m_Name: Cannon Tower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -161,6 +162,7 @@ MonoBehaviour:
   syncInterval: 0.1
   towerData: {fileID: 11400000, guid: aca56b6182729c040b82d11c0ca5f362, type: 2}
   sellableTooltip: {fileID: 11400000, guid: 8857fb61623567b40961d091f74a68f8, type: 2}
+  towerColor: {fileID: 66051170783696297}
   projectilePrefab: {fileID: 714181449567907701, guid: 1f8c90ba5a07db7408e83c46ccc05756,
     type: 3}
   towerTargeting: {fileID: 1069530625128871706}
@@ -179,6 +181,21 @@ MonoBehaviour:
   meshRenderers:
   - {fileID: 2630865470494519485}
   - {fileID: 6916251067768713850}
+--- !u!114 &66051170783696297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2169085319361342427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fdbc31987c022440af494fc236f3a4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshRendererMaterials:
+  - meshRenderer: {fileID: 6916251067768713850}
+    playerColorIndex: 2
 --- !u!114 &1707858391559959442
 MonoBehaviour:
   m_ObjectHideFlags: 0

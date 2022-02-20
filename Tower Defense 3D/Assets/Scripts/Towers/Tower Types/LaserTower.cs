@@ -166,6 +166,12 @@ public class LaserTower : TowerBase, IGridObjectInitialized, IGridObjectPlaced
         base.OnUpgradeFinished(upgradeOption);
 
         towerTargeting.SetTargeting(true);
+
+        var main = laserParticles.main;
+        main.startColor = PlayerColor;
+        
+        laser.startColor = PlayerColor;
+        laser.endColor = PlayerColor;
     }
 
     public override void OnUpgradeCanceled()

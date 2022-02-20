@@ -11,7 +11,7 @@ using UnityEngine.UI;
 
 public class LobbyPlayerStatus : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI nameText;
+    [SerializeField] protected TextMeshProUGUI nameText;
     [SerializeField] RawImage playerImage;
 
     public uint Id { get; private set; }

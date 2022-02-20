@@ -8,6 +8,7 @@ public class TowerBase : NetworkBehaviour, IUpgradeable, ISellable, IInteractabl
 {
     [SerializeField] TowerData towerData;
     [SerializeField] SellableTooltip sellableTooltip;
+    [SerializeField] TowerColor towerColor;
 
     public TowerData TowerData
     {
@@ -23,6 +24,9 @@ public class TowerBase : NetworkBehaviour, IUpgradeable, ISellable, IInteractabl
 
     [SyncVar] private uint _playerId;
     public uint PlayerId => _playerId;
+
+    [SyncVar] private Color _playerColor;
+    public Color PlayerColor => _playerColor;
 
     //============================================
     // IUpgradeable
@@ -70,9 +74,13 @@ public class TowerBase : NetworkBehaviour, IUpgradeable, ISellable, IInteractabl
     //============================================
     // Network
     //============================================
+    [Server]
     public void SetPlayerId(uint playerId)
     {
         _playerId = playerId;
+
+        var player = FindObjectsOfType<NetworkPlayer>().FirstOrDefault(x => x.MyInfo.netId == _playerId);
+        _playerColor = player.MyInfo.color;
     }
 
     [ClientRpc]
@@ -103,7 +111,7 @@ public class TowerBase : NetworkBehaviour, IUpgradeable, ISellable, IInteractabl
     protected virtual void SetLookingAtTarget(bool isLookingAtTarget)
     {
 
-    }
+    }    
 
     //============================================
     // IUpgradeable
@@ -136,6 +144,8 @@ public class TowerBase : NetworkBehaviour, IUpgradeable, ISellable, IInteractabl
             TowerData = nextTowerData;
             InteractionSystem.Instance.RefreshInteractions();
         }
+
+        UpdateTowerColor();
     }
 
     //not used
@@ -177,5 +187,10 @@ public class TowerBase : NetworkBehaviour, IUpgradeable, ISellable, IInteractabl
         position.y += GetComponent<Collider>().bounds.size.y / 2;
 
         return position;
+    }
+
+    private void UpdateTowerColor()
+    {
+        towerColor.ChangeTowerColor(_playerColor);
     }
 }

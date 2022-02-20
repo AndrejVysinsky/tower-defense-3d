@@ -35,6 +35,14 @@ namespace Assets.Scripts.Network
             }
         }
 
+        public void SetColor(Color color)
+        {
+            if (nameText == null)
+                return;
+
+            nameText.color = color;
+        }
+
         public void SetLives(int lives)
         {
             if (livesText == null)

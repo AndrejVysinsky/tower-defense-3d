@@ -244,7 +244,6 @@ GameObject:
   - component: {fileID: 5810605071456440181}
   - component: {fileID: 5810605071456440183}
   - component: {fileID: 5810605071456440180}
-  - component: {fileID: 3582838558730370044}
   m_Layer: 5
   m_Name: Lives
   m_TagString: Untagged
@@ -369,22 +368,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &3582838558730370044
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5810605071456440178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c9c081ba76778a4da27599615665b19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  towerData: {fileID: 0}
-  tooltipPosition: 0
-  containerRect: {fileID: 0}
-  positionOffset: 0
 --- !u!1 &5810605071803254724
 GameObject:
   m_ObjectHideFlags: 0
@@ -396,7 +379,6 @@ GameObject:
   - component: {fileID: 5810605071803254727}
   - component: {fileID: 5810605071803254729}
   - component: {fileID: 5810605071803254726}
-  - component: {fileID: 374678445311018020}
   m_Layer: 5
   m_Name: Networth
   m_TagString: Untagged
@@ -521,22 +503,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &374678445311018020
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5810605071803254724}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c9c081ba76778a4da27599615665b19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  towerData: {fileID: 0}
-  tooltipPosition: 0
-  containerRect: {fileID: 0}
-  positionOffset: 0
 --- !u!1 &5810605071997362025
 GameObject:
   m_ObjectHideFlags: 0
@@ -548,7 +514,6 @@ GameObject:
   - component: {fileID: 5810605071997362024}
   - component: {fileID: 5810605071997362026}
   - component: {fileID: 5810605071997362027}
-  - component: {fileID: 9000380597141410947}
   m_Layer: 5
   m_Name: Name
   m_TagString: Untagged
@@ -673,22 +638,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &9000380597141410947
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5810605071997362025}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c9c081ba76778a4da27599615665b19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  towerData: {fileID: 0}
-  tooltipPosition: 0
-  containerRect: {fileID: 0}
-  positionOffset: 0
 --- !u!1 &5872859323421979762
 GameObject:
   m_ObjectHideFlags: 0

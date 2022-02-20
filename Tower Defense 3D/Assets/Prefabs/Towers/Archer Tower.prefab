@@ -105,9 +105,10 @@ GameObject:
   - component: {fileID: 4330049152232915985}
   - component: {fileID: 2663825934812099868}
   - component: {fileID: 620067304947148532}
+  - component: {fileID: -256145374863680762}
   - component: {fileID: -7812258357926846469}
   m_Layer: 0
-  m_Name: Canon Tower
+  m_Name: Archer Tower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -159,6 +160,7 @@ MonoBehaviour:
   syncInterval: 0.1
   towerData: {fileID: 11400000, guid: 2656704ebcb0bb145809992a2023b8de, type: 2}
   sellableTooltip: {fileID: 11400000, guid: 8857fb61623567b40961d091f74a68f8, type: 2}
+  towerColor: {fileID: -256145374863680762}
   projectilePrefab: {fileID: 714181449567907701, guid: 0135b9e50aa251445aa7692d8c8d4782,
     type: 3}
   towerTargeting: {fileID: 1069530625128871706}
@@ -176,6 +178,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meshRenderers:
   - {fileID: 9109255074810490462}
+--- !u!114 &-256145374863680762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2169085319361342427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fdbc31987c022440af494fc236f3a4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshRendererMaterials:
+  - meshRenderer: {fileID: 9109255074810490462}
+    playerColorIndex: 2
 --- !u!114 &-7812258357926846469
 MonoBehaviour:
   m_ObjectHideFlags: 0

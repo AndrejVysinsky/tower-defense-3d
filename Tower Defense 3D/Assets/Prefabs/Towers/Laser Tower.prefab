@@ -204,6 +204,7 @@ GameObject:
   - component: {fileID: 1927771512813209181}
   - component: {fileID: -5169408426047425054}
   - component: {fileID: 1042597618034138002}
+  - component: {fileID: 6694069602814764103}
   - component: {fileID: -6150465339144987647}
   m_Layer: 0
   m_Name: Laser Tower
@@ -259,6 +260,7 @@ MonoBehaviour:
   syncInterval: 0.1
   towerData: {fileID: 11400000, guid: 4b9a912874548f74bbd05b30f4cf4285, type: 2}
   sellableTooltip: {fileID: 11400000, guid: 8857fb61623567b40961d091f74a68f8, type: 2}
+  towerColor: {fileID: 6694069602814764103}
   laser: {fileID: 8619833718616983908}
   laserParticles: {fileID: 7488479327953137949, guid: 0050f9f4301621540afa99fdb9594ebd,
     type: 3}
@@ -278,6 +280,23 @@ MonoBehaviour:
   meshRenderers:
   - {fileID: 7877572649589818567}
   - {fileID: 1930759712096520648}
+--- !u!114 &6694069602814764103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4093102055030679959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fdbc31987c022440af494fc236f3a4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshRendererMaterials:
+  - meshRenderer: {fileID: 7877572649589818567}
+    playerColorIndex: 2
+  - meshRenderer: {fileID: 1930759712096520648}
+    playerColorIndex: 0
 --- !u!114 &-6150465339144987647
 MonoBehaviour:
   m_ObjectHideFlags: 0

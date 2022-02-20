@@ -51,6 +51,17 @@ namespace Assets.Scripts.Network
             EventManager.RemoveListener(gameObject);
         }
 
+        public void OnColorUpdated(uint playersNetId, Color color)
+        {
+            for (int i = 0; i < _playerStatusList.Count; i++)
+            {
+                if (_playerStatusList[i].Id == playersNetId)
+                {
+                    _playerStatusList[i].SetColor(color);
+                }
+            }
+        }
+
         public void OnCurrencyUpdated(uint playersNetId, int currentValue)
         {
             for (int i = 0; i < _playerStatusList.Count; i++)
