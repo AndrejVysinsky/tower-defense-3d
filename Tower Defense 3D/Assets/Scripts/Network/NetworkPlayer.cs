@@ -112,6 +112,15 @@ public class NetworkPlayer : NetworkBehaviour
     {
         _playerInfoList.RemoveAll(x => x.netId == playerId);
 
+        RpcPlayerDisconnected(playerId);
+    }
+
+    [ClientRpc]
+    private void RpcPlayerDisconnected(uint playerId)
+    {
+        if (isLocalPlayer == false)
+            return;
+
         EventManager.ExecuteEvent<IServerEvents>((x, y) => x.OnPlayerDisconnected(playerId));
     }
 
