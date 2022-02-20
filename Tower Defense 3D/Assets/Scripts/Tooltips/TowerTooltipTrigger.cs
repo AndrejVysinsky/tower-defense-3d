@@ -60,14 +60,6 @@ public class TowerTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
 
     private void ShowTooltip()
     {
-        if (TryGetComponent(out UpgradePanel upgradePanel))
-        {
-            towerData = upgradePanel.GetUpgradeData();
-        }
-
-        if (towerData == null || TowerTooltip.Instance == null)
-            return;
-
         var position = containerRect.transform.position;
 
         switch (tooltipPosition)
@@ -89,6 +81,22 @@ public class TowerTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointer
                 position.y = transform.position.y;
                 break;
         }
+
+        if (TryGetComponent(out UpgradePanel upgradePanel))
+        {
+            var upgradeData = upgradePanel.GetUpgradeData();
+
+            if (upgradeData.currentUpgrade == null || upgradeData.nextUpgrade == null || TowerTooltip.Instance == null)
+                return;
+
+            towerData = upgradeData.nextUpgrade;
+
+            TowerTooltip.Instance.ShowUpgrade(upgradeData.currentUpgrade, upgradeData.nextUpgrade, position);
+            return;
+        }
+
+        if (towerData == null || TowerTooltip.Instance == null)
+            return;
 
         TowerTooltip.Instance.Show(towerData, position);
     }

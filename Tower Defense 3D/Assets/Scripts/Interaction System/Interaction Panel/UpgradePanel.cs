@@ -8,16 +8,18 @@ public class UpgradePanel : MonoBehaviour
 {
     [SerializeField] GameObject upgradeButton;
 
+    private TowerData _currentUpgrade;
     private TowerData _upgradeOption;
     private int _upgradeIndex;
 
     private bool _isUpgradeAvailable;
 
-    public void SetUpgrade(TowerData upgradeOption, int upgradeIndex)
+    public void SetUpgrade(TowerData currentUpgrade, TowerData upgradeOption, int upgradeIndex)
     {
         _isUpgradeAvailable = true;
         upgradeButton.SetActive(true);
 
+        _currentUpgrade = currentUpgrade;
         _upgradeOption = upgradeOption;
         _upgradeIndex = upgradeIndex;
 
@@ -32,12 +34,12 @@ public class UpgradePanel : MonoBehaviour
         //disable cursor hand
     }
 
-    public TowerData GetUpgradeData()
+    public (TowerData currentUpgrade, TowerData nextUpgrade) GetUpgradeData()
     {
         if (_isUpgradeAvailable == false)
-            return null;
+            return (null, null);
 
-        return _upgradeOption;
+        return (_currentUpgrade, _upgradeOption);
     }
 
     public void UpgradeTower()

@@ -14,9 +14,7 @@ public class JoinLobbyButton : MonoBehaviour
         }
 
         LobbyConfig.Instance.SetLobbyType(1);
-        sceneLoader.ChangeScene(1);
-
         LobbyConfig.Instance.SetLobbyId(steamIdText.text);
+        sceneLoader.ChangeScene(1);
     }
-   
 }

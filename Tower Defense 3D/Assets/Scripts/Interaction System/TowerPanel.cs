@@ -70,7 +70,7 @@ namespace Assets.Scripts.Interaction_System
         {
             if (_towerBase.UpgradeOptions.Count > 0)
             {
-                upgradePanel.SetUpgrade(_towerBase.TowerData.NextUpgrades[0], 0);
+                upgradePanel.SetUpgrade(_towerBase.TowerData, _towerBase.TowerData.NextUpgrades[0], 0);
             }
             else
             {
