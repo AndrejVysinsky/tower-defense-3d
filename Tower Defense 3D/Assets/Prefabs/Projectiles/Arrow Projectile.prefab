@@ -79,6 +79,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  meshRenderer: {fileID: 2486788427319726503}
   speed: 20
   travelledDistanceAfterReachingTarget: 3
 --- !u!114 &-1230533146638779878
@@ -170,6 +171,12 @@ PrefabInstance:
 --- !u!4 &3659724704407497416 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f84cd591a037d2242be69fbf8a748449,
+    type: 3}
+  m_PrefabInstance: {fileID: 3837996279004351779}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &2486788427319726503 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: f84cd591a037d2242be69fbf8a748449,
     type: 3}
   m_PrefabInstance: {fileID: 3837996279004351779}
   m_PrefabAsset: {fileID: 0}

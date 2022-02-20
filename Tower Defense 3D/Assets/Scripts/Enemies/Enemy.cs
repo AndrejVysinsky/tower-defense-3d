@@ -35,7 +35,7 @@ public class Enemy : NetworkBehaviour, IInteractable, IEntity
         _pathway = pathway;
         _difficultyModifier = difficultyMultiplier;
         transform.position = _pathway.GetCheckpointGroundPosition(0);
-        SetNextCheckpoint();
+        SetNextCheckpoint();        
     }
 
     public override void OnStartClient()
@@ -108,6 +108,9 @@ public class Enemy : NetworkBehaviour, IInteractable, IEntity
     private void OnDeath()
     {
         GetComponent<Collider>().enabled = false;
+
+        var player = FindObjectsOfType<NetworkPlayer>().FirstOrDefault(x => x.MyInfo.netId == PlayerId);
+        player.RemoveEnemyFromCreepCount();
 
         RpcDeathEffect();
 

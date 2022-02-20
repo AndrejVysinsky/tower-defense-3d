@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Mirror;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class BombardProjectile : MonoBehaviour, IProjectileWithAreaEffect
+public class BombardProjectile : NetworkBehaviour, IProjectileWithAreaEffect
 {
     [SerializeField] float speed;
     [Tooltip("Sets sphere collider radius")]
@@ -9,12 +10,14 @@ public class BombardProjectile : MonoBehaviour, IProjectileWithAreaEffect
     [SerializeField] float arcHeight;
     [SerializeField] ParticleSystem particlesPrefab;
 
-    private float _targetDistance;
-    private float _damage;
+    [SyncVar] private float _targetDistance;
+    [SyncVar] private float _damage;
+    [SyncVar] private Vector3 _targetPosition;
 
     private Vector3 _startingPosition;
     private Vector3 _currentPosition;
-    private Vector3 _targetPosition;
+
+    private bool _targetReached = false;
 
     public List<GameObject> TargetsInRange { get; private set; } = new List<GameObject>();
 
@@ -26,6 +29,7 @@ public class BombardProjectile : MonoBehaviour, IProjectileWithAreaEffect
         GetComponent<SphereCollider>().radius = damageRange;
     }
 
+    [Server]
     public void Initialize(Vector3 targetPosition, float effectValue)
     {
         _targetDistance = Vector3.Distance(_startingPosition, targetPosition);
@@ -36,6 +40,9 @@ public class BombardProjectile : MonoBehaviour, IProjectileWithAreaEffect
 
     private void Update()
     {
+        if (_targetReached)
+            return;
+
         MoveInPositionOfTarget();
     }
 
@@ -49,7 +56,13 @@ public class BombardProjectile : MonoBehaviour, IProjectileWithAreaEffect
 
         if (_currentPosition == _targetPosition)
         {
-            ApplyEffectOnImpact(TargetsInRange);
+            _targetReached = true;
+            ShowParticleEffect();
+            HideProjectile();
+            if (isServer)
+            {
+                ApplyEffectOnImpact(TargetsInRange);
+            }
         }
     }
 
@@ -79,13 +92,9 @@ public class BombardProjectile : MonoBehaviour, IProjectileWithAreaEffect
         TargetsInRange.Remove(target);
     }
 
+    [Server]
     public void ApplyEffectOnImpact(List<GameObject> targets)
     {
-        var particles = Instantiate(particlesPrefab);
-        particles.transform.position = transform.position;
-
-        Destroy(particles, particles.main.duration);
-
         foreach (var target in targets)
         {
             if (target == null)
@@ -98,6 +107,19 @@ public class BombardProjectile : MonoBehaviour, IProjectileWithAreaEffect
             target.GetComponent<Enemy>().TakeDamage(_damage * damageFactor);
         }
 
-        Destroy(gameObject);
+        Destroy(gameObject, 0.5f);
+    }
+
+    private void ShowParticleEffect()
+    {
+        var particles = Instantiate(particlesPrefab);
+        particles.transform.position = transform.position;
+
+        Destroy(particles.gameObject, particles.main.duration);
+    }
+
+    private void HideProjectile()
+    {
+        GetComponent<MeshRenderer>().enabled = false;
     }
 }

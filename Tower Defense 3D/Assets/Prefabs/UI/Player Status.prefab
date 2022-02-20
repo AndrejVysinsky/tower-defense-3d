@@ -232,6 +232,7 @@ MonoBehaviour:
   playerImage: {fileID: 6387997649392059047}
   livesText: {fileID: 5810605071456440180}
   currencyText: {fileID: 5810605071803254726}
+  creepsText: {fileID: 8893887050414837006}
 --- !u!1 &5810605071456440178
 GameObject:
   m_ObjectHideFlags: 0

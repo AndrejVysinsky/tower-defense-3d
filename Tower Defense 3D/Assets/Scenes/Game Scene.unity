@@ -6297,7 +6297,6 @@ GameObject:
   - component: {fileID: 1225989536}
   - component: {fileID: 1225989539}
   - component: {fileID: 1225989538}
-  - component: {fileID: 1225989537}
   m_Layer: 5
   m_Name: Wave Container
   m_TagString: Untagged
@@ -6326,22 +6325,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1225989537
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1225989535}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c9c081ba76778a4da27599615665b19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  towerData: {fileID: 0}
-  tooltipPosition: 0
-  containerRect: {fileID: 0}
-  positionOffset: 0
 --- !u!114 &1225989538
 MonoBehaviour:
   m_ObjectHideFlags: 0

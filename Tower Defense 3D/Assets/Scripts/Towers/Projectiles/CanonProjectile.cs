@@ -1,13 +1,9 @@
 ﻿using Mirror;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public class CanonProjectile : NetworkBehaviour, IProjectileSingleTarget
 {
+    [SerializeField] MeshRenderer meshRenderer;
     [SerializeField] float speed;
     [SerializeField] float travelledDistanceAfterReachingTarget;
 
@@ -72,6 +68,6 @@ public class CanonProjectile : NetworkBehaviour, IProjectileSingleTarget
 
     private void HideProjectile()
     {
-        GetComponent<MeshRenderer>().enabled = false;
+        meshRenderer.enabled = false;
     }
 }

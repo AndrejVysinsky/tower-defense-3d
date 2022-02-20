@@ -13,6 +13,7 @@ namespace Assets.Scripts.Network
     {
         [SerializeField] TextMeshProUGUI livesText;
         [SerializeField] TextMeshProUGUI currencyText;
+        [SerializeField] TextMeshProUGUI creepsText;
 
         protected override void Awake()
         {
@@ -48,6 +49,14 @@ namespace Assets.Scripts.Network
                 return;
 
             currencyText.text = GetParsedCurrency(currency);
+        }
+
+        public void SetCreeps(int creeps)
+        {
+            if (creepsText == null)
+                return;
+
+            creepsText.text = creeps.ToString();
         }
 
         private string GetParsedCurrency(float value)

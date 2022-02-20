@@ -25,6 +25,7 @@ public class NetworkPlayer : NetworkBehaviour
     [SyncVar] private int _currency;
     [SyncVar] private int _lives;
     [SyncVar] private int _myInfoIndex = -1;
+    [SyncVar] private int _creeps = 0;
     public int Currency => _currency;
     public int Lives => _lives;
     public BasePlayerInfo MyInfo => _playerInfoList[_myInfoIndex];
@@ -257,5 +258,26 @@ public class NetworkPlayer : NetworkBehaviour
     public void TargetDisplayLivesChange(NetworkConnection target, int value, Vector3 position)
     {
         GameController.Instance.DisplayLivesChange(value, position);
+    }
+
+    [Server]
+    public void AddEnemiesToCreepCount(int count)
+    {
+        _creeps += count;
+        RpcUpdateCreeps(MyInfo.netId, _creeps);
+        
+    }
+
+    [Server]
+    public void RemoveEnemyFromCreepCount()
+    {
+        _creeps--;
+        RpcUpdateCreeps(MyInfo.netId, _creeps);
+    }
+
+    [ClientRpc]
+    private void RpcUpdateCreeps(uint playersNetId, int creeps)
+    {
+        EventManager.ExecuteEvent<IPlayerEvents>((x, y) => x.OnCreepsUpdated(playersNetId, creeps));
     }
 }

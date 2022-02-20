@@ -1,6 +1,7 @@
 ﻿using Mirror;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EnemySpawner : NetworkBehaviour, IMapLoaded
@@ -93,8 +94,14 @@ public class EnemySpawner : NetworkBehaviour, IMapLoaded
 
         var enemyType = enemyWave.EnemyType;
         //var enemySprite = enemyWave.GetRandomSprite();
-        //var enemyColor = enemyWave.GetRandomColor();        
+        //var enemyColor = enemyWave.GetRandomColor();
 
+        for (int i = 0; i < _pathways.Length; i++)
+        {
+            var player = FindObjectsOfType<NetworkPlayer>().FirstOrDefault(x => x.MyInfo.netId == _pathways[i].PlayerId);
+            player.AddEnemiesToCreepCount(numberOfEnemies);
+        }
+        
         while (numberOfEnemies > 0)
         {
             SpawnEnemy(index);
