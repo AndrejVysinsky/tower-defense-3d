@@ -57,11 +57,7 @@ public static class RayCaster
     {
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        var hitInfos = Physics.RaycastAll(ray).ToList();
-
-        hitInfos = hitInfos.OrderBy(x => x.distance).ToList();
-
-        hitInfo = hitInfos.Find(x => x.transform.CompareTag(tag));
+        hitInfo = Physics.RaycastAll(ray).OrderBy(x => x.distance).FirstOrDefault(x => x.transform.CompareTag(tag));
 
         return hitInfo.transform != null;
     }

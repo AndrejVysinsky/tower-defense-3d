@@ -166,7 +166,7 @@ public class TowerTargeting : NetworkBehaviour
 
         float remainingDistance = _enemiesInRange.Min(enemy => enemy.GetRemainingDistance());
 
-        return _enemiesInRange.Where(enemy => enemy.GetRemainingDistance() == remainingDistance).FirstOrDefault();
+        return _enemiesInRange.FirstOrDefault(enemy => enemy.GetRemainingDistance() == remainingDistance);
     }
 
     public Vector3 GetFirePointPosition()
