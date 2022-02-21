@@ -56,10 +56,14 @@ public class MyNetworkManager : NetworkManager
         {
             CSteamID steamId = SteamMatchmaking.GetLobbyMemberByIndex(MyLobbyManager.LobbyId, numPlayers - 1);
             addedPlayerInfo.steamId = steamId.m_SteamID;
+            addedPlayerInfo.name = SteamFriends.GetFriendPersonaName(steamId);
+        }
+        else
+        {
+            addedPlayerInfo.name = "Player" + (_networkConnections.Count + 1);
         }
 
         addedPlayerInfo.netId = conn.identity.netId;
-        addedPlayerInfo.name = "Player" + (_networkConnections.Count + 1);
         addedPlayerInfo.color = _colors[_colorIndex++];
 
         _playerInfoList.Add(addedPlayerInfo);

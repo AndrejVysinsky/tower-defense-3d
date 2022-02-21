@@ -34,6 +34,9 @@ public class CameraController : MonoBehaviour
 
     void LateUpdate()
     {
+        if (ChatController.chatInputActive)
+            return;
+
         if (Input.GetKey(KeyCode.E) || Input.GetKey(KeyCode.Q))
         {
             RotateCamera();

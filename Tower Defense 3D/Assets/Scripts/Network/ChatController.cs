@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class ChatController : NetworkBehaviour
 {
+    [SerializeField] CanvasGroup canvasGroup;
     [SerializeField] GameObject messageContainer;
     [SerializeField] GameObject chatMessagePrefab;
 
@@ -12,15 +13,36 @@ public class ChatController : NetworkBehaviour
 
     private NetworkPlayer _localPlayer;
 
+    private float _alphaValueForCanvasGroup = 0.77f;
+    public static bool chatInputActive = false;
+
     public struct ChatMessage : NetworkMessage
     {
         public string message;
+    }
+
+    private void Start()
+    {
+        canvasGroup.alpha = _alphaValueForCanvasGroup;
+        chatInputActive = false;
     }
 
     public override void OnStartServer()
     {
         base.OnStartServer();
         NetworkServer.RegisterHandler<ChatMessage>(OnChatMessageSend);
+    }
+
+    public void OnChatSelected()
+    {
+        chatInputActive = true;
+        canvasGroup.alpha = 1;
+    }
+
+    public void OnChatDeselected()
+    {
+        chatInputActive = false;
+        canvasGroup.alpha = _alphaValueForCanvasGroup;
     }
 
     private void OnChatMessageSend(NetworkConnection conn, ChatMessage chatMessage)
