@@ -15,12 +15,12 @@ public class PathwayCollider : MonoBehaviour, IGridObjectTryToRemove, IGridObjec
 
         if (localScale.x == 0)
         {
-            localScale.x = 1;
+            localScale.x = 0.5f;
             localScale.z = (localScale.z - 2) / 2;
         }
         else
         {
-            localScale.z = 1;
+            localScale.z = 0.5f;
             localScale.x = (localScale.x - 2) / 2;
         }
 
