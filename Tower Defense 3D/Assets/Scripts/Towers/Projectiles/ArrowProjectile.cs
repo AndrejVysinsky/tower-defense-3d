@@ -7,25 +7,36 @@ public class ArrowProjectile : NetworkBehaviour, IProjectileSingleTarget
     [SerializeField] float speed;
     [SerializeField] float travelledDistanceAfterReachingTarget;
 
-    [SyncVar] private Vector3 _moveDirection;
-    [SyncVar] private float _targetDistance;
-    [SyncVar] private float _damage;
+    private Enemy _enemy;
+    [SyncVar] private Vector3 _targetPosition;
+    private Vector3 _moveDirection;
+    private float _targetDistance;
+    private float _damage;
 
     private float _travelledDistance;
 
     [Server]
-    public void Initialize(Vector3 targetPosition, float effectValue)
+    public void Initialize(Enemy enemy, float effectValue)
     {
-        _targetDistance = Vector3.Distance(transform.position, targetPosition);
-
-        _moveDirection = (targetPosition - transform.position).normalized;
+        _enemy = enemy;
         _damage = effectValue;
+        _targetPosition = _enemy.GetEnemyHitPoint();
 
-        transform.LookAt(targetPosition);
+        _targetDistance = Vector3.Distance(transform.position, _targetPosition);
+        _moveDirection = (_targetPosition - transform.position).normalized;
+        transform.LookAt(_targetPosition);
     }
 
     private void Update()
     {
+        if (isServer)
+        {
+            if (Vector3.SqrMagnitude(_enemy.GetEnemyHitPoint() - _targetPosition) < 0.1)
+            {
+                _targetPosition = _enemy.GetEnemyHitPoint();
+            }
+        }
+
         MoveInPositionOfTarget();
     }
 
@@ -36,6 +47,10 @@ public class ArrowProjectile : NetworkBehaviour, IProjectileSingleTarget
             Destroy(gameObject);
             return;
         }
+        
+        _targetDistance = Vector3.Distance(transform.position, _targetPosition);
+        _moveDirection = (_targetPosition - transform.position).normalized;
+        transform.LookAt(_targetPosition);
 
         var distanceDelta = _moveDirection * speed * Time.deltaTime;
 

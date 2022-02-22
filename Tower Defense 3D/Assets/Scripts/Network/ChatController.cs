@@ -33,6 +33,12 @@ public class ChatController : NetworkBehaviour
         NetworkServer.RegisterHandler<ChatMessage>(OnChatMessageSend);
     }
 
+    public override void OnStopServer()
+    {
+        base.OnStopServer();
+        NetworkServer.UnregisterHandler<ChatMessage>();
+    }
+
     public void OnChatSelected()
     {
         chatInputActive = true;

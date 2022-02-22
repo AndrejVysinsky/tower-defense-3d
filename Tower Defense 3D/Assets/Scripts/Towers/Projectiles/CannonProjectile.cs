@@ -30,11 +30,11 @@ public class CannonProjectile : NetworkBehaviour, IProjectileWithAreaEffect
     }
 
     [Server]
-    public void Initialize(Vector3 targetPosition, float effectValue)
+    public void Initialize(Enemy enemy, float effectValue)
     {
-        _targetDistance = Vector3.Distance(_startingPosition, targetPosition);
+        _targetDistance = Vector3.Distance(_startingPosition, enemy.GetEnemyHitPoint());
 
-        _targetPosition = targetPosition;
+        _targetPosition = enemy.GetEnemyHitPoint();
         _damage = effectValue;
     }
 

@@ -81,7 +81,7 @@ MonoBehaviour:
   syncInterval: 0.1
   meshRenderer: {fileID: 2486788427319726503}
   speed: 20
-  travelledDistanceAfterReachingTarget: 3
+  travelledDistanceAfterReachingTarget: 5
 --- !u!114 &-1230533146638779878
 MonoBehaviour:
   m_ObjectHideFlags: 0

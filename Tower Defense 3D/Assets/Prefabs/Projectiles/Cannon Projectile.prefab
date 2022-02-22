@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -3153121997887243712}
   - component: {fileID: -7025437213184896682}
   m_Layer: 2
-  m_Name: Bombard Projectile
+  m_Name: Cannon Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -126,6 +126,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81dccf21022bae3419c352e05a0220fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   speed: 2
   damageRange: 10
   arcHeight: 1
