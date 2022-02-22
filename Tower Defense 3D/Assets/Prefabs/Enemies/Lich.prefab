@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3570726811195979129}
   - component: {fileID: -4706752612991139005}
   - component: {fileID: 7237477493645979729}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Lich
   m_TagString: Enemy
   m_Icon: {fileID: 0}

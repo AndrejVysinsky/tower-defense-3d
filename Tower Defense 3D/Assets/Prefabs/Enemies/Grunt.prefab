@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6308366507835893172}
   - component: {fileID: 7649172382476221320}
   - component: {fileID: 2774152781776596663}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Grunt
   m_TagString: Enemy
   m_Icon: {fileID: 0}

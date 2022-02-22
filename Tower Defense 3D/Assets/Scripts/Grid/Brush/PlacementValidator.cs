@@ -174,7 +174,7 @@ public class PlacementValidator : MonoBehaviour
         modifiedExtents.x -= 0.01f;
         modifiedExtents.z -= 0.01f;
 
-        int bufferSize = Physics.OverlapBoxNonAlloc(transform.position, modifiedExtents, _colliderBuffer, Quaternion.identity, Physics.AllLayers ^ Physics.IgnoreRaycastLayer);
+        int bufferSize = Physics.OverlapBoxNonAlloc(transform.position, modifiedExtents, _colliderBuffer, Quaternion.identity, (Physics.AllLayers ^ Physics.IgnoreRaycastLayer) & ~LayerMask.GetMask("Enemy"));
 
         if (bufferSize == 1 && _colliderBuffer[0].gameObject.name == "Grid Base")
         {
