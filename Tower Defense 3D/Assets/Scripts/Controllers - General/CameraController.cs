@@ -37,6 +37,9 @@ public class CameraController : MonoBehaviour
         if (ChatController.chatInputActive)
             return;
 
+        if (MapExplorer.mapExplorerInputActive)
+            return;
+
         if (Input.GetKey(KeyCode.E) || Input.GetKey(KeyCode.Q))
         {
             RotateCamera();

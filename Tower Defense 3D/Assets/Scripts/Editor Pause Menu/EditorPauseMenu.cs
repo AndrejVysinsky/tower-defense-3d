@@ -2,16 +2,15 @@
 
 public class EditorPauseMenu : MonoBehaviour
 {
-    [SerializeField] GameObject pausePanel;
-    [SerializeField] GameObject pauseMenuBg;
+    [SerializeField] GameObject menuPanel;
     [SerializeField] GameObject mapExplorerPanel;
     [SerializeField] MapSaveManager mapManager;
 
-    private bool _isPauseMenuActive;
+    private bool _isMenuActive;
 
     private void Start()
     {
-        _isPauseMenuActive = pausePanel.activeSelf;
+        _isMenuActive = menuPanel.activeSelf;
     }
 
     private void Update()
@@ -24,35 +23,35 @@ public class EditorPauseMenu : MonoBehaviour
 
     public void TogglePauseMenu()
     {
-        _isPauseMenuActive = !_isPauseMenuActive;
+        _isMenuActive = !_isMenuActive;
 
-        pausePanel.SetActive(_isPauseMenuActive);
-        pauseMenuBg.SetActive(_isPauseMenuActive);
+        menuPanel.SetActive(_isMenuActive);
         mapExplorerPanel.SetActive(false);
     }
 
     public void OpenSaveMapPanel()
     {
-        pausePanel.SetActive(false);
+        menuPanel.SetActive(false);
         mapExplorerPanel.SetActive(true);
-        mapExplorerPanel.GetComponent<MapFileExplorer>().ShowSavePanel();
+        mapExplorerPanel.GetComponent<MapExplorer>().ShowSavePanel();
     }
 
     public void OpenLoadMapPanel()
     {
-        pausePanel.SetActive(false);
+        menuPanel.SetActive(false);
         mapExplorerPanel.SetActive(true);
-        mapExplorerPanel.GetComponent<MapFileExplorer>().ShowLoadPanel();
+        mapExplorerPanel.GetComponent<MapExplorer>().ShowLoadPanel();
     }
 
     public void CallClearMap()
     {
         mapManager.ClearScene();
+        mapManager.InitializePathway();
     }
 
     public void CloseMapPanel()
     {
-        pausePanel.SetActive(true);
+        menuPanel.SetActive(true);
         mapExplorerPanel.SetActive(false);
     }
 }

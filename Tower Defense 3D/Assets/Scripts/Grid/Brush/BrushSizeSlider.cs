@@ -1,46 +1,62 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+﻿using System.Reflection;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class BrushSizeSlider : MonoBehaviour
 {
     [SerializeField] GridController gridController;
-    [SerializeField] Slider slider;
     [SerializeField] TextMeshProUGUI textValue;
+
+    [Header("Brush size range")]
+    [SerializeField] int minSize;
+    [SerializeField] int maxSize;
+
+    private int _currentSize = 1;
 
     private void Start()
     {
-        var range = typeof(GridSettings).GetField(nameof(GridSettings.brushSize)).GetCustomAttribute<RangeAttribute>();
-
-        slider.minValue = range.min;
-        slider.maxValue = range.max;
-        slider.value = gridController.GridSettings.brushSize;
+        _currentSize = gridController.GridSettings.brushSize;
     }
 
     private void OnEnable()
     {
-        gridController.OnBrushSizeChangedEvent.AddListener(UpdateSliderValue);
+        gridController.OnBrushSizeChangedEvent.AddListener(UpdateTextValue);
     }
 
     private void OnDisable()
     {
-        gridController.OnBrushSizeChangedEvent.RemoveListener(UpdateSliderValue);
+        gridController.OnBrushSizeChangedEvent.RemoveListener(UpdateTextValue);
     }
 
-    public void OnValueChanged(float value)
+    public void IncreaseValue()
     {
-        var newValue = gridController.OnBrushSizeChanged((int)value);
+        if (_currentSize >= maxSize)
+        {
+            return;
+        }
 
-        textValue.text = newValue.ToString();
+        OnBrushSizeChanged(_currentSize + 1);
     }
 
-    public void UpdateSliderValue(int value)
+    public void DecreaseValue()
+    {
+        if (_currentSize <= minSize)
+        {
+            return;
+        }
+
+        OnBrushSizeChanged(_currentSize - 1);
+    }
+
+    private void OnBrushSizeChanged(int newSize)
+    {
+        _currentSize = gridController.OnBrushSizeChanged(newSize);
+
+        UpdateTextValue(_currentSize);
+    }
+
+    private void UpdateTextValue(int value)
     {
         textValue.text = value.ToString();
-        slider.value = value;
     }
 }

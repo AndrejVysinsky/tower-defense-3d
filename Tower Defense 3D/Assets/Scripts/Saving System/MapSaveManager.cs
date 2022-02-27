@@ -16,10 +16,7 @@ public class MapSaveManager : MonoBehaviour
     {
         _mapSaveData = new MapSaveData();
 
-        //initialize checkpoint Pathway for every map
-        var pathwayObject = Instantiate(pathwayPrefab, transform);
-        var pathwayScript = pathwayObject.GetComponent<Pathway>();
-        pathwayScript.Initialize(this, 0);
+        InitializePathway();
     }
 
     private void Start()
@@ -28,6 +25,14 @@ public class MapSaveManager : MonoBehaviour
         {
             navMeshSurface.BuildNavMesh();
         }
+    }
+
+    public void InitializePathway()
+    {
+        //initialize checkpoint Pathway for every map
+        var pathwayObject = Instantiate(pathwayPrefab, transform);
+        var pathwayScript = pathwayObject.GetComponent<Pathway>();
+        pathwayScript.Initialize(this, 0);
     }
 
     public string[] GetAllMaps()
