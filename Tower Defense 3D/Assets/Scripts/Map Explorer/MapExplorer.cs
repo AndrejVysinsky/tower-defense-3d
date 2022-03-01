@@ -108,7 +108,7 @@ public class MapExplorer : MonoBehaviour
 
     public void SaveMapFile()
     {
-        if (mapFileNameInput.text == null)
+        if (string.IsNullOrEmpty(mapFileNameInput.text))
         {
             Debug.Log("Missing map name.");
             return;

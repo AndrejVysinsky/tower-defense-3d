@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -2275716636036314022}
   - component: {fileID: -2450254903410633123}
   m_Layer: 0
-  m_Name: square block
+  m_Name: Grass Block
   m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 158cfb9d210db184c968a2a4d4895737, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  path: Terrain
+  path: Blocks
 --- !u!114 &-2450254903410633123
 MonoBehaviour:
   m_ObjectHideFlags: 0

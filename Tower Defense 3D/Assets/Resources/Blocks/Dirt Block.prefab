@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2972267428828670814
+--- !u!1 &6419299588404856958
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,47 +8,48 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2482694876282204644}
-  - component: {fileID: 1575017710485814849}
-  - component: {fileID: 3620719323798325899}
-  - component: {fileID: -4633501666673004093}
-  - component: {fileID: 4129667261257087244}
+  - component: {fileID: 5935249916851819204}
+  - component: {fileID: 7345905145060892001}
+  - component: {fileID: 4761732551222061483}
+  - component: {fileID: 2484938080397739128}
+  - component: {fileID: 1736335320625481530}
+  - component: {fileID: -7080447757360301475}
   m_Layer: 0
-  m_Name: Grass
-  m_TagString: Untagged
+  m_Name: Dirt Block
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2482694876282204644
+--- !u!4 &5935249916851819204
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2972267428828670814}
+  m_GameObject: {fileID: 6419299588404856958}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &1575017710485814849
+--- !u!33 &7345905145060892001
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2972267428828670814}
-  m_Mesh: {fileID: 3613567641014311022, guid: b0575868573cf8949b74c9fba46357b9, type: 3}
---- !u!23 &3620719323798325899
+  m_GameObject: {fileID: 6419299588404856958}
+  m_Mesh: {fileID: -5495902117074765545, guid: b4b8bff251bbdec44892322fac4b5d52, type: 3}
+--- !u!23 &4761732551222061483
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2972267428828670814}
+  m_GameObject: {fileID: 6419299588404856958}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -61,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5594ea16935b4d84c9f5d5c71a075b4c, type: 2}
+  - {fileID: 2100000, guid: d2cf7975e76e9364c8ec4b0f2463db28, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -83,29 +84,43 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &-4633501666673004093
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2972267428828670814}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 158cfb9d210db184c968a2a4d4895737, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  path: Grass
---- !u!65 &4129667261257087244
+--- !u!65 &2484938080397739128
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2972267428828670814}
+  m_GameObject: {fileID: 6419299588404856958}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.5, z: 0.5}
+  m_Size: {x: 2, y: 1.9999998, z: 1.9999998}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1736335320625481530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6419299588404856958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 158cfb9d210db184c968a2a4d4895737, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  path: Blocks
+--- !u!114 &-7080447757360301475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6419299588404856958}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a6a55c38ab77064daf146a0548b2ff2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultObject: {fileID: 0}
+  objectRulesData: []

@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 2484938080397739128}
   - component: {fileID: 1736335320625481530}
   - component: {fileID: -7080447757360301475}
-  m_Layer: 8
-  m_Name: Square Block Path
+  m_Layer: 0
+  m_Name: Sand Halft Block
   m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42,7 +42,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6419299588404856958}
-  m_Mesh: {fileID: -5495902117074765545, guid: b4b8bff251bbdec44892322fac4b5d52, type: 3}
+  m_Mesh: {fileID: -5495902117074765545, guid: e53ef565c6aa97b41965f41472b371b9, type: 3}
 --- !u!23 &4761732551222061483
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9422982a5176d5745a265b6c59990559, type: 2}
+  - {fileID: 2100000, guid: bad3c625be546c44f99e32e355afb4e6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -95,7 +95,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 1.9999998, z: 1.9999998}
+  m_Size: {x: 2, y: 1, z: 1.9999998}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1736335320625481530
 MonoBehaviour:
@@ -109,7 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 158cfb9d210db184c968a2a4d4895737, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  path: Terrain
+  path: Blocks
 --- !u!114 &-7080447757360301475
 MonoBehaviour:
   m_ObjectHideFlags: 0

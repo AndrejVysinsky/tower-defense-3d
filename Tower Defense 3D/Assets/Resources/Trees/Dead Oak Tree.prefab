@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &502428768679826038
+--- !u!1 &2852368486666661469
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,47 +8,47 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 987182088214628556}
-  - component: {fileID: 4187493832321288041}
-  - component: {fileID: 2159476286214812579}
-  - component: {fileID: 4704894681835607859}
-  - component: {fileID: -4462360615488799928}
-  m_Layer: 8
-  m_Name: Slope Block
-  m_TagString: Terrain
+  - component: {fileID: 3233152055736055015}
+  - component: {fileID: 1977552199315077954}
+  - component: {fileID: 4365494878921510792}
+  - component: {fileID: 9208173138454081474}
+  - component: {fileID: 9220067050197033562}
+  m_Layer: 0
+  m_Name: Dead Oak Tree
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &987182088214628556
+--- !u!4 &3233152055736055015
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 502428768679826038}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_GameObject: {fileID: 2852368486666661469}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &4187493832321288041
+--- !u!33 &1977552199315077954
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 502428768679826038}
-  m_Mesh: {fileID: -5495902117074765545, guid: 7e0e8975f44855547a465069c5b1268b, type: 3}
---- !u!23 &2159476286214812579
+  m_GameObject: {fileID: 2852368486666661469}
+  m_Mesh: {fileID: 4803919884012734380, guid: 80baeef4b13ad9a499965150986f458e, type: 3}
+--- !u!23 &4365494878921510792
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 502428768679826038}
+  m_GameObject: {fileID: 2852368486666661469}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9422982a5176d5745a265b6c59990559, type: 2}
+  - {fileID: 2100000, guid: 90aa7297a4507324e87a55dab7e860d6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -83,30 +83,29 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &4704894681835607859
-MeshCollider:
+--- !u!65 &9208173138454081474
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 502428768679826038}
+  m_GameObject: {fileID: 2852368486666661469}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -5495902117074765545, guid: 7e0e8975f44855547a465069c5b1268b, type: 3}
---- !u!114 &-4462360615488799928
+  serializedVersion: 2
+  m_Size: {x: 2, y: 2, z: 4.7615294}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &9220067050197033562
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 502428768679826038}
+  m_GameObject: {fileID: 2852368486666661469}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 158cfb9d210db184c968a2a4d4895737, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  path: Terrain
+  path: Trees
