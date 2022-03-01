@@ -75,4 +75,16 @@ public static class FileManager
         bf.Serialize(file, fileData);
         file.Close();
     }
+
+    public static bool RemoveFile(string path, string fileName)
+    {
+        if (Directory.Exists(path) == false)
+            return false;
+
+        if (File.Exists(path + fileName) == false)
+            return false;
+
+        File.Delete(path + fileName);
+        return true;
+    }
 }

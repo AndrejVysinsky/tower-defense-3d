@@ -132,4 +132,14 @@ public class MapExplorer : MonoBehaviour
 
         editorMenu.TogglePauseMenu();
     }
+
+    public void RemoveMapFile(MapCard mapCard)
+    {
+        var success = FileManager.RemoveFile(FileManager.MapPath, mapCard.MapName);
+        if (success)
+        {
+            ClearMapCards();
+            ShowMapCards();
+        }
+    }
 }

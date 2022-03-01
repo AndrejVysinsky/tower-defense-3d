@@ -1,6 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MapCard : MonoBehaviour, IPointerDownHandler
@@ -8,6 +9,7 @@ public class MapCard : MonoBehaviour, IPointerDownHandler
     [SerializeField] Image cardBackground;
     [SerializeField] Image mapImage;
     [SerializeField] TextMeshProUGUI nameText;
+    [SerializeField] GameObject deleteButton;
 
     [Header("Colors")]
     [SerializeField] Color defaultColor;
@@ -27,6 +29,9 @@ public class MapCard : MonoBehaviour, IPointerDownHandler
 
         if (mapSprite != null)
             mapImage.sprite = mapSprite;
+
+        var isEditor = SceneManager.GetActiveScene().name == "Editor Scene";
+        deleteButton.SetActive(isEditor);
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -42,5 +47,10 @@ public class MapCard : MonoBehaviour, IPointerDownHandler
     public void DeselectCard() 
     {
         cardBackground.color = defaultColor;
+    }
+
+    public void RemoveCard()
+    {
+        _mapExplorer.RemoveMapFile(this);
     }
 }
