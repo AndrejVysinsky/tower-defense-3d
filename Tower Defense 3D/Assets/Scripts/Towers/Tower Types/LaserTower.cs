@@ -78,7 +78,7 @@ public class LaserTower : TowerBase, IGridObjectInitialized, IGridObjectPlaced
         if (towerTargeting.Target == null)
             return;
 
-        towerTargeting.Target.TakeDamage(TowerData.Damage * time);
+        towerTargeting.Target.TakeDamage(PlayerId, TowerData.Damage * time);
     }
 
     [Command]

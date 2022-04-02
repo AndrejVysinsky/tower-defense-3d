@@ -96,12 +96,23 @@ public class EnemySpawner : NetworkBehaviour, IMapLoaded
         //var enemySprite = enemyWave.GetRandomSprite();
         //var enemyColor = enemyWave.GetRandomColor();
 
-        for (int i = 0; i < _pathways.Length; i++)
+        if (LobbyConfig.Instance.GetLobbyMode() == LobbyConfig.LobbyMode.Versus)
         {
-            var player = FindObjectsOfType<NetworkPlayer>().FirstOrDefault(x => x.MyInfo.netId == _pathways[i].PlayerId);
-            player.AddEnemiesToCreepCount(numberOfEnemies);
+            for (int i = 0; i < _pathways.Length; i++)
+            {
+                var player = FindObjectsOfType<NetworkPlayer>().FirstOrDefault(x => x.MyInfo.netId == _pathways[i].PlayerId);
+                player.AddEnemiesToCreepCount(numberOfEnemies);
+            }
         }
-        
+        else
+        {
+            var players = FindObjectsOfType<NetworkPlayer>().ToList();
+            foreach (var player in players)
+            {
+                player.AddEnemiesToCreepCount(numberOfEnemies);
+            }
+        }
+                
         while (numberOfEnemies > 0)
         {
             SpawnEnemy(index);

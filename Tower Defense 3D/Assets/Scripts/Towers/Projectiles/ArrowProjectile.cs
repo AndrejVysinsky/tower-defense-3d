@@ -7,6 +7,7 @@ public class ArrowProjectile : NetworkBehaviour, IProjectileSingleTarget
     [SerializeField] float speed;
     [SerializeField] float travelledDistanceAfterReachingTarget;
 
+    private uint _playerId;
     private Enemy _enemy;
     [SyncVar] private Vector3 _targetPosition;
     private Vector3 _moveDirection;
@@ -16,8 +17,9 @@ public class ArrowProjectile : NetworkBehaviour, IProjectileSingleTarget
     private float _travelledDistance;
 
     [Server]
-    public void Initialize(Enemy enemy, float effectValue)
+    public void Initialize(uint playerId, Enemy enemy, float effectValue)
     {
+        _playerId = playerId;
         _enemy = enemy;
         _damage = effectValue;
         _targetPosition = _enemy.GetEnemyHitPoint();
@@ -77,7 +79,7 @@ public class ArrowProjectile : NetworkBehaviour, IProjectileSingleTarget
     [Server]
     public void ApplyEffectOnImpact(GameObject target)
     {
-        target.GetComponent<Enemy>().TakeDamage(_damage);
+        target.GetComponent<Enemy>().TakeDamage(_playerId, _damage);
         Destroy(gameObject);
     }
 

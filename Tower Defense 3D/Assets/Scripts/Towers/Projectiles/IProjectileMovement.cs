@@ -2,6 +2,6 @@
 
 public interface IProjectileMovement
 {
-    void Initialize(Enemy enemy, float effectStrength);
+    void Initialize(uint playerId, Enemy enemy, float effectStrength);
     void MoveInPositionOfTarget();
 }

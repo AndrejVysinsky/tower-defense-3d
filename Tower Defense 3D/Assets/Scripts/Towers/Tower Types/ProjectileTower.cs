@@ -47,7 +47,7 @@ public class ProjectileTower : TowerBase, IGridObjectInitialized, IGridObjectPla
     {
         var projectile = Instantiate(projectilePrefab, towerTargeting.GetFirePointPosition(), transform.rotation);
 
-        projectile.GetComponent<IProjectileMovement>().Initialize(target, TowerData.Damage);
+        projectile.GetComponent<IProjectileMovement>().Initialize(PlayerId, target, TowerData.Damage);
 
         NetworkServer.Spawn(projectile);
     }

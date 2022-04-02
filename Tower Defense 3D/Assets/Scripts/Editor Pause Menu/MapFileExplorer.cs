@@ -81,7 +81,7 @@ public class MapFileExplorer : MonoBehaviour
             playerIds = myNetworkManager.GetPlayerIds();
         }
 
-        mapManager.LoadMapData(isLoadingInEditor, playerIds, mapName: _selectedMapFile.MapName);
+        mapManager.LoadMapData(isLoadingInEditor, playerIds, LobbyConfig.Instance.GetLobbyMode(), mapName: _selectedMapFile.MapName);
     }
 
     public void ShowSavePanel()

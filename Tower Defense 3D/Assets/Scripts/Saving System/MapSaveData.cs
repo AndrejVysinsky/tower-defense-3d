@@ -79,9 +79,33 @@ public class MapSaveData
         saveableObjects.RemoveAll(x => x.id == gameObjectID);
     }
 
-    public void InitializeObjects(bool isLoadingInEditor, List<GameObject> gameObjects, List<NetworkPlayer> networkPlayers)
+    public void InitializeObjects(bool isLoadingInEditor, int numberOfMapInstances, List<GameObject> gameObjects, List<NetworkPlayer> networkPlayers)
     {
-        int index = 0;
+        var mapBoundaries = new Boundaries();
+
+        int boundariesShift = GridSettings.sizeX + (int)GridSettings.cellSize;
+        if (isLoadingInEditor == false)
+        {
+            if (numberOfMapInstances == 1)
+            {
+                boundariesShift = 0;
+            }
+
+            for (int i = 0; i < networkPlayers.Count; i++)
+            {
+                if (networkPlayers[i].PlayerBoundaries == null)
+                    networkPlayers[i].PlayerBoundaries = new Boundaries();
+
+                networkPlayers[i].PlayerBoundaries.SetBoundaries(0 + boundariesShift * i, GridSettings.sizeX + boundariesShift * i, 0, GridSettings.sizeZ);
+
+                mapBoundaries.ExtendBoundariesTo(networkPlayers[i].PlayerBoundaries);
+            }
+
+            for (int i = 0; i < networkPlayers.Count; i++)
+            {
+                networkPlayers[i].SetMapBoundaries(mapBoundaries);
+            }
+        }
 
         /*
          * inner foreach iterates over all objects of currently loaded map
@@ -90,30 +114,11 @@ public class MapSaveData
          * do this for every player - because gameObjects list contains "numberOfPlayers" amount of map objects
          */
 
-        int numberOfMapInstances = 1;
+        int index = 0;
 
-        if (isLoadingInEditor == false)
+        var mapShift = GridSettings.sizeX + (int)GridSettings.cellSize;
+        for (int i = 0; i < numberOfMapInstances; i++) 
         {
-            numberOfMapInstances = networkPlayers.Count;
-        }
-
-        var mapBoundaries = new Boundaries();
-
-        for (int i = 0; i < numberOfMapInstances; i++)
-        {
-            int xShift = (GridSettings.sizeX + (int)GridSettings.cellSize) * i;
-            int zShift = (GridSettings.sizeZ + (int)GridSettings.cellSize) * i;
-
-            if (isLoadingInEditor == false)
-            {
-                if (networkPlayers[i].PlayerBoundaries == null)
-                    networkPlayers[i].PlayerBoundaries = new Boundaries();
-
-                networkPlayers[i].PlayerBoundaries.SetBoundaries(0 + xShift, GridSettings.sizeX + xShift, 0, GridSettings.sizeZ);
-
-                mapBoundaries.ExtendBoundariesTo(networkPlayers[i].PlayerBoundaries);
-            }
-
             saveableObjects.ForEach(obj =>
             {
                 if (obj is SaveableCheckpoint saveableCheckpoint && gameObjects[index].TryGetComponent(out Checkpoint checkpoint))
@@ -128,7 +133,7 @@ public class MapSaveData
 
                 var position = gameObjects[index].transform.position;
 
-                position.x = obj.positionX + xShift;
+                position.x = obj.positionX + mapShift * i;
                 position.y = obj.positionY;
                 position.z = obj.positionZ;
 
@@ -148,14 +153,6 @@ public class MapSaveData
 
                 index++;
             });
-        }
-
-        if (isLoadingInEditor == false)
-        {
-            for (int i = 0; i < networkPlayers.Count; i++)
-            {
-                networkPlayers[i].SetMapBoundaries(mapBoundaries);
-            }
         }
     }
 

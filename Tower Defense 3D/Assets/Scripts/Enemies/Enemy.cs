@@ -82,12 +82,23 @@ public class Enemy : NetworkBehaviour, IInteractable, IEntity
     {
         var damage = enemyData.DamageToPlayer;
 
-        var identity = FindObjectsOfType<NetworkIdentity>().FirstOrDefault(x => x.netId == PlayerId);
-        identity.GetComponent<NetworkPlayer>().UpdateLives(PlayerId, -damage, GetEnemyHitPoint());
+        if (LobbyConfig.Instance.GetLobbyMode() == LobbyConfig.LobbyMode.Versus)
+        {
+            var identity = FindObjectsOfType<NetworkIdentity>().FirstOrDefault(x => x.netId == PlayerId);
+            identity.GetComponent<NetworkPlayer>().UpdateLives(PlayerId, -damage, GetEnemyHitPoint());
+        }
+        else
+        {
+            var players = FindObjectsOfType<NetworkPlayer>();
+            foreach (var player in players)
+            {
+                player.UpdateLives(player.GetComponent<NetworkIdentity>().netId, -damage, GetEnemyHitPoint());
+            }
+        }
     }
 
     [Server]
-    public void TakeDamage(float amount)
+    public void TakeDamage(uint playerId, float amount)
     {
         healthScript.SubtractHealth(amount);
 
@@ -97,20 +108,31 @@ public class Enemy : NetworkBehaviour, IInteractable, IEntity
 
             var reward = enemyData.RewardToPlayer * (1 + _difficultyModifier);
 
-            var identity = FindObjectsOfType<NetworkIdentity>().FirstOrDefault(x => x.netId == PlayerId);
-            identity.GetComponent<NetworkPlayer>().UpdateCurrency(PlayerId, (int)reward, GetEnemyHitPoint());
+            var identity = FindObjectsOfType<NetworkIdentity>().FirstOrDefault(x => x.netId == playerId);
+            identity.GetComponent<NetworkPlayer>().UpdateCurrency(playerId, (int)reward, GetEnemyHitPoint());
 
-            OnDeath();
+            OnDeath(playerId);
         }
     }
 
     [Server]
-    private void OnDeath()
+    private void OnDeath(uint playerId)
     {
         GetComponent<Collider>().enabled = false;
 
-        var player = FindObjectsOfType<NetworkPlayer>().FirstOrDefault(x => x.MyInfo.netId == PlayerId);
-        player.RemoveEnemyFromCreepCount();
+        if (LobbyConfig.Instance.GetLobbyMode() == LobbyConfig.LobbyMode.Versus)
+        {
+            var player = FindObjectsOfType<NetworkPlayer>().FirstOrDefault(x => x.MyInfo.netId == playerId);
+            player.RemoveEnemyFromCreepCount();
+        }
+        else
+        {
+            var players = FindObjectsOfType<NetworkPlayer>();
+            foreach (var player in players)
+            {
+                player.RemoveEnemyFromCreepCount();
+            }
+        }
 
         RpcDeathEffect();
 

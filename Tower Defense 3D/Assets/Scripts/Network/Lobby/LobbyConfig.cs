@@ -3,12 +3,19 @@ using UnityEngine.SceneManagement;
 
 public class LobbyConfig : MonoBehaviour
 {
+    private readonly string lobbyModeKey = "LobbyMode";
     private readonly string lobbyStatusKey = "LobbyStatus";
     private readonly string lobbyTypeKey = "LobbyType";
     private readonly string lobbyIdKey = "LobbyId";
     private readonly string selectedMapKey = "SelectedMap";
     private readonly string selectedMapIsCustomKey = "SelectedMapIsCustom";
     private readonly string playerCountKey = "PlayerCount";
+
+    public enum LobbyMode
+    {
+        Versus,
+        Coop
+    }
 
     public enum LobbyStatus
     {
@@ -48,11 +55,17 @@ public class LobbyConfig : MonoBehaviour
 
     private void ResetLobbyData()
     {
+        PlayerPrefs.DeleteKey(lobbyModeKey);
         PlayerPrefs.DeleteKey(lobbyStatusKey);
         PlayerPrefs.DeleteKey(lobbyTypeKey);
         PlayerPrefs.DeleteKey(lobbyIdKey);
         PlayerPrefs.DeleteKey(selectedMapKey);
         PlayerPrefs.DeleteKey(selectedMapIsCustomKey);
+    }
+
+    public void SetLobbyMode(LobbyMode lobbyMode)
+    {
+        PlayerPrefs.SetInt(lobbyModeKey, (int)lobbyMode);
     }
 
     public void SetLobbyStatus(LobbyStatus lobbyStatus)
@@ -79,6 +92,15 @@ public class LobbyConfig : MonoBehaviour
     public void SetLobbyPlayerCount(int playerCount)
     {
         PlayerPrefs.SetInt(playerCountKey, playerCount);
+    }
+
+    public LobbyMode GetLobbyMode()
+    {
+        if (PlayerPrefs.HasKey(lobbyModeKey))
+        {
+            return (LobbyMode)PlayerPrefs.GetInt(lobbyModeKey);
+        }
+        return LobbyMode.Versus;
     }
 
     public LobbyType GetLobbyType()

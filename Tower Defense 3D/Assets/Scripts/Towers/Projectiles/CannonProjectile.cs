@@ -10,6 +10,7 @@ public class CannonProjectile : NetworkBehaviour, IProjectileWithAreaEffect
     [SerializeField] float arcHeight;
     [SerializeField] ParticleSystem particlesPrefab;
 
+    private uint _playerId;
     [SyncVar] private float _targetDistance;
     [SyncVar] private float _damage;
     [SyncVar] private Vector3 _targetPosition;
@@ -30,8 +31,9 @@ public class CannonProjectile : NetworkBehaviour, IProjectileWithAreaEffect
     }
 
     [Server]
-    public void Initialize(Enemy enemy, float effectValue)
+    public void Initialize(uint playerId, Enemy enemy, float effectValue)
     {
+        _playerId = playerId;
         _targetDistance = Vector3.Distance(_startingPosition, enemy.GetEnemyHitPoint());
 
         _targetPosition = enemy.GetEnemyHitPoint();
@@ -104,7 +106,7 @@ public class CannonProjectile : NetworkBehaviour, IProjectileWithAreaEffect
 
             var damageFactor = 1 - distance / damageRange;
 
-            target.GetComponent<Enemy>().TakeDamage(_damage * damageFactor);
+            target.GetComponent<Enemy>().TakeDamage(_playerId, _damage * damageFactor);
         }
 
         Destroy(gameObject, 0.5f);

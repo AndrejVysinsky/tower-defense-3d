@@ -40,7 +40,7 @@ public class MapSaveManager : MonoBehaviour
         return FileManager.GetFiles(FileManager.MapPath);
     }
 
-    public void LoadMapData(bool isLoadingInEditor, List<uint> playerIds, string mapName = "defaultGameMap", bool isCustomMap = true)
+    public void LoadMapData(bool isLoadingInEditor, List<uint> playerIds, LobbyConfig.LobbyMode lobbyMode, string mapName = "defaultGameMap", bool isCustomMap = true)
     {
         ClearScene();
 
@@ -66,7 +66,10 @@ public class MapSaveManager : MonoBehaviour
         List<NetworkPlayer> networkPlayers = new List<NetworkPlayer>();
         if (isLoadingInEditor == false)
         {
-            numberOfMapInstances = playerIds.Count;
+            if (lobbyMode == LobbyConfig.LobbyMode.Versus)
+            {
+                numberOfMapInstances = playerIds.Count;
+            }
 
             var temp = FindObjectsOfType<NetworkPlayer>();
 
@@ -84,8 +87,8 @@ public class MapSaveManager : MonoBehaviour
 
         for (int i = 0; i < numberOfMapInstances; i++)
         {
-            uint playerId = 0;
-            if (playerIds != null)
+            uint playerId = uint.MaxValue;
+            if (playerIds != null && lobbyMode == LobbyConfig.LobbyMode.Versus)
             {
                 playerId = playerIds[i];
             }
@@ -96,7 +99,7 @@ public class MapSaveManager : MonoBehaviour
         for (int i = objectsToRemove.Count - 1; i >= 0; i--)
             _mapSaveData.RemoveObjectAt(objectsToRemove[i]);
 
-        _mapSaveData.InitializeObjects(isLoadingInEditor, gameObjects, networkPlayers);
+        _mapSaveData.InitializeObjects(isLoadingInEditor, numberOfMapInstances, gameObjects, networkPlayers);
 
         StartCoroutine(NotifyAboutMapLoaded(isLoadingInEditor));
     }

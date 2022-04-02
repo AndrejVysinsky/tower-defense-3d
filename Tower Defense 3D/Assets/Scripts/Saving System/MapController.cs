@@ -1,5 +1,4 @@
 ﻿using Mirror;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,12 +10,12 @@ public class MapController : NetworkBehaviour
     public void LoadMap(string mapHash, bool isCustomMap)
     {
         var myNetworkManager = (MyNetworkManager)NetworkManager.singleton;
-
-        RpcLoadMap(myNetworkManager.GetPlayerIds(), mapHash, isCustomMap);
+        
+        RpcLoadMap(myNetworkManager.GetPlayerIds(), LobbyConfig.Instance.GetLobbyMode(), mapHash, isCustomMap);
     }
 
     [ClientRpc]
-    private void RpcLoadMap(List<uint> playerIds, string mapHash, bool isCustomMap)
+    private void RpcLoadMap(List<uint> playerIds, LobbyConfig.LobbyMode lobbyMode, string mapHash, bool isCustomMap)
     {
         var mapName = FileManager.DefaultMaps[0];
         if (isCustomMap)
@@ -48,6 +47,6 @@ public class MapController : NetworkBehaviour
             }
         }
 
-        saveManager.LoadMapData(false, playerIds, mapName, isCustomMap);
+        saveManager.LoadMapData(false, playerIds, lobbyMode, mapName, isCustomMap);
     }
 }
