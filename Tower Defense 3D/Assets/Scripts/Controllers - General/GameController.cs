@@ -80,14 +80,17 @@ public class GameController : NetworkBehaviour
 
         if (_isPaused)
         {
-            Time.timeScale = 1;
+            //Time.timeScale = 1;
             pauseMenu.gameObject.SetActive(false);
         }
         else
         {
-            Time.timeScale = 0;
+            //Time.timeScale = 0;
             pauseMenu.gameObject.SetActive(true);
             pauseMenu.Initialize(_score);
+
+            GetComponent<GoldDonationController>().OnMenuOpened();
+            GetComponent<GoldDonationController>().HideDonationMenu();
         }
 
         _isPaused = !_isPaused;
