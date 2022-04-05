@@ -16,11 +16,11 @@ MonoBehaviour:
   name: Laser Tower 1
   sprite: {fileID: 21300000, guid: ae24a21efe983e340a5d8ead9ba1d56c, type: 3}
   hitPoints: 50
-  price: 80
-  sellFactor: 0.4
+  price: 100
   damage: 50
   attackDelay: 0
   radius: 10
+  previousUpgrade: {fileID: 0}
   nextUpgrades:
   - {fileID: 11400000, guid: 5258a9b1c79804f4eb0fc0d6bab42aef, type: 2}
   description: Shoots beam of energy on enemies which deals constant damage and slow

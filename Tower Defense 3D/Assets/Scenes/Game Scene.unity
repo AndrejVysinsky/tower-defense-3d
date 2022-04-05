@@ -1506,12 +1506,12 @@ MonoBehaviour:
   waveTimer: {fileID: 504250771}
   waveDelay: 20
   difficultyMultiplierToAdd: 1
-  addMultiplierEveryXWaves: 2
+  addMultiplierEveryXWaves: 5
   enemyWaves:
-  - {fileID: 11400000, guid: cfe5df4b32fc6da43afd8cb0a30744e2, type: 2}
   - {fileID: 11400000, guid: b12389051d089ba4ab8e074a9f84b795, type: 2}
   - {fileID: 11400000, guid: d5ee58a0d1522734faf2699aea731dbf, type: 2}
   - {fileID: 11400000, guid: 9fc526f9ec8a40b4c88523b1b3d61058, type: 2}
+  - {fileID: 11400000, guid: cfe5df4b32fc6da43afd8cb0a30744e2, type: 2}
 --- !u!4 &193756317
 Transform:
   m_ObjectHideFlags: 0
@@ -5481,8 +5481,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 246215386}
   m_HandleRect: {fileID: 246215385}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 0
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -13812,7 +13812,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0.95, y: 1}
-  m_AnchoredPosition: {x: 0, y: -163.84244}
+  m_AnchoredPosition: {x: 0, y: -163.82727}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1660143679
@@ -13965,8 +13965,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   volumeAnchorOverride: {fileID: 0}
-  antialiasing: 0
-  SMAAQuality: 2
+  antialiasing: 3
+  SMAAQuality: 0
   dithering: 0
   stopNaNs: 0
   taaSharpenStrength: 0.6

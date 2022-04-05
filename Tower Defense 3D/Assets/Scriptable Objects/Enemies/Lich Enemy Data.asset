@@ -17,4 +17,4 @@ MonoBehaviour:
   speed: 2
   health: 75
   damageToPlayer: 1
-  rewardToPlayer: 5
+  rewardToPlayer: 3

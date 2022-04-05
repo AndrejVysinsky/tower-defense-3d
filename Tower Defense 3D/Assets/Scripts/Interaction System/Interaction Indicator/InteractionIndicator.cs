@@ -38,9 +38,10 @@ public class InteractionIndicator : MonoBehaviour
         {
             float sizeX = collider.bounds.size.x;
             float sizeY = collider.bounds.size.y;
+            float centerY = collider.bounds.center.y;
 
             _radius = sizeX / 2;
-            _heighOffset = sizeY / 2;
+            _heighOffset = centerY - sizeY / 2;
             
             if (_interactingObject.gameObject.TryGetComponent(out NavMeshAgent _))
             {
@@ -67,7 +68,11 @@ public class InteractionIndicator : MonoBehaviour
             x = Mathf.Sin(angle) * _radius;
             z = Mathf.Cos(angle) * _radius;
 
-            lineRenderer.SetPosition(i, new Vector3(x, -_heighOffset + _distanceAboveGround, z) + interactingObjectPosition);
+            var pointPosition = new Vector3(x, _heighOffset + _distanceAboveGround, z);
+            pointPosition.x += interactingObjectPosition.x;
+            pointPosition.z += interactingObjectPosition.z;
+
+            lineRenderer.SetPosition(i, pointPosition);
 
             angle += change;
         }

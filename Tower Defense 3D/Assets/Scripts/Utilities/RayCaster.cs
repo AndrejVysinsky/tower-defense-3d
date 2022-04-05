@@ -33,7 +33,8 @@ public static class RayCaster
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         int layerMask = LayerMask.GetMask(LayerMask.LayerToName((int)LayerEnum.Default), 
-                                            LayerMask.LayerToName((int)LayerEnum.UnbuildableTerrain));
+                                            LayerMask.LayerToName((int)LayerEnum.UnbuildableTerrain),
+                                            LayerMask.LayerToName((int)LayerEnum.Enemy));
 
         return Physics.Raycast(ray, out hitInfo, 100, layerMask);
 

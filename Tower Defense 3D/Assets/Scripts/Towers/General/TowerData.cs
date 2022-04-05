@@ -10,12 +10,12 @@ public class TowerData : ScriptableObject, IUpgradeOption
     [SerializeField] int hitPoints;
 
     [SerializeField] int price;
-    [SerializeField] float sellFactor;
 
     [SerializeField] float damage;
     [SerializeField] float attackDelay;
     [SerializeField] float radius;
 
+    [SerializeField] TowerData previousUpgrade;
     [SerializeField] List<TowerData> nextUpgrades;
 
     public string Name => name;
@@ -44,6 +44,15 @@ public class TowerData : ScriptableObject, IUpgradeOption
 
     public int GetSellValue()
     {
-        return (int)(Price * sellFactor);
+        var totalPrice = Price;
+        var previous = previousUpgrade;
+
+        while (previous != null)
+        {
+            totalPrice += previous.Price;
+            previous = previous.previousUpgrade;
+        }
+
+        return totalPrice;
     }
 }

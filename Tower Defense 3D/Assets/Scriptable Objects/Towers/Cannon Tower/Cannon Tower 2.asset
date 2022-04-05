@@ -16,11 +16,11 @@ MonoBehaviour:
   name: Cannon Tower 2
   sprite: {fileID: 21300000, guid: 9d209cad5e3b16344b4937a169ad7b3c, type: 3}
   hitPoints: 50
-  price: 150
-  sellFactor: 0.4
-  damage: 70
+  price: 500
+  damage: 120
   attackDelay: 3
   radius: 6
+  previousUpgrade: {fileID: 11400000, guid: aca56b6182729c040b82d11c0ca5f362, type: 2}
   nextUpgrades:
   - {fileID: 11400000, guid: dbf00604198352d4f8a65ca71e233ee7, type: 2}
   description: Shoots cannon projectiles which explode on impact and deal area damage.

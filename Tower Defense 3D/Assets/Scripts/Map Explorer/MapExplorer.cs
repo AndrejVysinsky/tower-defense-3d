@@ -128,7 +128,7 @@ public class MapExplorer : MonoBehaviour
             return;
         }
 
-        mapSaveManager.LoadMapData(isLoadingInEditor, null, LobbyConfig.Instance.GetLobbyMode(), mapName: SelectedMapCard.MapName);
+        mapSaveManager.LoadMapData(isLoadingInEditor, null, LobbyConfig.LobbyMode.Versus, mapName: SelectedMapCard.MapName);
 
         editorMenu.TogglePauseMenu();
     }

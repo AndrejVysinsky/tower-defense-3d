@@ -15,6 +15,6 @@ MonoBehaviour:
   name: Golem
   sprite: {fileID: 21300000, guid: ff905889de2d9984daf0b5950eee5923, type: 3}
   speed: 2
-  health: 1000
+  health: 2000
   damageToPlayer: 5
-  rewardToPlayer: 25
+  rewardToPlayer: 150

@@ -16,11 +16,11 @@ MonoBehaviour:
   name: Archer Tower 2
   sprite: {fileID: 21300000, guid: 3133b1586d5aa4d499af28c14fe48345, type: 3}
   hitPoints: 50
-  price: 50
-  sellFactor: 2
-  damage: 80
+  price: 300
+  damage: 60
   attackDelay: 0.5
   radius: 50
+  previousUpgrade: {fileID: 11400000, guid: 2656704ebcb0bb145809992a2023b8de, type: 2}
   nextUpgrades:
   - {fileID: 11400000, guid: 42f277d369fc04f4285b76f4b871b564, type: 2}
   description: Base line of defense. Shoots arrow projectiles at enemies with high

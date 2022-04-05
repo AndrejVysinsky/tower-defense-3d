@@ -53,16 +53,15 @@ public class EnemySpawner : NetworkBehaviour, IMapLoaded
                 _waveIndex = 0;
             }
 
+            GameController.Instance.WaveSpawned(WaveNumber++);
+
+            yield return StartCoroutine(SpawnWave(_waveIndex++));
+            yield return StartCoroutine(WaitForWaveDelay());
+
             if (WaveNumber % addMultiplierEveryXWaves == 0)
             {
                 _difficultyMultiplier += difficultyMultiplierToAdd;
             }
-
-            GameController.Instance.WaveSpawned(WaveNumber++);
-
-            yield return StartCoroutine(SpawnWave(_waveIndex++));
-
-            yield return StartCoroutine(WaitForWaveDelay());
         }
     }
 
