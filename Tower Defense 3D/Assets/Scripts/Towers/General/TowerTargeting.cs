@@ -139,7 +139,8 @@ public class TowerTargeting : NetworkBehaviour
             var enemy = other.gameObject.GetComponent<Enemy>();
 
             //enemy is assigned to player but player id does not match owner of tower
-            if (enemy.PlayerId != 0 && enemy.PlayerId != _towerBase.PlayerId)
+            if (enemy.PlayerId != 0 && enemy.PlayerId != _towerBase.PlayerId
+                && LobbyConfig.Instance.GetLobbyMode() == LobbyConfig.LobbyMode.Versus)
             {
                 return;
             }

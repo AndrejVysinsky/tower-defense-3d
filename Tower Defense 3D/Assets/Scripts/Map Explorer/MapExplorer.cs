@@ -72,6 +72,9 @@ public class MapExplorer : MonoBehaviour
             mapCards.Add(mapCard);
         }
 
+        if (mapCards.Count == 0)
+            return;
+
         SelectMapCard(mapCards[0]);
     }
 
