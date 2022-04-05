@@ -11,14 +11,14 @@ public static class FileManager
     public static string[] DefaultMaps { get; } = new string[]
     {
         "Lake Map",
-        "Castle Map",
+        "Forest Map",
         "Desert Map"
     };
 
     public static string[] DefaultMapsSprites { get; } = new string[]
     {
         "Lake Map Sprite",
-        "Castle Map Sprite",
+        "Forest Map Sprite",
         "Desert Map Sprite"
     };
 
